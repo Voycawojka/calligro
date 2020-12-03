@@ -42,8 +42,7 @@ export function drawInfo(ctx: CanvasRenderingContext2D, x: number, y: number, w:
 
 3) Paste the template code and you got yourself a font
 
-*Dashed lines signify the letter base.
-    `.replaceAll('\t', '')
+*Dashed lines signify the letter base.`.replaceAll('\t', '')
 
     ctx.fillStyle = 'black'
     ctx.textAlign = 'left'

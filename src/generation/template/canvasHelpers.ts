@@ -53,7 +53,6 @@ export function drawWrappedText(ctx: CanvasRenderingContext2D, text: string, opt
     let lines = wrapText(ctx, text, maxWidth)
 
     if (maxHeight) {
-        
         while (lines.length * trySize >= maxHeight) {
             trySize --
 
