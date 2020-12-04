@@ -1,4 +1,4 @@
-import { createCanvas } from './canvasHelpers'
+import { convertToBlob, createCanvas } from './canvasHelpers'
 import { CodePayload, Slot } from './types'
 import { drawInfo, drawSlot } from './slotDrawing'
 import { memoize } from '../../utils/decorators'
@@ -34,7 +34,7 @@ export default class Template {
     }
 
     @memoize
-    public generateDataUrl(): string {
+    public generateImageBlob(): Promise<Blob> {
         drawInfo(this.ctx, 0, 0, this.slotDim.w, this.slotDim.h)
     
         let currentSlotIdx = 0
@@ -66,7 +66,7 @@ export default class Template {
             }
         }
     
-        return this.canvas.toDataURL()
+        return convertToBlob(this.canvas)
     }
     
     @memoize

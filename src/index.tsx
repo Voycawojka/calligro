@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Template from './generation/template/Template';
+import { downloadTemplate } from './generation/template/download';
 
 ReactDOM.render(
   <React.StrictMode>
