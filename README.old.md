@@ -1,2 +1,0 @@
-# calligro
-Bitmap font creator
