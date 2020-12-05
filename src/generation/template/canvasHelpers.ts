@@ -63,3 +63,9 @@ export function drawWrappedText(ctx: CanvasRenderingContext2D, text: string, opt
 
     lines.forEach((line, i) => ctx.fillText(line, x, y + i * trySize, maxWidth))
 }
+
+export function convertToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+        canvas.toBlob(blob => !!blob ? resolve(blob) : reject())
+    })
+}
