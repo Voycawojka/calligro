@@ -1,12 +1,12 @@
 import React from 'react'
-import GenerationView from './generation/GenerationView'
+import GenerationView from './ui/generation/generationView/GenerationView'
 
 function App() {
-  return (
-    <div className='app'>
-      <GenerationView />
-    </div>
-  )
+    return (
+        <div>
+            <GenerationView />
+        </div>
+    )
 }
 
 export default App

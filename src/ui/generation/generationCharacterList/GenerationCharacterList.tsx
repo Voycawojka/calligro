@@ -1,46 +1,42 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { WorkSlot } from '../../../generation/template/types'
+import styles from './generationCharacterList.module.scss'
 
 interface GenerationCharacterListProps {
-  charSet: WorkSlot[]
-  handleDimentionChange: (event: React.ChangeEvent<HTMLInputElement>, width: boolean, char: WorkSlot) => void
-  defaultWidth: number
-  defaultHeight: number
+    charSet: WorkSlot[]
+    handleSpecificDimentionChange: (event: React.ChangeEvent<HTMLInputElement>, dimention: 'width' | 'height', char: WorkSlot) => void
+    resetCharacterDimentions: (char: WorkSlot) => void
+    defaultWidth: number
+    defaultHeight: number
 }
 
-class GenerationCharacterList extends Component<GenerationCharacterListProps, {}> {
-  constructor(props: GenerationCharacterListProps) {
-    super(props)
+function GenerationCharacterList (props: GenerationCharacterListProps) {
 
-    this.state = {
-      
-    }
-  }
+    const charList = props.charSet.map(char => 
+        <div key={char.character}>
+            <span>{char.character}</span>
+            <input
+                className={styles.input} 
+                type='number' 
+                value={char.width ?? props.defaultWidth} 
+                onChange={(event) => props.handleSpecificDimentionChange(event, 'width', char)}
+            />
 
-  render() {
-    const charList = this.props.charSet.map(char => 
-      <div key={char.character}>
-        <p>{char.character}</p>
-        <input 
-          type='number' 
-          value={char.width ?? this.props.defaultWidth} 
-          onChange={(event) => this.props.handleDimentionChange(event, true, char)}
-        />
-
-        <input
-          type='number' 
-          value={char.height ?? this.props.defaultHeight} 
-          onChange={(event) => this.props.handleDimentionChange(event, false, char)}
-        />
-      </div>
+            <input
+                className={styles.input} 
+                type='number' 
+                value={char.height ?? props.defaultHeight} 
+                onChange={(event) => props.handleSpecificDimentionChange(event, 'height', char)}
+            />
+            <button onClick={() => props.resetCharacterDimentions(char)}>reset</button>
+        </div>
     )
 
     return (
-      <div>
-        {charList}
-      </div>
+        <div className={styles.container}>
+            {charList}
+        </div>
     )
-  }
 }
 
 export default GenerationCharacterList
