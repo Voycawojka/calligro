@@ -12,20 +12,20 @@ interface GenerationCharacterListProps {
 
 function GenerationCharacterList (props: GenerationCharacterListProps) {
 
-    const charList = props.charSet.map(char => 
+    const charList = props.charSet.map(char =>
         <div key={char.character}>
             <span>{char.character}</span>
             <input
-                className={styles.input} 
-                type='number' 
-                value={char.width ?? props.defaultWidth} 
+                className={styles.input}
+                type='number'
+                value={char.width ?? props.defaultWidth}
                 onChange={(event) => props.handleSpecificDimentionChange(event, 'width', char)}
             />
 
             <input
-                className={styles.input} 
-                type='number' 
-                value={char.height ?? props.defaultHeight} 
+                className={styles.input}
+                type='number'
+                value={char.height ?? props.defaultHeight}
                 onChange={(event) => props.handleSpecificDimentionChange(event, 'height', char)}
             />
             <button onClick={() => props.resetCharacterDimentions(char)}>reset</button>

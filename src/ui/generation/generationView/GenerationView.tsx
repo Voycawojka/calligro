@@ -77,7 +77,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
         const newValue = parseInt(event.target.value)
 
         if (newValue > 0) {
-            const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char 
+            const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
                 ? {
                 ...character,
                 [dimention] : event.target.value
@@ -103,34 +103,34 @@ class GenerationView extends Component<{}, GenerationViewState> {
     render() {
         return (
             <div>
-                <textarea 
+                <textarea
                     onChange={this.handleCharSetInput}
                     value={this.charString}
                 />
 
                 <label>width</label>
-                <input 
-                    type='number' 
-                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')} 
+                <input
+                    type='number'
+                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
                     value={this.state.defaultWidth}
                     />
                 <label>height</label>
-                <input 
-                    type='number' 
-                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')} 
+                <input
+                    type='number'
+                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
                     value={this.state.defaultHeight}
                 />
                 <label>base</label>
-                <input 
-                    type='number' 
-                    onChange={event => this.handleDefaultValueChange(event, 'base')} 
+                <input
+                    type='number'
+                    onChange={event => this.handleDefaultValueChange(event, 'base')}
                     value={this.state.base}
                 />
 
-                <GenerationCharacterList 
-                    charSet={this.state.charSet} 
-                    defaultHeight={this.state.defaultHeight} 
-                    defaultWidth={this.state.defaultWidth} 
+                <GenerationCharacterList
+                    charSet={this.state.charSet}
+                    defaultHeight={this.state.defaultHeight}
+                    defaultWidth={this.state.defaultWidth}
                     handleSpecificDimentionChange={this.handleSpecificDimentionChange}
                     resetCharacterDimentions={this.resetCharacterDimentions}
                 />
