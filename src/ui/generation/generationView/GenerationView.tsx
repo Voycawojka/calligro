@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
 import { bind } from 'helpful-decorators'
-import GenerationCharacterList from './GenerationCharacterList'
-
-export interface WorkSlot {
-  character: string
-  width?: number 
-  height?: number 
-}
+import GenerationCharacterList from '../generationCharacterList/GenerationCharacterList'
+import { WorkSlot } from '../../../generation/template/types'
 
 interface GenerationViewState {
   charSet: WorkSlot[]

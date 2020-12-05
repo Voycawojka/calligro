@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { WorkSlot } from './GenerationView'
+import { WorkSlot } from '../../../generation/template/types'
 
 interface GenerationCharacterListProps {
   charSet: WorkSlot[]
