@@ -4,7 +4,7 @@ import styles from './generationCharacterList.module.scss'
 
 interface GenerationCharacterListProps {
     charSet: WorkSlot[]
-    handleDimensionChange: (event: React.ChangeEvent<HTMLInputElement>, dimention: 'width' | 'height', char: WorkSlot) => void
+    handleDimensionChange: (event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) => void
     resetCharacterDimensions: (char: WorkSlot) => void
     defaultWidth: number
     defaultHeight: number
