@@ -19,7 +19,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "plugins": [
+      { "name": "typescript-plugin-css-modules" }
+    ]
   },
   "include": [
     "src"
