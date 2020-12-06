@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bind } from 'helpful-decorators'
 import GenerationCharacterList from '../generationCharacterList/GenerationCharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'
+import Template from '../../../generation/template/Template'
 
 interface GenerationViewState {
     charSet: WorkSlot[]
@@ -30,16 +31,16 @@ class GenerationView extends Component<{}, GenerationViewState> {
 
     @bind
     handleCharSetInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        const newCharArray = event.target.value.split("")
+        const newCharArray = event.target.value.split("").filter(char => char !== " ")
         const isUniqueCharSet = new Set(newCharArray).size === newCharArray.length
-
-        const newCharSet: WorkSlot[] = newCharArray.map(character => {
-            return this.state.charSet.find(oldChar => oldChar.character === character) ?? {character: character}
-        })
 
         event.preventDefault()
 
         if (isUniqueCharSet) {
+            const newCharSet: WorkSlot[] = newCharArray.map(character => {
+                return this.state.charSet.find(oldChar => oldChar.character === character) ?? {character: character}
+            })
+
             this.setState({
                 charSet: newCharSet
             })
@@ -60,11 +61,11 @@ class GenerationView extends Component<{}, GenerationViewState> {
 
     @bind
     handleDefaultValueChange(event: React.ChangeEvent<HTMLInputElement>, valueName: 'defaultWidth' | 'defaultHeight' | 'base') {
-        const newValue = parseInt(event.target.value)
+        const newValue = parseInt(event.target.value, 10)
         const isBaseValid = valueName === 'base' && newValue <= this.state.defaultHeight && newValue >= 0
-        const isDimentionPositive = valueName !== 'base' && newValue > 0
+        const isDimensionPositive = valueName !== 'base' && newValue > 0
 
-        if (isBaseValid || isDimentionPositive) {
+        if (isBaseValid || isDimensionPositive) {
             this.setState(prevState => ({
                 ...prevState,
                 [valueName]: newValue
@@ -73,14 +74,14 @@ class GenerationView extends Component<{}, GenerationViewState> {
     }
   
     @bind
-    handleSpecificDimentionChange(event: React.ChangeEvent<HTMLInputElement>, dimention: 'width' | 'height', char: WorkSlot) {
-        const newValue = parseInt(event.target.value)
+    handleDimensionChange(event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) {
+        const newValue = parseInt(event.target.value, 10)
 
         if (newValue > 0) {
             const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char 
                 ? {
-                ...character,
-                [dimention] : event.target.value
+                    ...character,
+                    [dimension] : event.target.value
                 }
                 : character
             )
@@ -92,12 +93,18 @@ class GenerationView extends Component<{}, GenerationViewState> {
     }
 
     @bind
-    resetCharacterDimentions(char: WorkSlot) {
+    resetCharacterDimensions(char: WorkSlot) {
         const newCharSet =  this.state.charSet.map(workSlot => char === workSlot ? { character: workSlot.character } : workSlot)
 
         this.setState({
             charSet: newCharSet
         })
+    }
+
+    @bind
+    downloadTemplate() {
+        const template = new Template(this.slotArray, this.state.base)
+
     }
 
     render() {
@@ -131,8 +138,8 @@ class GenerationView extends Component<{}, GenerationViewState> {
                     charSet={this.state.charSet} 
                     defaultHeight={this.state.defaultHeight} 
                     defaultWidth={this.state.defaultWidth} 
-                    handleSpecificDimentionChange={this.handleSpecificDimentionChange}
-                    resetCharacterDimentions={this.resetCharacterDimentions}
+                    handleDimensionChange={this.handleDimensionChange}
+                    resetCharacterDimensions={this.resetCharacterDimensions}
                 />
 
                 <button>download template</button>

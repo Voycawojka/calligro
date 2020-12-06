@@ -1,12 +1,10 @@
-:local(.input) {
+.input {
     width: 60px;
 }
 
-:local(.container) {
+.container {
     width: 240px;
     border: 1px solid black;
     height: 380px;
     overflow-y: auto;
 }
-
-

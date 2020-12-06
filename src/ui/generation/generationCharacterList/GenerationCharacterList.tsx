@@ -4,8 +4,8 @@ import styles from './generationCharacterList.module.scss'
 
 interface GenerationCharacterListProps {
     charSet: WorkSlot[]
-    handleSpecificDimentionChange: (event: React.ChangeEvent<HTMLInputElement>, dimention: 'width' | 'height', char: WorkSlot) => void
-    resetCharacterDimentions: (char: WorkSlot) => void
+    handleDimensionChange: (event: React.ChangeEvent<HTMLInputElement>, dimention: 'width' | 'height', char: WorkSlot) => void
+    resetCharacterDimensions: (char: WorkSlot) => void
     defaultWidth: number
     defaultHeight: number
 }
@@ -19,16 +19,16 @@ function GenerationCharacterList (props: GenerationCharacterListProps) {
                 className={styles.input} 
                 type='number' 
                 value={char.width ?? props.defaultWidth} 
-                onChange={(event) => props.handleSpecificDimentionChange(event, 'width', char)}
+                onChange={(event) => props.handleDimensionChange(event, 'width', char)}
             />
 
             <input
                 className={styles.input} 
                 type='number' 
                 value={char.height ?? props.defaultHeight} 
-                onChange={(event) => props.handleSpecificDimentionChange(event, 'height', char)}
+                onChange={(event) => props.handleDimensionChange(event, 'height', char)}
             />
-            <button onClick={() => props.resetCharacterDimentions(char)}>reset</button>
+            <button onClick={() => props.resetCharacterDimensions(char)}>reset</button>
         </div>
     )
 
