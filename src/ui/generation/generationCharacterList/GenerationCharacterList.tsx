@@ -12,19 +12,19 @@ interface GenerationCharacterListProps {
 
 function GenerationCharacterList (props: GenerationCharacterListProps) {
 
-    const charList = props.charSet.map(char => 
+    const charList = props.charSet.map(char =>
         <div key={char.character}>
             <span>{char.character}</span>
             <input
                 className={styles.input} 
-                type='number' 
+                type='number'
                 value={char.width ?? props.defaultWidth} 
                 onChange={(event) => props.handleDimensionChange(event, 'width', char)}
             />
 
             <input
                 className={styles.input} 
-                type='number' 
+                type='number'
                 value={char.height ?? props.defaultHeight} 
                 onChange={(event) => props.handleDimensionChange(event, 'height', char)}
             />

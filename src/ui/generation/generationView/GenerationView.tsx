@@ -3,6 +3,7 @@ import { bind } from 'helpful-decorators'
 import GenerationCharacterList from '../generationCharacterList/GenerationCharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'
 import Template from '../../../generation/template/Template'
+import { downloadTemplate } from '../../../generation/template/download'
 
 interface GenerationViewState {
     charSet: WorkSlot[]
@@ -78,7 +79,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
         const newValue = parseInt(event.target.value, 10)
 
         if (newValue > 0) {
-            const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char 
+            const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
                 ? {
                     ...character,
                     [dimension] : event.target.value
@@ -105,44 +106,45 @@ class GenerationView extends Component<{}, GenerationViewState> {
     downloadTemplate() {
         const template = new Template(this.slotArray, this.state.base)
 
+        downloadTemplate(template)
     }
 
     render() {
         return (
             <div>
-                <textarea 
+                <textarea
                     onChange={this.handleCharSetInput}
                     value={this.charString}
                 />
 
                 <label>width</label>
-                <input 
-                    type='number' 
-                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')} 
+                <input
+                    type='number'
+                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
                     value={this.state.defaultWidth}
                     />
                 <label>height</label>
-                <input 
-                    type='number' 
-                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')} 
+                <input
+                    type='number'
+                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
                     value={this.state.defaultHeight}
                 />
                 <label>base</label>
-                <input 
-                    type='number' 
-                    onChange={event => this.handleDefaultValueChange(event, 'base')} 
+                <input
+                    type='number'
+                    onChange={event => this.handleDefaultValueChange(event, 'base')}
                     value={this.state.base}
                 />
 
-                <GenerationCharacterList 
-                    charSet={this.state.charSet} 
-                    defaultHeight={this.state.defaultHeight} 
-                    defaultWidth={this.state.defaultWidth} 
+                <GenerationCharacterList
+                    charSet={this.state.charSet}
+                    defaultHeight={this.state.defaultHeight}
+                    defaultWidth={this.state.defaultWidth}
                     handleDimensionChange={this.handleDimensionChange}
                     resetCharacterDimensions={this.resetCharacterDimensions}
                 />
 
-                <button>download template</button>
+                <button onClick={this.downloadTemplate}>download template</button>
             </div>
         )
     }
