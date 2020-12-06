@@ -16,16 +16,16 @@ function GenerationCharacterList (props: GenerationCharacterListProps) {
         <div key={char.character}>
             <span>{char.character}</span>
             <input
-                className={styles.input} 
+                className={styles.input}
                 type='number'
-                value={char.width ?? props.defaultWidth} 
+                value={char.width ?? props.defaultWidth}
                 onChange={(event) => props.handleDimensionChange(event, 'width', char)}
             />
 
             <input
-                className={styles.input} 
+                className={styles.input}
                 type='number'
-                value={char.height ?? props.defaultHeight} 
+                value={char.height ?? props.defaultHeight}
                 onChange={(event) => props.handleDimensionChange(event, 'height', char)}
             />
             <button onClick={() => props.resetCharacterDimensions(char)}>reset</button>
