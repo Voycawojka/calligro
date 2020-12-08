@@ -46,7 +46,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
     
     @bind
     handleNumericalInput(event: React.ChangeEvent<HTMLInputElement>, name: 'horizontalMargin' | 'verticalMargin' | 'space') {
-        const value = parseInt(event.target.value)
+        const value = parseInt(event.target.value, 10)
 
         if (value >= 0) {
             this.setState(prevState => ({
@@ -57,7 +57,6 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
     }
 
     render() {
-        
         return(
             <div>
                 <label>code</label>
@@ -67,21 +66,21 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
                 <input type='file' ref={this.templateInput} onChange={this.isInputsValid} accept='.png' />
 
                 <label>horizontal margin</label>
-                <input 
-                    type='number' 
+                <input
+                    type='number'
                     onChange={(event) => this.handleNumericalInput(event, 'horizontalMargin')}
                     value={this.state.horizontalMargin}
                 />
 
                 <label>vertical margin</label>
-                <input 
-                    type='number' 
+                <input
+                    type='number'
                     onChange={(event) => this.handleNumericalInput(event, 'verticalMargin')}
                     value={this.state.verticalMargin}
                 />
 
                 <label>space between characters</label>
-                <input 
+                <input
                     type='number'
                     onChange={(event) => this.handleNumericalInput(event, 'space')}
                     value={this.state.space}
