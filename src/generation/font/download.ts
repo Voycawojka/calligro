@@ -1,6 +1,6 @@
 import { downloadArchive, ZippedFile } from "../fs/zip";
 
-export async function downloadFont(fntFile: string, pages: Blob[]): Promise<void> {
+export async function downloadBmf(fntFile: string, pages: Blob[]): Promise<void> {
     const files: ZippedFile[] = [
         {
             name: 'calligro-font.fnt',

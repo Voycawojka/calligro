@@ -51,7 +51,7 @@ export interface FontConfig {
     lineHeight: number
 }
 
-export async function generateFont(templateImg: Blob, templateCode: string, fontConfig: FontConfig): Promise<[FontSpec, Blob]> {
+export async function generateFont(templateImg: Blob, templateCode: string, fontConfig: FontConfig): Promise<[FontSpec, Blob[]]> {
     const tempConfig = parseTemplateCode(templateCode)
     const slots = tempConfig.slots.map(([ unicode, width, height ]) => ({ character: String.fromCharCode(unicode), width, height }))
     const template = new Template(slots, tempConfig.base)
@@ -60,7 +60,7 @@ export async function generateFont(templateImg: Blob, templateCode: string, font
 
     const specification: FontSpec = {
         info: {
-            face: 'custom',
+            face: 'calligro-custom',
             size: 12,
             stretchH: 100,
             aa: 1,
@@ -86,7 +86,7 @@ export async function generateFont(templateImg: Blob, templateCode: string, font
         pages: [
             {
                 id: 0,
-                file: 'characters.png'
+                file: 'calligro-page-0.png'
             }
         ],
         chars: slots.map((slot, index) => ({
@@ -103,5 +103,5 @@ export async function generateFont(templateImg: Blob, templateCode: string, font
         }))
     }
 
-    return [specification, templateImg]
+    return [specification, [templateImg]]
 }

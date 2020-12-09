@@ -2,10 +2,10 @@ import { FontSpec } from "./Font";
 
 function tag(name: string, properties: [string, string | number][]) {
     const joinedProps = properties.map(([ prop, value ]) => `${prop}="${value.toString()}"`).join(' ')
-    return `<${name} ${joinedProps}/>`
+    return `${name} ${joinedProps}`
 }
 
-export function fontSpecToXml(specification: FontSpec) {
+export function fontSpecToTxt(specification: FontSpec) {
     const info = specification.info
     const infoTag = tag('info', [
         ['face', info.face],
@@ -45,7 +45,6 @@ export function fontSpecToXml(specification: FontSpec) {
     ]))
 
     return [
-        '<?xml version="1.0" encoding="utf-8"?>',
         infoTag,
         commonTag,
         ...pageTags,

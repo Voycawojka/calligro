@@ -65,7 +65,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
         return this.state.charSet.map(workSlot => ({
             character: workSlot.character,
             width: workSlot.width ?? this.state.defaultWidth,
-            height: workSlot.width ?? this.state.defaultHeight
+            height: workSlot.height ?? this.state.defaultHeight
         }))
     }
 
@@ -95,7 +95,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
             const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
                 ? {
                     ...character,
-                    [dimension] : event.target.value
+                    [dimension] : parseInt(event.target.value, 10)
                 }
                 : character
             )

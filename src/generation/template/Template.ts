@@ -36,7 +36,7 @@ export default class Template {
     public getSlotPosition(index: number): { x: number, y: number } {
         return {
             x: (index % this.w) * this.slotDim.w,
-            y: (index / this.h) * this.slotDim.h
+            y: Math.floor(index / this.w) * this.slotDim.h
         }
     }
 
@@ -44,11 +44,8 @@ export default class Template {
     public generateImageBlob(): Promise<Blob> {
         drawInfo(this.ctx, 0, 0, this.slotDim.w, this.slotDim.h)
     
-        this.slots.slice(1).forEach((slot, index) => {
-            const { x: slotX, y: slotY } = this.getSlotPosition(index + 1)
-
-            const x = slotX * this.slotDim.w
-            const y = slotY * this.slotDim.h
+        this.slots.forEach((slot, index) => {
+            const { x, y } = this.getSlotPosition(index + 1)
 
             drawSlot(this.ctx, slot, {
                 x,
@@ -59,7 +56,7 @@ export default class Template {
                 vertMargin: this.slotDim.hMargin
             })
         })
-    
+
         return convertToBlob(this.canvas)
     }
     

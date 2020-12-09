@@ -16,8 +16,9 @@ export function parseTemplateCode(code: string): CodePayload {
         throw new Error(`Property 'slots' must be an array, instead got: ${codePayload.slots} '${codePayload.slots}'`)
     }
 
-    if (codePayload.slots.find(slot => !Array.isArray(slot) || slot.length !== 3 || slot.find(value => !Number.isInteger(value)))) {
-        throw new Error('Each slot must be a three element array (integers only)')
+    const incorrectSlot = codePayload.slots.find(slot => !Array.isArray(slot) || slot.length !== 3 || slot.find(value => !Number.isInteger(value)))
+    if (incorrectSlot) {
+        throw new Error(`Each slot must be a three element array (integers only). Instead found: ${JSON.stringify(incorrectSlot)}`)
     }
 
     return codePayload
