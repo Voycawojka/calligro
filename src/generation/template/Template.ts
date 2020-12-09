@@ -1,4 +1,4 @@
-import { convertToBlob, createCanvas } from './canvasHelpers'
+import { convertToBlob, createCanvas } from '../../utils/canvasHelpers'
 import { CodePayload, Slot } from './types'
 import { drawInfo, drawSlot } from './slotDrawing'
 import { memoize } from '../../utils/decorators'
@@ -33,38 +33,32 @@ export default class Template {
         return { w: slotW, h: slotH, hMargin: vertMargin }
     }
 
+    public getSlotPosition(index: number): { x: number, y: number } {
+        return {
+            x: (index % this.w) * this.slotDim.w,
+            y: (index / this.h) * this.slotDim.h
+        }
+    }
+
     @memoize
     public generateImageBlob(): Promise<Blob> {
         drawInfo(this.ctx, 0, 0, this.slotDim.w, this.slotDim.h)
     
-        let currentSlotIdx = 0
-    
-        slotDrawingLoop:
-        for (let slotY = 0; slotY < this.h; slotY ++) {
-            for (let slotX = 0; slotX < this.w; slotX ++) {
-                if (slotY === 0 && slotX === 0) {
-                    continue
-                }
-    
-                const x = slotX * this.slotDim.w
-                const y = slotY * this.slotDim.h
-                const slot = this.slots[currentSlotIdx]
-    
-                drawSlot(this.ctx, slot, {
-                    x,
-                    y,
-                    w: this.slotDim.w,
-                    h: this.slotDim.h,
-                    base: this.base,
-                    vertMargin: this.slotDim.hMargin
-                })
-    
-                currentSlotIdx ++
-                if (currentSlotIdx >= this.slots.length) {
-                    break slotDrawingLoop
-                }
-            }
-        }
+        this.slots.slice(1).forEach((slot, index) => {
+            const { x: slotX, y: slotY } = this.getSlotPosition(index + 1)
+
+            const x = slotX * this.slotDim.w
+            const y = slotY * this.slotDim.h
+
+            drawSlot(this.ctx, slot, {
+                x,
+                y,
+                w: this.slotDim.w,
+                h: this.slotDim.h,
+                base: this.base,
+                vertMargin: this.slotDim.hMargin
+            })
+        })
     
         return convertToBlob(this.canvas)
     }
