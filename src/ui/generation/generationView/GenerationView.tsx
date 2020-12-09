@@ -18,16 +18,29 @@ class GenerationView extends Component<{}, GenerationViewState> {
     constructor(props: {}) {
         super(props)
 
-        this.state = {
-            charSet: this.createCharArray(),
-            defaultWidth: 20,
-            defaultHeight: 20,
-            base: 10
+        this.state = this.setInitialState()
+    }
+
+    setInitialState(): GenerationViewState {
+        const storedData = window.localStorage.getItem('settings')
+        const parsedData: GenerationViewState = storedData ? JSON.parse(storedData) : null
+
+        return ({
+            charSet: parsedData?.charSet ?? this.createCharArray(),
+            defaultWidth: parsedData?.defaultWidth ?? 20,
+            defaultHeight: parsedData?.defaultHeight ?? 20,
+            base: parsedData?.base ?? 10
+        })
+    }
+
+    componentDidUpdate(prevProps: {}, prevState: GenerationViewState) {
+        if (prevState !== this.state) {
+            window.localStorage.setItem('settings', JSON.stringify(this.state))
         }
-  }
+    }
 
     createCharArray(): WorkSlot[] {
-        return Array.from(defaultCharacters, (character: string) => ({character: character}))
+        return Array.from(defaultCharacters, (character: string) => ({ character }))
     }
 
     @bind
@@ -39,7 +52,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
 
         if (isUniqueCharSet) {
             const newCharSet: WorkSlot[] = newCharArray.map(character => {
-                return this.state.charSet.find(oldChar => oldChar.character === character) ?? {character: character}
+                return this.state.charSet.find(oldChar => oldChar.character === character) ?? { character }
             })
 
             this.setState({
