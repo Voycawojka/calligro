@@ -109,7 +109,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
                     value={this.state.lineHeight}
                 />
 
-                <button 
+                <button
                     disabled={!this.state.generationAllowed}
                     onClick={this.downloadFont}>
                         generate font
