@@ -20,7 +20,7 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
         })
 }
 
-export function createCanvas(width: number, height: number, color: string): [HTMLCanvasElement, CanvasRenderingContext2D] {
+export function createCanvas(width: number, height: number, color?: string): [HTMLCanvasElement, CanvasRenderingContext2D] {
     const canvas = document.createElement('canvas')
     canvas.width = width
     canvas.height = height
@@ -31,8 +31,10 @@ export function createCanvas(width: number, height: number, color: string): [HTM
         throw new Error('Your browser doesn\'t support 2d canvas context. Use a modern browser, please.')
     }
 
-    ctx.fillStyle = color
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    if (color) {
+        ctx.fillStyle = color
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+    }
 
     return [canvas, ctx]
 }

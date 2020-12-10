@@ -1,4 +1,4 @@
-import { downloadArchive, ZippedFile } from "../zip/zip";
+import { downloadArchive, ZippedFile } from "../fs/zip";
 import Template from "./Template";
 
 export async function downloadTemplate(template: Template): Promise<void> {
@@ -13,5 +13,5 @@ export async function downloadTemplate(template: Template): Promise<void> {
         }
     ]
 
-    return downloadArchive('template', files)
+    return downloadArchive('calligro-template', files)
 }
