@@ -22,7 +22,7 @@ export default class Template {
     }
 
     @memoize
-    private get slotDim(): { w: number, h: number, hMargin: number } {
+    public get slotDim(): { w: number, h: number, hMargin: number } {
         const maxW = Math.max.apply(null, this.slots.map(slot => slot.width))
         const maxH = Math.max.apply(null, this.slots.map(slot => slot.height))
 
