@@ -1,4 +1,4 @@
-import { CodePayload } from "./types";
+import { CodePayload } from './types'
 
 export function parseTemplateCode(code: string): CodePayload {
     const json = atob(code)
