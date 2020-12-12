@@ -1,5 +1,5 @@
-import { drawWrappedText } from "../../utils/canvasHelpers"
-import { Slot } from "./types"
+import { drawWrappedText } from '../../utils/canvasHelpers'
+import { Slot } from './types'
 
 type DrawSlotOptions = {
     x: number,
