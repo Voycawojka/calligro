@@ -1,5 +1,5 @@
-import { createCanvas } from "../../utils/canvasHelpers"
-import { Slot } from "../template/types"
+import { createCanvas } from '../../utils/canvasHelpers'
+import { Slot } from '../template/types'
 
 export interface SourceRect {
     x: number,
@@ -30,7 +30,7 @@ function pack(rects: SourceRect[], width: number): PackedData {
     
     let nextX = 0
     let nextY = 0
-    let furtherstSoFar = 0
+    let furthestSoFar = 0
     let lowestSoFar = 0
 
     data.packedRects = rects
@@ -41,8 +41,8 @@ function pack(rects: SourceRect[], width: number): PackedData {
                 nextY = lowestSoFar
             }
 
-            if (nextX + rect.w > furtherstSoFar) {
-                furtherstSoFar = nextX + rect.w
+            if (nextX + rect.w > furthestSoFar) {
+                furthestSoFar = nextX + rect.w
             }
 
             if (nextY + rect.h > lowestSoFar) {
@@ -60,7 +60,7 @@ function pack(rects: SourceRect[], width: number): PackedData {
             return packed
         })
     
-    data.width = furtherstSoFar
+    data.width = furthestSoFar
     data.height = lowestSoFar
 
     return data
