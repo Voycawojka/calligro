@@ -19,15 +19,15 @@ export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: Dra
     const charRectX = x + w / 2 - slot.width / 2
     const charRectY = y + h / 2 - slot.height / 2
 
+    ctx.strokeStyle = 'green'
+    ctx.beginPath()
+    ctx.moveTo(x, charRectY + base)
+    ctx.lineTo(x + w, charRectY + base)
+    ctx.stroke()
+
     ctx.strokeStyle = 'red'
     ctx.clearRect(charRectX, charRectY, slot.width, slot.height)
     ctx.strokeRect(charRectX, charRectY, slot.width, slot.height)
-    ctx.setLineDash([5, 15])
-    ctx.beginPath()
-    ctx.moveTo(charRectX, charRectY + base)
-    ctx.lineTo(charRectX + slot.width, charRectY + base)
-    ctx.stroke()
-    ctx.setLineDash([])
 
     ctx.fillStyle = 'black'
     ctx.font = `${vertMargin * 0.8}px serif`
@@ -42,7 +42,7 @@ export function drawInfo(ctx: CanvasRenderingContext2D, x: number, y: number, w:
 
 3) Paste the template code and you got yourself a font
 
-*Dashed lines signify the letter base.`
+*Green lines signify the letter base.`
 
     ctx.fillStyle = 'black'
     ctx.textAlign = 'left'

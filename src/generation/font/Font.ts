@@ -1,6 +1,8 @@
-import { blobToCanvas } from "../fs/image";
-import { parseTemplateCode } from "../template/parse";
-import Template from "../template/Template";
+import { convertToBlob } from '../../utils/canvasHelpers';
+import { blobToCanvas } from '../fs/image';
+import { packFromSheet, SourceRect } from '../packing/imagePacking';
+import { parseTemplateCode } from '../template/parse';
+import Template from '../template/Template';
 
 export interface FontSpec {
     info: {
@@ -56,7 +58,18 @@ export async function generateFont(templateImg: Blob, templateCode: string, font
     const slots = tempConfig.slots.map(([ unicode, width, height ]) => ({ character: String.fromCharCode(unicode), width, height }))
     const template = new Template(slots, tempConfig.base)
 
-    const [canvas, ctx] = await blobToCanvas(templateImg)
+    const [canvas] = await blobToCanvas(templateImg)
+
+    const sourceRects: SourceRect[] = slots.map((slot, index) => ({
+        slot,
+        x: template.getSlotPosition(index + 1).x + template.slotDim.w / 2 - (slot.width - 2) / 2,
+        y: template.getSlotPosition(index + 1).y + template.slotDim.h / 2 - (slot.height - 2) / 2,
+        w: slot.width - 2,
+        h: slot.height - 2
+    }))
+
+    const [packedTexture, packedRects] = packFromSheet(canvas, sourceRects)
+    const packedBlob = await convertToBlob(packedTexture)
 
     const specification: FontSpec = {
         info: {
@@ -89,19 +102,19 @@ export async function generateFont(templateImg: Blob, templateCode: string, font
                 file: 'calligro-page-0.png'
             }
         ],
-        chars: slots.map((slot, index) => ({
-            id: slot.character.charCodeAt(0),
-            x: template.getSlotPosition(index + 1).x,
-            y: template.getSlotPosition(index + 1).y,
-            width: slot.width,
-            height: slot.height,
+        chars: packedRects.map(rect => ({
+            id: rect.sourceRect.slot.character.charCodeAt(0),
+            x: rect.x,
+            y: rect.y,
+            width: rect.sourceRect.w,
+            height: rect.sourceRect.h,
             xoffset: 0,
             yoffset: 0,
-            xadvance: slot.width,
+            xadvance: rect.sourceRect.w,
             page: 0,
             chnl: 15
         }))
     }
 
-    return [specification, [templateImg]]
+    return [specification, [packedBlob]]
 }
