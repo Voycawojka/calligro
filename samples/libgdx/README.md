@@ -1,4 +1,4 @@
-# Calligro LibGDX Sample
+# BMFont LibGDX Sample
 
 This project was generated with the official LibGDX project generator.
 

@@ -1,4 +1,4 @@
-# Calligro Godot Sample
+# BMFont Godot Sample
 
 This project was created with Godot 3.2.1
 
