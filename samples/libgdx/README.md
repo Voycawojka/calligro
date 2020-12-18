@@ -9,3 +9,5 @@ Run it with
 ```
 
 See the [CalligroSample](core/src/com/ideasalmanac/calligro/libgdx/CalligroSample.java) class for the actual font usage.
+
+[BitmapFont class documentation](https://heaps.io/documentation/text.html)

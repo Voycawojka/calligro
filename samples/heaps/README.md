@@ -11,3 +11,5 @@ hl out/calligro-sample.hl
 ```
 
 See the [CalligroSample](src/CalligroSample.hx) class for the actual font usage.
+
+[Heaps.io text documentation](https://heaps.io/documentation/text.html)
