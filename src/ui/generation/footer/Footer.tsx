@@ -37,8 +37,8 @@ function Footer() {
             </div>
             
             <div className={styles.linkContainer}>
-                <Link to='/' className={styles.link}>Found a bug?</Link>
-                <Link to='/' className={styles.link}>Have a feature request?</Link>
+                <a href='https://github.com/Voycawojka/calligro/issues' className={styles.link}>Found a bug?</a>
+                <a href='https://github.com/Voycawojka/calligro/issues' className={styles.link}>Have a feature request?</a>
             </div>
         </footer>
     )
