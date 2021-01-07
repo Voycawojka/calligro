@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { generateFont } from '../../../generation/font/Font'
 import { fontSpecToTxt } from '../../../generation/font/txtSaver'
 import { downloadBmf } from '../../../generation/font/download'
+import styles from './fontCreationView.module.scss'
 
 interface FontCreationViewState {
     generationAllowed: boolean
@@ -81,7 +82,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
 
     render() {
         return(
-            <div>
+            <div className={styles.container}>
                 <label>code</label>
                 <input type='file' ref={this.templateCodeInput} onChange={this.isInputsValid} accept='.txt'/>
 
