@@ -132,7 +132,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                     <h2 className={styles.heading}>Generate bitmap fonts in the <Link to='http://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</Link> format.</h2>
                     <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
                     <p className={styles.paragraph}>
-                        If you’re looking to convert a truetype font into a BMFont, try tools like the 
+                        If you’re looking to convert a truetype font into a BMFont, try tools like the
                         original <Link to='http://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</Link> or <Link to='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</Link> instead.
                     </p>
                 </div>

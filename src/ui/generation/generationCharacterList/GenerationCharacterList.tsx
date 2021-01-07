@@ -30,7 +30,7 @@ function GenerationCharacterList (props: GenerationCharacterListProps) {
                 onChange={(event) => props.handleDimensionChange(event, 'height', char)}
             />
 
-            {   
+            {
                 !!char.height || !!char.width
                 ? <span className={styles.buttonContainer}>
                     <button onClick={() => props.resetCharacterDimensions(char)} className={styles.button}>
