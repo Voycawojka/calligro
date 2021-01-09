@@ -1,0 +1,19 @@
+@import "./colors.scss";
+
+@mixin scrollbar {
+    /* width */
+    &::-webkit-scrollbar {
+        width: 16px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: $primary-color;
+        box-shadow: inset 1px 0 1px 0 black;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: $scroll-handle-color;
+    }
+}

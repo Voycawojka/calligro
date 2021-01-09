@@ -1,11 +1,18 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import styles from './navbar.module.scss'
 
 function Navbar() {
     return (
-        <nav>
-            <NavLink to='/'>Step 1</NavLink>
-            <NavLink to='/step2'>Step 2</NavLink>
+        <nav className={styles.container}>
+            <NavLink exact to='/' className={styles.navLinkLeft} activeClassName={styles.navLinkActive}>
+                <p className={styles.linkBig}>Step 1</p>
+                <p className={styles.linkSmall}>create template</p>
+            </NavLink>
+            <NavLink to='/step2' className={styles.navLinkRight} activeClassName={styles.navLinkActive}>
+                <p className={styles.linkBig}>Step 2</p>
+                <p className={styles.linkSmall}>generate your font</p>
+            </NavLink>
         </nav>
     )
 }

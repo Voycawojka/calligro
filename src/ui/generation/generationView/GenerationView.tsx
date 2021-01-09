@@ -4,6 +4,9 @@ import GenerationCharacterList from '../generationCharacterList/GenerationCharac
 import { WorkSlot, Slot } from '../../../generation/template/types'
 import Template from '../../../generation/template/Template'
 import { downloadTemplate } from '../../../generation/template/download'
+import styles from './generationView.module.scss'
+import Fa from '../fa/Fa'
+import { Link } from 'react-router-dom'
 
 interface GenerationViewState {
     charSet: WorkSlot[]
@@ -124,40 +127,83 @@ class GenerationView extends Component<{}, GenerationViewState> {
 
     render() {
         return (
-            <div>
-                <textarea
-                    onChange={this.handleCharSetInput}
-                    value={this.charString}
-                />
+            <div className={styles.container}>
+                <div className={styles.description}>
+                    <h2 className={styles.heading}>Generate bitmap fonts in the <a href='http://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</a> format.</h2>
+                    <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
+                    <p className={styles.paragraph}>
+                        If you’re looking to convert a truetype font into a BMFont, try tools like the
+                        original <a href='http://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</a> or <a href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</a> instead.
+                    </p>
+                </div>
 
-                <label>width</label>
-                <input
-                    type='number'
-                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
-                    value={this.state.defaultWidth}
+                <div className={styles.characters}>
+                    <label className={styles.label}>
+                        Characters
+                        <Fa icon='fas fa-question' className={styles.questionMark} />
+                    </label>
+                    <textarea
+                        className={styles.charactersTextArea}
+                        onChange={this.handleCharSetInput}
+                        value={this.charString}
                     />
-                <label>height</label>
-                <input
-                    type='number'
-                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
-                    value={this.state.defaultHeight}
-                />
-                <label>base</label>
-                <input
-                    type='number'
-                    onChange={event => this.handleDefaultValueChange(event, 'base')}
-                    value={this.state.base}
-                />
+                </div>
 
-                <GenerationCharacterList
-                    charSet={this.state.charSet}
-                    defaultHeight={this.state.defaultHeight}
-                    defaultWidth={this.state.defaultWidth}
-                    handleDimensionChange={this.handleDimensionChange}
-                    resetCharacterDimensions={this.resetCharacterDimensions}
-                />
+                <div className={styles.common}>
+                    <label className={styles.label}>Common</label>
+                    <div>
+                        <label className={styles.commonLabel}>Size</label>
+                        <input
+                            className={styles.commonInput}
+                            type='number'
+                            onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
+                            value={this.state.defaultWidth}
+                        />
+                        <Fa icon='fas fa-times' className={styles.times} />
+                        <input
+                            className={styles.commonInput}
+                            type='number'
+                            onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
+                            value={this.state.defaultHeight}
+                        />
+                        <Fa icon='fas fa-question' className={styles.questionMark} />
+                    </div>
+                    
+                    <div>
+                        <label className={styles.commonLabel}>Base</label>
+                        <input
+                            className={styles.commonInput}
+                            type='number'
+                            onChange={event => this.handleDefaultValueChange(event, 'base')}
+                            value={this.state.base}
+                        />
+                        <Fa icon='fas fa-question' className={styles.questionMark} />
+                    </div>
 
-                <button onClick={this.downloadTemplate}>download template</button>
+                    <button onClick={this.downloadTemplate} className={styles.downloadButton}>download template</button>
+                </div>
+
+                <div className={styles.perCharacter}>
+                    <label className={styles.label}>Per character</label>
+                    <GenerationCharacterList
+                        charSet={this.state.charSet}
+                        defaultHeight={this.state.defaultHeight}
+                        defaultWidth={this.state.defaultWidth}
+                        handleDimensionChange={this.handleDimensionChange}
+                        resetCharacterDimensions={this.resetCharacterDimensions}
+                    />
+                </div>
+
+                <div className={styles.instructions}>
+                    <h2 className={styles.heading}>Step 1 - Create a template</h2>
+                    <ol className={styles.instructionList}>
+                        <li className={styles.instructionListItem}> Specify what characters you want included in the final font. </li>
+                        <li className={styles.instructionListItem}>Choose the character size and base.</li>
+                        <li className={styles.instructionListItem}>Optionally override the size per character if you want some to be smaller or bigger than the rest.</li>
+                        <li className={styles.instructionListItem}>Download the generated template. It’s a zip archive containing two files: png and txt. Open the png in your graphics editor of choice and draw characters inside the red boundaries.</li>
+                        <li className={styles.instructionListItem}>Go to <Link to='/step2' className={styles.link}>Step 2</Link> to upload the template and generate your font.</li>
+                    </ol>
+                </div>
             </div>
         )
     }

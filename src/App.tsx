@@ -18,11 +18,11 @@ function App() {
                     <Header/>
 
                     <Route exact path='/'>
-                        <FontCreationView />
+                        <GenerationView />
                     </Route>
 
                     <Route exact path='/step2'>
-                        <GenerationView />
+                        <FontCreationView />
                     </Route>
 
                     <Footer />

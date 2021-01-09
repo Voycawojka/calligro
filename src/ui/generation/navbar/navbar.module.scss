@@ -1,0 +1,41 @@
+@import "../../../colors.scss";
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    width: 500px;
+}
+
+.linkBig {
+    font-size: 32px;
+    margin: 0;
+}
+
+.linkSmall {
+    font-size: 24px;
+    margin: 0;
+}
+
+.navLinkLeft {
+    padding: 5px 9px;
+    display: block;
+    text-align: right;
+    font-weight: bold;
+}
+
+.navLinkRight {
+    padding: 5px 9px;
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    border-left: 4px solid black;
+}
+
+.navLinkActive {
+    color: $secondary-color;
+    text-decoration: none;
+}

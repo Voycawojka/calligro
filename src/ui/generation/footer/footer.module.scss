@@ -1,0 +1,44 @@
+@import "../../../colors.scss";
+
+.container {
+    width: 100%;
+    height: 80px;
+    background-color: $primary-color;
+    box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.3);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    font-size: 20px;
+}
+
+.policy {
+    position: absolute;
+    left: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.link {
+    color: $footer-link-color;
+    font-weight: 800;
+}
+
+.authors {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.linkContainer {
+    position: absolute;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}

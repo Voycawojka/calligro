@@ -1,5 +1,6 @@
 import React from 'react'
 import { WorkSlot } from '../../../generation/template/types'
+import Fa from '../fa/Fa'
 import styles from './generationCharacterList.module.scss'
 
 interface GenerationCharacterListProps {
@@ -13,22 +14,31 @@ interface GenerationCharacterListProps {
 function GenerationCharacterList (props: GenerationCharacterListProps) {
 
     const charList = props.charSet.map(char =>
-        <div key={char.character}>
-            <span>{char.character}</span>
+        <div key={char.character} className={styles.characterContainer}>
+            <p className={styles.character}>{char.character}</p>
             <input
                 className={styles.input}
                 type='number'
                 value={char.width ?? props.defaultWidth}
                 onChange={(event) => props.handleDimensionChange(event, 'width', char)}
             />
-
+            <Fa icon='fas fa-times' className={styles.times} />
             <input
                 className={styles.input}
                 type='number'
                 value={char.height ?? props.defaultHeight}
                 onChange={(event) => props.handleDimensionChange(event, 'height', char)}
             />
-            <button onClick={() => props.resetCharacterDimensions(char)}>reset</button>
+
+            {
+                !!char.height || !!char.width
+                ? <span className={styles.buttonContainer}>
+                    <button onClick={() => props.resetCharacterDimensions(char)} className={styles.button}>
+                        <Fa icon='fas fa-times' className={styles.timesButton} />
+                    </button>
+                </span >
+                : null
+            }
         </div>
     )
 
