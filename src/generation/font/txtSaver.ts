@@ -1,7 +1,7 @@
 import { FontSpec } from "./Font";
 
 function tag(name: string, properties: [string, string | number][]) {
-    const joinedProps = properties.map(([ prop, value ]) => `${prop}="${value.toString()}"`).join(' ')
+    const joinedProps = properties.map(([ prop, value ]) => `${prop}=${value.toString()}`).join(' ')
     return `${name} ${joinedProps}`
 }
 
