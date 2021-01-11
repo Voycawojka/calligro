@@ -25,3 +25,16 @@ If you want to convert an existing truetype font into a bitmap font, try one of 
 - [Hiero](https://github.com/libgdx/libgdx/wiki/Hiero)
 - [ShoeBox](http://renderhjs.net/shoebox/)
 - [Littera](http://kvazars.com/littera/) (requires Flash)
+
+# Contributing
+If you'd like to contribute: thanks!
+
+This is a regular create-react-app project in TypeScript using npm (not yarn) so:
+
+```bash
+# install dependencies and start a dev server with hot reloading
+npm install
+npm start
+```
+
+Our actions use Node 14.
