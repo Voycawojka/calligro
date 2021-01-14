@@ -1,17 +1,23 @@
-@import "../../../colors.scss";
-@import "../../../mixins.scss";
+@import "../../../scss/colors.scss";
+@import "../../../scss/mixins.scss";
 
 .container {
-    height: calc(100% - 50px);
-    max-height: 200px;
+    height: 200px;
     overflow-y: scroll;
     background-color: $primary-color;
-
     @include scrollbar;
+
+    @include small-device {
+        height: 135px;
+    }
+
+    @include small-device-portrait {
+        height: 165px;
+    }
 }
 
 .character {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
     display: inline-block;
     text-align: center;
@@ -35,12 +41,16 @@
     padding: 0;
 }
 
+.inputInvalid {
+    background-color: $scroll-handle-color;
+}
+
 .times {
     width: 15%;
     text-align: center;
 }
 
-.timesButton {
+.undoButton {
     width: 20px;
     text-align: center;
 }
@@ -50,13 +60,14 @@
 }
 
 .button {
-    background-color: black;
     border-radius: 50%;
     border: none;
-    color: white;
+    color: black;
+    background-color: transparent;
     width: 20px;
     height: 20px;
     padding: 0;
+    cursor: pointer;
 }
 
 .buttonContainer {

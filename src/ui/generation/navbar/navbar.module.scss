@@ -1,4 +1,5 @@
-@import "../../../colors.scss";
+@import "../../../scss/colors.scss";
+@import "../../../scss/fonts.scss";
 
 .container {
     position: absolute;
@@ -8,6 +9,7 @@
     display: flex;
     justify-content: center;
     width: 500px;
+    color: $footer-link-color;
 }
 
 .linkBig {
@@ -20,22 +22,24 @@
     margin: 0;
 }
 
-.navLinkLeft {
+.navLink {
+    @include font-headings(800);
     padding: 5px 9px;
     display: block;
+    color: $footer-link-color;
+}
+
+.navLinkLeft {
+    padding: 5px 9px;
     text-align: right;
-    font-weight: bold;
 }
 
 .navLinkRight {
-    padding: 5px 9px;
-    display: block;
     text-align: left;
-    font-weight: bold;
     border-left: 4px solid black;
 }
 
 .navLinkActive {
-    color: $secondary-color;
+    color: $scroll-handle-color;
     text-decoration: none;
 }

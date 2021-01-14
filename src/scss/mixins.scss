@@ -17,3 +17,15 @@
         background: $scroll-handle-color;
     }
 }
+
+@mixin small-device {
+    @media (max-width: 1300px) {
+        @content;
+    }
+}
+
+@mixin small-device-portrait {
+    @media (max-width: 1300px) and (orientation: portrait) {
+        @content;
+    }
+}

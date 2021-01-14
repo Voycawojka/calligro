@@ -1,6 +1,156 @@
-@import '../../../colors.scss';
+@import "../../../scss/colors.scss";
+@import "../../../scss/fonts.scss";
+@import "../../../scss/glyphs.scss";
+@import "../../../scss/mixins.scss";
 
 .container {
     background-color: $secondary-color;
-    padding: 30px;
+    padding: 2% 3%;
+    height: calc(100% - 80px - 110px);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 46% 48%;
+    column-gap: 6%;
+}
+
+.instructionList {
+    padding-left: 24px;
+}
+
+.instructionListItem {
+    @include font-paragraphs;
+    line-height: 23px;
+    margin: 12px 0;
+    font-size: 20px;
+
+    @include small-device {
+        font-size: 18px;
+        line-height: 21px;
+    }
+}
+
+.heading {
+    @include font-headings(800);
+    font-size: 28px;
+
+    @include small-device {
+        font-size: 24px;
+    }
+}
+
+.feature {
+    @include font-paragraphs;
+    line-height: 23px;
+    font-size: 20px;
+
+    &::before {
+        content: $dash-glyph;
+        padding-right: 10px;
+    }
+
+    @include small-device {
+        font-size: 18px;
+        line-height: 21px;
+    }
+}
+
+.goodbye {
+    @include font-paragraphs;
+    font-size: 20px;
+
+    @include small-device {
+        font-size: 18px;
+    }
+}
+
+.featureList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dropzones {
+    margin-top: 54px;
+    width: 100%;
+    min-height: 185px;
+    display: grid;
+    grid-template-columns: 49% 49%;
+    column-gap: 2%;
+
+    @include small-device {
+        margin-top: 46px;
+        grid-template-columns: 100%;
+        grid-template-rows: 48% 48%;
+        row-gap: 4%;
+        justify-content: center;
+        height: 290px;
+    }
+}
+
+.options {
+    margin-top: 12px;
+}
+
+.label {
+    @include font-headings(800);
+    margin: 10px 0;
+    display: block;
+    font-size: 20px;
+}
+
+.optionsLabel {
+    @include font-headings(800);
+    margin: 7px 0;
+    display: inline-block;
+    font-size: 20px;
+    width: 130px;
+}
+
+.optionsInput {
+    background-color: $input-color;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 41px;
+    width: 64px;
+    border: none;
+    box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-weight: 600;
+}
+
+.times {
+    width: 20px;
+    text-align: center;
+    margin: 5px;
+}
+
+.questionMark {
+    background-color: black;
+    border-radius: 50%;
+    color: white;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0 0 0 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.option {
+    margin-bottom: 10px;
+}
+
+.downloadButton {
+    @include font-headings(800);
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    text-align: center;
+    display: block;
+    margin: 15px 0 15px 130px;
+    padding: 0;
+    font-size: 20px;
+    color: $link-color;
+    text-transform: capitalize;
 }

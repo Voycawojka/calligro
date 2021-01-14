@@ -77,36 +77,40 @@ class GenerationView extends Component<{}, GenerationViewState> {
     }
 
     @bind
-    handleDefaultValueChange(event: React.ChangeEvent<HTMLInputElement>, valueName: 'defaultWidth' | 'defaultHeight' | 'base') {
-        const newValue = parseInt(event.target.value, 10)
-        const isBaseValid = valueName === 'base' && newValue <= this.state.defaultHeight && newValue >= 0
-        const isDimensionPositive = valueName !== 'base' && newValue > 0
+    isSlotArrayValid(): boolean {
+        return this.slotArray.every(slot => slot.height > 0 && slot.width > 0)
+    }
 
-        if (isBaseValid || isDimensionPositive) {
-            this.setState(prevState => ({
-                ...prevState,
-                [valueName]: newValue
-            }))
-        }
+    @bind
+    isBaseValid(): boolean {
+        return this.state.base <= this.state.defaultHeight && this.state.base >= 0
+    }
+
+    @bind
+    handleDefaultValueChange(event: React.ChangeEvent<HTMLInputElement>, valueName: 'defaultWidth' | 'defaultHeight' | 'base') {
+        const newValue = event.target.value ? parseInt(event.target.value, 10) : 0
+
+        this.setState(prevState => ({
+            ...prevState,
+            [valueName]: newValue
+        }))
     }
   
     @bind
     handleDimensionChange(event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) {
-        const newValue = parseInt(event.target.value, 10)
+        const newValue = event.target.value ? parseInt(event.target.value, 10) : 0
+        const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
+            ? {
+                ...character,
+                [dimension] : newValue
+            }
+            : character
+        )
 
-        if (newValue > 0) {
-            const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
-                ? {
-                    ...character,
-                    [dimension] : parseInt(event.target.value, 10)
-                }
-                : character
-            )
-
-            this.setState({
-                charSet: newCharSet
-            })
-        }
+        this.setState({
+            charSet: newCharSet
+        })
+        
     }
 
     @bind
@@ -128,73 +132,100 @@ class GenerationView extends Component<{}, GenerationViewState> {
     render() {
         return (
             <div className={styles.container}>
-                <div className={styles.description}>
-                    <h2 className={styles.heading}>Generate bitmap fonts in the <a href='http://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</a> format.</h2>
-                    <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
-                    <p className={styles.paragraph}>
-                        If you’re looking to convert a truetype font into a BMFont, try tools like the
-                        original <a href='http://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</a> or <a href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</a> instead.
-                    </p>
-                </div>
-
-                <div className={styles.characters}>
-                    <label className={styles.label}>
-                        Characters
-                        <Fa icon='fas fa-question' className={styles.questionMark} />
-                    </label>
-                    <textarea
-                        className={styles.charactersTextArea}
-                        onChange={this.handleCharSetInput}
-                        value={this.charString}
-                    />
-                </div>
-
-                <div className={styles.common}>
-                    <label className={styles.label}>Common</label>
+                <div>
                     <div>
-                        <label className={styles.commonLabel}>Size</label>
-                        <input
-                            className={styles.commonInput}
-                            type='number'
-                            onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
-                            value={this.state.defaultWidth}
-                        />
-                        <Fa icon='fas fa-times' className={styles.times} />
-                        <input
-                            className={styles.commonInput}
-                            type='number'
-                            onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
-                            value={this.state.defaultHeight}
-                        />
-                        <Fa icon='fas fa-question' className={styles.questionMark} />
-                    </div>
-                    
-                    <div>
-                        <label className={styles.commonLabel}>Base</label>
-                        <input
-                            className={styles.commonInput}
-                            type='number'
-                            onChange={event => this.handleDefaultValueChange(event, 'base')}
-                            value={this.state.base}
-                        />
-                        <Fa icon='fas fa-question' className={styles.questionMark} />
+                        <h2 className={styles.heading}>Generate bitmap fonts in the <a href='http://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</a> format.</h2>
+                        <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
+                        <p className={styles.paragraph}>
+                            If you’re looking to convert a truetype font into a BMFont, try tools like the
+                            original <a href='http://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</a> or <a href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</a> instead.
+                        </p>
                     </div>
 
-                    <button onClick={this.downloadTemplate} className={styles.downloadButton}>download template</button>
-                </div>
+                    <div>
+                        <label className={styles.label}>
+                            Characters
+                            <Fa 
+                                icon='fas fa-question' 
+                                className={styles.questionMark} 
+                                title='Characters you want to be included in the final font (all unicode characters should work)'
+                            />
+                        </label>
+                        <textarea
+                            className={styles.charactersTextArea}
+                            onChange={this.handleCharSetInput}
+                            value={this.charString}
+                        />
+                    </div>
 
-                <div className={styles.perCharacter}>
-                    <label className={styles.label}>Per character</label>
-                    <GenerationCharacterList
-                        charSet={this.state.charSet}
-                        defaultHeight={this.state.defaultHeight}
-                        defaultWidth={this.state.defaultWidth}
-                        handleDimensionChange={this.handleDimensionChange}
-                        resetCharacterDimensions={this.resetCharacterDimensions}
-                    />
-                </div>
+                    <div className={styles.parameters}>
+                        <div>
+                            <div>
+                                <label className={styles.label}>Common</label>
+                                <label className={styles.commonLabel}>Size</label>
+                                <input
+                                    className={styles.commonInput}
+                                    type='number'
+                                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
+                                    value={this.state.defaultWidth}
+                                />
+                                <Fa icon='fas fa-times' className={styles.times}/>
+                                <input
+                                    className={styles.commonInput}
+                                    type='number'
+                                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
+                                    value={this.state.defaultHeight}
+                                />
+                                <Fa icon='fas fa-question' className={styles.questionMark} title='Default size of one character in pixels'/>
+                            </div>
+                            
+                            <div>
+                                <label className={styles.commonLabel}>Base</label>
+                                <input
+                                    className={`${styles.commonInput} ${this.isBaseValid() ? "" : styles.commonInputIvalid}`}
+                                    type='number'
+                                    onChange={event => this.handleDefaultValueChange(event, 'base')}
+                                    value={this.state.base}
+                                />
+                                <Fa 
+                                    icon='fas fa-question' 
+                                    className={styles.questionMark} 
+                                    title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")' 
+                                />
+                            </div>
 
-                <div className={styles.instructions}>
+                            <button 
+                                onClick={this.downloadTemplate} 
+                                className={styles.downloadButton}
+                                disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
+                            >
+                                download template
+                            </button>
+                        </div>
+
+                        <div >
+                            <label className={styles.label}>
+                                Per character
+                                <Fa 
+                                    icon='fas fa-question' 
+                                    className={styles.questionMark} 
+                                    title='Override default size per character' 
+                                />
+                            </label>
+
+                            <GenerationCharacterList
+                                charSet={this.state.charSet}
+                                defaultHeight={this.state.defaultHeight}
+                                defaultWidth={this.state.defaultWidth}
+                                handleDimensionChange={this.handleDimensionChange}
+                                resetCharacterDimensions={this.resetCharacterDimensions}
+                            />
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div>
                     <h2 className={styles.heading}>Step 1 - Create a template</h2>
                     <ol className={styles.instructionList}>
                         <li className={styles.instructionListItem}> Specify what characters you want included in the final font. </li>
