@@ -153,10 +153,10 @@
     font-size: 20px;
     color: $link-color;
     text-transform: capitalize;
-    cursor: pointer;    
+    cursor: pointer;
 
     &:disabled {
         opacity: 0.5;
-        cursor: default;    
+        cursor: default;
     }
 }
