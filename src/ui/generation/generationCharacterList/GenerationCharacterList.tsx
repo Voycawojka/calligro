@@ -12,35 +12,39 @@ interface GenerationCharacterListProps {
 }
 
 function GenerationCharacterList (props: GenerationCharacterListProps) {
+    const charList = props.charSet.map(char => {
+        const width = char.width ?? props.defaultWidth
+        const height = char.height ?? props.defaultHeight
 
-    const charList = props.charSet.map(char =>
-        <div key={char.character} className={styles.characterContainer}>
-            <p className={styles.character}>{char.character}</p>
-            <input
-                className={styles.input}
-                type='number'
-                value={char.width ?? props.defaultWidth}
-                onChange={(event) => props.handleDimensionChange(event, 'width', char)}
-            />
-            <Fa icon='fas fa-times' className={styles.times} />
-            <input
-                className={styles.input}
-                type='number'
-                value={char.height ?? props.defaultHeight}
-                onChange={(event) => props.handleDimensionChange(event, 'height', char)}
-            />
+        return (
+            <div key={char.character} className={styles.characterContainer}>
+                <p className={styles.character}>{char.character}</p>
+                <input
+                    className={`${styles.input} ${width <= 0 ? styles.inputInvalid : ''}`}
+                    type='number'
+                    value={width}
+                    onChange={(event) => props.handleDimensionChange(event, 'width', char)}
+                />
+                <Fa icon='fas fa-times' className={styles.times} />
+                <input
+                    className={`${styles.input} ${height <= 0 ? styles.inputInvalid : ''}`}
+                    type='number'
+                    value={height}
+                    onChange={(event) => props.handleDimensionChange(event, 'height', char)}
+                />
 
-            {
-                !!char.height || !!char.width
-                ? <span className={styles.buttonContainer}>
-                    <button onClick={() => props.resetCharacterDimensions(char)} className={styles.button}>
-                        <Fa icon='fas fa-times' className={styles.timesButton} />
-                    </button>
-                </span >
-                : null
-            }
-        </div>
-    )
+                {
+                    (!!char.height || !!char.width) || (width <= 0 || height <= 0)
+                    ? <span className={styles.buttonContainer}>
+                        <button onClick={() => props.resetCharacterDimensions(char)} className={styles.button}>
+                            <Fa icon='fas fa-undo' className={styles.undoButton} />
+                        </button>
+                    </span >
+                    : null
+                }
+            </div>
+        )
+    })
 
     return (
         <div className={styles.container}>
