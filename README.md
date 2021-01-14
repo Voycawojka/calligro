@@ -1,6 +1,9 @@
 # Calligro
-Online bitmap font creator.
+Online bitmap font creator. 
 
+Available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com)
+
+![Build & Deploy](https://github.com/Voycawojka/calligro/workflows/Build%20&%20Deploy/badge.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/voycawojka/calligro/badge)](https://www.codefactor.io/repository/github/voycawojka/calligro)
 
 Calligro generates bitmap fonts in the [AngelCode's BMFont](https://www.angelcode.com/products/bmfont/) format.
