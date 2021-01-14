@@ -11,8 +11,8 @@ interface FontCreationViewState {
     horizontalMargin: number
     verticalMargin: number
     lineHeight: number
-    template?: File 
-    templateCode?: File 
+    template?: File
+    templateCode?: File
 }
 
 class FontCreationView extends Component<{}, FontCreationViewState> {
