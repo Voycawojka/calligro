@@ -13,7 +13,7 @@ interface GenerationCharacterListProps {
 
 function GenerationCharacterList (props: GenerationCharacterListProps) {
     const charList = props.charSet.map(char => {
-        const width = char.width ?? props.defaultWidth 
+        const width = char.width ?? props.defaultWidth
         const height = char.height ?? props.defaultHeight
 
         return (

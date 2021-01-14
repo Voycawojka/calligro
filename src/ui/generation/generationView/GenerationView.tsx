@@ -145,9 +145,9 @@ class GenerationView extends Component<{}, GenerationViewState> {
                     <div>
                         <label className={styles.label}>
                             Characters
-                            <Fa 
-                                icon='fas fa-question' 
-                                className={styles.questionMark} 
+                            <Fa
+                                icon='fas fa-question'
+                                className={styles.questionMark}
                                 title='Characters you want to be included in the final font (all unicode characters should work)'
                             />
                         </label>
@@ -187,15 +187,15 @@ class GenerationView extends Component<{}, GenerationViewState> {
                                     onChange={event => this.handleDefaultValueChange(event, 'base')}
                                     value={this.state.base}
                                 />
-                                <Fa 
-                                    icon='fas fa-question' 
-                                    className={styles.questionMark} 
-                                    title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")' 
+                                <Fa
+                                    icon='fas fa-question'
+                                    className={styles.questionMark}
+                                    title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")'
                                 />
                             </div>
 
-                            <button 
-                                onClick={this.downloadTemplate} 
+                            <button
+                                onClick={this.downloadTemplate}
                                 className={styles.downloadButton}
                                 disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
                             >
@@ -206,10 +206,10 @@ class GenerationView extends Component<{}, GenerationViewState> {
                         <div >
                             <label className={styles.label}>
                                 Per character
-                                <Fa 
-                                    icon='fas fa-question' 
-                                    className={styles.questionMark} 
-                                    title='Override default size per character' 
+                                <Fa
+                                    icon='fas fa-question'
+                                    className={styles.questionMark}
+                                    title='Override default size per character'
                                 />
                             </label>
 

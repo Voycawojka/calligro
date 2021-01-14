@@ -37,7 +37,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
     }
 
     @bind
-    isInputsValid(): boolean {        
+    isInputsValid(): boolean {
         const isCodeInputValid = !!this.state.templateCode && this.state.templateCode.type === 'text/plain'
         const isTemplateInputValid = !!this.state.template && this.state.template.type === 'image/png'
     
@@ -81,20 +81,20 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
             <div className={styles.container}>
                 <div>
                     <div className={styles.dropzones}>
-                        <Dropzone 
-                            inputName='image' 
-                            acceptedInputType='.png' 
+                        <Dropzone
+                            inputName='image'
+                            acceptedInputType='.png'
                             dataType='image/png'
-                            stateTarget='template' 
+                            stateTarget='template'
                             handleDropzoneInput={this.handleDropzoneInput}
                             templateName={this.state.template ? this.state.template.name : null}
                         />
 
-                        <Dropzone 
-                            inputName='code file' 
-                            acceptedInputType='.txt' 
+                        <Dropzone
+                            inputName='code file'
+                            acceptedInputType='.txt'
                             dataType='text/plain'
-                            stateTarget='templateCode' 
+                            stateTarget='templateCode'
                             handleDropzoneInput={this.handleDropzoneInput}
                             templateName={this.state.templateCode ? this.state.templateCode.name : null}
                         />

@@ -61,7 +61,7 @@ class Dropzone extends Component<DropzoneProps, {}> {
             : null
 
         return (
-            <div 
+            <div
                 className={styles.container}
                 onDrop={this.handleDrop}
                 onDragOver={this.dragOver}
@@ -70,10 +70,10 @@ class Dropzone extends Component<DropzoneProps, {}> {
             >
                 <label className={styles.label}>Drag&drop the {this.props.inputName}</label>
                 <div className={styles.inputContainer}>
-                    <input 
-                        className={styles.input} 
-                        type='file' ref={this.templateInput} 
-                        onChange={this.handleInput} 
+                    <input
+                        className={styles.input}
+                        type='file' ref={this.templateInput}
+                        onChange={this.handleInput}
                         accept={this.props.acceptedInputType}
                         title=" "
                     />
