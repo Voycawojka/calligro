@@ -11,8 +11,8 @@ interface FontCreationViewState {
     horizontalMargin: number
     verticalMargin: number
     lineHeight: number
-    template: File | null
-    templateCode: File | null
+    template?: File 
+    templateCode?: File 
 }
 
 class FontCreationView extends Component<{}, FontCreationViewState> {
@@ -22,9 +22,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
         this.state = {
             horizontalMargin: 0,
             verticalMargin: 0,
-            lineHeight: 0,
-            template: null,
-            templateCode: null
+            lineHeight: 0
         }
     }
 
@@ -87,7 +85,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
                             dataType='image/png'
                             stateTarget='template'
                             handleDropzoneInput={this.handleDropzoneInput}
-                            templateName={this.state.template ? this.state.template.name : null}
+                            templateName={this.state.template?.name}
                         />
 
                         <Dropzone
@@ -96,7 +94,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
                             dataType='text/plain'
                             stateTarget='templateCode'
                             handleDropzoneInput={this.handleDropzoneInput}
-                            templateName={this.state.templateCode ? this.state.templateCode.name : null}
+                            templateName={this.state.templateCode?.name}
                         />
                     </div>
 

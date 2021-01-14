@@ -4,7 +4,7 @@ import styles from './dropzone.module.scss'
 
 interface DropzoneProps {
     handleDropzoneInput: (stateTarget: 'template' | 'templateCode', data: Blob) => void
-    templateName: string | null
+    templateName?: string
     acceptedInputType: string
     dataType: string
     inputName: string
@@ -20,7 +20,7 @@ class Dropzone extends Component<DropzoneProps, {}> {
         this.templateInput = React.createRef()
     }
 
-    handleFileInput(data: File | undefined) {
+    handleFileInput(data?: File) {
         if (data && data.type === this.props.dataType) {
             this.props.handleDropzoneInput(this.props.stateTarget, data)
         }

@@ -5,16 +5,12 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="228.68317"
-   height="278"
-   viewBox="0 0 228.68317 278"
-   fill="none"
-   version="1.1"
    id="svg40"
-   sodipodi:docname="favicon.svg"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
+   version="1.1"
+   fill="none"
+   viewBox="0 0 228.68317 278"
+   height="278"
+   width="228.68317">
   <metadata
      id="metadata46">
     <rdf:RDF>
@@ -29,59 +25,33 @@
   </metadata>
   <defs
      id="defs44" />
-  <sodipodi:namedview
-     fit-margin-bottom="0"
-     fit-margin-right="0"
-     fit-margin-left="0"
-     fit-margin-top="0"
-     inkscape:pagecheckerboard="true"
-     inkscape:document-rotation="0"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1849"
-     inkscape:window-height="1057"
-     id="namedview42"
-     showgrid="false"
-     inkscape:zoom="1.17541"
-     inkscape:cx="208.97107"
-     inkscape:cy="153.74423"
-     inkscape:window-x="63"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg40" />
   <path
-     id="path884"
+     d="m 140.00001,32 c -53.324494,0 -98.000004,47.18393 -98.000004,106.5 0,57.12831 41.44263,102.99645 92.138674,106.30273 l 5.97266,-59.80664 c -0.0369,1.6e-4 -0.0744,0.004 -0.11133,0.004 -17.18551,0 -38,-16.52007 -38,-46.5 0,-29.97993 20.81449,-46.5 38,-46.5 3.01512,0 6.14152,0.521 9.24805,1.52148 l 6.01367,-60.21289 C 150.27771,32.45014 145.18031,32 140.00001,32 Z"
      style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:60;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000"
-     d="m 140.00001,32 c -53.324494,0 -98.000004,47.18393 -98.000004,106.5 0,57.12831 41.44263,102.99645 92.138674,106.30273 l 5.97266,-59.80664 c -0.0369,1.6e-4 -0.0744,0.004 -0.11133,0.004 -17.18551,0 -38,-16.52007 -38,-46.5 0,-29.97993 20.81449,-46.5 38,-46.5 3.01512,0 6.14152,0.521 9.24805,1.52148 l 6.01367,-60.21289 C 150.27771,32.45014 145.18031,32 140.00001,32 Z" />
+     id="path884" />
   <rect
-     x="5"
-     y="5"
-     width="196"
-     height="268"
-     stroke="#000000"
-     stroke-width="10"
+     id="rect8"
      stroke-dasharray="30, 8"
-     id="rect8" />
+     stroke-width="10"
+     stroke="#000000"
+     height="268"
+     width="196"
+     y="5"
+     x="5" />
   <rect
-     x="-223.37672"
-     y="53.792583"
-     width="29.303301"
-     height="14.6147"
+     id="rect10"
+     stroke-width="2"
+     stroke="#ffffff"
+     fill="#000000"
      transform="rotate(-149.635)"
-     fill="#000000"
-     stroke="#ffffff"
-     stroke-width="2"
-     id="rect10" />
+     height="14.6147"
+     width="29.303301"
+     y="53.792583"
+     x="-223.37672" />
   <path
-     d="m 177.53101,30.5 c -2.267,0.021 -3.692,2.453 -2.602,4.441 l 17.851,32.579 c 1.12,2.044 4.041,2.086 5.219,0.075 l 19.297,-32.936 c 1.178,-2.011 -0.287,-4.539 -2.618,-4.516 z"
-     fill="#000000"
-     stroke="#ffffff"
+     id="path12"
      stroke-width="2"
-     id="path12" />
+     stroke="#ffffff"
+     fill="#000000"
+     d="m 177.53101,30.5 c -2.267,0.021 -3.692,2.453 -2.602,4.441 l 17.851,32.579 c 1.12,2.044 4.041,2.086 5.219,0.075 l 19.297,-32.936 c 1.178,-2.011 -0.287,-4.539 -2.618,-4.516 z" />
 </svg>
