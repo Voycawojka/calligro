@@ -19,7 +19,7 @@ class CookieNotice extends Component<{}, CookieNoticeState> {
     componentDidMount() {
         this.setState({
             acknowledged: Cookies.get('cookies-acknowledged') === 'true'
-        }) 
+        })
     }
 
     @bind
