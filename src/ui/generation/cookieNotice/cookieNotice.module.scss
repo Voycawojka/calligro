@@ -1,0 +1,80 @@
+@import "../../../scss/colors.scss";
+@import "../../../scss/fonts.scss";
+@import "../../../scss/mixins.scss";
+@import "../../../scss/glyphs.scss";
+
+.container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    width: 448px;
+    height: 240px;
+    background-color: $primary-color;
+    box-shadow: -5px -5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.heading {
+    @include font-headings(800);
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    font-size: 28px;
+    width: 100%;
+    height: 28px;
+    left: 0;
+    top: 20px;
+    margin: 0;
+}
+
+.image {
+    display: block;
+    padding-top: 30px;
+    padding-left: 15px;
+    height: 203px;
+    width: 183px;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 200px 248px;
+}
+
+.list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.listItem {
+    @include font-paragraphs;
+    font-size: 18px;
+    line-height: 21px;
+
+    &::before {
+        content: $dash-glyph;
+        padding-right: 5px;
+    }
+}
+
+.link {
+    @include font-headings(800);
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    background-color: transparent;
+    text-decoration: underline;
+    color: $link-color;
+    border: none;
+    padding: 13px;
+}
+
+.details {
+    padding-top: 80px;
+    padding-left: 5px;
+}
+
+.linkContainer {
+    margin-top: 40px;
+}
