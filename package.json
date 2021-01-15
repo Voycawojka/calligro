@@ -12,6 +12,7 @@
     "@types/react-dom": "^16.9.10",
     "client-zip": "^1.2.2",
     "helpful-decorators": "^2.1.0",
+    "js-cookie": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-github-corner": "^2.5.0",
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "@types/js-cookie": "^2.2.6",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.6",
     "node-sass": "^4.14.1",

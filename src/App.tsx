@@ -5,6 +5,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import Header from './ui/generation/header/Header'
 import Footer from './ui/generation/footer/Footer'
 import Policy from './ui/generation/policy/Policy'
+import CookieNotice from './ui/generation/cookieNotice/CookieNotice'
 
 function App() {
     return (
@@ -26,6 +27,8 @@ function App() {
                     </Route>
 
                     <Footer />
+
+                    <CookieNotice />
                 </Route>
             </Switch>
         </HashRouter>
