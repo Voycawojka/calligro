@@ -6,9 +6,13 @@ import GithubCorner from 'react-github-corner'
 function Header() {
     return (
         <div className={styles.container}>
-            <img src='logo.svg' alt='logo' className={styles.logo}/>
+            <img src='logo.svg' alt='logo' className={styles.logo} />
             <Navbar />
-            <GithubCorner href='https://github.com/Voycawojka/calligro' size='110' />
+            <div className={styles.sourceNoticeContainer}>
+                <p className={styles.sourceNoticeLine1}>We're open source!</p>
+                <p className={styles.sourceNoticeLine2}>Feel free to contribute :D</p>
+            </div>
+            <GithubCorner className={styles.githubCorner} href='https://github.com/Voycawojka/calligro' size='110' bannerColor='#707070' octoColor='#202020' />
         </div>
     )
 }

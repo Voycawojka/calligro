@@ -10,8 +10,12 @@
     z-index: 1;
     width: 448px;
     height: 240px;
-    background-color: $primary-color;
+    background-color: $secondary-color;
     box-shadow: -5px -5px 5px 0 rgba(0, 0, 0, 0.3);
+
+    @include mini-device {
+        width: 100%;
+    }
 }
 
 .heading {
@@ -33,6 +37,15 @@
     padding-left: 15px;
     height: 203px;
     width: 183px;
+
+    @include mini-device {
+        width: 100%;
+    }
+
+    @include small-phone {
+        visibility: hidden;
+        display: none;
+    }
 }
 
 .content {
@@ -40,6 +53,18 @@
     height: 100%;
     display: grid;
     grid-template-columns: 200px 248px;
+
+    @include mini-device {
+        grid-template-columns: 1fr 2fr;
+    }
+
+    @include phone {
+        grid-template-columns: 1fr 3fr;
+    }
+
+    @include small-phone {
+        display: block;
+    }
 }
 
 .list {
@@ -73,6 +98,15 @@
 .details {
     padding-top: 80px;
     padding-left: 5px;
+
+    @include mini-device {
+        padding-left: 30px;
+    }
+    
+    @include small-phone {
+        display: grid;
+        grid-template-columns: 2f 1fr;
+    }
 }
 
 .linkContainer {

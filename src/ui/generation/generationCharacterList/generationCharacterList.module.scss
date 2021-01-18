@@ -4,7 +4,7 @@
 .container {
     height: 200px;
     overflow-y: scroll;
-    background-color: $primary-color;
+    background-color: $secondary-color;
     @include scrollbar;
 
     @include small-device {
@@ -42,7 +42,7 @@
 }
 
 .inputInvalid {
-    background-color: $scroll-handle-color;
+    background-color: $ternary-color;
 }
 
 .times {

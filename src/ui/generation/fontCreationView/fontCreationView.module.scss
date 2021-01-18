@@ -2,15 +2,23 @@
 @import "../../../scss/fonts.scss";
 @import "../../../scss/glyphs.scss";
 @import "../../../scss/mixins.scss";
+@import "../../../scss/sizes.scss";
 
 .container {
     background-color: $secondary-color;
     padding: 2% 3%;
-    height: calc(100% - 80px - 110px);
+    padding-top: $header-height;
+    padding-bottom: $header-height;
+    min-height: calc(100vh - #{$footer-height});
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 46% 48%;
     column-gap: 6%;
+
+    @include vertical-device {
+        grid-template-columns: 100%;
+        grid-template-rows: min-content min-content;
+    }
 }
 
 .instructionList {
@@ -103,6 +111,10 @@
     display: inline-block;
     font-size: 20px;
     width: 130px;
+
+    @include phone {
+        font-size: 16px;
+    }
 }
 
 .optionsInput {

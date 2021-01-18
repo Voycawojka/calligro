@@ -1,47 +1,54 @@
 @import "../../../scss/colors.scss";
 @import "../../../scss/fonts.scss";
+@import "../../../scss/sizes.scss";
+@import "../../../scss/mixins.scss";
 
 .container {
     @include font-headings(800);
     width: 100%;
-    height: 80px;
-    background-color: $primary-color;
+    min-height: $footer-height;
+    background-color: $secondary-color;
     box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.3);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
+    position: relative;
     box-sizing: border-box;
     font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include small-phone {
+        flex-wrap: wrap;
+    }
 }
 
 .policy {
-    position: absolute;
-    left: 2%;
-    top: 50%;
-    transform: translateY(-50%);
+    margin-left: 2%;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .link {
-    color: $footer-link-color;
+    display: inline;
+    color: $link-color;
     font-weight: 800;
     padding: 1px;
 }
 
 .authors {
     display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-left: 20px;
 }
 
 .linkContainer {
-    position: absolute;
-    right: 2%;
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
     flex-direction: column;
     text-align: right;
+    margin-left: 10px;
+    margin-right: 2%;
+
+    @include mini-device {
+        visibility: hidden;
+        display: none;
+    }
 }
