@@ -1,0 +1,24 @@
+@import "../../../scss/colors.scss";
+@import "../../../scss/fonts.scss";
+
+.policyContainer {
+    @include font-paragraphs;
+    height: 100%;
+    width: 80%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    @include font-headings(800);
+    margin-top: 0;
+}
+
+h2 {
+    @include font-headings(800);
+}
+
+.menuLink {
+    color: $link-color;
+}
