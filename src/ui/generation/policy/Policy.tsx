@@ -8,7 +8,7 @@ function Policy() {
             <h1>Calligro Privacy Policy</h1>
             <p>
                 Calligro is an open source tool served on a static web server (Github Pages).
-                We don't ask for nor collect any personal data. 
+                We don't ask for nor collect any personal data.
                 All information provided (and all files uploaded) by the user stay inside the user's browser.
             </p>
             
@@ -22,7 +22,7 @@ function Policy() {
                 </ul>
             <p>
                 Browsers allow users to view, remove or even entirely block cookies.
-                Check your browser's manual to access those options. 
+                Check your browser's manual to access those options.
             </p>
             
             <h2>Analytics</h2>
