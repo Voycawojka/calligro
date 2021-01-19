@@ -159,7 +159,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                     </div>
 
                     <div className={styles.parameters}>
-                        <div>
+                        <div className={styles.commonParameters}>
                             <div>
                                 <label className={styles.label}>Common</label>
                                 <label className={styles.commonLabel}>Size</label>
@@ -203,7 +203,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                             </button>
                         </div>
 
-                        <div >
+                        <div className={styles.perCharacterParameters} >
                             <label className={styles.label}>
                                 Per character
                                 <Fa

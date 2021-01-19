@@ -1,21 +1,39 @@
 @import "../../../scss/colors.scss";
 @import "../../../scss/fonts.scss";
 @import "../../../scss/mixins.scss";
+@import "../../../scss/sizes.scss";
 
 .container {
     background-color: $secondary-color;
     padding: 2% 3%;
+    padding-top: $header-height;
+    padding-bottom: calc(#{$header-height} - 1px);
     display: grid;
     grid-template-columns: 50% 46%;
     column-gap: 4%;
-    height: calc(100% - 80px - 110px);
+    min-height: calc(100vh - #{$footer-height} - #{$header-height});
     box-sizing: border-box;
+
+    @include vertical-device {
+        grid-template-columns: 100%;
+        grid-template-rows: min-content min-content;
+    }
 }
 
 .parameters {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    max-height: 180px;
+    display: flex;
+    max-width: 800px;
+    flex-wrap: wrap;
+}
+
+.commonParameters {
+    width: 315px;
+}
+
+.perCharacterParameters {
+    width: 30%;
+    min-width: 200px;
+    flex-grow: 2;
 }
 
 .charactersTextArea {
@@ -30,10 +48,6 @@
     font-size: 16px;
     padding: 10px;
     box-sizing: border-box;
-
-    @include small-device {
-        height: 75px;
-    }
 
     @include small-device-portrait {
         height: 145px;
@@ -61,6 +75,7 @@
     margin: 10px 0;
     display: block;
     font-size: 20px;
+    width: 100%;
 }
 
 .commonLabel {
@@ -68,7 +83,7 @@
     margin: 10px 0;
     display: inline-block;
     font-size: 20px;
-    width: 26%;
+    width: 70px;
 }
 
 .commonInput {
@@ -84,7 +99,7 @@
 }
 
 .commonInputIvalid {
-    background-color: $scroll-handle-color;
+    background-color: $ternary-color;
 }
 
 .heading {

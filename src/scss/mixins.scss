@@ -9,12 +9,41 @@
     /* Track */
     &::-webkit-scrollbar-track {
         background: $primary-color;
-        box-shadow: inset 1px 0 1px 0 black;
     }
 
     /* Handle */
     &::-webkit-scrollbar-thumb {
-        background: $scroll-handle-color;
+        background: $color-on-bg;
+    }
+}
+
+@mixin vertical-device {
+    @media (orientation: portrait) {
+        @content;
+    }
+}
+
+@mixin small-phone {
+    @media (max-width: 340px) {
+        @content;
+    }
+}
+
+@mixin phone {
+    @media (max-width: 400px) {
+        @content;
+    }
+}
+
+@mixin mini-device {
+    @media (max-width: 535px) {
+        @content;
+    }
+}
+
+@mixin tiny-device {
+    @media (max-width: 1000px) {
+        @content;
     }
 }
 

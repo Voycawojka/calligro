@@ -1,18 +1,61 @@
 @import "../../../scss/colors.scss";
 @import "../../../scss/fonts.scss";
+@import "../../../scss/sizes.scss";
+@import "../../../scss/mixins.scss";
 
 .container {
     @include font-headings(800);
+    position: fixed;
     width: 100%;
-    height: 110px;
+    height: $header-height;
     padding: 15px;
     background-color: $primary-color;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.3);
-    position: relative;
-    z-index: 1;
     box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.sourceNoticeContainer {
+    color: $ternary-color;
+    position: absolute;
+    right: 70px;
+    bottom: 8px;
+
+    @include vertical-device {
+        visibility: hidden;
+    }
+}
+
+.sourceNoticeLine1 {
+    margin: 0;
+
+    &:after {
+        content: " ";
+        grid-area: arrow;
+        display: inline-block;
+        margin-left: 10px;
+        margin-bottom: -7px;
+        background-image: url("github-arrow.svg");
+        background-repeat: no-repeat;
+        width: 50px;
+        height: 30px;
+    }
+}
+
+.sourceNoticeLine2 {
+    margin: 0;
 }
 
 .logo {
     height: 100%;
+}
+
+.githubCorner {
+    @include phone {
+        visibility: hidden;
+        display: none;
+    }
 }
