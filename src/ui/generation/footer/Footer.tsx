@@ -6,7 +6,7 @@ import styles from './footer.module.scss'
 function Footer() {
     return (
         <footer className={styles.container}>
-            <Link to='/policy' className={`${styles.policy} ${styles.link}`}>Cookie policy</Link>
+            <Link to='/policy' className={`${styles.policy} ${styles.link}`}>Privacy policy</Link>
             <div className={styles.authors}>
                 <Author
                     name='Filip A. Kowalski'

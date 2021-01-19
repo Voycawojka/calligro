@@ -19,7 +19,7 @@ class CookieNotice extends Component<{}, CookieNoticeState> {
     componentDidMount() {
         this.setState({
             acknowledged: Cookies.get('cookies-acknowledged') === 'true'
-        })
+        }, this.updateAnalytics)
     }
 
     @bind
@@ -28,7 +28,16 @@ class CookieNotice extends Component<{}, CookieNoticeState> {
 
         this.setState({
             acknowledged: true
-        })
+        }, this.updateAnalytics)
+    }
+
+    @bind
+    updateAnalytics() {
+        const analyticsStatus = this.state.acknowledged ? 'granted' : 'denied'
+
+        window.gtag('consent', 'update', {
+            analytics_storage: analyticsStatus
+        });
     }
 
     render () {
