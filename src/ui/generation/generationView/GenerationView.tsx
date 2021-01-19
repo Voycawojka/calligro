@@ -30,9 +30,9 @@ class GenerationView extends Component<{}, GenerationViewState> {
 
         return ({
             charSet: parsedData?.charSet ?? this.createCharArray(),
-            defaultWidth: parsedData?.defaultWidth ?? 20,
-            defaultHeight: parsedData?.defaultHeight ?? 20,
-            base: parsedData?.base ?? 10
+            defaultWidth: parsedData?.defaultWidth ?? 200,
+            defaultHeight: parsedData?.defaultHeight ?? 200,
+            base: parsedData?.base ?? 100
         })
     }
 
