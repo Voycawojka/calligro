@@ -26,7 +26,7 @@ class Loader extends Component<{}, LoaderState> {
 
     componentWillUnmount() {
         if (this.timer) {
-            clearTimeout(this.timer) 
+            clearTimeout(this.timer)
         }
     }
 
