@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import { generateFont } from '../../../generation/font/Font'
 import { fontSpecToTxt } from '../../../generation/font/txtSaver'
 import { downloadBmf } from '../../../generation/font/download'
-import styles from './fontCreationView.module.scss'
+import styles from './step2.module.scss'
 import Dropzone from '../dropzone/Dropzone'
-import Fa from '../fa/Fa'
+import Fa from '../../misc/fa/Fa'
 
-interface FontCreationViewState {
+interface Step2State {
     horizontalMargin: number
     verticalMargin: number
     lineHeight: number
@@ -15,7 +15,7 @@ interface FontCreationViewState {
     templateCode?: File
 }
 
-class FontCreationView extends Component<{}, FontCreationViewState> {
+class Step2 extends Component<{}, Step2State> {
     constructor(props: {}) {
         super(props)
 
@@ -163,4 +163,4 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
     }
 }
 
-export default FontCreationView
+export default Step2

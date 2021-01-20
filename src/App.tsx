@@ -1,11 +1,11 @@
 import React from 'react'
-import FontCreationView from './ui/generation/fontCreationView/FontCreationView'
-import GenerationView from './ui/generation/generationView/GenerationView'
+import Step2 from './ui/generation/step2/Step2'
+import Step1 from './ui/generation/step1/Step1'
 import { HashRouter, Route, Switch } from 'react-router-dom'
-import Header from './ui/generation/header/Header'
-import Footer from './ui/generation/footer/Footer'
-import Policy from './ui/generation/policy/Policy'
-import CookieNotice from './ui/generation/cookieNotice/CookieNotice'
+import Header from './ui/header/Header'
+import Footer from './ui/footer/Footer'
+import Policy from './ui/policy/Policy'
+import CookieNotice from './ui/cookieNotice/CookieNotice'
 
 function App() {
     return (
@@ -19,11 +19,11 @@ function App() {
                     <Header/>
 
                     <Route exact path='/'>
-                        <GenerationView />
+                        <Step1 />
                     </Route>
 
                     <Route exact path='/step2'>
-                        <FontCreationView />
+                        <Step2 />
                     </Route>
 
                     <Footer />

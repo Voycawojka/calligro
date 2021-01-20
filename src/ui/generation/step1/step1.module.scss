@@ -11,7 +11,7 @@
     display: grid;
     grid-template-columns: 50% 46%;
     column-gap: 4%;
-    min-height: calc(100vh - #{$footer-height} - #{$header-height});
+    min-height: calc(100vh - #{$footer-height});
     box-sizing: border-box;
 
     @include vertical-device {
