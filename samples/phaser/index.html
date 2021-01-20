@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calligro Phaser Sample</title>
+
+    <script async src="//cdn.jsdelivr.net/npm/phaser@3.52.0/dist/phaser.min.js"></script>
+    <script>
+        function run() {
+            const game = new Phaser.Game({
+                type: Phaser.AUTO,
+                width: 800,
+                height: 600,
+                backgroundColor: '#ffffff',
+                scene: {
+                    preload: function () {
+                        this.load.bitmapFont('calligro', 'calligro-page-0.png', 'calligro-font.fnt');
+                    },
+                    create: function () {
+                        this.add.bitmapText(200, 100, 'calligro', 'Hello\nCalligro');
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body onload="run()">
+</body>
+</html>

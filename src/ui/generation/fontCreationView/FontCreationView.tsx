@@ -1,7 +1,7 @@
 import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
 import { generateFont } from '../../../generation/font/Font'
-import { fontSpecToTxt } from '../../../generation/font/txtSaver'
+import { fontSpecToTextFile } from '../../../generation/font/specSaver'
 import { downloadBmf } from '../../../generation/font/download'
 import styles from './fontCreationView.module.scss'
 import Dropzone from '../dropzone/Dropzone'
@@ -69,7 +69,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
             lineHeight: this.state.lineHeight
         })
 
-        const fntFile = fontSpecToTxt(fontSpec)
+        const fntFile = fontSpecToTextFile(fontSpec, 'txt')
 
         downloadBmf(fntFile, pages)
     }
@@ -151,7 +151,6 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
 
                         <ul className={styles.featureList}>
                             <li className={styles.feature}>Kerning pairs support (that is: non-monospace fonts)</li>
-                            <li className={styles.feature}>XML export (some engines require it)</li>
                             <li className={styles.feature}>Font preview</li>
                         </ul>
 
