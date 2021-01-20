@@ -20,6 +20,7 @@ function Step1CharacterList (props: Step1CharacterListProps) {
             <div key={char.character} className={styles.characterContainer}>
                 <p className={styles.character}>{char.character}</p>
                 <input
+                    aria-label={`${char.character} width input`}
                     className={`${styles.input} ${width <= 0 ? styles.inputInvalid : ''}`}
                     type='number'
                     value={width}
@@ -27,6 +28,7 @@ function Step1CharacterList (props: Step1CharacterListProps) {
                 />
                 <Fa icon='fas fa-times' className={styles.times} />
                 <input
+                    aria-label={`${char.character} height input`}
                     className={`${styles.input} ${height <= 0 ? styles.inputInvalid : ''}`}
                     type='number'
                     value={height}

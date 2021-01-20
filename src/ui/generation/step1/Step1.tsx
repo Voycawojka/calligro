@@ -152,6 +152,7 @@ class Step1 extends Component<{}, Step1State> {
                             />
                         </label>
                         <textarea
+                            aria-label='characters input'
                             className={styles.charactersTextArea}
                             onChange={this.handleCharSetInput}
                             value={this.charString}
@@ -164,6 +165,7 @@ class Step1 extends Component<{}, Step1State> {
                                 <label className={styles.label}>Common</label>
                                 <label className={styles.commonLabel}>Size</label>
                                 <input
+                                    aria-label='default width input'
                                     className={styles.commonInput}
                                     type='number'
                                     onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
@@ -171,6 +173,7 @@ class Step1 extends Component<{}, Step1State> {
                                 />
                                 <Fa icon='fas fa-times' className={styles.times}/>
                                 <input
+                                    aria-label='default height input'
                                     className={styles.commonInput}
                                     type='number'
                                     onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
@@ -182,6 +185,7 @@ class Step1 extends Component<{}, Step1State> {
                             <div>
                                 <label className={styles.commonLabel}>Base</label>
                                 <input
+                                    aria-label='characters base input'
                                     className={`${styles.commonInput} ${this.isBaseValid() ? "" : styles.commonInputIvalid}`}
                                     type='number'
                                     onChange={event => this.handleDefaultValueChange(event, 'base')}
