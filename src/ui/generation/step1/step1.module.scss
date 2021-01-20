@@ -59,15 +59,7 @@
 }
 
 .instructionListItem {
-    @include font-paragraphs;
-    line-height: 23px;
-    margin: 12px 0;
-    font-size: 20px;
-
-    @include small-device {
-        font-size: 18px;
-        line-height: 21px;
-    }
+    @include instructionListItem;
 }
 
 .label {
@@ -123,22 +115,8 @@
 }
 
 .downloadButton {
-    @include font-headings(800);
-    background-color: transparent;
-    border: none;
-    text-decoration: underline;
-    text-align: center;
-    display: block;
+    @include downloadButton;
     margin: 15px auto;
-    font-size: 20px;
-    color: $link-color;
-    text-transform: capitalize;
-    cursor: pointer;
-
-    &:disabled {
-        opacity: 0.5;
-        cursor: default;
-    }
 }
 
 .times {
@@ -148,17 +126,9 @@
 }
 
 .questionMark {
-    background-color: black;
-    border-radius: 50%;
-    color: white;
-    width: 20px;
-    height: 20px;
-    padding: 0;
+    @include questionMark;
     margin: 0 2%;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 12px;
-    line-height: 20px;
+
 }
 
 .commonContainer {

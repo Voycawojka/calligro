@@ -103,6 +103,7 @@ class Step2 extends Component<{}, Step2State> {
                         <div className={styles.option}>
                             <label className={styles.optionsLabel}>Margin</label>
                             <input
+                                aria-label='horizontal margin input'
                                 className={styles.optionsInput}
                                 type='number'
                                 onChange={(event) => this.handleNumericalInput(event, 'horizontalMargin')}
@@ -110,6 +111,7 @@ class Step2 extends Component<{}, Step2State> {
                             />
                             <Fa icon='fas fa-times' className={styles.times} />
                             <input
+                                aria-label='vertical margin input'
                                 className={styles.optionsInput}
                                 type='number'
                                 onChange={(event) => this.handleNumericalInput(event, 'verticalMargin')}
@@ -121,6 +123,7 @@ class Step2 extends Component<{}, Step2State> {
                         <div className={styles.option}>
                             <label className={styles.optionsLabel}>Line height</label>
                             <input
+                                aria-label='line height input'
                                 className={styles.optionsInput}
                                 type='number'
                                 onChange={(event) => this.handleNumericalInput(event, 'lineHeight')}

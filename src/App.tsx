@@ -1,11 +1,13 @@
-import React from 'react'
-import Step2 from './ui/generation/step2/Step2'
+import React, { Suspense } from 'react'
 import Step1 from './ui/generation/step1/Step1'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import Header from './ui/header/Header'
 import Footer from './ui/footer/Footer'
 import Policy from './ui/policy/Policy'
 import CookieNotice from './ui/cookieNotice/CookieNotice'
+import Loader from './ui/misc/loader/Loader'
+
+const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 
 function App() {
     return (
@@ -23,7 +25,9 @@ function App() {
                     </Route>
 
                     <Route exact path='/step2'>
-                        <Step2 />
+                        <Suspense fallback={<Loader />}>
+                            <Step2 />
+                        </Suspense>
                     </Route>
 
                     <Footer />
