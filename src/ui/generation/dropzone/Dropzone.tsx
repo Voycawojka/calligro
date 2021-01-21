@@ -71,6 +71,7 @@ class Dropzone extends Component<DropzoneProps, {}> {
                 <label className={styles.label}>Drag&drop the {this.props.inputName}</label>
                 <div className={styles.inputContainer}>
                     <input
+                        aria-label={`${this.props.inputName} input`}
                         className={styles.input}
                         type='file' ref={this.templateInput}
                         onChange={this.handleInput}

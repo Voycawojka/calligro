@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { bind } from 'helpful-decorators'
-import GenerationCharacterList from '../generationCharacterList/GenerationCharacterList'
+import Step1CharacterList from '../step1CharacterList/Step1CharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'
 import Template from '../../../generation/template/Template'
 import { downloadTemplate } from '../../../generation/template/download'
-import styles from './generationView.module.scss'
-import Fa from '../fa/Fa'
+import styles from './step1.module.scss'
+import Fa from '../../misc//fa/Fa'
 import { Link } from 'react-router-dom'
 
-interface GenerationViewState {
+interface Step1State {
     charSet: WorkSlot[]
     defaultWidth: number
     defaultHeight: number
@@ -17,16 +17,16 @@ interface GenerationViewState {
 
 const defaultCharacters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz.?!,:'
 
-class GenerationView extends Component<{}, GenerationViewState> {
+class Step1 extends Component<{}, Step1State> {
     constructor(props: {}) {
         super(props)
 
         this.state = this.setInitialState()
     }
 
-    setInitialState(): GenerationViewState {
+    setInitialState(): Step1State {
         const storedData = window.localStorage.getItem('settings')
-        const parsedData: GenerationViewState = storedData ? JSON.parse(storedData) : null
+        const parsedData: Step1State = storedData ? JSON.parse(storedData) : null
 
         return ({
             charSet: parsedData?.charSet ?? this.createCharArray(),
@@ -36,7 +36,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
         })
     }
 
-    componentDidUpdate(prevProps: {}, prevState: GenerationViewState) {
+    componentDidUpdate(prevProps: {}, prevState: Step1State) {
         if (prevState !== this.state) {
             window.localStorage.setItem('settings', JSON.stringify(this.state))
         }
@@ -152,6 +152,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                             />
                         </label>
                         <textarea
+                            aria-label='characters input'
                             className={styles.charactersTextArea}
                             onChange={this.handleCharSetInput}
                             value={this.charString}
@@ -164,6 +165,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                                 <label className={styles.label}>Common</label>
                                 <label className={styles.commonLabel}>Size</label>
                                 <input
+                                    aria-label='default width input'
                                     className={styles.commonInput}
                                     type='number'
                                     onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
@@ -171,6 +173,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                                 />
                                 <Fa icon='fas fa-times' className={styles.times}/>
                                 <input
+                                    aria-label='default height input'
                                     className={styles.commonInput}
                                     type='number'
                                     onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
@@ -182,6 +185,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                             <div>
                                 <label className={styles.commonLabel}>Base</label>
                                 <input
+                                    aria-label='characters base input'
                                     className={`${styles.commonInput} ${this.isBaseValid() ? "" : styles.commonInputIvalid}`}
                                     type='number'
                                     onChange={event => this.handleDefaultValueChange(event, 'base')}
@@ -213,7 +217,7 @@ class GenerationView extends Component<{}, GenerationViewState> {
                                 />
                             </label>
 
-                            <GenerationCharacterList
+                            <Step1CharacterList
                                 charSet={this.state.charSet}
                                 defaultHeight={this.state.defaultHeight}
                                 defaultWidth={this.state.defaultWidth}
@@ -240,4 +244,4 @@ class GenerationView extends Component<{}, GenerationViewState> {
     }
 }
 
-export default GenerationView
+export default Step1
