@@ -166,7 +166,7 @@ class Step1 extends Component<{}, Step1State> {
                             </label>
                             <button
                                 title='Reset characters to default values'
-                                onClick={this.resetCharacters} 
+                                onClick={this.resetCharacters}
                                 className={styles.charactersResetButton}
                                 disabled={this.isCharsetDefault()}
                             >
