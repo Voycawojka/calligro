@@ -36,6 +36,21 @@
     flex-grow: 2;
 }
 
+.charactersLabelContainer {
+    display: flex;
+}
+
+.charactersResetButton {
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    cursor: pointer;
+
+    &:disabled {
+        display: none;
+    }
+}
+
 .charactersTextArea {
     @include font-paragraphs;
     line-height: 18px;
