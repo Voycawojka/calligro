@@ -13,7 +13,7 @@ function xmlTag(name: string, properties: tagProp[]) {
 }
 
 export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml') {
-    const tag = format == 'txt' ? txtTag : xmlTag
+    const tag = format === 'txt' ? txtTag : xmlTag
 
     const info = specification.info
     const infoTag = tag('info', [
