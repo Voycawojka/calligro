@@ -1,12 +1,6 @@
-html {
-    height: 100%;
-}
+@import "./scss/colors.scss";
 
 body {
     margin: 0;
-    height: 100%;
-}
-
-#root {
-    height: 100%;
+    background-color: $secondary-color;
 }

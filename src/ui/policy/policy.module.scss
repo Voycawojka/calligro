@@ -1,13 +1,11 @@
-@import "../../../scss/colors.scss";
-@import "../../../scss/fonts.scss";
+@import "../../scss/colors.scss";
+@import "../../scss/fonts.scss";
 
 .policyContainer {
     @include font-paragraphs;
-    height: 100%;
     width: 80%;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 48px auto 24px;
+    background-color: $secondary-color;
 }
 
 h1 {

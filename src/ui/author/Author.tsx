@@ -1,10 +1,11 @@
 import React from 'react'
 import styles from './author.module.scss'
-import Fa from '../fa/Fa'
+import Fa from '../misc/fa/Fa'
 
 interface Social {
     icon: string
     url: string
+    label: string
 }
 
 interface AuthorProps {
@@ -14,7 +15,7 @@ interface AuthorProps {
 
 function Author(props: AuthorProps) {
     const renderSocial = props.socialLinks.map(social =>
-        <a className={styles.socialLink} href={social.url} key={social.url}>
+        <a className={styles.socialLink} href={social.url} key={social.url} aria-label={social.label} >
             <Fa icon={social.icon} className={styles.icon} />
         </a>
     )

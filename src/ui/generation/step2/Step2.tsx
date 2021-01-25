@@ -3,11 +3,11 @@ import React, { Component } from 'react'
 import { generateFont } from '../../../generation/font/Font'
 import { fontSpecToTextFile } from '../../../generation/font/specSaver'
 import { downloadBmf } from '../../../generation/font/download'
-import styles from './fontCreationView.module.scss'
+import styles from './step2.module.scss'
 import Dropzone from '../dropzone/Dropzone'
-import Fa from '../fa/Fa'
+import Fa from '../../misc/fa/Fa'
 
-interface FontCreationViewState {
+interface Step2State {
     horizontalMargin: number
     verticalMargin: number
     lineHeight: number
@@ -15,7 +15,7 @@ interface FontCreationViewState {
     templateCode?: File
 }
 
-class FontCreationView extends Component<{}, FontCreationViewState> {
+class Step2 extends Component<{}, Step2State> {
     constructor(props: {}) {
         super(props)
 
@@ -103,6 +103,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
                         <div className={styles.option}>
                             <label className={styles.optionsLabel}>Margin</label>
                             <input
+                                aria-label='horizontal margin input'
                                 className={styles.optionsInput}
                                 type='number'
                                 onChange={(event) => this.handleNumericalInput(event, 'horizontalMargin')}
@@ -110,6 +111,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
                             />
                             <Fa icon='fas fa-times' className={styles.times} />
                             <input
+                                aria-label='vertical margin input'
                                 className={styles.optionsInput}
                                 type='number'
                                 onChange={(event) => this.handleNumericalInput(event, 'verticalMargin')}
@@ -121,6 +123,7 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
                         <div className={styles.option}>
                             <label className={styles.optionsLabel}>Line height</label>
                             <input
+                                aria-label='line height input'
                                 className={styles.optionsInput}
                                 type='number'
                                 onChange={(event) => this.handleNumericalInput(event, 'lineHeight')}
@@ -162,4 +165,4 @@ class FontCreationView extends Component<{}, FontCreationViewState> {
     }
 }
 
-export default FontCreationView
+export default Step2
