@@ -87,6 +87,11 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     @bind
+    isCharsetDefault(): boolean {
+        return this.charString === defaultCharacters
+    }
+
+    @bind
     handleDefaultValueChange(event: React.ChangeEvent<HTMLInputElement>, valueName: 'defaultWidth' | 'defaultHeight' | 'base') {
         const newValue = event.target.value ? parseInt(event.target.value, 10) : 0
 
@@ -123,6 +128,13 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     @bind
+    resetCharacters() {
+        this.setState({
+            charSet: this.createCharArray()
+        })
+    }
+
+    @bind
     downloadTemplate() {
         const template = new Template(this.slotArray, this.state.base)
 
@@ -143,14 +155,24 @@ class Step1 extends Component<{}, Step1State> {
                     </div>
 
                     <div>
-                        <label className={styles.label}>
-                            Characters
-                            <Fa
-                                icon='fas fa-question'
-                                className={styles.questionMark}
-                                title='Characters you want to be included in the final font (all unicode characters should work)'
-                            />
-                        </label>
+                        <div className={styles.charactersLabelContainer}>
+                            <label className={styles.label}>
+                                Characters
+                                <Fa
+                                    icon='fas fa-question'
+                                    className={styles.questionMark}
+                                    title='Characters you want to be included in the final font (all unicode characters should work)'
+                                />
+                            </label>
+                            <button
+                                title='Reset characters to default values'
+                                onClick={this.resetCharacters}
+                                className={styles.charactersResetButton}
+                                disabled={this.isCharsetDefault()}
+                            >
+                                <Fa icon='fas fa-undo' />
+                            </button>
+                        </div>
                         <textarea
                             aria-label='characters input'
                             className={styles.charactersTextArea}
