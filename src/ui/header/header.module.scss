@@ -1,7 +1,7 @@
-@import "../../../scss/colors.scss";
-@import "../../../scss/fonts.scss";
-@import "../../../scss/sizes.scss";
-@import "../../../scss/mixins.scss";
+@import "../../scss/colors.scss";
+@import "../../scss/fonts.scss";
+@import "../../scss/sizes.scss";
+@import "../../scss/mixins.scss";
 
 .container {
     @include font-headings(800);

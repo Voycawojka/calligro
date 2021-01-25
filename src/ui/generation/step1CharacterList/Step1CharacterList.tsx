@@ -1,9 +1,9 @@
 import React from 'react'
 import { WorkSlot } from '../../../generation/template/types'
-import Fa from '../fa/Fa'
-import styles from './generationCharacterList.module.scss'
+import Fa from '../../misc/fa/Fa'
+import styles from './step1CharacterList.module.scss'
 
-interface GenerationCharacterListProps {
+interface Step1CharacterListProps {
     charSet: WorkSlot[]
     handleDimensionChange: (event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) => void
     resetCharacterDimensions: (char: WorkSlot) => void
@@ -11,7 +11,7 @@ interface GenerationCharacterListProps {
     defaultHeight: number
 }
 
-function GenerationCharacterList (props: GenerationCharacterListProps) {
+function Step1CharacterList (props: Step1CharacterListProps) {
     const charList = props.charSet.map(char => {
         const width = char.width ?? props.defaultWidth
         const height = char.height ?? props.defaultHeight
@@ -20,6 +20,7 @@ function GenerationCharacterList (props: GenerationCharacterListProps) {
             <div key={char.character} className={styles.characterContainer}>
                 <p className={styles.character}>{char.character}</p>
                 <input
+                    aria-label={`${char.character} width input`}
                     className={`${styles.input} ${width <= 0 ? styles.inputInvalid : ''}`}
                     type='number'
                     value={width}
@@ -27,6 +28,7 @@ function GenerationCharacterList (props: GenerationCharacterListProps) {
                 />
                 <Fa icon='fas fa-times' className={styles.times} />
                 <input
+                    aria-label={`${char.character} height input`}
                     className={`${styles.input} ${height <= 0 ? styles.inputInvalid : ''}`}
                     type='number'
                     value={height}
@@ -53,4 +55,4 @@ function GenerationCharacterList (props: GenerationCharacterListProps) {
     )
 }
 
-export default GenerationCharacterList
+export default Step1CharacterList

@@ -13,15 +13,18 @@ function Footer() {
                     socialLinks={[
                         {
                             url: 'http://ideasalmanac.com',
-                            icon: 'fa fa-globe-africa'
+                            icon: 'fa fa-globe-africa',
+                            label: 'ideasalmanac'
                         },
                         {
                             url: 'https://twitter.com/IdeasAlmanac',
-                            icon: 'fab fa-twitter'
+                            icon: 'fab fa-twitter',
+                            label: 'twitter'
                         },
                         {
                             url: 'https://github.com/Voycawojka',
-                            icon: 'fab fa-github'
+                            icon: 'fab fa-github',
+                            label: 'github'
                         }
                     ]}
                 />
@@ -30,7 +33,8 @@ function Footer() {
                     socialLinks={[
                         {
                             url: 'https://github.com/domlj',
-                            icon: 'fab fa-github'
+                            icon: 'fab fa-github',
+                            label: 'github'
                         }
                     ]}
                 />
