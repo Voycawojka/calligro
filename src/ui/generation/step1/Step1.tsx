@@ -7,13 +7,13 @@ import { downloadTemplate } from '../../../generation/template/download'
 import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'
 import { Link } from 'react-router-dom'
-import { InputValue, standardizeNumericalInput } from '../../../utils/input'
+import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 
 interface Step1State {
     charSet: WorkSlot[]
-    defaultWidth: InputValue
-    defaultHeight: InputValue
-    base: InputValue
+    defaultWidth: NumInputValue
+    defaultHeight: NumInputValue
+    base: NumInputValue
 }
 
 const defaultCharacters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz.?!,:'

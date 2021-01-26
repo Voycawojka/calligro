@@ -2,14 +2,14 @@ import React from 'react'
 import { WorkSlot } from '../../../generation/template/types'
 import Fa from '../../misc/fa/Fa'
 import styles from './step1CharacterList.module.scss'
-import { InputValue, standardizeNumericalInput } from '../../../utils/input'
+import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 
 interface Step1CharacterListProps {
     charSet: WorkSlot[]
     handleDimensionChange: (event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) => void
     resetCharacterDimensions: (char: WorkSlot) => void
-    defaultWidth: InputValue
-    defaultHeight: InputValue
+    defaultWidth: NumInputValue
+    defaultHeight: NumInputValue
 }
 
 function Step1CharacterList (props: Step1CharacterListProps) {

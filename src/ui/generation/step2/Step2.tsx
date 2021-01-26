@@ -6,12 +6,12 @@ import { downloadBmf } from '../../../generation/font/download'
 import styles from './step2.module.scss'
 import Dropzone from '../dropzone/Dropzone'
 import Fa from '../../misc/fa/Fa'
-import { InputValue, standardizeNumericalInput } from '../../../utils/input'
+import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 
 interface Step2State {
-    horizontalMargin: InputValue
-    verticalMargin: InputValue
-    lineHeight: InputValue
+    horizontalMargin: NumInputValue
+    verticalMargin: NumInputValue
+    lineHeight: NumInputValue
     template?: File
     templateCode?: File
 }
@@ -46,8 +46,6 @@ class Step2 extends Component<{}, Step2State> {
     @bind
     handleNumericalInput(event: React.ChangeEvent<HTMLInputElement>, name: 'horizontalMargin' | 'verticalMargin' | 'lineHeight') {
         const value = event.target.value === '' ? '' : parseInt(event.target.value, 10)
-
-        console.log(`input:  ${parseInt(event.target.value, 10)}`)
 
         if (value === '' || value >= 0) {
             this.setState(prevState => ({

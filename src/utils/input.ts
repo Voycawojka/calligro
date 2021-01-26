@@ -1,5 +1,5 @@
-export type InputValue = number | ''
+export type NumInputValue = number | ''
 
-export function standardizeNumericalInput(input: InputValue) : number {
+export function standardizeNumericalInput(input: NumInputValue) : number {
     return input === '' ? 0 : input
 }
