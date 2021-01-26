@@ -1,7 +1,7 @@
 import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
 import { generateFont } from '../../../generation/font/Font'
-import { fontSpecToTxt } from '../../../generation/font/txtSaver'
+import { fontSpecToTextFile } from '../../../generation/font/specSaver'
 import { downloadBmf } from '../../../generation/font/download'
 import styles from './step2.module.scss'
 import Dropzone from '../dropzone/Dropzone'
@@ -56,7 +56,7 @@ class Step2 extends Component<{}, Step2State> {
     }
 
     @bind
-    async downloadFont() {
+    async downloadFont(format: 'txt' | 'xml') {
         if (!this.state.template || !this.state.templateCode) {
             return
         }
@@ -70,7 +70,7 @@ class Step2 extends Component<{}, Step2State> {
             lineHeight: standardizeNumericalInput(this.state.lineHeight)
         })
 
-        const fntFile = fontSpecToTxt(fontSpec)
+        const fntFile = fontSpecToTextFile(fontSpec, format)
 
         downloadBmf(fntFile, pages)
     }
@@ -133,7 +133,34 @@ class Step2 extends Component<{}, Step2State> {
                             <Fa icon='fas fa-question' className={styles.questionMark} title='Distance from the bottom of a line to the top of the next one in pixels'/>
                         </div>
 
-                        <button onClick={this.downloadFont} className={styles.downloadButton} disabled={!this.isInputsValid()} >generate font</button>
+                        <div className={styles.download}>
+                            <label className={styles.buttonsContainerLabel}>Download font</label>
+
+                            <div className={styles.buttons}>
+                                <div>
+                                    <button onClick={() => this.downloadFont('txt')} className={styles.downloadButton} disabled={!this.isInputsValid()} >txt format</button>
+                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, Heaps.io and possibly others.'/>
+                                </div>
+
+                                <div>
+                                    <button onClick={() => this.downloadFont('xml')} className={styles.downloadButton} disabled={!this.isInputsValid()} >xml format</button>
+                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser and possibly others.'/>
+                                </div>
+                            </div>
+                            
+                            <p className={styles.samplesParagraph}>
+                                Check
+                                <a
+                                    href='https://github.com/Voycawojka/calligro/tree/main/samples'
+                                    className={styles.samplesLink}
+                                    target='_blank'
+                                    rel='noreferrer'
+                                >
+                                    our samples
+                                </a>
+                                to see how to use it
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -155,7 +182,6 @@ class Step2 extends Component<{}, Step2State> {
 
                         <ul className={styles.featureList}>
                             <li className={styles.feature}>Kerning pairs support (that is: non-monospace fonts)</li>
-                            <li className={styles.feature}>XML export (some engines require it)</li>
                             <li className={styles.feature}>Font preview</li>
                         </ul>
 

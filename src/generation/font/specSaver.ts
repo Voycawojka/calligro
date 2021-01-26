@@ -1,11 +1,20 @@
 import { FontSpec } from "./Font";
 
-function tag(name: string, properties: [string, string | number][]) {
+type tagProp = [string, string | number]
+
+function txtTag(name: string, properties: tagProp[]) {
     const joinedProps = properties.map(([ prop, value ]) => `${prop}=${value.toString()}`).join(' ')
     return `${name} ${joinedProps}`
 }
 
-export function fontSpecToTxt(specification: FontSpec) {
+function xmlTag(name: string, properties: tagProp[]) {
+    const joinedProps = properties.map(([ prop, value ]) => `${prop}="${value.toString()}"`).join(' ')
+    return `<${name} ${joinedProps} />`
+}
+
+export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml') {
+    const tag = format === 'txt' ? txtTag : xmlTag
+
     const info = specification.info
     const infoTag = tag('info', [
         ['face', info.face],
@@ -44,10 +53,32 @@ export function fontSpecToTxt(specification: FontSpec) {
         ['chnl', char.chnl]
     ]))
 
-    return [
-        infoTag,
-        commonTag,
-        ...pageTags,
-        ...charTags
-    ].join('\n')
+    switch(format) {
+        case 'txt':
+            return [
+                infoTag,
+                commonTag,
+                ...pageTags,
+                ...charTags
+            ].join('\n')
+        
+        case 'xml':
+            const font = [
+                infoTag,
+                commonTag,
+                '<pages>',
+                ...pageTags.map(tag => `\t${tag}`),
+                '</pages>',
+                `<chars count="${charTags.length}">`,
+                ...charTags.map(tag => `\t${tag}`),
+                '</chars>'
+            ].join('\n\t')
+
+            return [
+                '<?xml version="1.0"?>',
+                '<font>',
+                '\t' + font,
+                '</font>'
+            ].join('\n')
+    }
 }
