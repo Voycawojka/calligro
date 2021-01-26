@@ -6,11 +6,12 @@ import { downloadBmf } from '../../../generation/font/download'
 import styles from './step2.module.scss'
 import Dropzone from '../dropzone/Dropzone'
 import Fa from '../../misc/fa/Fa'
+import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 
 interface Step2State {
-    horizontalMargin: number
-    verticalMargin: number
-    lineHeight: number
+    horizontalMargin: NumInputValue
+    verticalMargin: NumInputValue
+    lineHeight: NumInputValue
     template?: File
     templateCode?: File
 }
@@ -44,9 +45,9 @@ class Step2 extends Component<{}, Step2State> {
     
     @bind
     handleNumericalInput(event: React.ChangeEvent<HTMLInputElement>, name: 'horizontalMargin' | 'verticalMargin' | 'lineHeight') {
-        const value = parseInt(event.target.value, 10)
+        const value = event.target.value === '' ? '' : parseInt(event.target.value, 10)
 
-        if (value >= 0) {
+        if (value === '' || value >= 0) {
             this.setState(prevState => ({
                 ...prevState,
                 [name]: value
@@ -64,9 +65,9 @@ class Step2 extends Component<{}, Step2State> {
         const templateCode = await this.state.templateCode.text()
 
         const [fontSpec, pages] = await generateFont(templateImg, templateCode, {
-            horizontalSpacing: this.state.horizontalMargin,
-            verticalSpacing: this.state.verticalMargin,
-            lineHeight: this.state.lineHeight
+            horizontalSpacing: standardizeNumericalInput(this.state.horizontalMargin) ,
+            verticalSpacing: standardizeNumericalInput(this.state.verticalMargin),
+            lineHeight: standardizeNumericalInput(this.state.lineHeight)
         })
 
         const fntFile = fontSpecToTxt(fontSpec)

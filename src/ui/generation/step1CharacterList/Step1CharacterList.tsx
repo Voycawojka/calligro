@@ -2,13 +2,14 @@ import React from 'react'
 import { WorkSlot } from '../../../generation/template/types'
 import Fa from '../../misc/fa/Fa'
 import styles from './step1CharacterList.module.scss'
+import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 
 interface Step1CharacterListProps {
     charSet: WorkSlot[]
     handleDimensionChange: (event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) => void
     resetCharacterDimensions: (char: WorkSlot) => void
-    defaultWidth: number
-    defaultHeight: number
+    defaultWidth: NumInputValue
+    defaultHeight: NumInputValue
 }
 
 function Step1CharacterList (props: Step1CharacterListProps) {
@@ -21,7 +22,7 @@ function Step1CharacterList (props: Step1CharacterListProps) {
                 <p className={styles.character}>{char.character}</p>
                 <input
                     aria-label={`${char.character} width input`}
-                    className={`${styles.input} ${width <= 0 ? styles.inputInvalid : ''}`}
+                    className={`${styles.input} ${standardizeNumericalInput(width) <= 0 ? styles.inputInvalid : ''}`}
                     type='number'
                     value={width}
                     onChange={(event) => props.handleDimensionChange(event, 'width', char)}
@@ -29,14 +30,14 @@ function Step1CharacterList (props: Step1CharacterListProps) {
                 <Fa icon='fas fa-times' className={styles.times} />
                 <input
                     aria-label={`${char.character} height input`}
-                    className={`${styles.input} ${height <= 0 ? styles.inputInvalid : ''}`}
+                    className={`${styles.input} ${standardizeNumericalInput(height) <= 0 ? styles.inputInvalid : ''}`}
                     type='number'
                     value={height}
                     onChange={(event) => props.handleDimensionChange(event, 'height', char)}
                 />
 
                 {
-                    (!!char.height || !!char.width) || (width <= 0 || height <= 0)
+                    (!!char.height || !!char.width) || (standardizeNumericalInput(width) <= 0 || standardizeNumericalInput(height) <= 0)
                     ? <span className={styles.buttonContainer}>
                         <button onClick={() => props.resetCharacterDimensions(char)} className={styles.button}>
                             <Fa icon='fas fa-undo' className={styles.undoButton} />

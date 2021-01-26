@@ -7,12 +7,13 @@ import { downloadTemplate } from '../../../generation/template/download'
 import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'
 import { Link } from 'react-router-dom'
+import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 
 interface Step1State {
     charSet: WorkSlot[]
-    defaultWidth: number
-    defaultHeight: number
-    base: number
+    defaultWidth: NumInputValue
+    defaultHeight: NumInputValue
+    base: NumInputValue
 }
 
 const defaultCharacters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz.?!,:'
@@ -67,8 +68,8 @@ class Step1 extends Component<{}, Step1State> {
     get slotArray(): Slot[] {
         return this.state.charSet.map(workSlot => ({
             character: workSlot.character,
-            width: workSlot.width ?? this.state.defaultWidth,
-            height: workSlot.height ?? this.state.defaultHeight
+            width: standardizeNumericalInput(workSlot.width ?? this.state.defaultWidth),
+            height: standardizeNumericalInput(workSlot.height ?? this.state.defaultHeight)
         }))
     }
 
@@ -83,7 +84,10 @@ class Step1 extends Component<{}, Step1State> {
 
     @bind
     isBaseValid(): boolean {
-        return this.state.base <= this.state.defaultHeight && this.state.base >= 0
+        const standardizedBase: number = standardizeNumericalInput(this.state.base)
+        const standardizedHeight: number = standardizeNumericalInput(this.state.defaultHeight)
+
+        return standardizedBase <= standardizedHeight && standardizedBase >= 0
     }
 
     @bind
@@ -93,7 +97,7 @@ class Step1 extends Component<{}, Step1State> {
 
     @bind
     handleDefaultValueChange(event: React.ChangeEvent<HTMLInputElement>, valueName: 'defaultWidth' | 'defaultHeight' | 'base') {
-        const newValue = event.target.value ? parseInt(event.target.value, 10) : 0
+        const newValue = event.target.value === '' ? '' : parseInt(event.target.value, 10)
 
         this.setState(prevState => ({
             ...prevState,
@@ -103,7 +107,7 @@ class Step1 extends Component<{}, Step1State> {
   
     @bind
     handleDimensionChange(event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) {
-        const newValue = event.target.value ? parseInt(event.target.value, 10) : 0
+        const newValue = event.target.value === '' ? '' : parseInt(event.target.value, 10)
         const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
             ? {
                 ...character,
@@ -136,7 +140,7 @@ class Step1 extends Component<{}, Step1State> {
 
     @bind
     downloadTemplate() {
-        const template = new Template(this.slotArray, this.state.base)
+        const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base))
 
         downloadTemplate(template)
     }
