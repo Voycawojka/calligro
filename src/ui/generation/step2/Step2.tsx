@@ -148,16 +148,16 @@ class Step2 extends Component<{}, Step2State> {
                             </div>
                             
                             <p className={styles.samplesParagraph}>
-                                Check 
-                                <a 
-                                    href='https://github.com/Voycawojka/calligro/tree/main/samples' 
+                                Check
+                                <a
+                                    href='https://github.com/Voycawojka/calligro/tree/main/samples'
                                     className={styles.samplesLink}
                                     target='_blank'
                                     rel='noreferrer'
                                 >
                                     our samples
-                                </a> 
-                                to see how to use it 
+                                </a>
+                                to see how to use it
                             </p>
                         </div>
                     </div>
