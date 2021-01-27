@@ -67,7 +67,9 @@ class Step2 extends Component<{}, Step2State> {
         const [fontSpec, pages] = await generateFont(templateImg, templateCode, {
             horizontalSpacing: standardizeNumericalInput(this.state.horizontalMargin) ,
             verticalSpacing: standardizeNumericalInput(this.state.verticalMargin),
-            lineHeight: standardizeNumericalInput(this.state.lineHeight)
+            lineHeight: standardizeNumericalInput(this.state.lineHeight),
+            // TODO pass kernings from UI
+            kernings: []
         })
 
         const fntFile = fontSpecToTextFile(fontSpec, format)
@@ -173,6 +175,15 @@ class Step2 extends Component<{}, Step2State> {
                             <li className={styles.instructionListItem}>Upload the txt file downloaded togheter with the template image earlier (it contains template metadata).</li>
                             <li className={styles.instructionListItem}>Specify the horizontal and vertical margins for characters.</li>
                             <li className={styles.instructionListItem}>Specify the font line height (distance from the top of one line to the top of the next one).</li>
+                            <li className={styles.instructionListItem}>
+                                <p>
+                                    Add kerning pairs if you want to. Characters in a pair are rendered further or closer from each other. 
+                                    E.g. pair "ab" with amount -10 will cause "b" to be 10 pixels closer to "a". Pair "ab" &ne; "ba"!
+                                </p>
+                                <p>
+                                    Warning - not all tools support this feature. We know Godot does.
+                                </p>
+                            </li>
                             <li className={styles.instructionListItem}>Generate and download your BMFont.</li>
                         </ol>
                     </div>
@@ -181,7 +192,6 @@ class Step2 extends Component<{}, Step2State> {
                         <h2 className={styles.heading}>Coming soon</h2>
 
                         <ul className={styles.featureList}>
-                            <li className={styles.feature}>Kerning pairs support (that is: non-monospace fonts)</li>
                             <li className={styles.feature}>Font preview</li>
                         </ul>
 
