@@ -177,7 +177,7 @@ class Step2 extends Component<{}, Step2State> {
                             <li className={styles.instructionListItem}>Specify the font line height (distance from the top of one line to the top of the next one).</li>
                             <li className={styles.instructionListItem}>
                                 <p>
-                                    Add kerning pairs if you want to. Characters in a pair are rendered further or closer from each other. 
+                                    Add kerning pairs if you want to. Characters in a pair are rendered further or closer from each other.
                                     E.g. pair "ab" with amount -10 will cause "b" to be 10 pixels closer to "a". Pair "ab" &ne; "ba"!
                                 </p>
                                 <p>
