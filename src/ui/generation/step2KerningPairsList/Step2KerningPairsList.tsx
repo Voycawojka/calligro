@@ -119,11 +119,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
 
     @bind
     isPairValid(pair: WorkKerningPair): boolean {
-        if (this.isWorkPairLegal(pair)) {
-            return this.isPairUnrepeated(pair)
-        } else {
-            return false
-        }
+        return this.isWorkPairLegal(pair) && this.isPairUnrepeated(pair)
     }
 
     get isAllPairsValid(): boolean {

@@ -73,7 +73,6 @@ class Step2 extends Component<{}, Step2State> {
             horizontalSpacing: standardizeNumericalInput(this.state.horizontalMargin) ,
             verticalSpacing: standardizeNumericalInput(this.state.verticalMargin),
             lineHeight: standardizeNumericalInput(this.state.lineHeight),
-            // TODO pass kernings from UI
             kernings: this.state.kerningPairs
         })
 

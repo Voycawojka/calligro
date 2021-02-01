@@ -5,4 +5,3 @@ export function charToUnicode(char: string): number {
 export function unicodeToChar(unicode: number): string {
     return String.fromCharCode(unicode)
 }
- 
