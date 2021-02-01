@@ -123,7 +123,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
             return this.isPairUnrepeated(pair)
         } else {
             return false
-        }        
+        }
     }
 
     get isAllPairsValid(): boolean {
@@ -135,12 +135,12 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
     }
 
     render () {
-        const renderPairs = this.state.pairs.map(( pair, index ) => 
+        const renderPairs = this.state.pairs.map(( pair, index ) =>
             <Fragment key={index} >
                 <input
                     aria-label='first letter input'
                     className={`${styles.input} ${this.isCharLegal(pair.first) ? '' : styles.inputInvalid}`}
-                    value={pair.first ? unicodeToChar(pair.first) : ''} 
+                    value={pair.first ? unicodeToChar(pair.first) : ''}
                     onChange={(event) => this.changeChar(event, index, 'first')}
                     type='text'
                 />
@@ -148,7 +148,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
                 <input
                     aria-label='second letter input'
                     className={`${styles.input} ${this.isCharLegal(pair.second) ? '' : styles.inputInvalid}`}
-                    value={pair.second ? unicodeToChar(pair.second) : ''} 
+                    value={pair.second ? unicodeToChar(pair.second) : ''}
                     onChange={(event) => this.changeChar(event, index, 'second')}
                     type='text'
                 />
@@ -170,9 +170,9 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
         return (
             <div className={styles.container}>
                 <label className={styles.label}>Kerning pairs
-                    <Fa 
-                        icon='fas fa-question' 
-                        className={styles.questionMark} 
+                    <Fa
+                        icon='fas fa-question'
+                        className={styles.questionMark}
                         title='Pairs of characters with non-default distance from each other. Only supported by some engines'
                     />
                 </label>
@@ -180,14 +180,14 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
                     <label className={styles.pairsKey}>character 1</label>
                     <label className={styles.pairsKey}>character 2</label>
                     <label className={styles.pairsKey}>distance
-                        <Fa 
-                            icon='fas fa-question' 
-                            className={styles.questionMark} 
+                        <Fa
+                            icon='fas fa-question'
+                            className={styles.questionMark}
                             title=' This value is added to the default character distance when character 2 immediately follows character 1. Can be negative.'
                         />
                     </label>
                     <p className={styles.pairsKey}>
-                        <button 
+                        <button
                             className={styles.button}
                             onClick={this.addPair}
                             disabled={this.state.UICodeCharList.length === 0}

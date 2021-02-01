@@ -154,7 +154,7 @@ class Step2 extends Component<{}, Step2State> {
                             <Fa icon='fas fa-question' className={styles.questionMark} title='Distance from the bottom of a line to the top of the next one in pixels'/>
                         </div>
 
-                        <Step2KerningPairsList 
+                        <Step2KerningPairsList
                             templateCode={this.state.templateCode}
                             changeKernings={this.changeKernings}
                             handleKerningsValidity={this.handleKerningsValidity}

@@ -53,7 +53,7 @@
 
 .label {
     @include font-headings(800);
-    margin: 10px 0 6px 0;
+    margin: 10px 0 6px;
     display: block;
     font-size: 20px;
 }
@@ -80,7 +80,7 @@
 
 .warning {
     color: $button-color;
-    margin: 5px 0 0 0;
+    margin: 5px 0 0;
     text-align: center;
 }
 
