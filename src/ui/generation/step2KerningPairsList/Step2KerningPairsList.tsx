@@ -24,12 +24,15 @@ interface Step2KerningPairsListState {
 }
 
 class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2KerningPairsListState> {
+    private pairsContainerRef: React.RefObject<HTMLDivElement>
+
     constructor(props: Step2KerningPairsListProps) {
         super(props)
         this.state = {
             pairs: [],
             UICodeCharList: []
         }
+        this.pairsContainerRef = React.createRef<HTMLDivElement>()
     }
 
     async componentDidUpdate(prevProps: Step2KerningPairsListProps, prevState: Step2KerningPairsListState) {
@@ -60,7 +63,13 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
             pairs: [...prevState.pairs, {
                 amount: 1
             }]
-        }))
+        }), () => this.scrollToBottom())
+    }
+
+    scrollToBottom() {
+        if (this.pairsContainerRef.current) {
+            this.pairsContainerRef.current.scrollTop = this.pairsContainerRef.current.scrollHeight
+        }
     }
 
     @bind
@@ -172,7 +181,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
                         title='Pairs of characters with non-default distance from each other. Only supported by some engines'
                     />
                 </label>
-                <div className={styles.pairsContainer}>
+                <div className={styles.pairsContainer} ref={this.pairsContainerRef}>
                     <label className={styles.pairsKey}>character 1</label>
                     <label className={styles.pairsKey}>character 2</label>
                     <label className={styles.pairsKey}>distance
