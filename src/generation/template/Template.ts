@@ -68,6 +68,6 @@ export default class Template {
             base: this.base
         }
 
-        return btoa(JSON.stringify(payload))
+        return btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
     }
 }

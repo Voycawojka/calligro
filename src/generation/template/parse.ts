@@ -1,7 +1,7 @@
 import { CodePayload } from './types'
 
 export function parseTemplateCode(code: string): CodePayload {
-    const json = atob(code)
+    const json = decodeURIComponent(escape(atob(code)))
     const codePayload: CodePayload = JSON.parse(json)
 
     if (codePayload.version !== 0) {
