@@ -29,16 +29,11 @@
 }
 
 .input {
-    background-color: $input-color;
-    box-sizing: border-box;
-    display: inline-block;
+    @include input;
     height: 40px;
     min-width: 40px;
     width: 26%;
     border: none;
-    box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, 0.3);
-    text-align: center;
-    font-weight: 600;
     padding: 0;
 }
 

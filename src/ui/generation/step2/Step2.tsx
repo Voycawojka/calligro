@@ -1,17 +1,20 @@
 import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
-import { generateFont } from '../../../generation/font/Font'
+import { generateFont, KerningPair } from '../../../generation/font/Font';
 import { fontSpecToTextFile } from '../../../generation/font/specSaver'
 import { downloadBmf } from '../../../generation/font/download'
 import styles from './step2.module.scss'
 import Dropzone from '../dropzone/Dropzone'
 import Fa from '../../misc/fa/Fa'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
+import Step2KerningPairsList from '../step2KerningPairsList/Step2KerningPairsList'
 
 interface Step2State {
     horizontalMargin: NumInputValue
     verticalMargin: NumInputValue
     lineHeight: NumInputValue
+    kerningPairs: KerningPair[]
+    isKerningsValid: boolean
     template?: File
     templateCode?: File
 }
@@ -23,7 +26,9 @@ class Step2 extends Component<{}, Step2State> {
         this.state = {
             horizontalMargin: 0,
             verticalMargin: 0,
-            lineHeight: 0
+            lineHeight: 0,
+            kerningPairs: [],
+            isKerningsValid: true
         }
     }
 
@@ -40,7 +45,7 @@ class Step2 extends Component<{}, Step2State> {
         const isCodeInputValid = !!this.state.templateCode && this.state.templateCode.type === 'text/plain'
         const isTemplateInputValid = !!this.state.template && this.state.template.type === 'image/png'
     
-        return isTemplateInputValid && isCodeInputValid
+        return isTemplateInputValid && isCodeInputValid && this.state.isKerningsValid
     }
     
     @bind
@@ -69,12 +74,26 @@ class Step2 extends Component<{}, Step2State> {
             verticalSpacing: standardizeNumericalInput(this.state.verticalMargin),
             lineHeight: standardizeNumericalInput(this.state.lineHeight),
             // TODO pass kernings from UI
-            kernings: []
+            kernings: this.state.kerningPairs
         })
 
         const fntFile = fontSpecToTextFile(fontSpec, format)
 
         downloadBmf(fntFile, pages)
+    }
+
+    @bind
+    changeKernings(kernings: KerningPair[]) {
+        this.setState({
+            kerningPairs: kernings
+        })
+    }
+
+    @bind
+    handleKerningsValidity(valid: boolean) {
+        this.setState({
+            isKerningsValid: valid
+        })
     }
 
     render() {
@@ -135,6 +154,12 @@ class Step2 extends Component<{}, Step2State> {
                             <Fa icon='fas fa-question' className={styles.questionMark} title='Distance from the bottom of a line to the top of the next one in pixels'/>
                         </div>
 
+                        <Step2KerningPairsList 
+                            templateCode={this.state.templateCode}
+                            changeKernings={this.changeKernings}
+                            handleKerningsValidity={this.handleKerningsValidity}
+                        />
+
                         <div className={styles.download}>
                             <label className={styles.buttonsContainerLabel}>Download font</label>
 
@@ -177,8 +202,8 @@ class Step2 extends Component<{}, Step2State> {
                             <li className={styles.instructionListItem}>Specify the font line height (distance from the top of one line to the top of the next one).</li>
                             <li className={styles.instructionListItem}>
                                 <p>
-                                    Add kerning pairs if you want to. Characters in a pair are rendered further or closer from each other.
-                                    E.g. pair "ab" with amount -10 will cause "b" to be 10 pixels closer to "a". Pair "ab" &ne; "ba"!
+                                    Add kerning pairs if you want to. Characters in a pair are rendered further or closer to each other.
+                                    E.g. pair "ab" with distance -10 will cause "b" to be 10 pixels closer to "a". Pair "ab" &ne; "ba"!
                                 </p>
                                 <p>
                                     Warning - not all tools support this feature. We know Godot does.
