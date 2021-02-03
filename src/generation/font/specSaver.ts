@@ -20,6 +20,8 @@ export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml
         ['face', info.face],
         ['size', info.size],
         ['unicode', '1'],
+        ['bold', '0'],
+        ['italic', '0'],
         ['stretchH', info.stretchH],
         ['aa', info.stretchH],
         ['padding', `${info.padding.up},${info.padding.right},${info.padding.down},${info.padding.left}`],

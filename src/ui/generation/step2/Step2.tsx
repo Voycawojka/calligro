@@ -144,7 +144,7 @@ class Step2 extends Component<{}, Step2State> {
 
                                 <div>
                                     <button onClick={() => this.downloadFont('xml')} className={styles.downloadButton} disabled={!this.isInputsValid()} >xml format</button>
-                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser and possibly others.'/>
+                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser, HaxeFlixel and possibly others.'/>
                                 </div>
                             </div>
                             
