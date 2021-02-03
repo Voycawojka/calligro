@@ -144,7 +144,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
             <Fragment key={index} >
                 <input
                     aria-label='first letter input'
-                    className={`${styles.input} ${this.isCharLegal(pair.first) ? '' : styles.inputInvalid}`}
+                    className={`${styles.input} ${this.isCharLegal(pair.first) && this.isPairUnrepeated(pair) ? '' : styles.inputInvalid}`}
                     value={pair.first ? unicodeToChar(pair.first) : ''}
                     onChange={(event) => this.changeChar(event, index, 'first')}
                     type='text'
@@ -152,7 +152,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
 
                 <input
                     aria-label='second letter input'
-                    className={`${styles.input} ${this.isCharLegal(pair.second) ? '' : styles.inputInvalid}`}
+                    className={`${styles.input} ${this.isCharLegal(pair.second) && this.isPairUnrepeated(pair) ? '' : styles.inputInvalid}`}
                     value={pair.second ? unicodeToChar(pair.second) : ''}
                     onChange={(event) => this.changeChar(event, index, 'second')}
                     type='text'
