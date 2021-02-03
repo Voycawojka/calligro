@@ -55,13 +55,20 @@ export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml
         ['chnl', char.chnl]
     ]))
 
+    const kerningTags = specification.kernings.map(kerning => tag('kerning', [
+        ['first', kerning.first],
+        ['second', kerning.second],
+        ['amount', kerning.amount]
+    ]))
+
     switch(format) {
         case 'txt':
             return [
                 infoTag,
                 commonTag,
                 ...pageTags,
-                ...charTags
+                ...charTags,
+                ...kerningTags
             ].join('\n')
         
         case 'xml':
@@ -73,7 +80,10 @@ export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml
                 '</pages>',
                 `<chars count="${charTags.length}">`,
                 ...charTags.map(tag => `\t${tag}`),
-                '</chars>'
+                '</chars>',
+                `</kernings count="${kerningTags.length}">`,
+                ...kerningTags.map(tag => `\t${tag}`),
+                '</kernings>'
             ].join('\n\t')
 
             return [

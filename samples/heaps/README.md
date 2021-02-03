@@ -10,6 +10,8 @@ haxe compile.hxml
 hl out/calligro-sample.hl
 ```
 
+Note Heaps.io doesn't support kerning pairs.
+
 See the [CalligroSample](src/CalligroSample.hx) class for the actual font usage.
 
 [Heaps.io text documentation](https://heaps.io/documentation/text.html)
