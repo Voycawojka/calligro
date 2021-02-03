@@ -12,5 +12,6 @@ lime test neko
 See the [PlayState](source/PlayState.hx) class for the actual font usage.
 
 Note HaxeFlixel requires the XML version of the format.
+It also doesn't support kerning pairs. 
 
 [FlxBitmapFont class documentation](https://api.haxeflixel.com/flixel/graphics/frames/FlxBitmapFont.html) (the format Calligro uses requires the use of the `fromAngelCode` method)

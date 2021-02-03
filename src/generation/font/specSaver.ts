@@ -81,7 +81,7 @@ export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml
                 `<chars count="${charTags.length}">`,
                 ...charTags.map(tag => `\t${tag}`),
                 '</chars>',
-                `</kernings count="${kerningTags.length}">`,
+                `<kernings count="${kerningTags.length}">`,
                 ...kerningTags.map(tag => `\t${tag}`),
                 '</kernings>'
             ].join('\n\t')
