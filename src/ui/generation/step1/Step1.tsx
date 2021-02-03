@@ -49,7 +49,7 @@ class Step1 extends Component<{}, Step1State> {
 
     @bind
     handleCharSetInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        const newCharArray = event.target.value.split("").filter(char => char !== " ")
+        const newCharArray = event.target.value.split('').filter(char => char !== ' ')
         const isUniqueCharSet = new Set(newCharArray).size === newCharArray.length
 
         event.preventDefault()
@@ -74,7 +74,7 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     get charString(): string {
-        return this.state.charSet.map(char => char.character).join("")
+        return this.state.charSet.map(char => char.character).join('')
     }
 
     @bind
@@ -212,7 +212,7 @@ class Step1 extends Component<{}, Step1State> {
                                 <label className={styles.commonLabel}>Base</label>
                                 <input
                                     aria-label='characters base input'
-                                    className={`${styles.commonInput} ${this.isBaseValid() ? "" : styles.commonInputIvalid}`}
+                                    className={`${styles.commonInput} ${this.isBaseValid() ? '' : styles.commonInputIvalid}`}
                                     type='number'
                                     onChange={event => this.handleDefaultValueChange(event, 'base')}
                                     value={this.state.base}

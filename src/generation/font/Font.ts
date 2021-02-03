@@ -45,12 +45,24 @@ export interface FontSpec {
         page: number
         chnl: 1 | 2 | 4 | 8 | 15
     }[]
+    kernings: {
+        first: number
+        second: number
+        amount: number
+    }[]
+}
+
+export interface KerningPair {
+    first: number
+    second: number
+    amount: number
 }
 
 export interface FontConfig {
     horizontalSpacing: number
     verticalSpacing: number
     lineHeight: number
+    kernings: KerningPair[]
 }
 
 export async function generateFont(templateImg: Blob, templateCode: string, fontConfig: FontConfig): Promise<[FontSpec, Blob[]]> {
@@ -113,7 +125,8 @@ export async function generateFont(templateImg: Blob, templateCode: string, font
             xadvance: rect.sourceRect.w,
             page: 0,
             chnl: 15
-        }))
+        })),
+        kernings: fontConfig.kernings
     }
 
     return [specification, [packedBlob]]

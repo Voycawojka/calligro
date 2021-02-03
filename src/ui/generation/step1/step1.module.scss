@@ -53,16 +53,15 @@
 
 .charactersTextArea {
     @include font-paragraphs;
+    @include input;
+    font-weight: 400;
+    text-align: left;
     line-height: 18px;
     width: 100%;
     resize: none;
     height: 170px;
-    border: none;
-    background-color: $input-color;
-    box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, 0.3);
     font-size: 16px;
     padding: 10px;
-    box-sizing: border-box;
 
     @include small-device-portrait {
         height: 145px;
@@ -94,15 +93,9 @@
 }
 
 .commonInput {
-    background-color: $input-color;
-    box-sizing: border-box;
-    display: inline-block;
+    @include input;
     height: 40px;
     width: 22%;
-    border: none;
-    box-shadow: inset 0 5px 5px 0 rgba(0, 0, 0, 0.3);
-    text-align: center;
-    font-weight: 600;
 }
 
 .commonInputIvalid {
