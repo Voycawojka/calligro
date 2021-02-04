@@ -42,9 +42,13 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
             })
 
             if (this.props.templateCode) {
-                this.setState({
-                    UICodeCharList: parseTemplateCode(await this.props.templateCode.text()).slots.flatMap(char => char[0])
-                })
+                const parsedCode = parseTemplateCode(await this.props.templateCode.text())?.slots.flatMap(char => char[0])
+
+                if (parsedCode) {
+                    this.setState({
+                        UICodeCharList: parsedCode
+                    })
+                }
             }
         }
 
