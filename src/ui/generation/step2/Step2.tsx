@@ -8,6 +8,7 @@ import Dropzone from '../dropzone/Dropzone'
 import Fa from '../../misc/fa/Fa'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import Step2KerningPairsList from '../step2KerningPairsList/Step2KerningPairsList'
+import { parseTemplateCode } from '../../../generation/template/parse';
 
 interface Step2State {
     horizontalMargin: NumInputValue
@@ -17,6 +18,8 @@ interface Step2State {
     isKerningsValid: boolean
     template?: File
     templateCode?: File
+    templateError?: string
+    templateCodeError?: string
 }
 
 class Step2 extends Component<{}, Step2State> {
@@ -33,19 +36,56 @@ class Step2 extends Component<{}, Step2State> {
     }
 
     @bind
-    handleDropzoneInput(stateTarget: 'template' | 'templateCode', data: Blob) {
+    async handleTemplateDropzoneInput(data: File) {
+        if (!this.isTemplateFileValid(data)) {
+            this.setState(prevState => ({
+                ...prevState,
+                templateError: 'Uploaded file isn\'t a valid template.',
+                template: undefined
+            }))
+            return
+        }
+
         this.setState(prevState => ({
             ...prevState,
-            [stateTarget] : data
+            templateError: undefined,
+            templateCodeError: undefined,
+            template: data
         }))
     }
 
     @bind
-    isInputsValid(): boolean {
-        const isCodeInputValid = !!this.state.templateCode && this.state.templateCode.type === 'text/plain'
-        const isTemplateInputValid = !!this.state.template && this.state.template.type === 'image/png'
-    
-        return isTemplateInputValid && isCodeInputValid && this.state.isKerningsValid
+    async handleCodeDropzoneInput(data: File) {
+        if (!(await this.isCodeFileValid(data))) {
+            this.setState(prevState => ({
+                ...prevState,
+                templateCodeError: 'Uploaded file isn\'t a valid code.',
+                templateCode: undefined
+            }))
+            return
+        }
+
+        this.setState(prevState => ({
+            ...prevState,
+            templateError: undefined,
+            templateCodeError: undefined,
+            templateCode: data
+        }))
+    }
+
+    async isCodeFileValid(file?: Blob): Promise<boolean> {
+        return !!file && file.type === 'text/plain' && !!parseTemplateCode(await file.text())
+    }
+
+    isTemplateFileValid(file?: Blob): boolean {
+        return !!file && file.type === 'image/png'
+    }
+
+    @bind
+    areDropzonesValid(): boolean {
+        return this.isTemplateFileValid(this.state.template)
+            && this.isCodeFileValid(this.state.templateCode)
+            && this.state.isKerningsValid
     }
     
     @bind
@@ -104,18 +144,18 @@ class Step2 extends Component<{}, Step2State> {
                             inputName='image'
                             acceptedInputType='.png'
                             dataType='image/png'
-                            stateTarget='template'
-                            handleDropzoneInput={this.handleDropzoneInput}
-                            templateName={this.state.template?.name}
+                            handleDropzoneInput={this.handleTemplateDropzoneInput}
+                            fileName={this.state.template?.name}
+                            error={this.state.templateError}
                         />
 
                         <Dropzone
                             inputName='code file'
                             acceptedInputType='.txt'
                             dataType='text/plain'
-                            stateTarget='templateCode'
-                            handleDropzoneInput={this.handleDropzoneInput}
-                            templateName={this.state.templateCode?.name}
+                            handleDropzoneInput={this.handleCodeDropzoneInput}
+                            fileName={this.state.templateCode?.name}
+                            error={this.state.templateCodeError}
                         />
                     </div>
 
@@ -164,12 +204,12 @@ class Step2 extends Component<{}, Step2State> {
 
                             <div className={styles.buttons}>
                                 <div>
-                                    <button onClick={() => this.downloadFont('txt')} className={styles.downloadButton} disabled={!this.isInputsValid()} >txt format</button>
+                                    <button onClick={() => this.downloadFont('txt')} className={styles.downloadButton} disabled={!this.areDropzonesValid()} >txt format</button>
                                     <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, Heaps.io and possibly others.'/>
                                 </div>
 
                                 <div>
-                                    <button onClick={() => this.downloadFont('xml')} className={styles.downloadButton} disabled={!this.isInputsValid()} >xml format</button>
+                                    <button onClick={() => this.downloadFont('xml')} className={styles.downloadButton} disabled={!this.areDropzonesValid()} >xml format</button>
                                     <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser, HaxeFlixel and possibly others.'/>
                                 </div>
                             </div>

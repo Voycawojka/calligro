@@ -3,12 +3,12 @@ import React, { Component } from 'react'
 import styles from './dropzone.module.scss'
 
 interface DropzoneProps {
-    handleDropzoneInput: (stateTarget: 'template' | 'templateCode', data: Blob) => void
-    templateName?: string
+    handleDropzoneInput: (data: File) => void
+    fileName?: string
     acceptedInputType: string
     dataType: string
     inputName: string
-    stateTarget: 'template' | 'templateCode'
+    error?: string
 }
 
 class Dropzone extends Component<DropzoneProps, {}> {
@@ -22,7 +22,7 @@ class Dropzone extends Component<DropzoneProps, {}> {
 
     handleFileInput(data?: File) {
         if (data && data.type === this.props.dataType) {
-            this.props.handleDropzoneInput(this.props.stateTarget, data)
+            this.props.handleDropzoneInput(data)
         }
     }
 
@@ -56,8 +56,12 @@ class Dropzone extends Component<DropzoneProps, {}> {
     }
 
     render() {
-        const renderUploadedFileName = this.props.templateName
-            ? <p className={styles.fileName}>Uploaded {this.props.templateName}</p>
+        const renderUploadedFileName = this.props.fileName
+            ? <p className={styles.fileName}>Uploaded {this.props.fileName}</p>
+            : null
+        
+        const renderError = this.props.error
+            ? <p className={styles.error}>{this.props.error}</p>
             : null
 
         return (
@@ -68,7 +72,7 @@ class Dropzone extends Component<DropzoneProps, {}> {
                 onDragEnter={this.dragEnter}
                 onDragLeave={this.dragLeave}
             >
-                <label className={styles.label}>Drag&drop the {this.props.inputName}</label>
+                <label className={styles.label}>Drag&amp;drop the {this.props.inputName}</label>
                 <div className={styles.inputContainer}>
                     <input
                         aria-label={`${this.props.inputName} input`}
@@ -80,6 +84,7 @@ class Dropzone extends Component<DropzoneProps, {}> {
                     />
                 </div>
                 {renderUploadedFileName}
+                {renderError}
             </div>
         )
     }

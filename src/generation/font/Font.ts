@@ -67,6 +67,11 @@ export interface FontConfig {
 
 export async function generateFont(templateImg: Blob, templateCode: string, fontConfig: FontConfig): Promise<[FontSpec, Blob[]]> {
     const tempConfig = parseTemplateCode(templateCode)
+
+    if (!tempConfig) {
+        throw new Error()
+    }
+
     const slots = tempConfig.slots.map(([ unicode, width, height ]) => ({ character: String.fromCharCode(unicode), width, height }))
     const template = new Template(slots, tempConfig.base)
 
