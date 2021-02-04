@@ -83,8 +83,8 @@ class Step2 extends Component<{}, Step2State> {
 
     @bind
     areDropzonesValid(): boolean {
-        return this.isTemplateFileValid(this.state.template) 
-            && this.isCodeFileValid(this.state.templateCode) 
+        return this.isTemplateFileValid(this.state.template)
+            && this.isCodeFileValid(this.state.templateCode)
             && this.state.isKerningsValid
     }
     
