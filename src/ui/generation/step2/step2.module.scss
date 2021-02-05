@@ -6,9 +6,7 @@
 
 .container {
     background-color: $secondary-color;
-    padding: 2% 3%;
-    padding-top: $header-height;
-    padding-bottom: $header-height;
+    padding: $header-height 3% $footer-height;
     min-height: calc(100vh - #{$footer-height});
     box-sizing: border-box;
     display: grid;

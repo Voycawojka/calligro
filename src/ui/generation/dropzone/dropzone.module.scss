@@ -19,6 +19,10 @@
     align-items: center;
 }
 
+.containerDragOver {
+    outline-offset: -7px;
+}
+
 .inputContainer {
     text-align: center;
 }
@@ -64,7 +68,7 @@
         display: inline-block;
         text-align: center;
         padding: 5px 8px;
-        -webkit-user-select: none;
+        user-select: none;
         cursor: pointer;
         text-decoration: underline;
         color: $link-color;

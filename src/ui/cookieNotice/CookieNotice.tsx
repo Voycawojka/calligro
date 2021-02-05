@@ -46,7 +46,7 @@ class CookieNotice extends Component<{}, CookieNoticeState> {
                 <div className={styles.container}>
                     <h2 className={styles.heading}>We use cookies</h2>
                     <div className={styles.content}>
-                        <img className={styles.image} src='cookie.svg' alt='cookie'/>
+                        <img className={styles.image} src='cookie.svg' alt='cookie' height='203' width='183' />
                         <div className={styles.details}>
                             <ul className={styles.list}>
                                 <li className={styles.listItem}>for your convienience</li>
