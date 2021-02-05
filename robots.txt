@@ -1,3 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /.nojekyll
+
+Sitemap: https://calligro.ideasalmanac.com/sitemap.xml
