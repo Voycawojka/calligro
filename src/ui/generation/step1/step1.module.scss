@@ -5,9 +5,7 @@
 
 .container {
     background-color: $secondary-color;
-    padding: 2% 3%;
-    padding-top: $header-height;
-    padding-bottom: calc(#{$header-height} - 1px);
+    padding: $header-height 3% $footer-height;
     display: grid;
     grid-template-columns: 50% 46%;
     column-gap: 4%;

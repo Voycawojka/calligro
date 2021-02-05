@@ -11,11 +11,19 @@ interface DropzoneProps {
     error?: string
 }
 
-class Dropzone extends Component<DropzoneProps, {}> {
+interface DropzoneState {
+    dragCounter: number
+}
+
+class Dropzone extends Component<DropzoneProps, DropzoneState> {
     private templateInput: React.RefObject<HTMLInputElement>
 
     constructor(props: DropzoneProps) {
         super(props)
+
+        this.state = {
+            dragCounter: 0
+        }
 
         this.templateInput = React.createRef()
     }
@@ -39,6 +47,9 @@ class Dropzone extends Component<DropzoneProps, {}> {
         const data = event.dataTransfer.files[0]
 
         this.handleFileInput(data)
+        this.setState({
+            dragCounter: 0
+        })
     }
 
     dragOver (event: React.DragEvent<HTMLDivElement>) {
@@ -48,11 +59,19 @@ class Dropzone extends Component<DropzoneProps, {}> {
     @bind
     dragEnter (event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault()
+
+        this.setState(prevState => ({
+            dragCounter: prevState.dragCounter + 1
+        }))
     }
     
     @bind
     dragLeave (event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault()
+
+        this.setState(prevState => ({
+            dragCounter: prevState.dragCounter - 1
+        }))
     }
 
     render() {
@@ -66,7 +85,7 @@ class Dropzone extends Component<DropzoneProps, {}> {
 
         return (
             <div
-                className={styles.container}
+                className={`${styles.container} ${this.state.dragCounter ? styles.containerDragOver : ''}`}
                 onDrop={this.handleDrop}
                 onDragOver={this.dragOver}
                 onDragEnter={this.dragEnter}
