@@ -8,21 +8,27 @@ import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'
 import { Link } from 'react-router-dom'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
+import { getUnicodeRanges, UnicodeRange } from '../../../utils/unicodeRanges'
+
 
 interface Step1State {
     charSet: WorkSlot[]
     defaultWidth: NumInputValue
     defaultHeight: NumInputValue
     base: NumInputValue
+    selectedPreset: string
 }
 
-const defaultCharacters = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz.?!,:'
-
 class Step1 extends Component<{}, Step1State> {
+    private unicodeRanges: UnicodeRange[]
+    private presetInputRef: React.RefObject<HTMLInputElement>
+
     constructor(props: {}) {
         super(props)
 
+        this.unicodeRanges = getUnicodeRanges()
         this.state = this.setInitialState()
+        this.presetInputRef = React.createRef<HTMLInputElement>()
     }
 
     setInitialState(): Step1State {
@@ -30,10 +36,11 @@ class Step1 extends Component<{}, Step1State> {
         const parsedData: Step1State = storedData ? JSON.parse(storedData) : null
 
         return ({
-            charSet: parsedData?.charSet ?? this.createCharArray(),
+            selectedPreset: parsedData?.selectedPreset ?? 'Basic Latin',
+            charSet: parsedData?.charSet ?? this.createCharSetFromPreset(parsedData?.selectedPreset ?? 'Basic Latin'),
             defaultWidth: parsedData?.defaultWidth ?? 200,
             defaultHeight: parsedData?.defaultHeight ?? 200,
-            base: parsedData?.base ?? 100
+            base: parsedData?.base ?? 100,
         })
     }
 
@@ -41,10 +48,6 @@ class Step1 extends Component<{}, Step1State> {
         if (prevState !== this.state) {
             window.localStorage.setItem('settings', JSON.stringify(this.state))
         }
-    }
-
-    createCharArray(): WorkSlot[] {
-        return Array.from(defaultCharacters, (character: string) => ({ character }))
     }
 
     @bind
@@ -60,8 +63,30 @@ class Step1 extends Component<{}, Step1State> {
             })
 
             this.setState({
-                charSet: newCharSet
+                charSet: newCharSet,
+                selectedPreset: 'custom'
             })
+
+            if (this.presetInputRef && this.presetInputRef.current) {
+                this.presetInputRef.current.value = 'custom' 
+            }
+        }
+    }
+
+    @bind
+    createCharSetFromPreset(preset: string): WorkSlot[] {
+        const activeRange = this.unicodeRanges.find(range => range.category === preset)
+
+        if (activeRange) {
+            const charSet: WorkSlot[] = []
+
+            for (let i = activeRange.range[0]; i < activeRange.range[1] + 1; i++) {
+                charSet.push({character: String.fromCharCode(i)})
+            }
+
+            return charSet
+        } else {
+            return []
         }
     }
 
@@ -88,11 +113,6 @@ class Step1 extends Component<{}, Step1State> {
         const standardizedHeight: number = standardizeNumericalInput(this.state.defaultHeight)
 
         return standardizedBase <= standardizedHeight && standardizedBase >= 0
-    }
-
-    @bind
-    isCharsetDefault(): boolean {
-        return this.charString === defaultCharacters
     }
 
     @bind
@@ -132,20 +152,57 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     @bind
-    resetCharacters() {
-        this.setState({
-            charSet: this.createCharArray()
-        })
-    }
-
-    @bind
     downloadTemplate() {
         const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base))
 
         downloadTemplate(template)
     }
 
+    @bind
+    changePreset(event: React.ChangeEvent<HTMLInputElement>) {
+        const isValuePreset = this.unicodeRanges.some(range => range.category === event.target.value)
+
+        if (isValuePreset) {
+            const newCharset = this.createCharSetFromPreset(event.target.value)
+
+            this.setState({
+                selectedPreset: event.target.value,
+                charSet: newCharset
+            })
+        }
+    }
+
+    @bind
+    presetSelectBlur(event: React.FocusEvent<HTMLInputElement>) {
+        event.target.value = this.state.selectedPreset
+    }
+
     render() {
+        const renderPresetSelect = (() => {
+            const options = this.unicodeRanges.map(range => <option value={range.category} key={range.category} >{range.category}</option>)
+            const defaultOption = <option value='Basic Latin'>Default</option>
+            const datalistId = 'datalistId'
+            
+            return (
+                <>
+                    <input 
+                        list={datalistId}
+                        aria-label='unicode presets selection input'
+                        onChange={this.changePreset}
+                        defaultValue={this.state.selectedPreset}
+                        className={styles.presetSelect}
+                        onBlur={this.presetSelectBlur}
+                        ref={this.presetInputRef}
+                    />
+
+                    <datalist id={datalistId}>
+                        {defaultOption}
+                        {options}
+                    </datalist>
+                </>
+            )
+        })()
+
         return (
             <div className={styles.container}>
                 <div>
@@ -168,14 +225,7 @@ class Step1 extends Component<{}, Step1State> {
                                     title='Characters you want to be included in the final font (all unicode characters should work)'
                                 />
                             </label>
-                            <button
-                                title='Reset characters to default values'
-                                onClick={this.resetCharacters}
-                                className={styles.charactersResetButton}
-                                disabled={this.isCharsetDefault()}
-                            >
-                                <Fa icon='fas fa-undo' />
-                            </button>
+                            {renderPresetSelect}
                         </div>
                         <textarea
                             aria-label='characters input'

@@ -134,7 +134,6 @@
 .questionMark {
     @include questionMark;
     margin: 0 2%;
-
 }
 
 .commonContainer {
@@ -144,4 +143,15 @@
 
 .link {
     color: $link-color;
+}
+
+.presetSelect {
+    @include input;
+    @include font-paragraphs;
+    font-size: 16px;
+    margin: 6px 0;
+    width: 100%;
+    text-align: left;
+    padding-left: 10px;
+    height: 35px;
 }
