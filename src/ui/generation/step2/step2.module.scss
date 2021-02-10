@@ -13,7 +13,7 @@
     grid-template-columns: 46% 48%;
     column-gap: 6%;
 
-    @include vertical-device {
+    @include vertical-device-or-mini-device {
         grid-template-columns: 100%;
         grid-template-rows: min-content min-content;
     }

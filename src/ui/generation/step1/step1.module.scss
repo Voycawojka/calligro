@@ -12,7 +12,7 @@
     min-height: calc(100vh - #{$footer-height});
     box-sizing: border-box;
 
-    @include vertical-device {
+    @include vertical-device-or-mini-device {
         grid-template-columns: 100%;
         grid-template-rows: min-content min-content;
     }
