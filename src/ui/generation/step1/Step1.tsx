@@ -68,7 +68,7 @@ class Step1 extends Component<{}, Step1State> {
             })
 
             if (this.presetInputRef && this.presetInputRef.current) {
-                this.presetInputRef.current.value = 'custom' 
+                this.presetInputRef.current.value = 'custom'
             }
         }
     }
@@ -185,7 +185,7 @@ class Step1 extends Component<{}, Step1State> {
             
             return (
                 <>
-                    <input 
+                    <input
                         list={datalistId}
                         aria-label='unicode presets selection input'
                         onChange={this.changePreset}
