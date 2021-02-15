@@ -277,16 +277,6 @@ class Step2 extends Component<{}, Step2State> {
                             <li className={styles.instructionListItem}>Generate and download your BMFont.</li>
                         </ol>
                     </div>
-
-                    <div >
-                        <h2 className={styles.heading}>Coming soon</h2>
-
-                        <ul className={styles.featureList}>
-                            <li className={styles.feature}>Font preview</li>
-                        </ul>
-
-                        <p className={styles.goodbye}>Stay tuned ;)</p>
-                    </div>
                 </div>
 
                 <Preview
