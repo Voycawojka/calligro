@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import styles from './step2KerningPairsList.module.scss'
-import { KerningPair } from '../../../generation/font/Font';
+import { FontSpec, KerningPair } from '../../../generation/font/Font';
 import { parseTemplateCode } from '../../../generation/template/parse'
 import { bind } from 'helpful-decorators'
 import { unicodeToChar, charToUnicode } from '../../../utils/char';
 import Fa from '../../misc/fa/Fa';
+import { CodePayload } from '../../../generation/template/types';
 
 interface WorkKerningPair {
     first?: number,
@@ -15,7 +16,7 @@ interface WorkKerningPair {
 interface Step2KerningPairsListProps {
     changeKernings: (kernings: KerningPair[]) => void
     handleKerningsValidity: (valid: boolean) => void
-    templateCode?: File
+    templateCode?: CodePayload
 }
 
 interface Step2KerningPairsListState {
@@ -35,14 +36,14 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
         this.pairsContainerRef = React.createRef<HTMLDivElement>()
     }
 
-    async componentDidUpdate(prevProps: Step2KerningPairsListProps, prevState: Step2KerningPairsListState) {
+    componentDidUpdate(prevProps: Step2KerningPairsListProps, prevState: Step2KerningPairsListState) {
         if (prevProps.templateCode !== this.props.templateCode) {
             this.setState({
                 pairs: []
             })
 
             if (this.props.templateCode) {
-                const parsedCode = parseTemplateCode(await this.props.templateCode.text())?.slots.flatMap(char => char[0])
+                const parsedCode = this.props.templateCode?.slots.flatMap(char => char[0])
 
                 if (parsedCode) {
                     this.setState({
