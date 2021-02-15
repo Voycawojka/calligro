@@ -216,7 +216,7 @@ class Step2 extends Component<{}, Step2State> {
                                 onChange={(event) => this.handleNumericalInput(event, 'lineHeight')}
                                 value={this.state.lineHeight}
                             />
-                            <Fa icon='fas fa-question' className={styles.questionMark} title='Distance from the bottom of a line to the top of the next one in pixels'/>
+                            <Fa icon='fas fa-question' className={styles.questionMark} title='Distance from the top of a line to the top of the next one in pixels'/>
                         </div>
 
                         <Step2KerningPairsList
@@ -261,10 +261,8 @@ class Step2 extends Component<{}, Step2State> {
                         <h2 className={styles.heading}>Step 2 - Generate your font</h2>
                         
                         <ol className={styles.instructionList}>
-                            <li className={styles.instructionListItem}>Upload the template image with your characters drawn on it. Nothing is sent to a server, everything stays in your browser.</li>
-                            <li className={styles.instructionListItem}>Upload the txt file downloaded togheter with the template image earlier (it contains template metadata).</li>
-                            <li className={styles.instructionListItem}>Specify the horizontal and vertical margins for characters.</li>
-                            <li className={styles.instructionListItem}>Specify the font line height (distance from the top of one line to the top of the next one).</li>
+                            <li className={styles.instructionListItem}>Upload the template image with your characters drawn on it and the corresponding txt file (metadata).</li>
+                            <li className={styles.instructionListItem}>Specify font options</li>
                             <li className={styles.instructionListItem}>
                                 <p>
                                     Add kerning pairs if you want to. Characters in a pair are rendered further or closer to each other.
