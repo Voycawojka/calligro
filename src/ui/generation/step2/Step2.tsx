@@ -257,6 +257,15 @@ class Step2 extends Component<{}, Step2State> {
                 </div>
 
                 <div>
+                    <div className={styles.previewContainer}>
+                        <Preview
+                            width={400}
+                            height={250}
+                            templateCode={this.state.templateCode}
+                            templateImg={this.state.template}
+                            fontConfig={this.getFontConfig()} />
+                    </div>
+
                     <div>
                         <h2 className={styles.heading}>Step 2 - Generate your font</h2>
                         
@@ -276,13 +285,6 @@ class Step2 extends Component<{}, Step2State> {
                         </ol>
                     </div>
                 </div>
-
-                <Preview
-                    width={500}
-                    height={500}
-                    templateCode={this.state.templateCode}
-                    templateImg={this.state.template}
-                    fontConfig={this.getFontConfig()} />
             </div>
         )
     }

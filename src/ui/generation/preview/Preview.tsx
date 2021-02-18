@@ -15,6 +15,7 @@ interface PreviewProps {
 interface PreviewState {
     text: string
     scale: number
+    color: string
 }
 
 class Preview extends Component<PreviewProps, PreviewState> {
@@ -25,7 +26,8 @@ class Preview extends Component<PreviewProps, PreviewState> {
 
         this.state = {
             text: '',
-            scale: 1
+            scale: 1,
+            color: '#ffffff'
         }
 
         this.canvas = React.createRef()
@@ -35,6 +37,7 @@ class Preview extends Component<PreviewProps, PreviewState> {
         if (this.canvas.current && this.props.templateImg && this.props.templateCode) {
             const ctx = this.canvas.current.getContext('2d');
             const spec = await generateFont(this.props.templateImg, this.props.templateCode, this.props.fontConfig)
+
             ctx && drawPreview(this.state.text, spec[0], spec[1], this.state.scale, ctx);
         }
     }
@@ -48,25 +51,44 @@ class Preview extends Component<PreviewProps, PreviewState> {
     }
 
     render() {
-        return <div>
-            <textarea
-                aria-label='preview text input'
-                onChange={event => this.setState({ text: event.target.value })}
-                value={this.state.text}
-                className={styles.previewInput}
-                placeholder='Type something to preview the font' />
-            <input
-                aria-label='preview scale input'
-                type='number'
-                step={0.01}
-                min={0.01}
-                onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
-                value={this.state.scale} />
-            <canvas 
-                width={this.props.width} 
-                height={this.props.height} 
-                ref={this.canvas} 
-                className={styles.canvas} />
+        return <div className={styles.container}>
+            <div className={styles.controls}>
+                <textarea
+                    aria-label='preview text input'
+                    onChange={event => this.setState({ text: event.target.value })}
+                    value={this.state.text}
+                    className={styles.previewInput}
+                    placeholder='Type to preview the font' />
+                <div>
+                    <label className={styles.label}>Scale</label>
+                    <input
+                        aria-label='preview scale input'
+                        type='number'
+                        step={0.01}
+                        min={0.01}
+                        onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
+                        value={this.state.scale} 
+                        className={styles.scaleInput} />
+                </div>
+                <div>
+                    <label className={styles.label}>Background</label>
+                    <input
+                        aria-label='preview color input'
+                        type='color'
+                        className={styles.colorInput}
+                        onChange={event => this.setState({ color: event.target.value })}
+                        value={this.state.color} />
+                </div>
+            </div>
+            <div 
+                className={styles.previewContainer} 
+                style={{ backgroundColor: this.state.color, maxWidth: this.props.width }}>
+                <canvas 
+                    width={this.props.width} 
+                    height={this.props.height} 
+                    ref={this.canvas} 
+                    className={styles.preview} />
+            </div>
         </div>
     }
 }

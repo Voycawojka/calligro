@@ -1,7 +1,50 @@
-.canvas {
+@import "../../../scss/mixins.scss";
+
+.previewContainer {
+    display: block;
+}
+
+.preview {
     border: 1px solid black;
 }
 
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: stretch;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.label {
+    @include font-headings(800);
+    margin: 3px 0;
+    display: inline-block;
+    font-size: 16px;
+    width: 100px;
+}
+
 .previewInput {
-    width: 100%;
+    @include input;
+    resize: none;
+    min-height: 80px;
+    text-align: left;
+    padding: 10px;
+}
+
+.scaleInput {
+    @include input;
+    height: 41px;
+    width: 75px;
+}
+
+.colorInput {
+    width: 69px;
 }
