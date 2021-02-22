@@ -67,7 +67,7 @@ class Preview extends Component<PreviewProps, PreviewState> {
                         step={0.01}
                         min={0.01}
                         onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
-                        value={this.state.scale} 
+                        value={this.state.scale}
                         className={styles.scaleInput} />
                 </div>
                 <div>
@@ -80,12 +80,12 @@ class Preview extends Component<PreviewProps, PreviewState> {
                         value={this.state.color} />
                 </div>
             </div>
-            <div 
-                className={styles.previewContainer} 
+            <div
+                className={styles.previewContainer}
                 style={{ backgroundColor: this.state.color, width: this.props.width, maxHeight: this.props.height }}>
-                <canvas 
-                    width={this.props.width} 
-                    height={this.props.height} 
+                <canvas
+                    width={this.props.width}
+                    height={this.props.height}
                     ref={this.canvas} />
             </div>
         </div>
