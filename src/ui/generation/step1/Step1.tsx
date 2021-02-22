@@ -77,7 +77,7 @@ class Step1 extends Component<{}, Step1State> {
             })
 
             if (this.presetInputRef && this.presetInputRef.current) {
-                this.presetInputRef.current.value = 'custom' 
+                this.presetInputRef.current.value = 'custom'
             }
         }
     }
@@ -257,8 +257,8 @@ class Step1 extends Component<{}, Step1State> {
 
             
             return (
-                <div className={styles.presetSelectContainer} >
-                    <input 
+                <div className={styles.presetSelectContainer}>
+                    <input
                         aria-label='unicode presets selection input'
                         onChange={(event) => this.handlePresetInput(event.target.value)}
                         defaultValue={this.state.selectedPreset}
