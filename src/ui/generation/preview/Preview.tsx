@@ -82,12 +82,11 @@ class Preview extends Component<PreviewProps, PreviewState> {
             </div>
             <div 
                 className={styles.previewContainer} 
-                style={{ backgroundColor: this.state.color, maxWidth: this.props.width }}>
+                style={{ backgroundColor: this.state.color, width: this.props.width, maxHeight: this.props.height }}>
                 <canvas 
                     width={this.props.width} 
                     height={this.props.height} 
-                    ref={this.canvas} 
-                    className={styles.preview} />
+                    ref={this.canvas} />
             </div>
         </div>
     }

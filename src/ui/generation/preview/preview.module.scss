@@ -2,24 +2,28 @@
 
 .previewContainer {
     display: block;
-}
+    border: 2px solid black;
+    max-width: 100%;
 
-.preview {
-    border: 1px solid black;
+    canvas {
+        max-width: 100%;
+    }
 }
 
 .container {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: stretch;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    margin-bottom: 50px;
 }
 
 .controls {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     gap: 10px;
-    height: 100%;
+    max-height: 100%;
     margin-right: 10px;
 }
 

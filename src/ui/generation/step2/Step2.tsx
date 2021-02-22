@@ -281,6 +281,7 @@ class Step2 extends Component<{}, Step2State> {
                                     Warning - not all tools support this feature. We know Godot does.
                                 </p>
                             </li>
+                            <li className={styles.instructionListItem}>Preview changes live at any point.</li>
                             <li className={styles.instructionListItem}>Generate and download your BMFont.</li>
                         </ol>
                     </div>
