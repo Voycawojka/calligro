@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import styles from './step2KerningPairsList.module.scss'
-import { FontSpec, KerningPair } from '../../../generation/font/Font';
-import { parseTemplateCode } from '../../../generation/template/parse'
+import { KerningPair } from '../../../generation/font/Font';
 import { bind } from 'helpful-decorators'
 import { unicodeToChar, charToUnicode } from '../../../utils/char';
 import Fa from '../../misc/fa/Fa';

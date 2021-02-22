@@ -1,7 +1,6 @@
 import { convertToBlob } from '../../utils/canvasHelpers';
 import { blobToCanvas } from '../fs/image';
 import { packFromSheet, SourceRect } from '../packing/imagePacking';
-import { parseTemplateCode } from '../template/parse';
 import Template from '../template/Template';
 import { CodePayload } from '../template/types';
 

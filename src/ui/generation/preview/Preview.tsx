@@ -67,7 +67,7 @@ class Preview extends Component<PreviewProps, PreviewState> {
                         step={0.01}
                         min={0.01}
                         onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
-                        value={this.state.scale} 
+                        value={isNaN(this.state.scale) ? '' : this.state.scale} 
                         className={styles.scaleInput} />
                 </div>
                 <div>
