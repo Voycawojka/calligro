@@ -35,10 +35,10 @@ class Preview extends Component<PreviewProps, PreviewState> {
 
     async draw() {
         if (this.canvas.current && this.props.templateImg && this.props.templateCode) {
-            const ctx = this.canvas.current.getContext('2d');
+            const ctx = this.canvas.current.getContext('2d')
             const spec = await generateFont(this.props.templateImg, this.props.templateCode, this.props.fontConfig)
 
-            ctx && drawPreview(this.state.text, spec[0], spec[1], this.state.scale, ctx);
+            ctx && drawPreview(this.state.text, spec[0], spec[1], this.state.scale, ctx)
         }
     }
 

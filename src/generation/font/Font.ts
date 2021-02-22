@@ -1,8 +1,8 @@
-import { convertToBlob } from '../../utils/canvasHelpers';
-import { blobToCanvas } from '../fs/image';
-import { packFromSheet, SourceRect } from '../packing/imagePacking';
-import Template from '../template/Template';
-import { CodePayload } from '../template/types';
+import { convertToBlob } from '../../utils/canvasHelpers'
+import { blobToCanvas } from '../fs/image'
+import { packFromSheet, SourceRect } from '../packing/imagePacking'
+import Template from '../template/Template'
+import { CodePayload } from '../template/types'
 
 export interface FontSpec {
     info: {

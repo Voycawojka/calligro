@@ -1,4 +1,4 @@
-import { FontSpec } from "../generation/font/Font";
+import { FontSpec } from '../generation/font/Font'
 
 function blobsToTextures(blobs: Blob[]): Promise<HTMLImageElement[]> {
     const textures: HTMLImageElement[] = []

@@ -1,6 +1,6 @@
 import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
-import { FontConfig, generateFont, KerningPair } from '../../../generation/font/Font';
+import { FontConfig, generateFont, KerningPair } from '../../../generation/font/Font'
 import { fontSpecToTextFile } from '../../../generation/font/specSaver'
 import { downloadBmf } from '../../../generation/font/download'
 import styles from './step2.module.scss'
@@ -8,9 +8,9 @@ import Dropzone from '../dropzone/Dropzone'
 import Fa from '../../misc/fa/Fa'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import Step2KerningPairsList from '../step2KerningPairsList/Step2KerningPairsList'
-import { parseTemplateCode } from '../../../generation/template/parse';
-import Preview from '../preview/Preview';
-import { CodePayload } from '../../../generation/template/types';
+import { parseTemplateCode } from '../../../generation/template/parse'
+import Preview from '../preview/Preview'
+import { CodePayload } from '../../../generation/template/types'
 
 interface Step2State {
     horizontalMargin: NumInputValue
