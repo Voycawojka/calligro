@@ -25,33 +25,16 @@
   </metadata>
   <defs
      id="defs44" />
+  <rect
+     style="fill:#202020;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:3.27467;stroke-linecap:round;stroke-opacity:1"
+     id="rect1454"
+     width="228.87923"
+     height="276.52719"
+     x="1.0796912"
+     y="0.69414645"
+     ry="39.249283" />
   <path
-     d="m 140.00001,32 c -53.324494,0 -98.000004,47.18393 -98.000004,106.5 0,57.12831 41.44263,102.99645 92.138674,106.30273 l 5.97266,-59.80664 c -0.0369,1.6e-4 -0.0744,0.004 -0.11133,0.004 -17.18551,0 -38,-16.52007 -38,-46.5 0,-29.97993 20.81449,-46.5 38,-46.5 3.01512,0 6.14152,0.521 9.24805,1.52148 l 6.01367,-60.21289 C 150.27771,32.45014 145.18031,32 140.00001,32 Z"
-     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:60;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000"
+     d="m 143.92302,48.347107 c -44.849423,0 -82.424504,39.68481 -82.424504,89.573553 0,48.04871 34.856011,86.62685 77.494724,89.40766 l 5.02342,-50.30137 c -0.0295,1.4e-4 -0.0626,0.002 -0.0935,0.002 -14.45418,0 -31.96052,-13.89449 -31.96052,-39.10959 0,-25.2151 17.50634,-39.109576 31.96052,-39.109576 2.53591,0 5.16543,0.438203 7.77823,1.279676 l 5.05787,-50.643064 c -4.19187,-0.722092 -8.47914,-1.100679 -12.8361,-1.100679 z"
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#ffd76c;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:50.464;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000"
      id="path884" />
-  <rect
-     id="rect8"
-     stroke-dasharray="30, 8"
-     stroke-width="10"
-     stroke="#000000"
-     height="268"
-     width="196"
-     y="5"
-     x="5" />
-  <rect
-     id="rect10"
-     stroke-width="2"
-     stroke="#ffffff"
-     fill="#000000"
-     transform="rotate(-149.635)"
-     height="14.6147"
-     width="29.303301"
-     y="53.792583"
-     x="-223.37672" />
-  <path
-     id="path12"
-     stroke-width="2"
-     stroke="#ffffff"
-     fill="#000000"
-     d="m 177.53101,30.5 c -2.267,0.021 -3.692,2.453 -2.602,4.441 l 17.851,32.579 c 1.12,2.044 4.041,2.086 5.219,0.075 l 19.297,-32.936 c 1.178,-2.011 -0.287,-4.539 -2.618,-4.516 z" />
 </svg>
