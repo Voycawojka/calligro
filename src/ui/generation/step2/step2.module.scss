@@ -36,36 +36,6 @@
     }
 }
 
-.feature {
-    @include font-paragraphs;
-    line-height: 23px;
-    font-size: 20px;
-
-    &::before {
-        content: $dash-glyph;
-        padding-right: 10px;
-    }
-
-    @include small-device {
-        font-size: 18px;
-        line-height: 21px;
-    }
-}
-
-.goodbye {
-    @include font-paragraphs;
-    font-size: 20px;
-
-    @include small-device {
-        font-size: 18px;
-    }
-}
-
-.featureList {
-    list-style-type: none;
-    padding: 0;
-}
-
 .dropzones {
     margin-top: 54px;
     width: 100%;
@@ -166,4 +136,8 @@
         content: $nbsp;
         display: inline-block;
     }
+}
+
+.previewContainer {
+    margin-top: 65px;
 }
