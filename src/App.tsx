@@ -6,6 +6,7 @@ import Footer from './ui/footer/Footer'
 import Policy from './ui/policy/Policy'
 import CookieNotice from './ui/cookieNotice/CookieNotice'
 import Loader from './ui/misc/loader/Loader'
+import { WebOnly } from './ui/envSpecific/WebOnly'
 
 const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 
@@ -18,7 +19,9 @@ function App() {
                 </Route>
 
                 <Route>
-                    <Header/>
+                    <WebOnly>
+                        <Header/>
+                    </WebOnly>
 
                     <Route exact path='/'>
                         <Step1 />
@@ -30,9 +33,11 @@ function App() {
                         </Suspense>
                     </Route>
 
-                    <Footer />
+                    <WebOnly>
+                        <Footer />
 
-                    <CookieNotice />
+                        <CookieNotice />
+                    </WebOnly>
                 </Route>
             </Switch>
         </HashRouter>

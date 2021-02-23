@@ -8,6 +8,7 @@ import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'
 import { Link } from 'react-router-dom'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
+import { WebOnly } from '../../envSpecific/WebOnly'
 
 interface Step1State {
     charSet: WorkSlot[]
@@ -149,14 +150,14 @@ class Step1 extends Component<{}, Step1State> {
         return (
             <div className={styles.container}>
                 <div>
-                    <div>
+                    <WebOnly div>
                         <h2 className={styles.heading}>Generate bitmap fonts in the <a href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</a> format.</h2>
                         <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
                         <p className={styles.paragraph}>
                             If you’re looking to convert a truetype font into a BMFont, try tools like the
                             original <a href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</a> or <a href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</a> instead.
                         </p>
-                    </div>
+                    </WebOnly>
 
                     <div>
                         <div className={styles.charactersLabelContainer}>
