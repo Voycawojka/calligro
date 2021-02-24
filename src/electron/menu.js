@@ -1,6 +1,6 @@
 const { shell } = require('electron')
 
-function constructMenuTemplate(app) {
+function constructMenuTemplate(app, window) {
     const isMac = process.platform === 'darwin'
 
     const macAppMenu = [{
@@ -22,11 +22,11 @@ function constructMenuTemplate(app) {
         ...(isMac ? macAppMenu : []),
         {
             label: 'Create a template',
-            click: () => alert('STEP 1')
+            click: () => window.webContents.send('navigation', '/')
         },
         {
             label: 'Generate a font',
-            click: () => alert('STEP 2')
+            click: () => window.webContents.send('navigation', '/step2')
         },
         { 
             label: 'More',

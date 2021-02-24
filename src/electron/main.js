@@ -18,7 +18,7 @@ function createWindow() {
         slashes: true
     })
 
-    const menuTemplate = constructMenuTemplate(app)
+    const menuTemplate = constructMenuTemplate(app, window)
     const menu = Menu.buildFromTemplate(menuTemplate)
     Menu.setApplicationMenu(menu)
 

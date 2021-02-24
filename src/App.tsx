@@ -7,6 +7,8 @@ import Policy from './ui/policy/Policy'
 import CookieNotice from './ui/cookieNotice/CookieNotice'
 import Loader from './ui/misc/loader/Loader'
 import { WebOnly } from './ui/envSpecific/WebOnly'
+import { DesktopOnly } from './ui/envSpecific/DesktopOnly'
+import { IpcNavigation } from './ui/ipcNavigation/IpcNavigation'
 
 const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 
@@ -35,9 +37,12 @@ function App() {
 
                     <WebOnly>
                         <Footer />
-
                         <CookieNotice />
                     </WebOnly>
+
+                    <DesktopOnly>
+                        <IpcNavigation />
+                    </DesktopOnly>
                 </Route>
             </Switch>
         </HashRouter>
