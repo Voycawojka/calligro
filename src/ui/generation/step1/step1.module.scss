@@ -79,7 +79,7 @@
     margin: 10px 0;
     display: block;
     font-size: 20px;
-    width: 100%;
+    width: 50%;
 }
 
 .commonLabel {
@@ -133,7 +133,7 @@
 
 .questionMark {
     @include questionMark;
-    margin: 0 2%;
+    margin: 0 0 0 10px;
 }
 
 .commonContainer {
@@ -150,8 +150,13 @@
     @include font-paragraphs;
     font-size: 16px;
     margin: 6px 0;
-    width: 100%;
+    width: calc(100% - 34px);
     text-align: left;
     padding-left: 10px;
     height: 35px;
+}
+
+.inputContainer {
+    display: inline;
+    width: 50%;
 }

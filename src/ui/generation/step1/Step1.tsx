@@ -17,30 +17,31 @@ interface Step1State {
     defaultHeight: NumInputValue
     base: NumInputValue
     selectedPreset: string
+    presetInputValue: string
 }
 
 class Step1 extends Component<{}, Step1State> {
     private unicodeRanges: UnicodeRange[]
-    private presetInputRef: React.RefObject<HTMLInputElement>
-
+    
     constructor(props: {}) {
         super(props)
 
         this.unicodeRanges = getUnicodeRanges()
         this.state = this.setInitialState()
-        this.presetInputRef = React.createRef<HTMLInputElement>()
     }
 
     setInitialState(): Step1State {
         const storedData = window.localStorage.getItem('settings')
         const parsedData: Step1State = storedData ? JSON.parse(storedData) : null
+        const initialPreset = parsedData?.selectedPreset ?? 'Basic Latin'
 
         return ({
-            selectedPreset: parsedData?.selectedPreset ?? 'Basic Latin',
-            charSet: parsedData?.charSet ?? this.createCharSetFromPreset(parsedData?.selectedPreset ?? 'Basic Latin'),
+            selectedPreset: initialPreset,
+            charSet: parsedData?.charSet ?? this.createCharSetFromPreset(initialPreset),
             defaultWidth: parsedData?.defaultWidth ?? 200,
             defaultHeight: parsedData?.defaultHeight ?? 200,
             base: parsedData?.base ?? 100,
+            presetInputValue: initialPreset
         })
     }
 
@@ -64,12 +65,9 @@ class Step1 extends Component<{}, Step1State> {
 
             this.setState({
                 charSet: newCharSet,
-                selectedPreset: 'custom'
+                selectedPreset: 'custom',
+                presetInputValue: 'custom'
             })
-
-            if (this.presetInputRef && this.presetInputRef.current) {
-                this.presetInputRef.current.value = 'custom'
-            }
         }
     }
 
@@ -162,13 +160,17 @@ class Step1 extends Component<{}, Step1State> {
     changePreset(event: React.ChangeEvent<HTMLInputElement>) {
         const isValuePreset = this.unicodeRanges.some(range => range.category === event.target.value)
 
+        this.setState({
+            presetInputValue: event.target.value
+        })
+
         if (isValuePreset) {
             const newCharset = this.createCharSetFromPreset(event.target.value)
 
             this.setState({
                 selectedPreset: event.target.value,
                 charSet: newCharset
-            })
+            }, () => event.target.blur())
         }
     }
 
@@ -179,27 +181,36 @@ class Step1 extends Component<{}, Step1State> {
 
     render() {
         const renderPresetSelect = (() => {
-            const options = this.unicodeRanges.map(range => <option value={range.category} key={range.category} >{range.category}</option>)
+            const options = this.unicodeRanges
+                .filter(range => range.category.toLowerCase().includes(this.state.presetInputValue.toLowerCase()))
+                .slice(0, 10)
+                .map(range => <option value={range.category} key={range.category} >{range.category}</option>)
+
             const defaultOption = <option value='Basic Latin'>Default</option>
             const datalistId = 'datalistId'
             
             return (
-                <>
-                    <input 
+                <div className={styles.inputContainer}>
+                    <input
                         list={datalistId}
                         aria-label='unicode presets selection input'
                         onChange={this.changePreset}
-                        defaultValue={this.state.selectedPreset}
+                        value={this.state.presetInputValue}
                         className={styles.presetSelect}
                         onBlur={this.presetSelectBlur}
-                        ref={this.presetInputRef}
                     />
 
-                    <datalist id={datalistId}>
+                    <datalist id={datalistId} onClick={() => console.log('clicked')}>
                         {defaultOption}
                         {options}
                     </datalist>
-                </>
+
+                    <Fa
+                        icon='fas fa-question'
+                        className={styles.questionMark}
+                        title='Search any unicode preset like Arabic, Cyrillic, or Hiragana'
+                    />
+                </div>
             )
         })()
 
@@ -222,7 +233,7 @@ class Step1 extends Component<{}, Step1State> {
                                 <Fa
                                     icon='fas fa-question'
                                     className={styles.questionMark}
-                                    title='Characters you want to be included in the final font (all unicode characters should work)'
+                                    title={'Characters you want to be included in the final font (symbols made from multiple unicode characters won\'t work, e.g. more complex emojis)'}
                                 />
                             </label>
                             {renderPresetSelect}
