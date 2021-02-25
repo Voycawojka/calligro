@@ -79,6 +79,10 @@
     margin: 10px 0;
     display: block;
     font-size: 20px;
+    width: 100%;
+}
+
+.charactersLabel {
     width: 50%;
 }
 
@@ -133,7 +137,11 @@
 
 .questionMark {
     @include questionMark;
-    margin: 0 0 0 10px;
+    margin: 0 10px;
+}
+
+.inputQuestionMark {
+    margin-bottom: 2px;
 }
 
 .commonContainer {
@@ -150,7 +158,7 @@
     @include font-paragraphs;
     font-size: 16px;
     margin: 6px 0;
-    width: calc(100% - 34px);
+    width: calc(100% - 40px);
     text-align: left;
     padding-left: 10px;
     height: 35px;

@@ -191,6 +191,12 @@ class Step1 extends Component<{}, Step1State> {
             
             return (
                 <div className={styles.inputContainer}>
+                    <Fa
+                        icon='fas fa-question'
+                        className={`${styles.questionMark} ${styles.inputQuestionMark}`}
+                        title='Search any unicode preset like Arabic, Cyrillic, or Hiragana'
+                    />
+
                     <input
                         list={datalistId}
                         aria-label='unicode presets selection input'
@@ -204,12 +210,6 @@ class Step1 extends Component<{}, Step1State> {
                         {defaultOption}
                         {options}
                     </datalist>
-
-                    <Fa
-                        icon='fas fa-question'
-                        className={styles.questionMark}
-                        title='Search any unicode preset like Arabic, Cyrillic, or Hiragana'
-                    />
                 </div>
             )
         })()
@@ -228,7 +228,7 @@ class Step1 extends Component<{}, Step1State> {
 
                     <div>
                         <div className={styles.charactersLabelContainer}>
-                            <label className={styles.label}>
+                            <label className={`${styles.label} ${styles.charactersLabel}`}>
                                 Characters
                                 <Fa
                                     icon='fas fa-question'
