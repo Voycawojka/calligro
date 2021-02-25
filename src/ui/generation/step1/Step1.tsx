@@ -17,15 +17,11 @@ interface Step1State {
     defaultHeight: NumInputValue
     base: NumInputValue
     selectedPreset: string
-    presetInputValue: string
-    suggestionsVisible: boolean
 }
 
 class Step1 extends Component<{}, Step1State> {
     private unicodeRanges: UnicodeRange[]
     private presetInputRef: React.RefObject<HTMLInputElement>
-    private firstSuggestionButtonRef: React.RefObject<HTMLButtonElement>
-    private suggestionListRef: React.RefObject<HTMLUListElement>
 
     constructor(props: {}) {
         super(props)
@@ -33,23 +29,18 @@ class Step1 extends Component<{}, Step1State> {
         this.unicodeRanges = getUnicodeRanges()
         this.state = this.setInitialState()
         this.presetInputRef = React.createRef<HTMLInputElement>()
-        this.firstSuggestionButtonRef = React.createRef<HTMLButtonElement>()
-        this.suggestionListRef = React.createRef<HTMLUListElement>()
     }
 
     setInitialState(): Step1State {
         const storedData = window.localStorage.getItem('settings')
         const parsedData: Step1State = storedData ? JSON.parse(storedData) : null
-        const initialPreset = parsedData?.selectedPreset ?? 'Basic Latin'
 
         return ({
-            selectedPreset: initialPreset,
-            presetInputValue: initialPreset,
-            charSet: parsedData?.charSet ?? this.createCharSetFromPreset(initialPreset),
+            selectedPreset: parsedData?.selectedPreset ?? 'Basic Latin',
+            charSet: parsedData?.charSet ?? this.createCharSetFromPreset(parsedData?.selectedPreset ?? 'Basic Latin'),
             defaultWidth: parsedData?.defaultWidth ?? 200,
             defaultHeight: parsedData?.defaultHeight ?? 200,
             base: parsedData?.base ?? 100,
-            suggestionsVisible: false
         })
     }
 
@@ -168,23 +159,16 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     @bind
-    changePreset(event: React.MouseEvent<HTMLButtonElement, MouseEvent>, value: string) {
-        const isValuePreset = this.unicodeRanges.some(range => range.category === value)
+    changePreset(event: React.ChangeEvent<HTMLInputElement>) {
+        const isValuePreset = this.unicodeRanges.some(range => range.category === event.target.value)
 
         if (isValuePreset) {
-            const newCharset = this.createCharSetFromPreset(value)
+            const newCharset = this.createCharSetFromPreset(event.target.value)
 
             this.setState({
-                selectedPreset: value,
+                selectedPreset: event.target.value,
                 charSet: newCharset
             })
-
-
-            if (this.presetInputRef && this.presetInputRef.current) {
-                this.presetInputRef.current.value = value
-            }
-
-            event.currentTarget.blur()
         }
     }
 
@@ -193,85 +177,29 @@ class Step1 extends Component<{}, Step1State> {
         event.target.value = this.state.selectedPreset
     }
 
-    @bind
-    handlePresetInput(value: string) {
-        this.setState({
-            presetInputValue: value
-        })
-    }
-
-    @bind
-    handleArrowInputNavigation(event: React.KeyboardEvent<HTMLInputElement>) {
-        if (event.key === 'ArrowDown') {
-            if (this.firstSuggestionButtonRef.current) {
-                this.firstSuggestionButtonRef.current.focus()
-            }
-        }
-    }
-
-    @bind
-    handleArrowSuggestionsNavigation(event: React.KeyboardEvent<HTMLButtonElement>, index: number, arrayLength: number) {
-        const moveFocusInsideSuggestions = (nextIndex: number) => {
-            if (this.suggestionListRef.current) {
-                const nextButton = this.suggestionListRef.current.children[nextIndex].children[0] as HTMLInputElement
-
-                nextButton.focus()
-            }
-        }
-        const moveFocusToInput = () => {
-            if (this.presetInputRef.current) {
-                this.presetInputRef.current.focus()
-            }
-        }
-
-        if (event.key === 'ArrowDown' && index + 1 < arrayLength) {
-            moveFocusInsideSuggestions(index + 1)
-        }
-        
-        if (event.key === 'ArrowUp') {
-            if (index === 0) {
-                moveFocusToInput()
-            } else {
-                moveFocusInsideSuggestions(index - 1)
-            }
-        }
-    }
-
     render() {
         const renderPresetSelect = (() => {
-            const options = this.unicodeRanges
-                .filter(range => range.category.toLowerCase().includes(this.state.presetInputValue.toLowerCase()))
-                .slice(0, 5)
-                .map((range, index, array) =>
-                    <li key={range.category} >
-                        <button
-                            onClick={(event) => this.changePreset(event, range.category)}
-                            className={styles.suggestion}
-                            onKeyDown={(event) => this.handleArrowSuggestionsNavigation(event, index, array.length)}
-                            ref={index === 0 ? this.firstSuggestionButtonRef : undefined}
-                        >
-                            {range.category}
-                        </button>
-                    </li>
-                )
-
+            const options = this.unicodeRanges.map(range => <option value={range.category} key={range.category} >{range.category}</option>)
+            const defaultOption = <option value='Basic Latin'>Default</option>
+            const datalistId = 'datalistId'
             
             return (
-                <div className={styles.presetSelectContainer}>
-                    <input
+                <>
+                    <input 
+                        list={datalistId}
                         aria-label='unicode presets selection input'
-                        onChange={(event) => this.handlePresetInput(event.target.value)}
+                        onChange={this.changePreset}
                         defaultValue={this.state.selectedPreset}
                         className={styles.presetSelect}
                         onBlur={this.presetSelectBlur}
                         ref={this.presetInputRef}
-                        onKeyDown={this.handleArrowInputNavigation}
                     />
 
-                    <ul aria-label='unicode preset selection suggestions' className={styles.suggestions} ref={this.suggestionListRef}>
+                    <datalist id={datalistId}>
+                        {defaultOption}
                         {options}
-                    </ul>
-                </div>
+                    </datalist>
+                </>
             )
         })()
 
