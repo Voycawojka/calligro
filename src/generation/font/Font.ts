@@ -1,8 +1,8 @@
-import { convertToBlob } from '../../utils/canvasHelpers';
-import { blobToCanvas } from '../fs/image';
-import { packFromSheet, SourceRect } from '../packing/imagePacking';
-import { parseTemplateCode } from '../template/parse';
-import Template from '../template/Template';
+import { convertToBlob } from '../../utils/canvasHelpers'
+import { blobToCanvas } from '../fs/image'
+import { packFromSheet, SourceRect } from '../packing/imagePacking'
+import Template from '../template/Template'
+import { CodePayload } from '../template/types'
 
 export interface FontSpec {
     info: {
@@ -65,13 +65,7 @@ export interface FontConfig {
     kernings: KerningPair[]
 }
 
-export async function generateFont(templateImg: Blob, templateCode: string, fontConfig: FontConfig): Promise<[FontSpec, Blob[]]> {
-    const tempConfig = parseTemplateCode(templateCode)
-
-    if (!tempConfig) {
-        throw new Error()
-    }
-
+export async function generateFont(templateImg: Blob, tempConfig: CodePayload, fontConfig: FontConfig): Promise<[FontSpec, Blob[]]> {
     const slots = tempConfig.slots.map(([ unicode, width, height ]) => ({ character: String.fromCharCode(unicode), width, height }))
     const template = new Template(slots, tempConfig.base)
 

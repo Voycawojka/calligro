@@ -38,9 +38,9 @@ class Step1 extends Component<{}, Step1State> {
         return ({
             selectedPreset: initialPreset,
             charSet: parsedData?.charSet ?? this.createCharSetFromPreset(initialPreset),
-            defaultWidth: parsedData?.defaultWidth ?? 200,
+            defaultWidth: parsedData?.defaultWidth ?? 150,
             defaultHeight: parsedData?.defaultHeight ?? 200,
-            base: parsedData?.base ?? 100,
+            base: parsedData?.base ?? 150,
             presetInputValue: initialPreset
         })
     }
