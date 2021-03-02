@@ -60,6 +60,12 @@
     }
 }
 
+@mixin vertical-device-or-mini-device {
+    @media (orientation: portrait), (max-width: 535px) {
+        @content;
+    }
+}
+
 @mixin downloadButton {
     @include font-headings(800);
     background-color: transparent;

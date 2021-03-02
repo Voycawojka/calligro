@@ -13,7 +13,7 @@
     grid-template-columns: 46% 48%;
     column-gap: 6%;
 
-    @include vertical-device {
+    @include vertical-device-or-mini-device {
         grid-template-columns: 100%;
         grid-template-rows: min-content min-content;
     }
@@ -38,36 +38,6 @@
     @include small-device {
         font-size: 24px;
     }
-}
-
-.feature {
-    @include font-paragraphs;
-    line-height: 23px;
-    font-size: 20px;
-
-    &::before {
-        content: $dash-glyph;
-        padding-right: 10px;
-    }
-
-    @include small-device {
-        font-size: 18px;
-        line-height: 21px;
-    }
-}
-
-.goodbye {
-    @include font-paragraphs;
-    font-size: 20px;
-
-    @include small-device {
-        font-size: 18px;
-    }
-}
-
-.featureList {
-    list-style-type: none;
-    padding: 0;
 }
 
 .dropzones {
@@ -170,4 +140,8 @@
         content: $nbsp;
         display: inline-block;
     }
+}
+
+.previewContainer {
+    margin-top: 65px;
 }
