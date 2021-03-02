@@ -9,6 +9,7 @@ import Fa from '../../misc//fa/Fa'
 import { Link } from 'react-router-dom'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import { WebOnly } from '../../envSpecific/WebOnly'
+import { isElectron } from '../../../electron/electronInterop'
 
 interface Step1State {
     charSet: WorkSlot[]
@@ -148,7 +149,7 @@ class Step1 extends Component<{}, Step1State> {
 
     render() {
         return (
-            <div className={styles.container}>
+            <div className={`${styles.container} ${isElectron() ? styles.containerDesktop : ''}`}>
                 <div>
                     <WebOnly div>
                         <h2 className={styles.heading}>Generate bitmap fonts in the <a href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</a> format.</h2>

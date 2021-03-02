@@ -9,6 +9,7 @@ import Fa from '../../misc/fa/Fa'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import Step2KerningPairsList from '../step2KerningPairsList/Step2KerningPairsList'
 import { parseTemplateCode } from '../../../generation/template/parse';
+import { isElectron } from '../../../electron/electronInterop';
 
 interface Step2State {
     horizontalMargin: NumInputValue
@@ -137,7 +138,7 @@ class Step2 extends Component<{}, Step2State> {
 
     render() {
         return(
-            <div className={styles.container}>
+            <div className={`${styles.container} ${isElectron() ? styles.containerDesktop : ''}`}>
                 <div>
                     <div className={styles.dropzones}>
                         <Dropzone

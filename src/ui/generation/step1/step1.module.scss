@@ -18,6 +18,10 @@
     }
 }
 
+.containerDesktop {
+    padding: 3%;
+}
+
 .parameters {
     display: flex;
     max-width: 800px;
@@ -134,7 +138,6 @@
 .questionMark {
     @include questionMark;
     margin: 0 2%;
-
 }
 
 .commonContainer {
