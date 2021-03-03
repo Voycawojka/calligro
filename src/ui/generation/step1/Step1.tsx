@@ -315,7 +315,6 @@ class Step1 extends Component<{}, Step1State> {
                         </div>
                     </div>
                 </div>
-                
 
                 <div>
                     <h2 className={styles.heading}>Step 1 - Create a template</h2>

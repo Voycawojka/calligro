@@ -1,0 +1,45 @@
+@import "../../scss/colors.scss";
+@import "../../scss/fonts.scss";
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $secondary-color;
+    z-index: 1;
+    width: 450px;
+    min-height: 300px;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    @include font-headings(800);
+    background-color: $primary-color;
+    font-size: 24px;
+    width: 100%;
+    margin: 0;
+    padding: 4px 5%;
+    color: $color-on-bg;
+    box-sizing: border-box;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.closeButton {
+    position: absolute;
+    top: 8px;
+    right: 4px;
+    color: $color-on-bg;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:hover{
+        color: $button-color;
+    }
+}
+
+.times {
+    font-size: 20px;
+}
