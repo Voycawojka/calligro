@@ -21,6 +21,7 @@
 
 .containerDesktop {
     padding: 3%;
+    min-height: 100vh;
 }
 
 .instructionList {
@@ -56,6 +57,10 @@
         justify-content: center;
         height: 290px;
     }
+}
+
+.dropzonesDesktop {
+    margin-top: 0;
 }
 
 .options {
@@ -144,4 +149,8 @@
 
 .previewContainer {
     margin-top: 65px;
+}
+
+.previewContainerDesktop {
+    margin-top: 11px;
 }

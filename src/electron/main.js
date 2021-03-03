@@ -5,11 +5,12 @@ const { constructMenuTemplate } = require('./menu')
 
 function createWindow() {
     const window = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1310,
+        height: 850,
         webPreferences: {
             nodeIntegration: true
-        }
+        },
+        useContentSize: true
     })
 
     const appUrl = process.env.ELECTRON_URL || url.format({

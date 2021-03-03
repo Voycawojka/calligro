@@ -3,6 +3,7 @@ import { WorkSlot } from '../../../generation/template/types'
 import Fa from '../../misc/fa/Fa'
 import styles from './step1CharacterList.module.scss'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
+import { isElectron } from '../../../electron/electronInterop'
 
 interface Step1CharacterListProps {
     charSet: WorkSlot[]
@@ -50,7 +51,7 @@ function Step1CharacterList (props: Step1CharacterListProps) {
     })
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${isElectron() ? styles.containerDesktop : ''}`}>
             {charList}
         </div>
     )

@@ -7,7 +7,7 @@
     background-color: $secondary-color;
     padding: $header-height 3% $footer-height;
     display: grid;
-    grid-template-columns: 50% 46%;
+    grid-template-columns: 48% 48%;
     column-gap: 4%;
     min-height: calc(100vh - #{$footer-height});
     box-sizing: border-box;
@@ -19,7 +19,8 @@
 }
 
 .containerDesktop {
-    padding: 3%;
+    padding: 10% 3%;
+    min-height: 100vh;
 }
 
 .parameters {
