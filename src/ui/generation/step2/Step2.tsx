@@ -164,9 +164,9 @@ class Step2 extends Component<{}, Step2State> {
 
     render() {
         return(
-            <div className={`${styles.container} ${isElectron() ? styles.containerDesktop : ''}`}>
+            <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <div>
-                    <div className={`${styles.dropzones} ${isElectron() ? styles.dropzonesDesktop : ''}`}>
+                    <div className={`${styles.dropzones} ${isElectron() ? styles.desktop : ''}`}>
                         <Dropzone
                             inputName='image'
                             acceptedInputType='.png'
@@ -258,7 +258,7 @@ class Step2 extends Component<{}, Step2State> {
                 </div>
 
                 <div>
-                    <div className={`${styles.previewContainer} ${isElectron() ? styles.previewContainerDesktop : ''}`}>
+                    <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
                         <Preview
                             width={400}
                             height={250}

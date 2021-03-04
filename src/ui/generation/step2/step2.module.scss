@@ -17,11 +17,11 @@
         grid-template-columns: 100%;
         grid-template-rows: min-content min-content;
     }
-}
 
-.containerDesktop {
-    padding: 3%;
-    min-height: 100vh;
+    &.desktop {
+        padding: 3%;
+        min-height: 100vh;
+    }
 }
 
 .instructionList {
@@ -57,10 +57,10 @@
         justify-content: center;
         height: 290px;
     }
-}
 
-.dropzonesDesktop {
-    margin-top: 0;
+    &.desktop {
+        margin-top: 0;
+    }
 }
 
 .options {
@@ -141,7 +141,8 @@
 .samplesLink {
     color: $link-color;
 
-    &::before, &::after {
+    &::before,
+    &::after {
         content: $nbsp;
         display: inline-block;
     }
@@ -149,8 +150,8 @@
 
 .previewContainer {
     margin-top: 65px;
-}
 
-.previewContainerDesktop {
-    margin-top: 11px;
+    &.desktop {
+        margin-top: 11px;
+    }
 }

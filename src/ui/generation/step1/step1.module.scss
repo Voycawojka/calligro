@@ -16,11 +16,11 @@
         grid-template-columns: 100%;
         grid-template-rows: min-content min-content;
     }
-}
 
-.containerDesktop {
-    padding: 10% 3%;
-    min-height: 100vh;
+    &.desktop {
+        padding: 10% 3%;
+        min-height: 100vh;
+    }
 }
 
 .parameters {

@@ -217,7 +217,7 @@ class Step1 extends Component<{}, Step1State> {
         })()
 
         return (
-            <div className={`${styles.container} ${isElectron() ? styles.containerDesktop : ''}`}>
+            <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <div>
                     <WebOnly div>
                         <h2 className={styles.heading}>Generate bitmap fonts in the <a href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</a> format.</h2>

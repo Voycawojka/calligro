@@ -51,7 +51,7 @@ function Step1CharacterList (props: Step1CharacterListProps) {
     })
 
     return (
-        <div className={`${styles.container} ${isElectron() ? styles.containerDesktop : ''}`}>
+        <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
             {charList}
         </div>
     )

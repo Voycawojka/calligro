@@ -14,10 +14,10 @@
     @include small-device-portrait {
         height: 165px;
     }
-}
 
-.containerDesktop {
-    height: 230px;
+    &.desktop {
+        height: 230px;
+    }
 }
 
 .character {
