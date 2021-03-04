@@ -8,6 +8,7 @@ import Dropzone from '../dropzone/Dropzone'
 import Fa from '../../misc/fa/Fa'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import Step2KerningPairsList from '../step2KerningPairsList/Step2KerningPairsList'
+import { isElectron } from '../../../electron/electronInterop'
 import { parseTemplateCode } from '../../../generation/template/parse'
 import Preview from '../preview/Preview'
 import { CodePayload } from '../../../generation/template/types'
@@ -163,9 +164,9 @@ class Step2 extends Component<{}, Step2State> {
 
     render() {
         return(
-            <div className={styles.container}>
+            <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <div>
-                    <div className={styles.dropzones}>
+                    <div className={`${styles.dropzones} ${isElectron() ? styles.desktop : ''}`}>
                         <Dropzone
                             inputName='image'
                             acceptedInputType='.png'
@@ -257,7 +258,7 @@ class Step2 extends Component<{}, Step2State> {
                 </div>
 
                 <div>
-                    <div className={styles.previewContainer}>
+                    <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
                         <Preview
                             width={400}
                             height={250}
