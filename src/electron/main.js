@@ -14,7 +14,7 @@ function createWindow() {
     })
 
     const appUrl = process.env.ELECTRON_URL || url.format({
-        pathname: path.join(__dirname, '/../../build/index.html'),
+        pathname: path.join(__dirname, 'app/index.html'),
         protocol: 'file:',
         slashes: true
     })
@@ -24,7 +24,10 @@ function createWindow() {
     Menu.setApplicationMenu(menu)
 
     window.loadURL(appUrl)
-    window.webContents.openDevTools()
+
+    if (process.env.ELECTRON_URL) {
+        window.webContents.openDevTools()
+    }
 }
 
 app.whenReady().then(createWindow)

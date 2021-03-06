@@ -38,6 +38,29 @@ This is a regular create-react-app project in TypeScript using npm (not yarn) so
 # install dependencies and start a dev server with hot reloading
 npm install
 npm start
+
+# then optionally start the desktop app
+npm run electron:dev
 ```
 
 Our actions use Node 14.
+
+## Production builds
+
+### Web
+
+Create the production web build in the `build/` directory:
+
+```bash
+npm run build
+```
+
+### Desktop
+
+Create the production destop build for Windows and Linux in the `electron_build/` directory:
+
+```
+npm run electron:build
+```
+
+Note this command only works on Windows.
