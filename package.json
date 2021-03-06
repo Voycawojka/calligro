@@ -10,7 +10,8 @@
     "test": "react-scripts test",
     "version": "printenv npm_package_version | tr -d '\\n' > version.txt & cp version.txt electron_resources/version.txt",
     "electron:dev": "cross-env ELECTRON_URL=http://localhost:3000 electron .",
-    "electron:build": "powershell -file build-electron.ps1"
+    "electron:build": "powershell -file build-electron.ps1",
+    "itch:upload": "powershell -file upload-itch.ps1"
   },
   "eslintConfig": {
     "extends": [
