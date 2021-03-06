@@ -8,7 +8,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "version": "printenv npm_package_version | tr -d '\\n' > version.txt & cp version.txt electron_resources/version.txt",
+    "version": "printenv npm_package_version | tr -d '\\n' > version.txt & cp version.txt electron_resources/version.txt & git add version.txt & git add electron_resources/version.txt",
     "electron:dev": "cross-env ELECTRON_URL=http://localhost:3000 electron .",
     "electron:build": "powershell -file build-electron.ps1",
     "itch:upload": "powershell -file upload-itch.ps1"
