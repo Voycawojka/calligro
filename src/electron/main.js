@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 const url = require('url')
 const { constructMenuTemplate } = require('./menu')
+const { readVersion } = require('./version')
 
 function createWindow() {
     const window = new BrowserWindow({
@@ -14,7 +15,7 @@ function createWindow() {
     })
 
     const appUrl = process.env.ELECTRON_URL || url.format({
-        pathname: path.join(__dirname, '/../../build/index.html'),
+        pathname: path.join(__dirname, 'app/index.html'),
         protocol: 'file:',
         slashes: true
     })
@@ -24,7 +25,12 @@ function createWindow() {
     Menu.setApplicationMenu(menu)
 
     window.loadURL(appUrl)
-    window.webContents.openDevTools()
+
+    if (process.env.ELECTRON_URL) {
+        window.webContents.openDevTools()
+    }
+
+    readVersion().then(version => console.log(`Running version ${version}`))
 }
 
 app.whenReady().then(createWindow)

@@ -1,6 +1,12 @@
 name: Build & Deploy
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      versionBump:
+        description: 'Parameter for `npm version` (e.g. `patch`, `minor`, `major`, etc) or `none` to not update the version'
+        required: true
+        default: 'patch'
 
 jobs:
   build-and-deploy:
@@ -13,6 +19,10 @@ jobs:
         with:
           node-version: '14'
         
+      - name: Bump version 📈
+        if: ${{ github.event.inputs.versionBump != 'none' }}
+        run: npm version ${{ github.event.inputs.versionBump }}
+
       - name: Build 🔨
         run: |
           npm ci
