@@ -1,6 +1,6 @@
 {
   "name": "calligro",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "main": "src/electron/main.js",
   "homepage": "./",
@@ -8,6 +8,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "version": "printenv npm_package_version | tr -d '\\n' > version.txt & cp version.txt electron_resources/version.txt",
     "electron:dev": "cross-env ELECTRON_URL=http://localhost:3000 electron .",
     "electron:build": "powershell -file build-electron.ps1"
   },

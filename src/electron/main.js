@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 const url = require('url')
 const { constructMenuTemplate } = require('./menu')
+const { readVersion } = require('./version')
 
 function createWindow() {
     const window = new BrowserWindow({
@@ -28,6 +29,8 @@ function createWindow() {
     if (process.env.ELECTRON_URL) {
         window.webContents.openDevTools()
     }
+
+    readVersion().then(version => console.log(`Running version ${version}`))
 }
 
 app.whenReady().then(createWindow)
