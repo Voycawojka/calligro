@@ -21,7 +21,7 @@ jobs:
         
       - name: Bump version 📈
         if: ${{ github.event.inputs.versionBump != 'none' }}
-        run: npm run version ${{ github.event.inputs.versionBump }}
+        run: npm version ${{ github.event.inputs.versionBump }}
 
       - name: Build 🔨
         run: |
