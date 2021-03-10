@@ -12,6 +12,8 @@ import { WebOnly } from '../../envSpecific/WebOnly'
 import { isElectron } from '../../../electron/electronInterop'
 import { getUnicodeRanges, UnicodeRange } from '../../../utils/unicodeRanges'
 
+const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+
 
 interface Step1State {
     charSet: WorkSlot[]
@@ -152,10 +154,17 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     @bind
-    downloadTemplate() {
+    async downloadTemplate() {
         const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base))
+        
+        if (isElectron()) {
+            const image = await template.generateImageBlob()
+            const imageBlobArrayBuffer = await image.arrayBuffer()
 
-        downloadTemplate(template)
+            ipcRenderer?.send('save-template', imageBlobArrayBuffer, template.generateTemplateCode())
+        } else {
+            downloadTemplate(template)
+        }
     }
 
     @bind
@@ -292,7 +301,7 @@ class Step1 extends Component<{}, Step1State> {
                                 className={styles.downloadButton}
                                 disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
                             >
-                                download template
+                                {`${isElectron() ? 'save' : 'download'} template`}
                             </button>
                         </div>
 

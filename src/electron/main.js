@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron')
+const { writeFile } = require('fs')
 const path = require('path')
 const url = require('url')
 const { constructMenuTemplate } = require('./menu')
@@ -28,6 +29,29 @@ function createWindow() {
 }
 
 app.whenReady().then(createWindow)
+
+ipcMain.on('save-template', (event, imageBlobBufferArray, templateCode) => {
+    dialog.showSaveDialog()
+        .then(object => {
+            if (!object.canceled) {
+                writeFile(`${object.filePath}.txt`, templateCode, () => { })
+                writeFile(`${object.filePath}.png`, Buffer.from(imageBlobBufferArray), { encoding: 'base64' }, () => { })
+            }
+        })
+})
+
+ipcMain.on('save-font', (event, fntFile, pagesBufferArray) => {
+    dialog.showSaveDialog()
+        .then(object => {
+            if (!object.canceled) {
+                writeFile(`${object.filePath}.fnt`, fntFile, () => { })
+                
+                for (let i = 0; i < pagesBufferArray.length; i++) {
+                    writeFile(`${object.filePath}-${i}.png`, Buffer.from(pagesBufferArray[i]), { encoding: 'base64' }, () => { })
+                }
+            }
+        })
+})
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
