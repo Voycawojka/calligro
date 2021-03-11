@@ -9,7 +9,10 @@ function createWindow() {
         width: 1310,
         height: 850,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            webSecurity: false,
+            enableRemoteModule: false,
+            allowRunningInsecureContent: false
         },
         useContentSize: true
     })
