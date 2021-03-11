@@ -13,6 +13,8 @@ import { parseTemplateCode } from '../../../generation/template/parse'
 import Preview from '../preview/Preview'
 import { CodePayload } from '../../../generation/template/types'
 
+const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+
 interface Step2State {
     horizontalMargin: NumInputValue
     verticalMargin: NumInputValue
@@ -136,7 +138,18 @@ class Step2 extends Component<{}, Step2State> {
 
         const fntFile = fontSpecToTextFile(fontSpec, format)
 
-        downloadBmf(fntFile, pages)
+        if (isElectron()) {
+            let pagesBufferArray: ArrayBuffer[] = []
+
+            for (let i = 0; i < pages.length; i++) {
+                const buffer = await pages[i].arrayBuffer()
+                pagesBufferArray.push(buffer)
+            }
+
+            ipcRenderer?.send('save-font', fntFile, pagesBufferArray)
+        } else {
+            downloadBmf(fntFile, pages)
+        }
     }
 
     getFontConfig(): FontConfig {
@@ -227,7 +240,9 @@ class Step2 extends Component<{}, Step2State> {
                         />
 
                         <div className={styles.download}>
-                            <label className={styles.buttonsContainerLabel}>Download font</label>
+                            <label className={styles.buttonsContainerLabel}>
+                                {`${isElectron() ? 'save' : 'download'} font`}
+                            </label>
 
                             <div className={styles.buttons}>
                                 <div>
