@@ -241,7 +241,7 @@ class Step2 extends Component<{}, Step2State> {
 
                         <div className={styles.download}>
                             <label className={styles.buttonsContainerLabel}>
-                                {`${isElectron() ? 'save' : 'download'} template`}
+                                {`${isElectron() ? 'save' : 'download'} font`}
                             </label>
 
                             <div className={styles.buttons}>

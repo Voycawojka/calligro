@@ -34,23 +34,41 @@ ipcMain.on('save-template', (event, imageBlobBufferArray, templateCode) => {
     dialog.showSaveDialog()
         .then(object => {
             if (!object.canceled) {
-                writeFile(`${object.filePath}.txt`, templateCode, () => { })
-                writeFile(`${object.filePath}.png`, Buffer.from(imageBlobBufferArray), { encoding: 'base64' }, () => { })
+                writeFile(`${object.filePath}.txt`, templateCode, (error) => {
+                    if (error) {
+                        throw error
+                    }
+                })
+                writeFile(`${object.filePath}.png`, Buffer.from(imageBlobBufferArray), { encoding: 'base64' }, (error) => {
+                    if (error) {
+                        throw error
+                    }
+                })
             }
         })
+        .catch(error => dialog.showErrorBox('Error', error.message))
 })
 
 ipcMain.on('save-font', (event, fntFile, pagesBufferArray) => {
     dialog.showSaveDialog()
         .then(object => {
             if (!object.canceled) {
-                writeFile(`${object.filePath}.fnt`, fntFile, () => { })
-                
+                writeFile(`${object.filePath}.fnt`, fntFile, (error) => {
+                    if (error) {
+                        throw error
+                    }
+                })
+
                 for (let i = 0; i < pagesBufferArray.length; i++) {
-                    writeFile(`${object.filePath}-${i}.png`, Buffer.from(pagesBufferArray[i]), { encoding: 'base64' }, () => { })
+                    writeFile(`${object.filePath}-${i}.png`, Buffer.from(pagesBufferArray[i]), { encoding: 'base64' }, (error) => {
+                        if (error) {
+                            throw error
+                        }
+                    })
                 }
             }
         })
+        .catch(error => dialog.showErrorBox('Error', error.message))
 })
 
 app.on('window-all-closed', () => {
