@@ -10,16 +10,15 @@ interface ItchReleaseData {
 }
 
 function fetchLatestItchVersion(channelName: string): Promise<ItchReleaseData> {
-    // return fetch(`https://itch.io/api/1/x/wharf/latest?target=voycawojka/calligro&channel_name=${channelName}`)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (data.errors) {
-    //             throw new Error(`Cannot fetch latest version information [${data.errors.join(', ')}]`)
-    //         }
+    return fetch(`https://itch.io/api/1/x/wharf/latest?target=voycawojka/calligro&channel_name=${channelName}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.errors) {
+                throw new Error(`Cannot fetch latest version information [${data.errors.join(', ')}]`)
+            }
 
-    //         return data as ItchReleaseData
-    //     })
-    return Promise.resolve().then(() => ({ latest: '0.2.0' }))
+            return data as ItchReleaseData
+        })
 }
 
 function fetchGithubVersionDetails(version: string): Promise<GithubReleaseData> {
