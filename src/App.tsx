@@ -9,13 +9,11 @@ import Loader from './ui/misc/loader/Loader'
 import { WebOnly } from './ui/envSpecific/WebOnly'
 import { DesktopOnly } from './ui/envSpecific/DesktopOnly'
 import { IpcNavigation } from './ui/ipcNavigation/IpcNavigation'
-import { fetchNewerVersion } from './api/latestVesion'
+import { Updater } from './ui/updater/Updater'
 
 const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 
 function App() {
-    fetchNewerVersion('0.1.8', 'win-64').then(data => console.log(data))
-
     return (
         <HashRouter>
             <Switch>
@@ -45,6 +43,7 @@ function App() {
 
                     <DesktopOnly>
                         <IpcNavigation />
+                        <Updater />
                     </DesktopOnly>
                 </Route>
             </Switch>
