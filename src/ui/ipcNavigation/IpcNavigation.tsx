@@ -24,7 +24,7 @@ export class IpcNavigation extends Component<IpcNavigationProps, IpcNavigationSt
 
     componentDidMount() {
         ipcRenderer?.on('navigation', this.navigationListener)
-        this.openLinksExternaly()
+        this.setupLinksOpeningStrategy()
     }
 
     componentWillUnmount() {
@@ -36,7 +36,7 @@ export class IpcNavigation extends Component<IpcNavigationProps, IpcNavigationSt
         this.setState({ url: arg })
     }
 
-    openLinksExternaly() {
+    setupLinksOpeningStrategy() {
         document.addEventListener('click', (event: MouseEvent) => {
             if ((event.target as HTMLElement).tagName === 'A') {
                 const target = event.target as HTMLLinkElement
