@@ -1,4 +1,5 @@
 const { shell } = require('electron')
+const { readVersion } = require('./version')
 
 function constructMenuTemplate(app, window) {
     const isMac = process.platform === 'darwin'
@@ -38,7 +39,7 @@ function constructMenuTemplate(app, window) {
             label: 'Generate a font',
             click: () => window.webContents.send('navigation', '/step2')
         },
-        { 
+        {
             label: 'More',
             submenu: [
                 {
@@ -52,6 +53,20 @@ function constructMenuTemplate(app, window) {
                 {
                     label: 'Web version',
                     click: () => shell.openExternal('https://calligro.ideasalmanac.com')
+                },
+                {
+                    label: 'About',
+                    click: async () => {
+                        try {
+                            const version = await readVersion()
+
+                            window.webContents.send('about-popup', version)
+                        } catch (error) {
+                            console.log(error)
+
+                            window.webContents.send('about-popup', '[error while reading version]')
+                        }
+                    }
                 }
             ]
         },
