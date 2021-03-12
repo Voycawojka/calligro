@@ -1,5 +1,4 @@
 const { app, BrowserWindow, Menu } = require('electron')
-const { writeFile } = require('fs')
 const path = require('path')
 const url = require('url')
 const { setupIpcListeners } = require('./listeners')
