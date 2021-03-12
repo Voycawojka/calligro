@@ -37,7 +37,7 @@ class CookieNotice extends Component<{}, CookieNoticeState> {
 
         window.gtag('consent', 'update', {
             analytics_storage: analyticsStatus
-        });
+        })
     }
 
     render () {
