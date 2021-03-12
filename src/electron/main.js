@@ -1,6 +1,8 @@
 const { app, BrowserWindow, Menu } = require('electron')
+const { writeFile } = require('fs')
 const path = require('path')
 const url = require('url')
+const { setupIpcListeners } = require('./listeners')
 const { constructMenuTemplate } = require('./menu')
 const { readVersion } = require('./version')
 
@@ -9,7 +11,10 @@ function createWindow() {
         width: 1310,
         height: 850,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            webSecurity: false,
+            enableRemoteModule: false,
+            allowRunningInsecureContent: false
         },
         useContentSize: true
     })
@@ -26,11 +31,9 @@ function createWindow() {
 
     window.loadURL(appUrl)
 
-    if (process.env.ELECTRON_URL) {
-        window.webContents.openDevTools()
-    }
-
     readVersion().then(version => console.log(`Running version ${version}`))
+
+    setupIpcListeners(window)
 }
 
 app.whenReady().then(createWindow)

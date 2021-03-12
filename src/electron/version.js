@@ -1,7 +1,13 @@
 const fs = require('fs')
 const path = require('path')
 
+let cachedVersion = null
+
 function readVersion() {
+    if (cachedVersion) {
+        return Promise.resolve(cachedVersion)
+    }
+
     const versionPath = process.env.ELECTRON_URL
         ? '../../version.txt'
         : '../version.txt'
@@ -10,7 +16,10 @@ function readVersion() {
         if (error) {
             reject(error)
         } else {
-            resolve(data)
+            const version = data.startsWith('v.') ? data.substr(2) : data
+
+            cachedVersion = version
+            resolve(version)
         }
     }))
 }

@@ -18,6 +18,16 @@ function constructMenuTemplate(app, window) {
         ]
     }]
 
+    const debugMenu = [{
+        label: 'Debug',
+        submenu: [
+            {
+                label: 'Dev tools',
+                click: () => window.webContents.openDevTools()
+            }
+        ]
+    }]
+
     return [
         ...(isMac ? macAppMenu : []),
         {
@@ -44,7 +54,8 @@ function constructMenuTemplate(app, window) {
                     click: () => shell.openExternal('https://calligro.ideasalmanac.com')
                 }
             ]
-        }
+        },
+        ...(process.env.ELECTRON_URL ? debugMenu : [])
     ]
 }
 
