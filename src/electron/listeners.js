@@ -3,6 +3,7 @@ const { ipcMain, dialog } = require('electron')
 const { readVersion } = require('./version')
 const { addRecentlySavedTemplate, addRecentlySavedFont } = require('./recentlySaved')
 const { setupMenu } = require('./menu')
+const { errorDialog } = require('./nativeDialogs')
 
 function setupIpcListeners(app, window) {
     ipcMain.on('save-template', (_event, image, code) => saveTemplate(app, window, image, code))
@@ -19,12 +20,12 @@ async function saveTemplate(app, window, imageBlobBufferArray, templateCode) {
 
     writeFile(`${result.filePath}.txt`, templateCode, (error) => {
         if (error) {
-            dialog.showErrorBox('Error', error.message)
+            errorDialog(`Cannot save ${result.filePath.txt}`, error.message)
         }
     })
     writeFile(`${result.filePath}.png`, Buffer.from(imageBlobBufferArray), { encoding: 'base64' }, (error) => {
         if (error) {
-            dialog.showErrorBox('Error', error.message)
+            errorDialog(`Cannot save ${result.filePath.png}`, error.message)
         }
     })
 
@@ -45,14 +46,14 @@ async function saveFont(app, window, fntFile, pagesBufferArray) {
 
     writeFile(`${result.filePath}.fnt`, fntFile, (error) => {
         if (error) {
-            dialog.showErrorBox('Error', error.message)
+            errorDialog(`Cannot save ${result.filePath}.fnt`, error.message)
         }
     })
 
     for (let i = 0; i < pagesBufferArray.length; i++) {
         writeFile(`${result.filePath}-${i}.png`, Buffer.from(pagesBufferArray[i]), { encoding: 'base64' }, (error) => {
             if (error) {
-                dialog.showErrorBox('Error', error.message)
+                errorDialog(`Cannot save ${result.filePath}.png`, error.message)
             }
         })
     }

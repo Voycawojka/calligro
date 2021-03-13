@@ -1,5 +1,6 @@
 const { shell, Menu, dialog } = require('electron')
 const { readFile } = require('fs')
+const { errorDialog } = require('./nativeDialogs')
 const { getRecentlySavedTemplates } = require('./recentlySaved')
 
 async function setupMenu(app, window) {
@@ -59,7 +60,7 @@ async function constructMenuTemplate(app, window) {
 
                             readFile(template.path, 'utf8', (error, data) => {
                                 if (error) {
-                                    dialog.showErrorBox('Error', error.message)
+                                    errorDialog(`Cannot load ${template.path}`, error.message)
                                 } else {
                                     window.webContents.send('navigation', '/')
                                     window.webContents.send('load-template', data)
