@@ -67,7 +67,7 @@ export interface FontConfig {
 
 export async function generateFont(templateImg: Blob, tempConfig: CodePayload, fontConfig: FontConfig): Promise<[FontSpec, Blob[]]> {
     const slots = tempConfig.slots.map(([ unicode, width, height ]) => ({ character: String.fromCharCode(unicode), width, height }))
-    const template = new Template(slots, tempConfig.base)
+    const template = new Template(slots, tempConfig.base, tempConfig.presetName)
 
     const [canvas] = await blobToCanvas(templateImg)
 

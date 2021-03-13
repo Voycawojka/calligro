@@ -13,5 +13,6 @@ export interface WorkSlot {
 export interface CodePayload {
     version: number,
     slots: [number, number, number][],
-    base: number
+    base: number,
+    presetName: string
 }

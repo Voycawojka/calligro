@@ -11,6 +11,9 @@ import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import { WebOnly } from '../../envSpecific/WebOnly'
 import { isElectron } from '../../../electron/electronInterop'
 import { getUnicodeRanges, UnicodeRange } from '../../../utils/unicodeRanges'
+import { parseTemplateCode } from '../../../generation/template/parse'
+import { unicodeToChar } from '../../../utils/char'
+import { DesktopOnly } from '../../envSpecific/DesktopOnly'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -49,9 +52,35 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    componentDidUpdate(prevProps: {}, prevState: Step1State) {
+    componentDidUpdate(_prevProps: {}, prevState: Step1State) {
         if (prevState !== this.state) {
             window.localStorage.setItem('settings', JSON.stringify(this.state))
+        }
+    }
+
+    componentDidMount() {
+        ipcRenderer?.on('load-template', this.loadTemplateListener)
+    }
+
+    componentWillUnmount() {
+        ipcRenderer?.removeListener('load-template', this.loadTemplateListener)
+    }
+
+    @bind
+    loadTemplateListener(_event: any, templateCode: string) {
+        const code = parseTemplateCode(templateCode)
+
+        if (code) {
+            this.setState({
+                base: code.base,
+                charSet: code.slots.map(([character, width, height]) => ({ 
+                    character: unicodeToChar(character), 
+                    width, 
+                    height 
+                })),
+                selectedPreset: code.presetName,
+                presetInputValue: code.presetName
+            })
         }
     }
 
@@ -155,7 +184,7 @@ class Step1 extends Component<{}, Step1State> {
 
     @bind
     async downloadTemplate() {
-        const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base))
+        const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset)
         
         if (isElectron()) {
             const image = await template.generateImageBlob()
@@ -329,11 +358,16 @@ class Step1 extends Component<{}, Step1State> {
                 <div>
                     <h2 className={styles.heading}>Step 1 - Create a template</h2>
                     <ol className={styles.instructionList}>
-                        <li className={styles.instructionListItem}> Specify what characters you want included in the final font. </li>
+                        <li className={styles.instructionListItem}>Specify what characters you want included in the final font. </li>
                         <li className={styles.instructionListItem}>Choose the character size and base.</li>
                         <li className={styles.instructionListItem}>Optionally override the size per character if you want some to be smaller or bigger than the rest.</li>
                         <li className={styles.instructionListItem}>Download the generated template. It’s a zip archive containing two files: png and txt. Open the png in your graphics editor of choice and draw characters inside the red boundaries.</li>
-                        <li className={styles.instructionListItem}>Go to <Link to='/step2' className={styles.link}>Step 2</Link> to upload the template and generate your font.</li>
+                        <li className={styles.instructionListItem}>
+                            Go to{' '}
+                            <WebOnly><Link to='/step2' className={styles.link}>Step 2</Link></WebOnly>
+                            <DesktopOnly>'Fonts -&gt; Generate a font'</DesktopOnly>
+                            {' '}to upload the template and generate your font.
+                        </li>
                     </ol>
                 </div>
             </div>

@@ -1,13 +1,16 @@
+const { writeFile } = require('fs')
 const { ipcMain, dialog } = require('electron')
 const { readVersion } = require('./version')
+const { addRecentlySavedTemplate, addRecentlySavedFont } = require('./recentlySaved')
+const { setupMenu } = require('./menu')
 
-function setupIpcListeners(window) {
-    ipcMain.on('save-template', saveTemplate)
-    ipcMain.on('save-font', saveFont)
+function setupIpcListeners(app, window) {
+    ipcMain.on('save-template', (_event, image, code) => saveTemplate(app, window, image, code))
+    ipcMain.on('save-font', (_event, fnt, pages) => saveFont(app, window, fnt, pages))
     ipcMain.on('request-version', () => requestVersion(window))
 }
 
-async function saveTemplate(_event, imageBlobBufferArray, templateCode) {
+async function saveTemplate(app, window, imageBlobBufferArray, templateCode) {
     const result = await dialog.showSaveDialog()
 
     if (result.canceled) {
@@ -24,9 +27,16 @@ async function saveTemplate(_event, imageBlobBufferArray, templateCode) {
             dialog.showErrorBox('Error', error.message)
         }
     })
+
+    await addRecentlySavedTemplate({
+        name: result.filePath.split('/').pop().split('\\').pop(),
+        path: `${result.filePath}.txt`
+    }, app)
+
+    setupMenu(app, window)
 }
 
-async function saveFont(_event, fntFile, pagesBufferArray) {
+async function saveFont(app, window, fntFile, pagesBufferArray) {
     const result = await dialog.showSaveDialog()
 
     if (result.canceled) {

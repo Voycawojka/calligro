@@ -1,6 +1,15 @@
-const { shell } = require('electron')
+const { shell, Menu, dialog } = require('electron')
+const { readFile } = require('fs')
+const { getRecentlySavedTemplates } = require('./recentlySaved')
 
-function constructMenuTemplate(app, window) {
+async function setupMenu(app, window) {
+    const menuTemplate = await constructMenuTemplate(app, window)
+    const menu = Menu.buildFromTemplate(menuTemplate)
+
+    Menu.setApplicationMenu(menu)
+}
+
+async function constructMenuTemplate(app, window) {
     const isMac = process.platform === 'darwin'
 
     const macAppMenu = [{
@@ -28,15 +37,47 @@ function constructMenuTemplate(app, window) {
         ]
     }]
 
+    const recentlySavedTemplates = await getRecentlySavedTemplates(app)
+
     return [
         ...(isMac ? macAppMenu : []),
         {
-            label: 'Create a template',
-            click: () => window.webContents.send('navigation', '/')
+            label: 'Templates',
+            submenu: [
+                {
+                    label: 'Create a template',
+                    click: () => window.webContents.send('navigation', '/')
+                },
+                {
+                    label: 'Recently saved',
+                    enabled: recentlySavedTemplates.length > 0,
+                    submenu: recentlySavedTemplates.map(template => ({
+                        label: template.name,
+                        sublabel: template.path,
+                        click: () => {
+                            
+
+                            readFile(template.path, 'utf8', (error, data) => {
+                                if (error) {
+                                    dialog.showErrorBox('Error', error.message)
+                                } else {
+                                    window.webContents.send('navigation', '/')
+                                    window.webContents.send('load-template', data)
+                                }
+                            })
+                        }
+                    }))
+                }
+            ]
         },
         {
-            label: 'Generate a font',
-            click: () => window.webContents.send('navigation', '/step2')
+            label: 'Fonts',
+            submenu: [
+                {
+                    label: 'Generate a font',
+                    click: () => window.webContents.send('navigation', '/step2')
+                }
+            ]
         },
         { 
             label: 'More',
@@ -59,4 +100,4 @@ function constructMenuTemplate(app, window) {
     ]
 }
 
-exports.constructMenuTemplate = constructMenuTemplate
+exports.setupMenu = setupMenu
