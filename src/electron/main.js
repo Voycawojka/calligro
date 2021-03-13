@@ -1,11 +1,11 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const url = require('url')
 const { setupIpcListeners } = require('./listeners')
-const { constructMenuTemplate } = require('./menu')
+const { setupMenu } = require('./menu')
 const { readVersion } = require('./version')
 
-function createWindow() {
+async function createWindow() {
     const window = new BrowserWindow({
         width: 1310,
         height: 850,
@@ -24,15 +24,10 @@ function createWindow() {
         slashes: true
     })
 
-    const menuTemplate = constructMenuTemplate(app, window)
-    const menu = Menu.buildFromTemplate(menuTemplate)
-    Menu.setApplicationMenu(menu)
-
+    setupMenu(app, window)
     window.loadURL(appUrl)
-
     readVersion().then(version => console.log(`Running version ${version}`))
-
-    setupIpcListeners(window)
+    setupIpcListeners(app, window)
 }
 
 app.whenReady().then(createWindow)
