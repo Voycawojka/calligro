@@ -10,6 +10,7 @@ import { WebOnly } from './ui/envSpecific/WebOnly'
 import { DesktopOnly } from './ui/envSpecific/DesktopOnly'
 import { IpcNavigation } from './ui/ipcNavigation/IpcNavigation'
 import { Updater } from './ui/updater/Updater'
+import AboutPopup from './ui/aboutPopup/AboutPopup'
 
 const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 
@@ -44,6 +45,7 @@ function App() {
                     <DesktopOnly>
                         <IpcNavigation />
                         <Updater />
+                        <AboutPopup />
                     </DesktopOnly>
                 </Route>
             </Switch>

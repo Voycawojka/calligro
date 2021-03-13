@@ -1,7 +1,8 @@
-const { shell, Menu, dialog } = require('electron')
+const { shell, Menu } = require('electron')
 const { readFile } = require('fs')
 const { errorDialog } = require('./nativeDialogs')
 const { getRecentlySavedTemplates } = require('./recentlySaved')
+const { readVersion } = require('./version')
 
 async function setupMenu(app, window) {
     const menuTemplate = await constructMenuTemplate(app, window)
@@ -80,7 +81,7 @@ async function constructMenuTemplate(app, window) {
                 }
             ]
         },
-        { 
+        {
             label: 'More',
             submenu: [
                 {
@@ -94,6 +95,20 @@ async function constructMenuTemplate(app, window) {
                 {
                     label: 'Web version',
                     click: () => shell.openExternal('https://calligro.ideasalmanac.com')
+                },
+                {
+                    label: 'About',
+                    click: async () => {
+                        try {
+                            const version = await readVersion()
+
+                            window.webContents.send('about-popup', version)
+                        } catch (error) {
+                            console.log(error)
+
+                            window.webContents.send('about-popup', '[error while reading version]')
+                        }
+                    }
                 }
             ]
         },
