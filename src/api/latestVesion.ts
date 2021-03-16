@@ -22,7 +22,7 @@ function fetchLatestItchVersion(channelName: string): Promise<ItchReleaseData> {
 }
 
 function fetchGithubVersionDetails(version: string): Promise<GithubReleaseData> {
-    const tag = compareVersions(version, '0.2.0')  === 'greater'
+    const tag = compareVersions(version, '0.2.0') === 'greater'
         ? version
         : `v.${version}`
 
@@ -30,7 +30,7 @@ function fetchGithubVersionDetails(version: string): Promise<GithubReleaseData> 
         .then(response => response.json())
 }
 
-export type NewVersionData = { type: 'up_to_date' } | { type: 'new_available', name: string, body: string }
+export type NewVersionData = { type: 'up_to_date' } | { type: 'new_available', name: string, body: string, version: string }
 
 export async function fetchNewerVersion(currentVersion: string, currentChannel: string): Promise<NewVersionData> {
     try {
@@ -45,7 +45,8 @@ export async function fetchNewerVersion(currentVersion: string, currentChannel: 
         return {
             type: 'new_available',
             name: githubRelease.name,
-            body: githubRelease.body
+            body: githubRelease.body,
+            version: itchVersion.latest
         }
     } catch (e) {
         console.error(`Error while checking for a newer version`, e)
