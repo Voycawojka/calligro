@@ -55,9 +55,6 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
                     newVersionCount: newVersion.version,
                     currentVersion: data.version
                 })
-
-                console.log(newVersion.name)
-                console.log(newVersion)
             }
         }
     }
