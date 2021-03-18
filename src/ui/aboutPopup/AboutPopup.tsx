@@ -4,6 +4,7 @@ import styles from './aboutPopup.module.scss'
 import { bind } from 'helpful-decorators'
 import Popup from '../popup/Popup'
 import Authors from '../authors/Authors'
+import ExternalLink from '../misc/externalLink/ExternalLink'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -49,8 +50,11 @@ class AboutPopup extends Component<{}, AboutPopupState> {
                         <div className={styles.disclaimer}>
                             <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
                             <p className={styles.paragraph}>
-                                If you’re looking to convert a truetype font into a BMFont, try tools like the
-                                original <a href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</a> or <a href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</a> instead.
+                                If you’re looking to convert a truetype font into a BMFont, try tools like the original{' '}
+                                <ExternalLink href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</ExternalLink> 
+                                {' '}or{' '} 
+                                <ExternalLink href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</ExternalLink>
+                                {' '}instead.
                             </p>
                         </div>
                         <div className={styles.version}>Version: {this.state.version}</div>

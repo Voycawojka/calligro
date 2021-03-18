@@ -8,7 +8,7 @@ function Authors() {
                     name='Filip A. Kowalski'
                     socialLinks={[
                         {
-                            url: 'http://ideasalmanac.com',
+                            url: 'https://ideasalmanac.com',
                             icon: 'fa fa-globe-africa',
                             label: 'ideasalmanac'
                         },
