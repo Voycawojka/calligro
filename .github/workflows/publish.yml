@@ -31,7 +31,7 @@ jobs:
           git config user.name "Version Bumping Bot"
           git config user.email "<>"
           npm version ${{ github.event.inputs.versionBump }} -m "Release %s"
-          git push --force origin main
+          git push origin main
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
