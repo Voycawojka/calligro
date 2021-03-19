@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './author.module.scss'
 import Fa from '../misc/fa/Fa'
+import ExternalLink from '../misc/externalLink/ExternalLink'
 
 interface Social {
     icon: string
@@ -15,9 +16,9 @@ interface AuthorProps {
 
 function Author(props: AuthorProps) {
     const renderSocial = props.socialLinks.map(social =>
-        <a className={styles.socialLink} href={social.url} key={social.url} aria-label={social.label} >
+        <ExternalLink className={styles.socialLink} href={social.url} key={social.url} aria-label={social.label} >
             <Fa icon={social.icon} className={styles.icon} />
-        </a>
+        </ExternalLink>
     )
 
     return (

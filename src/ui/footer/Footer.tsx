@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Authors from '../authors/Authors'
+import ExternalLink from '../misc/externalLink/ExternalLink'
 import styles from './footer.module.scss'
 
 function Footer() {
@@ -12,8 +13,8 @@ function Footer() {
             </div>
             
             <div className={styles.linkContainer}>
-                <a href='https://github.com/Voycawojka/calligro/issues' className={styles.link}>Found a bug?</a>
-                <a href='https://github.com/Voycawojka/calligro/issues' className={styles.link}>Have a feature request?</a>
+                <ExternalLink href='https://github.com/Voycawojka/calligro/issues' className={styles.link}>Found a bug?</ExternalLink>
+                <ExternalLink href='https://github.com/Voycawojka/calligro/issues' className={styles.link}>Have a feature request?</ExternalLink>
             </div>
         </footer>
     )

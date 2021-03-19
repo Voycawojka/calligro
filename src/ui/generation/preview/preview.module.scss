@@ -1,9 +1,12 @@
 @import "../../../scss/mixins.scss";
 
 .previewContainer {
+    --bgColor: #ffffff;
+    
     display: block;
     border: 2px solid black;
     max-width: 100%;
+    background-color: var(--bgColor);
 
     canvas {
         max-width: 100%;

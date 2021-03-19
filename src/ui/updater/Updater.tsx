@@ -3,6 +3,7 @@ import { bind } from 'helpful-decorators'
 import { fetchNewerVersion } from '../../api/latestVesion'
 import Popup from '../popup/Popup'
 import styles from './updater.module.scss'
+import ExternalLink from '../misc/externalLink/ExternalLink'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -82,7 +83,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
                             Name:
                             <span className={styles.contentBold}> {this.state.newVersionName}</span>
                         </div>
-                        <a className={styles.link} href='https://voycawojka.itch.io/calligro'>Download from itch.io</a>
+                        <ExternalLink className={styles.link} href='https://voycawojka.itch.io/calligro'>Download from itch.io</ExternalLink>
                         <div className={styles.content}>Changelog:</div>
                         <div>{description}</div>
                     </div>
