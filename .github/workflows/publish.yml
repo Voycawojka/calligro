@@ -30,7 +30,8 @@ jobs:
         run: |
           git config user.name "Version Bumping Bot"
           git config user.email "<>"
-          npm version ${{ github.event.inputs.versionBump }}
+          npm version ${{ github.event.inputs.versionBump }} -m "Release %s"
+          git push origin master
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
