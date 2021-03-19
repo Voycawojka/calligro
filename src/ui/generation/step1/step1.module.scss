@@ -173,3 +173,19 @@
     display: inline;
     width: 50%;
 }
+
+.desktopWidget {
+    display: block;
+
+    @include small-device{
+        display: none;
+    }
+}
+
+.mobileWidget {
+    display: none;
+
+    @include small-device {
+        display: block;
+    }
+}
