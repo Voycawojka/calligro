@@ -2,6 +2,7 @@
 Online bitmap font creator. 
 
 Available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com)
+
 Desktop version is hosted on [itch.io](https://voycawojka.itch.io/calligro)
 
 ![Build & Deploy](https://github.com/Voycawojka/calligro/workflows/Build%20&%20Deploy/badge.svg)
