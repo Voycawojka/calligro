@@ -10,6 +10,10 @@
 
 # production
 /build
+/electron_build
+/electron_resources/src
+!electron_resources/src/.gitkeep
+!electron_resources/src/app/.gitkeep
 
 # IDE
 .vscode

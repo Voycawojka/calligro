@@ -14,6 +14,10 @@
     @include small-device-portrait {
         height: 165px;
     }
+
+    &.desktop {
+        height: 230px;
+    }
 }
 
 .character {

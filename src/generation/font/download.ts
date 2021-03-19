@@ -1,4 +1,4 @@
-import { downloadArchive, ZippedFile } from "../fs/zip";
+import { downloadArchive, ZippedFile } from '../fs/zip'
 
 export async function downloadBmf(fntFile: string, pages: Blob[]): Promise<void> {
     const files: ZippedFile[] = [

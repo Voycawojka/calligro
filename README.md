@@ -2,6 +2,7 @@
 Online bitmap font creator. 
 
 Available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com)
+Desktop version is hosted on [itch.io](https://voycawojka.itch.io/calligro)
 
 ![Build & Deploy](https://github.com/Voycawojka/calligro/workflows/Build%20&%20Deploy/badge.svg)
 [![CodeFactor](https://www.codefactor.io/repository/github/voycawojka/calligro/badge)](https://www.codefactor.io/repository/github/voycawojka/calligro)
@@ -15,6 +16,8 @@ The workflow is as follows:
 - upload the filled template back to Calligro and download a bitmap font
 
 Everything is calculated on the client side. No files are sent or stored on the server (we use gh pages anyway).
+
+There is also an offline version available for Windows and Linux. It has the same core features but is a little bit more convenient to use.
 
 # Samples
 The BMFont format has existed for a while and a lot of game frameworks, libraries and engines support it out of the box.
@@ -38,6 +41,29 @@ This is a regular create-react-app project in TypeScript using npm (not yarn) so
 # install dependencies and start a dev server with hot reloading
 npm install
 npm start
+
+# then optionally start the desktop app
+npm run electron:dev
 ```
 
 Our actions use Node 14.
+
+## Production builds
+
+### Web
+
+Create the production web build in the `build/` directory:
+
+```bash
+npm run build
+```
+
+### Desktop
+
+Create the production destop build for Windows and Linux in the `electron_build/` directory:
+
+```
+npm run electron:build
+```
+
+Note this command only works on Windows.

@@ -1,28 +1,17 @@
 {
   "name": "calligro",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.3.0",
-    "client-zip": "^1.2.2",
-    "helpful-decorators": "^2.1.0",
-    "js-cookie": "^2.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-github-corner": "^2.5.0",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1",
-    "typescript": "^4.1.2",
-    "unicode-range-json": "^1.0.1",
-    "web-vitals": "^0.2.4"
-  },
+  "main": "src/electron/main.js",
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "version": "printenv npm_package_version | tr -d '\\n' > version.txt & cp version.txt electron_resources/version.txt & git add version.txt & git add electron_resources/version.txt",
+    "electron:dev": "cross-env ELECTRON_URL=http://localhost:3000 electron .",
+    "electron:build": "powershell -file build-electron.ps1",
+    "itch:upload": "powershell -file upload-itch.ps1"
   },
   "eslintConfig": {
     "extends": [
@@ -42,7 +31,22 @@
       "last 1 safari version"
     ]
   },
+  "dependencies": {
+    "client-zip": "^1.2.2",
+    "helpful-decorators": "^2.1.0",
+    "js-cookie": "^2.2.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-github-corner": "^2.5.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "unicode-range-json": "^1.0.1",
+    "web-vitals": "^0.2.4"
+  },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.3.0",
     "@types/jest": "^26.0.15",
     "@types/js-cookie": "^2.2.6",
     "@types/node": "^12.19.8",
@@ -50,7 +54,12 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.6",
+    "cross-env": "^7.0.3",
+    "electron": "^11.3.0",
+    "electron-packager": "^15.2.0",
     "node-sass": "^4.14.1",
+    "react-scripts": "4.0.1",
+    "typescript": "^4.1.2",
     "typescript-plugin-css-modules": "^3.0.1"
   }
 }

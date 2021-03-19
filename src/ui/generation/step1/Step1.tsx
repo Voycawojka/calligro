@@ -8,7 +8,15 @@ import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'
 import { Link } from 'react-router-dom'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
+import { WebOnly } from '../../envSpecific/WebOnly'
+import { isElectron } from '../../../electron/electronInterop'
 import { getUnicodeRanges, UnicodeRange } from '../../../utils/unicodeRanges'
+import { parseTemplateCode } from '../../../generation/template/parse'
+import { unicodeToChar } from '../../../utils/char'
+import { DesktopOnly } from '../../envSpecific/DesktopOnly'
+import ExternalLink from '../../misc/externalLink/ExternalLink'
+
+const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
 
 interface Step1State {
@@ -45,9 +53,35 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    componentDidUpdate(prevProps: {}, prevState: Step1State) {
+    componentDidUpdate(_prevProps: {}, prevState: Step1State) {
         if (prevState !== this.state) {
             window.localStorage.setItem('settings', JSON.stringify(this.state))
+        }
+    }
+
+    componentDidMount() {
+        ipcRenderer?.on('load-template', this.loadTemplateListener)
+    }
+
+    componentWillUnmount() {
+        ipcRenderer?.removeListener('load-template', this.loadTemplateListener)
+    }
+
+    @bind
+    loadTemplateListener(_event: any, templateCode: string) {
+        const code = parseTemplateCode(templateCode)
+
+        if (code) {
+            this.setState({
+                base: code.base,
+                charSet: code.slots.map(([character, width, height]) => ({
+                    character: unicodeToChar(character),
+                    width,
+                    height
+                })),
+                selectedPreset: code.presetName,
+                presetInputValue: code.presetName
+            })
         }
     }
 
@@ -150,10 +184,17 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     @bind
-    downloadTemplate() {
-        const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base))
+    async downloadTemplate() {
+        const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset)
+        
+        if (isElectron()) {
+            const image = await template.generateImageBlob()
+            const imageBlobArrayBuffer = await image.arrayBuffer()
 
-        downloadTemplate(template)
+            ipcRenderer?.send('save-template', imageBlobArrayBuffer, template.generateTemplateCode())
+        } else {
+            downloadTemplate(template)
+        }
     }
 
     @bind
@@ -215,16 +256,19 @@ class Step1 extends Component<{}, Step1State> {
         })()
 
         return (
-            <div className={styles.container}>
+            <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <div>
-                    <div>
-                        <h2 className={styles.heading}>Generate bitmap fonts in the <a href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</a> format.</h2>
+                    <WebOnly div>
+                        <h2 className={styles.heading}>Generate bitmap fonts in the <ExternalLink href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</ExternalLink> format.</h2>
                         <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
                         <p className={styles.paragraph}>
-                            If you’re looking to convert a truetype font into a BMFont, try tools like the
-                            original <a href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</a> or <a href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</a> instead.
+                            If you’re looking to convert a truetype font into a BMFont, try tools like the original{' '}
+                            <ExternalLink href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</ExternalLink>
+                            {' '}or{' '}
+                            <ExternalLink href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</ExternalLink>
+                            {' '}instead.
                         </p>
-                    </div>
+                    </WebOnly>
 
                     <div>
                         <div className={styles.charactersLabelContainer}>
@@ -290,7 +334,7 @@ class Step1 extends Component<{}, Step1State> {
                                 className={styles.downloadButton}
                                 disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
                             >
-                                download template
+                                {`${isElectron() ? 'save' : 'download'} template`}
                             </button>
                         </div>
 
@@ -314,16 +358,20 @@ class Step1 extends Component<{}, Step1State> {
                         </div>
                     </div>
                 </div>
-                
 
                 <div>
                     <h2 className={styles.heading}>Step 1 - Create a template</h2>
                     <ol className={styles.instructionList}>
-                        <li className={styles.instructionListItem}> Specify what characters you want included in the final font. </li>
+                        <li className={styles.instructionListItem}>Specify what characters you want included in the final font. </li>
                         <li className={styles.instructionListItem}>Choose the character size and base.</li>
                         <li className={styles.instructionListItem}>Optionally override the size per character if you want some to be smaller or bigger than the rest.</li>
                         <li className={styles.instructionListItem}>Download the generated template. It’s a zip archive containing two files: png and txt. Open the png in your graphics editor of choice and draw characters inside the red boundaries.</li>
-                        <li className={styles.instructionListItem}>Go to <Link to='/step2' className={styles.link}>Step 2</Link> to upload the template and generate your font.</li>
+                        <li className={styles.instructionListItem}>
+                            Go to{' '}
+                            <WebOnly><Link to='/step2' className={styles.link}>Step 2</Link></WebOnly>
+                            <DesktopOnly>'Fonts -&gt; Generate a font'</DesktopOnly>
+                            {' '}to upload the template and generate your font.
+                        </li>
                     </ol>
                 </div>
             </div>

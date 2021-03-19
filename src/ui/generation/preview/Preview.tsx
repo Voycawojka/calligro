@@ -15,22 +15,22 @@ interface PreviewProps {
 interface PreviewState {
     text: string
     scale: number
-    color: string
 }
 
 class Preview extends Component<PreviewProps, PreviewState> {
     private canvas: React.RefObject<HTMLCanvasElement>
+    private canvasContainer: React.RefObject<HTMLDivElement>
 
     constructor(props: PreviewProps) {
         super(props)
 
         this.state = {
             text: '',
-            scale: 1,
-            color: '#ffffff'
+            scale: 1
         }
 
         this.canvas = React.createRef()
+        this.canvasContainer = React.createRef()
     }
 
     async draw() {
@@ -48,6 +48,10 @@ class Preview extends Component<PreviewProps, PreviewState> {
 
     componentDidUpdate() {
         this.draw()
+    }
+
+    handleBgColorChange(newColor: string) {
+        this.canvasContainer.current?.style.setProperty('--bgColor', newColor)
     }
 
     render() {
@@ -76,13 +80,14 @@ class Preview extends Component<PreviewProps, PreviewState> {
                         aria-label='preview color input'
                         type='color'
                         className={styles.colorInput}
-                        onChange={event => this.setState({ color: event.target.value })}
-                        value={this.state.color} />
+                        defaultValue='#ffffff'
+                        onChange={event => this.handleBgColorChange(event.target.value)} />
                 </div>
             </div>
             <div
                 className={styles.previewContainer}
-                style={{ backgroundColor: this.state.color, width: this.props.width, maxHeight: this.props.height }}>
+                ref={this.canvasContainer}
+                style={{ width: this.props.width, maxHeight: this.props.height }}>
                 <canvas
                     width={this.props.width}
                     height={this.props.height}

@@ -5,8 +5,18 @@ export function parseTemplateCode(code: string): CodePayload | null {
         const json = decodeURIComponent(escape(atob(code)))
         const codePayload: CodePayload = JSON.parse(json)
 
-        if (codePayload.version !== 0) {
-            throw new Error(`Only templates version '0' are supported, instead got version '${codePayload.version}'`)
+        switch (codePayload.version) {
+            case 0:
+                codePayload.presetName = 'custom'
+                break
+            case 1:
+                break
+            default:
+                throw new Error(`Only templates version '0' and '1' are supported, instead got version '${codePayload.version}'`)
+        }
+
+        if (typeof codePayload.presetName !== 'string') {
+            throw new Error(`Property 'presetName' must be a string, instead got: ${typeof codePayload.presetName} '${codePayload.presetName}'`)
         }
 
         if (!Number.isInteger(codePayload.base)) {

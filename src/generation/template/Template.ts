@@ -7,7 +7,7 @@ export default class Template {
     private readonly canvas: HTMLCanvasElement
     private readonly ctx: CanvasRenderingContext2D
 
-    constructor(private readonly slots: Slot[], private readonly base: number) {
+    constructor(private readonly slots: Slot[], private readonly base: number, private readonly presetName: string) {
         [this.canvas, this.ctx] = createCanvas(this.w * this.slotDim.w, this.h * this.slotDim.h, 'white')
     }
 
@@ -63,9 +63,10 @@ export default class Template {
     @memoize
     public generateTemplateCode(): string {
         const payload: CodePayload = {
-            version: 0,
+            version: 1,
             slots: this.slots.map(slot => ([slot.character.charCodeAt(0), slot.width, slot.height])),
-            base: this.base
+            base: this.base,
+            presetName: this.presetName
         }
 
         return btoa(unescape(encodeURIComponent(JSON.stringify(payload))))

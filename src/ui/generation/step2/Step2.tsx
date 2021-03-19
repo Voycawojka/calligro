@@ -8,9 +8,12 @@ import Dropzone from '../dropzone/Dropzone'
 import Fa from '../../misc/fa/Fa'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import Step2KerningPairsList from '../step2KerningPairsList/Step2KerningPairsList'
+import { isElectron } from '../../../electron/electronInterop'
 import { parseTemplateCode } from '../../../generation/template/parse'
 import Preview from '../preview/Preview'
 import { CodePayload } from '../../../generation/template/types'
+
+const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
 interface Step2State {
     horizontalMargin: NumInputValue
@@ -135,7 +138,18 @@ class Step2 extends Component<{}, Step2State> {
 
         const fntFile = fontSpecToTextFile(fontSpec, format)
 
-        downloadBmf(fntFile, pages)
+        if (isElectron()) {
+            let pagesBufferArray: ArrayBuffer[] = []
+
+            for (let i = 0; i < pages.length; i++) {
+                const buffer = await pages[i].arrayBuffer()
+                pagesBufferArray.push(buffer)
+            }
+
+            ipcRenderer?.send('save-font', fntFile, pagesBufferArray)
+        } else {
+            downloadBmf(fntFile, pages)
+        }
     }
 
     getFontConfig(): FontConfig {
@@ -163,9 +177,9 @@ class Step2 extends Component<{}, Step2State> {
 
     render() {
         return(
-            <div className={styles.container}>
+            <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <div>
-                    <div className={styles.dropzones}>
+                    <div className={`${styles.dropzones} ${isElectron() ? styles.desktop : ''}`}>
                         <Dropzone
                             inputName='image'
                             acceptedInputType='.png'
@@ -226,7 +240,9 @@ class Step2 extends Component<{}, Step2State> {
                         />
 
                         <div className={styles.download}>
-                            <label className={styles.buttonsContainerLabel}>Download font</label>
+                            <label className={styles.buttonsContainerLabel}>
+                                {`${isElectron() ? 'save' : 'download'} font`}
+                            </label>
 
                             <div className={styles.buttons}>
                                 <div>
@@ -257,7 +273,7 @@ class Step2 extends Component<{}, Step2State> {
                 </div>
 
                 <div>
-                    <div className={styles.previewContainer}>
+                    <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
                         <Preview
                             width={400}
                             height={250}
