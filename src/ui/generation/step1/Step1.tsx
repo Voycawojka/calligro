@@ -74,10 +74,10 @@ class Step1 extends Component<{}, Step1State> {
         if (code) {
             this.setState({
                 base: code.base,
-                charSet: code.slots.map(([character, width, height]) => ({ 
-                    character: unicodeToChar(character), 
-                    width, 
-                    height 
+                charSet: code.slots.map(([character, width, height]) => ({
+                    character: unicodeToChar(character),
+                    width,
+                    height
                 })),
                 selectedPreset: code.presetName,
                 presetInputValue: code.presetName
@@ -265,7 +265,7 @@ class Step1 extends Component<{}, Step1State> {
                             If you’re looking to convert a truetype font into a BMFont, try tools like the original{' '}
                             <ExternalLink href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</ExternalLink>
                             {' '}or{' '}
-                            <ExternalLink href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</ExternalLink> 
+                            <ExternalLink href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</ExternalLink>
                             {' '}instead.
                         </p>
                     </WebOnly>

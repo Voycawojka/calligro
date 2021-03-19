@@ -7,8 +7,8 @@ interface WebOnlyProps {
 }
 
 export function WebOnly(props: WebOnlyProps) {
-    return isElectron() 
-        ? null 
+    return isElectron()
+        ? null
         : props.div
             ? <div>{props.children}</div>
             : <>{props.children}</>

@@ -7,7 +7,7 @@ interface DesktopOnlyProps {
 }
 
 export function DesktopOnly(props: DesktopOnlyProps) {
-    return isElectron() 
+    return isElectron()
         ? props.div
             ? <div>{props.children}</div>
             : <>{props.children}</>
