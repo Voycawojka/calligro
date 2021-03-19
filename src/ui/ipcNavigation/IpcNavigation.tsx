@@ -8,12 +8,9 @@ interface IpcNavigationState {
     url: string
 }
 
-interface IpcNavigationProps {
-}
+export class IpcNavigation extends Component<{}, IpcNavigationState> {
 
-export class IpcNavigation extends Component<IpcNavigationProps, IpcNavigationState> {
-
-    constructor(props: IpcNavigationProps) {
+    constructor(props: {}) {
         super(props)
 
         this.state = {
