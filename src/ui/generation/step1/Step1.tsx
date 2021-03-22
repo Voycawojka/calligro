@@ -373,6 +373,19 @@ class Step1 extends Component<{}, Step1State> {
                             {' '}to upload the template and generate your font.
                         </li>
                     </ol>
+
+                    <WebOnly div>
+                        <h2 className={styles.heading}>We have an offline version too</h2>
+                        <p className={styles.paragraph}>The desktop version is also free and has the same features but is just a little bit more convenient to use ;)</p>
+                        <div className={styles.desktopWidget}>
+                            {/* Copied from itch.io */}
+                            <iframe frameBorder="0" src="https://itch.io/embed/946259" width="552" height="167"><a href="https://voycawojka.itch.io/calligro">Calligro by Voycawojka</a></iframe>
+                        </div>
+                        <div className={styles.mobileWidget}>
+                            {/* Copied from itch.io */}
+                            <iframe frameBorder="0" src="https://itch.io/embed/946259" width="208" height="167"><a href="https://voycawojka.itch.io/calligro">Calligro by Voycawojka</a></iframe>
+                        </div>
+                    </WebOnly>
                 </div>
             </div>
         )
