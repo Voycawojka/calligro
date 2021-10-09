@@ -26,9 +26,9 @@ export default class Template {
         const maxW = Math.max.apply(null, this.slots.map(slot => slot.width))
         const maxH = Math.max.apply(null, this.slots.map(slot => slot.height))
 
-        const slotW = maxW * 1.3
-        const slotH = maxH * 1.3
-        const vertMargin = (slotH - maxH) / 2
+        const slotW = Math.round(maxW * 1.3)
+        const slotH = Math.round(maxH * 1.3)
+        const vertMargin = Math.ceil((slotH - maxH) / 2)
 
         return { w: slotW, h: slotH, hMargin: vertMargin }
     }

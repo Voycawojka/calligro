@@ -1,4 +1,5 @@
 import { drawWrappedText } from '../../utils/canvasHelpers'
+import { memoize } from '../../utils/decorators'
 import { Slot } from './types'
 
 type DrawSlotOptions = {
@@ -12,6 +13,8 @@ type DrawSlotOptions = {
 
 export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: DrawSlotOptions): void {
     const { x, y, w, h, base, vertMargin } = options
+
+    ctx.translate(0.5, 0.5)
 
     ctx.strokeStyle = 'black'
     ctx.strokeRect(x, y, w, h)
@@ -29,10 +32,16 @@ export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: Dra
     ctx.clearRect(charRectX, charRectY, slot.width, slot.height)
     ctx.strokeRect(charRectX, charRectY, slot.width, slot.height)
 
-    ctx.fillStyle = 'black'
-    ctx.font = `${vertMargin * 0.8}px serif`
-    ctx.textAlign = 'center'
-    ctx.fillText(slot.character, x + w / 2, y + h - vertMargin / 4, w)
+    ctx.translate(-0.5, -0.5)
+
+    const fontSize = vertMargin * 0.8
+
+    if (fontSize >= 6) {
+        ctx.fillStyle = 'black'
+        ctx.font = `${fontSize}px serif`
+        ctx.textAlign = 'center'
+        ctx.fillText(slot.character, x + w / 2, y + h - vertMargin / 4, w)
+    }
 }
 
 export function drawInfo(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number): void {
