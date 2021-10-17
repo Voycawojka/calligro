@@ -33,7 +33,7 @@ export function parseTemplateCode(code: string): CodePayload | null {
         }
 
         return codePayload
-    } catch (e) {
+    } catch (e: any) {
         console.warn(`Invalid template code provided: ${e.message}`)
         return null
     }
