@@ -1,5 +1,4 @@
 import { drawWrappedText } from '../../utils/canvasHelpers'
-import { memoize } from '../../utils/decorators'
 import { Slot } from './types'
 
 type DrawSlotOptions = {
