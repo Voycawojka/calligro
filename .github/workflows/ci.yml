@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  build-and-deploy:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🕵️
