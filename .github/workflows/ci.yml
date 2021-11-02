@@ -1,0 +1,25 @@
+name: CI
+
+on: 
+  push:
+    branches: 
+      - main
+  pull_request:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🕵️
+        uses: actions/checkout@v2
+      
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Test 🧪
+        run: |
+          npm ci
+          npm run build
+          npm run test

@@ -45,6 +45,9 @@ npm start
 
 # then optionally start the desktop app
 npm run electron:dev
+
+# run unit tests
+npm run test
 ```
 
 Our actions use Node 14.
