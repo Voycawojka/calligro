@@ -7,6 +7,7 @@
     - version bump: `patch`, `minor` or `major` (or `none` to not bump the version number)
 4. Web version is now live
 5. Create a github release based on the tag automatically created in step 3
+    - base description off of the changelog
 6. Pull the branch on a Windows machine
 7. Have itch.io butler installed
 8. Run `npm run itch:upload`

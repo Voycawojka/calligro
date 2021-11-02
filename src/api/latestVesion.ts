@@ -23,7 +23,7 @@ function fetchLatestItchVersion(channelName: string): Promise<ItchReleaseData> {
 
 function fetchGithubVersionDetails(version: string): Promise<GithubReleaseData> {
     const tag = compareVersions(version, '0.2.0') === 'greater'
-        ? version
+        ? `v${version}`
         : `v.${version}`
 
     return fetch(`https://api.github.com/repos/voycawojka/calligro/releases/tags/${tag}`)
