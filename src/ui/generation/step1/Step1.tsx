@@ -99,7 +99,7 @@ class Step1 extends Component<{}, Step1State> {
 
         const newCharSet: WorkSlot[] = uniqueCharArray
             .map(character => this.state.charSet
-                .find(existingSlot => existingSlot.character === character) 
+                .find(existingSlot => existingSlot.character === character)
                 ?? { character })
 
         this.setState({
