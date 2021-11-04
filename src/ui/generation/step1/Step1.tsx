@@ -224,10 +224,12 @@ class Step1 extends Component<{}, Step1State> {
 
         if (isValuePreset) {
             const newCharset = this.createCharSetFromPreset(event.target.value)
+            const newCharString = newCharset.map(slot => slot.character).join('')
 
             this.setState({
                 selectedPreset: event.target.value,
-                charSet: newCharset
+                charSet: newCharset,
+                charString: newCharString
             }, () => event.target.blur())
         }
     }
