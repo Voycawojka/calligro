@@ -129,9 +129,15 @@
     }
 }
 
-.downloadButton {
-    @include downloadButton;
+.formButton {
+    @include formButton;
     margin: 15px auto;
+}
+
+.smallFormButton {
+    @include formButton;
+    text-align: left;
+    font-size: 18px;
 }
 
 .times {

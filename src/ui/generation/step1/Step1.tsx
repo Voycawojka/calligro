@@ -26,6 +26,7 @@ interface Step1State {
     base: NumInputValue
     selectedPreset: string
     presetInputValue: string
+    charString: string
 }
 
 class Step1 extends Component<{}, Step1State> {
@@ -42,14 +43,17 @@ class Step1 extends Component<{}, Step1State> {
         const storedData = window.localStorage.getItem('settings')
         const parsedData: Step1State = storedData ? JSON.parse(storedData) : null
         const initialPreset = parsedData?.selectedPreset ?? 'Basic Latin'
+        const initialCharSet = parsedData?.charSet ?? this.createCharSetFromPreset(initialPreset)
+        const initialCharString = parsedData?.charString ?? initialCharSet.map(slot => slot.character).join('')
 
         return ({
             selectedPreset: initialPreset,
-            charSet: parsedData?.charSet ?? this.createCharSetFromPreset(initialPreset),
+            charSet: initialCharSet,
             defaultWidth: parsedData?.defaultWidth ?? 150,
             defaultHeight: parsedData?.defaultHeight ?? 200,
             base: parsedData?.base ?? 150,
-            presetInputValue: initialPreset
+            presetInputValue: initialPreset,
+            charString: initialCharString
         })
     }
 
@@ -87,22 +91,39 @@ class Step1 extends Component<{}, Step1State> {
 
     @bind
     handleCharSetInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        const newCharArray = event.target.value.split('').filter(char => char !== ' ')
-        const isUniqueCharSet = new Set(newCharArray).size === newCharArray.length
-
         event.preventDefault()
 
-        if (isUniqueCharSet) {
-            const newCharSet: WorkSlot[] = newCharArray.map(character => {
-                return this.state.charSet.find(oldChar => oldChar.character === character) ?? { character }
-            })
+        const newCharString = event.target.value
+        const newCharArray = newCharString.split('').filter(char => char.trim() !== '')
+        const uniqueCharArray = [...new Set(newCharArray)]
 
-            this.setState({
-                charSet: newCharSet,
-                selectedPreset: 'custom',
-                presetInputValue: 'custom'
-            })
-        }
+        const newCharSet: WorkSlot[] = uniqueCharArray
+            .map(character => this.state.charSet
+                .find(existingSlot => existingSlot.character === character) 
+                ?? { character })
+
+        this.setState({
+            charString: newCharString,
+            charSet: newCharSet,
+            selectedPreset: 'custom',
+            presetInputValue: 'custom'
+        })
+    }
+
+    @bind
+    removeDuplicatesFromCharString() {
+        const validCharString = [...new Set(this.state.charString.split(''))].join('')
+
+        this.setState({
+            charString: validCharString
+        })
+    }
+
+    @bind
+    isCharStringValid() {
+        const charArray = this.state.charString.split('')
+
+        return new Set(charArray).size === charArray.length
     }
 
     @bind
@@ -128,10 +149,6 @@ class Step1 extends Component<{}, Step1State> {
             width: standardizeNumericalInput(workSlot.width ?? this.state.defaultWidth),
             height: standardizeNumericalInput(workSlot.height ?? this.state.defaultHeight)
         }))
-    }
-
-    get charString(): string {
-        return this.state.charSet.map(char => char.character).join('')
     }
 
     @bind
@@ -285,9 +302,17 @@ class Step1 extends Component<{}, Step1State> {
                         <textarea
                             aria-label='characters input'
                             className={styles.charactersTextArea}
-                            onChange={this.handleCharSetInput}
-                            value={this.charString}
+                            onChange={event => this.setState({ charString: event.target.value})}
+                            onBlur={this.handleCharSetInput}
+                            value={this.state.charString}
                         />
+                        <button
+                            onClick={this.removeDuplicatesFromCharString}
+                            className={styles.smallFormButton}
+                            disabled={this.isCharStringValid()}
+                        >
+                            Remove duplicates
+                        </button>
                     </div>
 
                     <div className={styles.parameters}>
@@ -331,7 +356,7 @@ class Step1 extends Component<{}, Step1State> {
 
                             <button
                                 onClick={this.downloadTemplate}
-                                className={styles.downloadButton}
+                                className={styles.formButton}
                                 disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
                             >
                                 {`${isElectron() ? 'save' : 'download'} template`}

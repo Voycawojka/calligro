@@ -115,8 +115,8 @@
     margin-bottom: 10px;
 }
 
-.downloadButton {
-    @include downloadButton;
+.formButton {
+    @include formButton;
     display: inline-block;
     margin: 0;
     padding: 0;
