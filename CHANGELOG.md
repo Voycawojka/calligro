@@ -4,3 +4,4 @@
 
 - started maintaining changelog
 - fixed new updates popup
+- redesigned character set input for better UX
