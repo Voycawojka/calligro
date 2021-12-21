@@ -1,0 +1,13 @@
+info face=calligro-custom size=12 unicode=1 bold=0 italic=0 stretchH=100 aa=100 padding=0,0,0,0 spacing=5,5
+common lineHeight=105 base=70 scaleW=260 scaleH=520 pages=1
+page id=0 file="calligro-page-0.png"
+chars count=9
+char id=72 x=0 y=0 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=101 x=48 y=0 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=108 x=96 y=0 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=111 x=144 y=0 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=67 x=192 y=0 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=97 x=0 y=98 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=105 x=48 y=98 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=103 x=96 y=98 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15
+char id=114 x=144 y=98 width=48 height=98 xoffset=0 yoffset=0 xadvance=48 page=0 chnl=15

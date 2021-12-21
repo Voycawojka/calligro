@@ -247,7 +247,7 @@ class Step2 extends Component<{}, Step2State> {
                             <div className={styles.buttons}>
                                 <div>
                                     <button onClick={() => this.downloadFont('txt')} className={styles.formButton} disabled={!this.areDropzonesValid()} >txt format</button>
-                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, Heaps.io and possibly others.'/>
+                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, LÖVE, Heaps.io and possibly others.'/>
                                 </div>
 
                                 <div>
