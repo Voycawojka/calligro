@@ -14,8 +14,8 @@ export default class Template {
     private readonly ctx: CanvasRenderingContext2D
 
     constructor(
-        private readonly slots: Slot[], 
-        private readonly base: number, 
+        private readonly slots: Slot[],
+        private readonly base: number,
         private readonly presetName: string,
         private readonly fontOptions?: FontOptions
     ) {
