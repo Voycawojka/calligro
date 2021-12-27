@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import Step1 from './ui/generation/step1/Step1'
-import { HashRouter, Route, Switch } from 'react-router-dom'
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import Header from './ui/header/Header'
 import Footer from './ui/footer/Footer'
 import Policy from './ui/policy/Policy'
@@ -11,6 +11,8 @@ import { DesktopOnly } from './ui/envSpecific/DesktopOnly'
 import { IpcNavigation } from './ui/ipcNavigation/IpcNavigation'
 import { Updater } from './ui/updater/Updater'
 import AboutPopup from './ui/aboutPopup/AboutPopup'
+import { isElectron } from './electron/electronInterop'
+import LandingPage from './ui/landingPage/LandingPage'
 
 const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 
@@ -24,14 +26,25 @@ function App() {
 
                 <Route>
                     <WebOnly>
-                        <Header/>
+                        <Header />
                     </WebOnly>
 
-                    <Route exact path='/'>
-                        <Step1 />
+                    <Route exact path='/' render={() => (
+                        isElectron() ? <Redirect to="/app/template" /> : <LandingPage />
+                    )}>
                     </Route>
 
-                    <Route exact path='/step2'>
+                    <Route exact path='/app'>
+                        <Redirect to="/app/template" />
+                    </Route>
+
+                    <Route exact path='/app/template'>
+                        <Suspense fallback={<Loader />}>
+                            <Step1 />
+                        </Suspense>
+                    </Route>
+
+                    <Route exact path='/app/font'>
                         <Suspense fallback={<Loader />}>
                             <Step2 />
                         </Suspense>

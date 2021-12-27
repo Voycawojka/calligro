@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Head from '../Head/Head'
 import styles from './policy.module.scss'
 
 function Policy() {
     return (
         <div className={styles.policyContainer}>
+            <Head title={'Privacy Policy | Calligro'}/>
             <h1>Calligro Privacy Policy</h1>
             <p>
                 Calligro is an open source tool served on a static web server (Github Pages).

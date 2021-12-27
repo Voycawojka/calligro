@@ -15,6 +15,7 @@ import { parseTemplateCode } from '../../../generation/template/parse'
 import { unicodeToChar } from '../../../utils/char'
 import { DesktopOnly } from '../../envSpecific/DesktopOnly'
 import ExternalLink from '../../misc/externalLink/ExternalLink'
+import Head from '../../Head/Head'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -276,6 +277,7 @@ class Step1 extends Component<{}, Step1State> {
 
         return (
             <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
+                <Head title={'Template Generation | Calligro'}/>
                 <div>
                     <WebOnly div>
                         <h2 className={styles.heading}>Generate bitmap fonts in the <ExternalLink href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</ExternalLink> format.</h2>
