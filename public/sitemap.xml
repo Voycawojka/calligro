@@ -7,7 +7,17 @@
 	</url>
 
 	<url>
-		<loc>https://calligro.ideasalmanac.com/#/step2</loc>
+		<loc>https://calligro.ideasalmanac.com/#/app</loc>
+		<priority>0.9</priority>
+	</url>
+
+	<url>
+		<loc>https://calligro.ideasalmanac.com/#/app/template</loc>
+		<priority>0.9</priority>
+	</url>
+
+	<url>
+		<loc>https://calligro.ideasalmanac.com/#/app/font</loc>
 		<priority>0.9</priority>
 	</url>
 
