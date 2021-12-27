@@ -4,6 +4,7 @@
 
 - allowed prefilling templates with characters from vector fonts
 - fixed a bug where all generated templates would look the same as the first one (https://github.com/Voycawojka/calligro/issues/57)
+- redesigned the webpage
 
 ## 1.0.2
 
