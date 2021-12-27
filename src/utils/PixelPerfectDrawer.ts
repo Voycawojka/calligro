@@ -15,9 +15,9 @@ export default class PixelPerfectDrawer {
         const index = Math.ceil(y) * (Math.ceil(this.spaceW) * 4) + Math.ceil(x) * 4
         
         return {
-            r: index, 
-            g: index + 1, 
-            b: index + 2, 
+            r: index,
+            g: index + 1,
+            b: index + 2,
             a: index + 3
         }
     }
