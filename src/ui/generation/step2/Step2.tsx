@@ -12,6 +12,7 @@ import { isElectron } from '../../../electron/electronInterop'
 import { parseTemplateCode } from '../../../generation/template/parse'
 import Preview from '../preview/Preview'
 import { CodePayload } from '../../../generation/template/types'
+import Head from '../../Head/Head'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -178,6 +179,7 @@ class Step2 extends Component<{}, Step2State> {
     render() {
         return(
             <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
+                <Head title={'Font Generation | Calligro'}/>
                 <div>
                     <div className={`${styles.dropzones} ${isElectron() ? styles.desktop : ''}`}>
                         <Dropzone
