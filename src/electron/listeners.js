@@ -1,5 +1,6 @@
 const { writeFile } = require('fs')
 const { ipcMain, dialog } = require('electron')
+const { getFonts } = require('font-list')
 const { readVersion } = require('./version')
 const { addRecentlySavedTemplate, addRecentlySavedFont } = require('./recentlySaved')
 const { setupMenu } = require('./menu')
@@ -9,6 +10,7 @@ function setupIpcListeners(app, window) {
     ipcMain.on('save-template', (_event, image, code) => saveTemplate(app, window, image, code))
     ipcMain.on('save-font', (_event, fnt, pages) => saveFont(app, window, fnt, pages))
     ipcMain.on('request-version', () => requestVersion(window))
+    ipcMain.on('request-fonts', () => requestFonts(window))
 }
 
 async function saveTemplate(app, window, imageBlobBufferArray, templateCode) {
@@ -63,6 +65,12 @@ async function requestVersion(window) {
     const version = await readVersion()
 
     window.webContents.send('version', { version, platform: process.platform })
+}
+
+async function requestFonts(window) {
+    const fonts = await getFonts({ disableQuoting: true })
+
+    window.webContents.send('fonts', { fonts })
 }
 
 exports.setupIpcListeners = setupIpcListeners
