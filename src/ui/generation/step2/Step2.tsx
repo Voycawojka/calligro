@@ -191,7 +191,7 @@ class Step2 extends Component<{}, Step2State> {
 
                         <Dropzone
                             inputName='code file'
-                            acceptedInputType='.txt'
+                            acceptedInputType='.calligro'
                             dataType='text/plain'
                             handleDropzoneInput={this.handleCodeDropzoneInput}
                             fileName={this.state.templateCodeName}
@@ -286,7 +286,7 @@ class Step2 extends Component<{}, Step2State> {
                         <h2 className={styles.heading}>Step 2 - Generate your font</h2>
                         
                         <ol className={styles.instructionList}>
-                            <li className={styles.instructionListItem}>Upload the template image with your characters drawn on it and the corresponding txt file (metadata).</li>
+                            <li className={styles.instructionListItem}>Upload the template image with your characters drawn on it and the corresponding .calligro file (metadata).</li>
                             <li className={styles.instructionListItem}>Specify font options</li>
                             <li className={styles.instructionListItem}>
                                 <p>

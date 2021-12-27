@@ -208,7 +208,7 @@ class Step1 extends Component<{}, Step1State> {
             const image = await template.generateImageBlob()
             const imageBlobArrayBuffer = await image.arrayBuffer()
 
-            ipcRenderer?.send('save-template', imageBlobArrayBuffer, template.generateTemplateCode())
+            ipcRenderer?.send('save-template', imageBlobArrayBuffer, template.generateTemplateCode(), template.readmeContent)
         } else {
             downloadTemplate(template)
         }
@@ -392,7 +392,7 @@ class Step1 extends Component<{}, Step1State> {
                         <li className={styles.instructionListItem}>Specify what characters you want included in the final font. </li>
                         <li className={styles.instructionListItem}>Choose the character size and base.</li>
                         <li className={styles.instructionListItem}>Optionally override the size per character if you want some to be smaller or bigger than the rest.</li>
-                        <li className={styles.instructionListItem}>Download the generated template. It’s a zip archive containing two files: png and txt. Open the png in your graphics editor of choice and draw characters inside the red boundaries.</li>
+                        <li className={styles.instructionListItem}>Download the generated template. It’s a zip archive containing three files: .png, .calligro and a readme. Open the png in your graphics editor of choice and draw characters inside the yellow boundaries.</li>
                         <li className={styles.instructionListItem}>
                             Go to{' '}
                             <WebOnly><Link to='/step2' className={styles.link}>Step 2</Link></WebOnly>

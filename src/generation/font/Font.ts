@@ -73,8 +73,8 @@ export async function generateFont(templateImg: Blob, tempConfig: CodePayload, f
 
     const sourceRects: SourceRect[] = slots.map((slot, index) => ({
         slot,
-        x: template.getSlotPosition(index + 1).x + template.slotDim.w / 2 - (slot.width - 2) / 2,
-        y: template.getSlotPosition(index + 1).y + template.slotDim.h / 2 - (slot.height - 2) / 2,
+        x: template.getSlotPosition(index + 1).x + template.enclosingDim.w / 2 - (slot.width - 2) / 2,
+        y: template.getSlotPosition(index + 1).y + template.enclosingDim.h / 2 - (slot.height - 2) / 2,
         w: slot.width - 2,
         h: slot.height - 2
     }))

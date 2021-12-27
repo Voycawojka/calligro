@@ -8,8 +8,12 @@ export async function downloadTemplate(template: Template): Promise<void> {
             input: await template.generateImageBlob()
         },
         {
-            name: 'template code.txt',
+            name: 'template.calligro',
             input: template.generateTemplateCode()
+        },
+        {
+            name: 'readme.txt',
+            input: template.readmeContent
         }
     ]
 
