@@ -3,11 +3,22 @@ import { CodePayload, Slot } from './types'
 import { drawInfo, drawSlot } from './slotDrawing'
 import { memoize } from '../../utils/decorators'
 
+export interface FontOptions {
+    name: string
+    fillColor: string
+    outlineColor: string
+}
+
 export default class Template {
     private readonly canvas: HTMLCanvasElement
     private readonly ctx: CanvasRenderingContext2D
 
-    constructor(private readonly slots: Slot[], private readonly base: number, private readonly presetName: string) {
+    constructor(
+        private readonly slots: Slot[], 
+        private readonly base: number, 
+        private readonly presetName: string,
+        private readonly fontOptions?: FontOptions
+    ) {
         [this.canvas, this.ctx] = createCanvas(this.w * this.slotDim.w, this.h * this.slotDim.h, 'white')
     }
 
@@ -53,7 +64,8 @@ export default class Template {
                 w: this.slotDim.w,
                 h: this.slotDim.h,
                 base: this.base,
-                vertMargin: this.slotDim.hMargin
+                vertMargin: this.slotDim.hMargin,
+                font: this.fontOptions
             })
         })
 
