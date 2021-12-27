@@ -1,4 +1,5 @@
 import { drawWrappedText } from '../../utils/canvasHelpers'
+import { FontOptions } from './Template'
 import { Slot } from './types'
 
 type DrawSlotOptions = {
@@ -7,7 +8,8 @@ type DrawSlotOptions = {
     w: number,
     h: number,
     base: number,
-    vertMargin: number
+    vertMargin: number,
+    font?: FontOptions
 }
 
 export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: DrawSlotOptions): void {
@@ -31,13 +33,23 @@ export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: Dra
     ctx.clearRect(charRectX, charRectY, slot.width, slot.height)
     ctx.strokeRect(charRectX, charRectY, slot.width, slot.height)
 
+    if (options.font) {
+        ctx.fillStyle = options.font.fillColor
+        ctx.strokeStyle = options.font.outlineColor
+        ctx.font = `${0.9 * base}px ${options.font.name}`
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'alphabetic'
+        ctx.fillText(slot.character, x + w / 2, charRectY + base, w)
+        ctx.strokeText(slot.character, x + w / 2, charRectY + base, w)
+    }
+
     ctx.translate(-0.5, -0.5)
 
-    const fontSize = vertMargin * 0.8
+    const labelFontSize = vertMargin * 0.8
 
-    if (fontSize >= 6) {
+    if (labelFontSize >= 6) {
         ctx.fillStyle = 'black'
-        ctx.font = `${fontSize}px serif`
+        ctx.font = `${labelFontSize}px serif`
         ctx.textAlign = 'center'
         ctx.fillText(slot.character, x + w / 2, y + h - vertMargin / 4, w)
     }
