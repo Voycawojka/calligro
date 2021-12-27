@@ -1,0 +1,24 @@
+@import "../../scss/colors.scss";
+@import "../../scss/fonts.scss";
+@import "../../scss/mixins.scss";
+@import "../../scss/sizes.scss";
+
+.container {
+    background-color: $secondary-color;
+    padding: $header-height 3% $footer-height;
+    display: grid;
+    grid-template-columns: 48% 48%;
+    column-gap: 4%;
+    min-height: calc(100vh - #{$footer-height});
+    box-sizing: border-box;
+
+    @include vertical-device-or-mini-device {
+        grid-template-columns: 100%;
+        grid-template-rows: min-content min-content;
+    }
+
+    &.desktop {
+        padding: 10% 3%;
+        min-height: 100vh;
+    }
+}
