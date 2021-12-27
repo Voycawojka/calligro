@@ -7,27 +7,32 @@ const { setupMenu } = require('./menu')
 const { errorDialog } = require('./nativeDialogs')
 
 function setupIpcListeners(app, window) {
-    ipcMain.on('save-template', (_event, image, code) => saveTemplate(app, window, image, code))
+    ipcMain.on('save-template', (_event, image, code, readme) => saveTemplate(app, window, image, code, readme))
     ipcMain.on('save-font', (_event, fnt, pages) => saveFont(app, window, fnt, pages))
     ipcMain.on('request-version', () => requestVersion(window))
     ipcMain.on('request-fonts', () => requestFonts(window))
 }
 
-async function saveTemplate(app, window, imageBlobBufferArray, templateCode) {
+async function saveTemplate(app, window, imageBlobBufferArray, templateCode, readme) {
     const result = await dialog.showSaveDialog()
 
     if (result.canceled) {
         return
     }
 
-    writeFile(`${result.filePath}.txt`, templateCode, (error) => {
+    writeFile(`${result.filePath}.calligro`, templateCode, (error) => {
         if (error) {
-            errorDialog(`Cannot save ${result.filePath.txt}`, error.message)
+            errorDialog(`Cannot save ${result.filePath}.txt`, error.message)
         }
     })
     writeFile(`${result.filePath}.png`, Buffer.from(imageBlobBufferArray), { encoding: 'base64' }, (error) => {
         if (error) {
-            errorDialog(`Cannot save ${result.filePath.png}`, error.message)
+            errorDialog(`Cannot save ${result.filePath}.png`, error.message)
+        }
+    })
+    writeFile(`${result.filePath}-readme.txt`, readme, (error) => {
+        if (error) {
+            errorDialog(`Cannon save ${result.filePath}-readme.txt`, readme, error.message)
         }
     })
 

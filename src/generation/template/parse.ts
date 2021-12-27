@@ -6,13 +6,10 @@ export function parseTemplateCode(code: string): CodePayload | null {
         const codePayload: CodePayload = JSON.parse(json)
 
         switch (codePayload.version) {
-            case 0:
-                codePayload.presetName = 'custom'
-                break
-            case 1:
+            case 2:
                 break
             default:
-                throw new Error(`Only templates version '0' and '1' are supported, instead got version '${codePayload.version}'`)
+                throw new Error(`Only templates version '2' are supported, instead got version '${codePayload.version}'`)
         }
 
         if (typeof codePayload.presetName !== 'string') {

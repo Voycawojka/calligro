@@ -1,76 +1,61 @@
-import { drawWrappedText } from '../../utils/canvasHelpers'
+import PixelPerfectDrawer from '../../utils/PixelPerfectDrawer'
 import { FontOptions } from './Template'
 import { Slot } from './types'
 
 type DrawSlotOptions = {
-    x: number,
-    y: number,
-    w: number,
-    h: number,
+    enclosingSpaceX: number,
+    enclosingSpaceY: number,
+    enclosingSpaceW: number,
+    enclosingSpaceH: number,
     base: number,
     vertMargin: number,
     font?: FontOptions
 }
 
 export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: DrawSlotOptions): void {
-    const { x, y, w, h, base, vertMargin } = options
+    const { enclosingSpaceX, enclosingSpaceY, enclosingSpaceW, enclosingSpaceH, base, vertMargin } = options
 
-    ctx.translate(0.5, 0.5)
+    const slotX = enclosingSpaceW / 2 - slot.width / 2
+    const slotY = enclosingSpaceH / 2 - slot.height / 2
 
-    ctx.strokeStyle = 'black'
-    ctx.strokeRect(x, y, w, h)
-
-    const charRectX = x + w / 2 - slot.width / 2
-    const charRectY = y + h / 2 - slot.height / 2
-
-    ctx.strokeStyle = 'green'
-    ctx.beginPath()
-    ctx.moveTo(x, charRectY + base)
-    ctx.lineTo(x + w, charRectY + base)
-    ctx.stroke()
-
-    ctx.strokeStyle = 'red'
-    ctx.clearRect(charRectX, charRectY, slot.width, slot.height)
-    ctx.strokeRect(charRectX, charRectY, slot.width, slot.height)
-
+    new PixelPerfectDrawer(enclosingSpaceX, enclosingSpaceY, enclosingSpaceW, enclosingSpaceH, ctx)
+        .fillRect(0, 0, enclosingSpaceW + 1, enclosingSpaceH + 1, '#f2f2f2')
+        .strokeRect(0, 0, enclosingSpaceW + 1, enclosingSpaceH + 1, '#202020')
+        .strokeHorizontalLine(0, slotY + base, enclosingSpaceW, '#ffd76c')
+        .clearRect(slotX, slotY, slot.width, slot.height)
+        .strokeRect(slotX, slotY, slot.width, slot.height, '#ffd76c')
+        .flush()
+    
     if (options.font) {
+        const absSlotY = enclosingSpaceY + enclosingSpaceH / 2 - slot.height / 2
+
         ctx.fillStyle = options.font.fillColor
         ctx.strokeStyle = options.font.outlineColor
         ctx.font = `${0.9 * base}px ${options.font.name}`
         ctx.textAlign = 'center'
         ctx.textBaseline = 'alphabetic'
-        ctx.fillText(slot.character, x + w / 2, charRectY + base, w)
-        ctx.strokeText(slot.character, x + w / 2, charRectY + base, w)
+        ctx.fillText(slot.character, enclosingSpaceX + enclosingSpaceW / 2, absSlotY + base, enclosingSpaceW)
+        ctx.strokeText(slot.character, enclosingSpaceX + enclosingSpaceW / 2, absSlotY + base, enclosingSpaceW)
     }
 
-    ctx.translate(-0.5, -0.5)
-
-    const labelFontSize = vertMargin * 0.8
-
-    if (labelFontSize >= 6) {
-        ctx.fillStyle = 'black'
-        ctx.font = `${labelFontSize}px serif`
-        ctx.textAlign = 'center'
-        ctx.fillText(slot.character, x + w / 2, y + h - vertMargin / 4, w)
-    }
+    ctx.fillStyle = '#202020'
+    ctx.font = `${vertMargin * 0.8}px serif`
+    ctx.textAlign = 'center'
+    ctx.fillText(slot.character, enclosingSpaceX + enclosingSpaceW / 2, enclosingSpaceY + enclosingSpaceH - vertMargin / 4, enclosingSpaceW)
 }
 
-export function drawInfo(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number): void {
-    const info = `1) Draw characters inside the red boundaries*.
+export async function drawLogo(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number): Promise<void> {
+    await new Promise<void>(resolve => {
+        const image = new Image()
+        image.onload = () => {
+            const size = Math.min(w, h)
 
-2) Upload this file back to Calligro
-
-3) Paste the template code and you got yourself a font
-
-*Green lines signify the letter base.`
-
-    ctx.fillStyle = 'black'
-    ctx.textAlign = 'left'
-    drawWrappedText(ctx, info, {
-        x: x + w * 0.05,
-        y: y + h * 0.1,
-        maxWidth: w * 0.9,
-        maxHeight: h * 0.8,
-        size: h / 5
+            
+            ctx.imageSmoothingEnabled = true
+            ctx.drawImage(image, x, y, size, size)
+            ctx.imageSmoothingEnabled = false
+            resolve()
+        }
+        image.src = '/logo192.png'
     })
 }
