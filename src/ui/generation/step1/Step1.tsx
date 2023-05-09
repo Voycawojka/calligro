@@ -324,7 +324,7 @@ class Step1 extends Component<{}, Step1State> {
                             This tool can also be used to convert a trutype font into a BMFont (with the prefill option) but if you’re looking specifically for that try tools like the original{' '}
                             <ExternalLink href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</ExternalLink>
                             {' '}or{' '}
-                            <ExternalLink href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</ExternalLink>
+                            <ExternalLink href='https://libgdx.com/wiki/tools/hiero' className={styles.link}>Hiero</ExternalLink>
                             {' '}instead.
                         </p>
                     </WebOnly>

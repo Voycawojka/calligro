@@ -50,10 +50,10 @@ class AboutPopup extends Component<{}, AboutPopupState> {
                         <div className={styles.disclaimer}>
                             <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
                             <p className={styles.paragraph}>
-                                If you’re looking to convert a truetype font into a BMFont, try tools like the original{' '}
+                                This tool can also be used to convert a trutype font into a BMFont (with the prefill option) but if you’re looking specifically for that try tools like the original{' '}
                                 <ExternalLink href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</ExternalLink> 
                                 {' '}or{' '} 
-                                <ExternalLink href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</ExternalLink>
+                                <ExternalLink href='https://libgdx.com/wiki/tools/hiero' className={styles.link}>Hiero</ExternalLink>
                                 {' '}instead.
                             </p>
                         </div>

@@ -29,7 +29,7 @@ Calligro is useful when you need to draw a custom font stored as a spritesheet. 
 
 If you only want to convert an existing truetype font into a bitmap font, you can also try one of those tools instead:
 - [AngelCode's BMFont](https://www.angelcode.com/products/bmfont/) 
-- [Hiero](https://github.com/libgdx/libgdx/wiki/Hiero)
+- [Hiero](https://libgdx.com/wiki/tools/hiero)
 - [ShoeBox](http://renderhjs.net/shoebox/)
 - [Littera](http://kvazars.com/littera/) (requires Flash)
 
