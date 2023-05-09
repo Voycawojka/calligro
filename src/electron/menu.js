@@ -48,7 +48,7 @@ async function constructMenuTemplate(app, window) {
             submenu: [
                 {
                     label: 'Create a template',
-                    click: () => window.webContents.send('navigation', '/')
+                    click: () => window.webContents.send('navigation', '/app/template')
                 },
                 {
                     label: 'Recently saved',
@@ -63,7 +63,7 @@ async function constructMenuTemplate(app, window) {
                                 if (error) {
                                     errorDialog(`Cannot load ${template.path}`, error.message)
                                 } else {
-                                    window.webContents.send('navigation', '/')
+                                    window.webContents.send('navigation', '/app/template')
                                     window.webContents.send('load-template', data)
                                 }
                             })
@@ -77,7 +77,7 @@ async function constructMenuTemplate(app, window) {
             submenu: [
                 {
                     label: 'Generate a font',
-                    click: () => window.webContents.send('navigation', '/step2')
+                    click: () => window.webContents.send('navigation', '/app/font')
                 }
             ]
         },

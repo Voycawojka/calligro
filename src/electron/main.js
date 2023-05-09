@@ -28,6 +28,10 @@ async function createWindow() {
     window.loadURL(appUrl)
     readVersion().then(version => console.log(`Running version ${version}`))
     setupIpcListeners(app, window)
+    // hot fix!
+    setTimeout(() => {
+        window.webContents.send('navigation', '/app/template')
+    }, 500)
 }
 
 app.whenReady().then(createWindow)

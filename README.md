@@ -44,6 +44,9 @@ npm install
 npm start
 
 # then optionally start the desktop app
+cd electron_resources
+npm install
+cd ..
 npm run electron:dev
 
 # run unit tests

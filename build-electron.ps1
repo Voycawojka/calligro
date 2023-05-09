@@ -9,6 +9,10 @@ Copy-Item -Path "src\electron\*" -Destination "electron_resources\src" -Recurse 
 npm run build
 Copy-Item -Path "build\*" -Destination "electron_resources\src\app" -Recurse
 
+Set-Location -Path "electron_resources"
+npm install
+Set-Location -Path ".." 
+
 # Package electron app for Windows and Linux from resources
 node_modules\.bin\electron-packager electron_resources\ calligro `
     --platform="win32,linux" `
