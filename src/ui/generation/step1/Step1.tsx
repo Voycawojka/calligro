@@ -16,7 +16,6 @@ import { unicodeToChar } from '../../../utils/char'
 import { DesktopOnly } from '../../envSpecific/DesktopOnly'
 import ExternalLink from '../../misc/externalLink/ExternalLink'
 import Head from '../../Head/Head'
-import TemplatePreview from '../templatePreview/TemplatePreview'
 import { findSystemFonts } from '../../../generation/template/fontsDetection'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null

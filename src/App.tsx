@@ -11,8 +11,6 @@ import { DesktopOnly } from './ui/envSpecific/DesktopOnly'
 import { IpcNavigation } from './ui/ipcNavigation/IpcNavigation'
 import { Updater } from './ui/updater/Updater'
 import AboutPopup from './ui/aboutPopup/AboutPopup'
-import { isElectron } from './electron/electronInterop'
-import LandingPage from './ui/landingPage/LandingPage'
 
 const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 
