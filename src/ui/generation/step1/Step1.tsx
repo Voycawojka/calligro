@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bind } from 'helpful-decorators'
 import Step1CharacterList from '../step1CharacterList/Step1CharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'
-import Template from '../../../generation/template/Template'
+import Template, { FontOptions } from '../../../generation/template/Template'
 import { downloadTemplate } from '../../../generation/template/download'
 import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'
@@ -16,6 +16,8 @@ import { unicodeToChar } from '../../../utils/char'
 import { DesktopOnly } from '../../envSpecific/DesktopOnly'
 import ExternalLink from '../../misc/externalLink/ExternalLink'
 import Head from '../../Head/Head'
+import TemplatePreview from '../templatePreview/TemplatePreview'
+import { findSystemFonts } from '../../../generation/template/fontsDetection'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -28,16 +30,27 @@ interface Step1State {
     selectedPreset: string
     presetInputValue: string
     charString: string
+    fontOptions: FontOptions | null
+    loadedSystemFonts: boolean
 }
 
 class Step1 extends Component<{}, Step1State> {
     private unicodeRanges: UnicodeRange[]
-    
+    private systemFonts: string[]
+
     constructor(props: {}) {
         super(props)
 
         this.unicodeRanges = getUnicodeRanges()
+        this.systemFonts = []
         this.state = this.setInitialState()
+
+        findSystemFonts().then(fonts => {
+            this.systemFonts = fonts
+            this.setState({
+                loadedSystemFonts: true
+            })
+        })
     }
 
     setInitialState(): Step1State {
@@ -46,6 +59,7 @@ class Step1 extends Component<{}, Step1State> {
         const initialPreset = parsedData?.selectedPreset ?? 'Basic Latin'
         const initialCharSet = parsedData?.charSet ?? this.createCharSetFromPreset(initialPreset)
         const initialCharString = parsedData?.charString ?? initialCharSet.map(slot => slot.character).join('')
+        const initialFontOptions = parsedData?.fontOptions ?? null
 
         return ({
             selectedPreset: initialPreset,
@@ -54,7 +68,9 @@ class Step1 extends Component<{}, Step1State> {
             defaultHeight: parsedData?.defaultHeight ?? 200,
             base: parsedData?.base ?? 150,
             presetInputValue: initialPreset,
-            charString: initialCharString
+            charString: initialCharString,
+            fontOptions: initialFontOptions,
+            loadedSystemFonts: false
         })
     }
 
@@ -135,7 +151,7 @@ class Step1 extends Component<{}, Step1State> {
             const charSet: WorkSlot[] = []
 
             for (let i = activeRange.range[0]; i < activeRange.range[1] + 1; i++) {
-                charSet.push({character: String.fromCharCode(i)})
+                charSet.push({ character: String.fromCharCode(i) })
             }
 
             return charSet
@@ -174,14 +190,14 @@ class Step1 extends Component<{}, Step1State> {
             [valueName]: newValue
         }))
     }
-  
+
     @bind
     handleDimensionChange(event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) {
         const newValue = event.target.value === '' ? '' : parseInt(event.target.value, 10)
         const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
             ? {
                 ...character,
-                [dimension] : newValue
+                [dimension]: newValue
             }
             : character
         )
@@ -189,12 +205,12 @@ class Step1 extends Component<{}, Step1State> {
         this.setState({
             charSet: newCharSet
         })
-        
+
     }
 
     @bind
     resetCharacterDimensions(char: WorkSlot) {
-        const newCharSet =  this.state.charSet.map(workSlot => char === workSlot ? { character: workSlot.character } : workSlot)
+        const newCharSet = this.state.charSet.map(workSlot => char === workSlot ? { character: workSlot.character } : workSlot)
 
         this.setState({
             charSet: newCharSet
@@ -203,8 +219,8 @@ class Step1 extends Component<{}, Step1State> {
 
     @bind
     async downloadTemplate() {
-        const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset)
-        
+        const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset, this.state.fontOptions)
+
         if (isElectron()) {
             const image = await template.generateImageBlob()
             const imageBlobArrayBuffer = await image.arrayBuffer()
@@ -236,6 +252,23 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     @bind
+    changePrefill(event: React.ChangeEvent<HTMLInputElement>) {
+        if (event.target.value === "") {
+            this.setState({
+                fontOptions: null
+            })
+        } else {
+            this.setState({
+                fontOptions: {
+                    name: event.target.value,
+                    fillColor: 'black',
+                    outlineColor: ''
+                }
+            })
+        }
+    }
+
+    @bind
     presetSelectBlur(event: React.FocusEvent<HTMLInputElement>) {
         event.target.value = this.state.selectedPreset
     }
@@ -248,8 +281,8 @@ class Step1 extends Component<{}, Step1State> {
                 .map(range => <option value={range.category} key={range.category} >{range.category}</option>)
 
             const defaultOption = <option value='Basic Latin'>Default</option>
-            const datalistId = 'datalistId'
-            
+            const datalistId = 'presets-datalist'
+
             return (
                 <div className={styles.inputContainer}>
                     <Fa
@@ -267,7 +300,7 @@ class Step1 extends Component<{}, Step1State> {
                         onBlur={this.presetSelectBlur}
                     />
 
-                    <datalist id={datalistId} onClick={() => console.log('clicked')}>
+                    <datalist id={datalistId}>
                         {defaultOption}
                         {options}
                     </datalist>
@@ -275,15 +308,20 @@ class Step1 extends Component<{}, Step1State> {
             )
         })()
 
+        const defaultPrefillOption = <option value="" key="none">none</option>
+        const prefillOptions = this.state.loadedSystemFonts
+            ? this.systemFonts.map(font => <option value={font} key={font}>{font}</option>)
+            : []
+
         return (
             <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
-                <Head title={'Template Generation | Calligro'}/>
+                <Head title={'Template Generation | Calligro'} />
                 <div>
                     <WebOnly div>
                         <h2 className={styles.heading}>Generate bitmap fonts in the <ExternalLink href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</ExternalLink> format.</h2>
                         <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
                         <p className={styles.paragraph}>
-                            If you’re looking to convert a truetype font into a BMFont, try tools like the original{' '}
+                            This tool can also be used to convert a trutype font into a BMFont (with the prefill option) but if you’re looking specifically for that try tools like the original{' '}
                             <ExternalLink href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</ExternalLink>
                             {' '}or{' '}
                             <ExternalLink href='https://github.com/libgdx/libgdx/wiki/Hiero' className={styles.link}>Hiero</ExternalLink>
@@ -306,7 +344,7 @@ class Step1 extends Component<{}, Step1State> {
                         <textarea
                             aria-label='characters input'
                             className={styles.charactersTextArea}
-                            onChange={event => this.setState({ charString: event.target.value})}
+                            onChange={event => this.setState({ charString: event.target.value })}
                             onBlur={this.handleCharSetInput}
                             value={this.state.charString}
                         />
@@ -331,7 +369,7 @@ class Step1 extends Component<{}, Step1State> {
                                     onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
                                     value={this.state.defaultWidth}
                                 />
-                                <Fa icon='fas fa-times' className={styles.times}/>
+                                <Fa icon='fas fa-times' className={styles.times} />
                                 <input
                                     aria-label='default height input'
                                     className={styles.commonInput}
@@ -339,9 +377,9 @@ class Step1 extends Component<{}, Step1State> {
                                     onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
                                     value={this.state.defaultHeight}
                                 />
-                                <Fa icon='fas fa-question' className={styles.questionMark} title='Default size of one character in pixels'/>
+                                <Fa icon='fas fa-question' className={styles.questionMark} title='Default size of one character in pixels' />
                             </div>
-                            
+
                             <div>
                                 <label className={styles.commonLabel}>Base</label>
                                 <input
@@ -355,6 +393,27 @@ class Step1 extends Component<{}, Step1State> {
                                     icon='fas fa-question'
                                     className={styles.questionMark}
                                     title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")'
+                                />
+                            </div>
+
+                            <div>
+                                <label className={styles.commonLabel}>Prefill</label>
+                                <input
+                                    list="prefill-datalist"
+                                    aria-label='unicode presets selection input'
+                                    onChange={this.changePrefill}
+                                    value={this.state.fontOptions?.name}
+                                    className={styles.prefillSelect}
+                                />
+
+                                <datalist id="prefill-datalist">
+                                    {defaultPrefillOption}
+                                    {prefillOptions}
+                                </datalist>
+                                <Fa
+                                    icon='fas fa-question'
+                                    className={styles.questionMark}
+                                    title='Vector font to prefill the template with. Leave empty to not prefill.'
                                 />
                             </div>
 
@@ -386,6 +445,12 @@ class Step1 extends Component<{}, Step1State> {
                             />
                         </div>
                     </div>
+                    {/* <div>
+                        <TemplatePreview
+                            width={1000}
+                            height={500}
+                            template={new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset, this.state.fontOptions)}/>
+                    </div> */}
                 </div>
 
                 <div>
@@ -393,6 +458,7 @@ class Step1 extends Component<{}, Step1State> {
                     <ol className={styles.instructionList}>
                         <li className={styles.instructionListItem}>Specify what characters you want included in the final font. </li>
                         <li className={styles.instructionListItem}>Choose the character size and base.</li>
+                        <li className={styles.instructionListItem}>Optionally choose a font to prefill the template with. Doesn't work well with low resolution templates.</li>
                         <li className={styles.instructionListItem}>Optionally override the size per character if you want some to be smaller or bigger than the rest.</li>
                         <li className={styles.instructionListItem}>Download the generated template. It’s a zip archive containing three files: .png, .calligro and a readme. Open the png in your graphics editor of choice and draw characters inside the yellow boundaries.</li>
                         <li className={styles.instructionListItem}>

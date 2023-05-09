@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { FontConfig, generateFont } from '../../../generation/font/Font'
 import { CodePayload } from '../../../generation/template/types'
 import { drawPreview } from '../../../preview/preview'
-import styles from  './preview.module.scss'
+import styles from  './fontPreview.module.scss'
 
-interface PreviewProps {
+interface FontPreviewProps {
     width: number
     height: number
     templateCode?: CodePayload
@@ -12,16 +12,16 @@ interface PreviewProps {
     fontConfig: FontConfig
 }
 
-interface PreviewState {
+interface FontPreviewState {
     text: string
     scale: number
 }
 
-class Preview extends Component<PreviewProps, PreviewState> {
+class FontPreview extends Component<FontPreviewProps, FontPreviewState> {
     private canvas: React.RefObject<HTMLCanvasElement>
     private canvasContainer: React.RefObject<HTMLDivElement>
 
-    constructor(props: PreviewProps) {
+    constructor(props: FontPreviewProps) {
         super(props)
 
         this.state = {
@@ -97,4 +97,4 @@ class Preview extends Component<PreviewProps, PreviewState> {
     }
 }
 
-export default Preview
+export default FontPreview

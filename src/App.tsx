@@ -29,9 +29,13 @@ function App() {
                         <Header />
                     </WebOnly>
 
-                    <Route exact path='/' render={() => (
+                    {/* <Route exact path='/' render={() => (
                         isElectron() ? <Redirect to="/app/template" /> : <LandingPage />
                     )}>
+                    </Route> */}
+
+                    <Route exact path='/'>
+                        <Redirect to="/app/template" />
                     </Route>
 
                     <Route exact path='/app'>

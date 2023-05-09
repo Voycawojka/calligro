@@ -1,0 +1,15 @@
+@import "../../../scss/mixins.scss";
+
+.container {
+    --bgColor: #ffffff;
+    
+    display: block;
+    border: 2px solid black;
+    max-width: 100%;
+    margin-bottom: 50px;
+    background-color: var(--bgColor);
+
+    canvas {
+        max-width: 100%;
+    }
+}

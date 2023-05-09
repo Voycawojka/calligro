@@ -9,7 +9,7 @@ type DrawSlotOptions = {
     enclosingSpaceH: number,
     base: number,
     vertMargin: number,
-    font?: FontOptions
+    font: FontOptions | null
 }
 
 export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: DrawSlotOptions): void {

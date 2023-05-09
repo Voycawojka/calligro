@@ -10,7 +10,7 @@ import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import Step2KerningPairsList from '../step2KerningPairsList/Step2KerningPairsList'
 import { isElectron } from '../../../electron/electronInterop'
 import { parseTemplateCode } from '../../../generation/template/parse'
-import Preview from '../preview/Preview'
+import FontPreview from '../fontPreview/FontPreview'
 import { CodePayload } from '../../../generation/template/types'
 import Head from '../../Head/Head'
 
@@ -276,7 +276,7 @@ class Step2 extends Component<{}, Step2State> {
 
                 <div>
                     <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
-                        <Preview
+                        <FontPreview
                             width={400}
                             height={250}
                             templateCode={this.state.templateCode}

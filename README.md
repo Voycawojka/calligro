@@ -9,7 +9,7 @@ Desktop version is hosted on [itch.io](https://voycawojka.itch.io/calligro)
 [![CodeFactor](https://www.codefactor.io/repository/github/voycawojka/calligro/badge)](https://www.codefactor.io/repository/github/voycawojka/calligro)
 
 Calligro generates bitmap fonts in the [AngelCode's BMFont](https://www.angelcode.com/products/bmfont/) format.
-Unlike the original BMFont and other tools it doesn't convert TTF but instead generates bitmap fonts from custom images.
+It can be used to convert a TTF but unlike the original BMFont and other tools it can also generate bitmap fonts from custom images.
 
 The workflow is as follows:
 - generate a Calligro template (which is a .png image)
@@ -18,7 +18,7 @@ The workflow is as follows:
 
 Everything is calculated on the client side. No files are sent or stored on the server (we use gh pages anyway).
 
-There is also an offline version available for Windows and Linux. It has the same core features but is a little bit more convenient to use.
+There is also an offline version available for Windows and Linux. It has the same core features but is a little bit more convenient to use. It also detects system fonts better.
 
 # Samples
 The BMFont format has existed for a while and a lot of game frameworks, libraries and engines support it out of the box.
@@ -27,7 +27,7 @@ Some examples and more details on compatibility can be found in the [samples/](s
 # Use case
 Calligro is useful when you need to draw a custom font stored as a spritesheet. Pixelart font would be a good use.
 
-If you want to convert an existing truetype font into a bitmap font, try one of those tools instead:
+If you only want to convert an existing truetype font into a bitmap font, you can also try one of those tools instead:
 - [AngelCode's BMFont](https://www.angelcode.com/products/bmfont/) 
 - [Hiero](https://github.com/libgdx/libgdx/wiki/Hiero)
 - [ShoeBox](http://renderhjs.net/shoebox/)

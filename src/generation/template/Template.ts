@@ -29,7 +29,7 @@ export default class Template {
         private readonly slots: Slot[],
         private readonly base: number,
         private readonly presetName: string,
-        private readonly fontOptions?: FontOptions
+        private readonly fontOptions: FontOptions | null
     ) {
         this.w = Math.ceil(Math.sqrt(this.slots.length + 1))
         this.h = Math.ceil(Math.sqrt(this.slots.length + 1))
@@ -104,5 +104,11 @@ export default class Template {
 
         More info at https://calligro.ideasalmanac.com
         `.trim()
+    }
+
+    public async copyOnto(ctx: CanvasRenderingContext2D): Promise<void> {
+        await this.generateImageBlob()
+
+        ctx.drawImage(this.canvas, 0, 0)
     }
 }
