@@ -93,8 +93,8 @@ class Step2 extends Component<{}, Step2State> {
         }))
     }
 
-    async isCodeFileValid(file?: Blob): Promise<boolean> {
-        return !!file && file.type === 'text/plain'
+    async isCodeFileValid(file?: File): Promise<boolean> {
+        return file?.name.split('.').at(-1) === 'calligro'
     }
 
     isTemplateFileValid(file?: Blob): boolean {
@@ -194,7 +194,7 @@ class Step2 extends Component<{}, Step2State> {
                         <Dropzone
                             inputName='code file'
                             acceptedInputType='.calligro'
-                            dataType='text/plain'
+                            dataType=''
                             handleDropzoneInput={this.handleCodeDropzoneInput}
                             fileName={this.state.templateCodeName}
                             error={this.state.templateCodeError}
