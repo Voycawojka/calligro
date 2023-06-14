@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- fixed a bug where .calligro files could not be uploaded (thanks to [ksv90](https://github.com/Voycawojka/calligro/pull/76))
+
 ## 1.1.0
 
 - allowed prefilling templates with characters from vector fonts

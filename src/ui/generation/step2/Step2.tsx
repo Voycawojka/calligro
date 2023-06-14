@@ -63,7 +63,7 @@ class Step2 extends Component<{}, Step2State> {
 
     @bind
     async handleCodeDropzoneInput(data: File) {
-        if (!(await this.isCodeFileValid(data))) {
+        if (!this.isCodeFileValid(data)) {
             this.setState(prevState => ({
                 ...prevState,
                 templateCodeError: 'Uploaded file isn\'t valid.',
@@ -93,8 +93,10 @@ class Step2 extends Component<{}, Step2State> {
         }))
     }
 
-    async isCodeFileValid(file?: File): Promise<boolean> {
-        return file?.name.split('.').at(-1) === 'calligro'
+    isCodeFileValid(file?: File): boolean {
+        const nameParts = file?.name.split('.')
+        const extension = nameParts && nameParts[nameParts.length-1]
+        return extension === 'calligro'
     }
 
     isTemplateFileValid(file?: Blob): boolean {
@@ -194,7 +196,6 @@ class Step2 extends Component<{}, Step2State> {
                         <Dropzone
                             inputName='code file'
                             acceptedInputType='.calligro'
-                            dataType=''
                             handleDropzoneInput={this.handleCodeDropzoneInput}
                             fileName={this.state.templateCodeName}
                             error={this.state.templateCodeError}
