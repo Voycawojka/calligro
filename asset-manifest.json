@@ -3,13 +3,13 @@
     "main.css": "./static/css/main.72d75520.chunk.css",
     "main.js": "./static/js/main.b0a1556d.chunk.js",
     "main.js.map": "./static/js/main.b0a1556d.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.095baf30.js",
-    "runtime-main.js.map": "./static/js/runtime-main.095baf30.js.map",
+    "runtime-main.js": "./static/js/runtime-main.2b8b69ac.js",
+    "runtime-main.js.map": "./static/js/runtime-main.2b8b69ac.js.map",
     "static/js/2.eac7b528.chunk.js": "./static/js/2.eac7b528.chunk.js",
     "static/js/2.eac7b528.chunk.js.map": "./static/js/2.eac7b528.chunk.js.map",
     "static/css/3.436b6c30.chunk.css": "./static/css/3.436b6c30.chunk.css",
-    "static/js/3.e1d0686f.chunk.js": "./static/js/3.e1d0686f.chunk.js",
-    "static/js/3.e1d0686f.chunk.js.map": "./static/js/3.e1d0686f.chunk.js.map",
+    "static/js/3.bc1a06f5.chunk.js": "./static/js/3.bc1a06f5.chunk.js",
+    "static/js/3.bc1a06f5.chunk.js.map": "./static/js/3.bc1a06f5.chunk.js.map",
     "static/js/4.b499325e.chunk.js": "./static/js/4.b499325e.chunk.js",
     "static/js/4.b499325e.chunk.js.map": "./static/js/4.b499325e.chunk.js.map",
     "index.html": "./index.html",
@@ -19,7 +19,7 @@
     "static/media/header.module.scss": "./static/media/github-arrow.9ec6f9d0.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.095baf30.js",
+    "static/js/runtime-main.2b8b69ac.js",
     "static/js/2.eac7b528.chunk.js",
     "static/css/main.72d75520.chunk.css",
     "static/js/main.b0a1556d.chunk.js"
