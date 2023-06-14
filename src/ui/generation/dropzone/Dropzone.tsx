@@ -6,7 +6,7 @@ interface DropzoneProps {
     handleDropzoneInput: (data: File) => void
     fileName?: string
     acceptedInputType: string
-    dataType: string
+    dataType?: string
     inputName: string
     error?: string
 }
@@ -28,8 +28,16 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
         this.templateInput = React.createRef()
     }
 
+    isCorrectType(file: File) {
+        if (!this.props.dataType) {
+            return true;
+        } else {
+            return file.type === this.props.dataType
+        }
+    }
+
     handleFileInput(data?: File) {
-        if (data && data.type === this.props.dataType) {
+        if (data && this.isCorrectType(data)) {
             this.props.handleDropzoneInput(data)
         }
     }
