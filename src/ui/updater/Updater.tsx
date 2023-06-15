@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import { bind } from 'helpful-decorators'
 import { fetchNewerVersion } from '../../api/latestVesion'
 import Popup from '../popup/Popup'
 import styles from './updater.module.scss'
@@ -7,11 +6,17 @@ import ExternalLink from '../misc/externalLink/ExternalLink'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
+interface VersionListenerData {
+    version: string
+    platform: string
+}
+
 interface UpdaterState {
     newVersionName?: string
     newVersionDescription?: string,
     currentVersion?: string,
-    newVersionCount? : string
+    newVersionCount?: string
+    versionListener?: (event: any, data: VersionListenerData) => Promise<void>
 }
 
 interface UpdaterProps {
@@ -26,16 +31,25 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('version', this.versionListener)
-        ipcRenderer?.send('request-version')
+        if (ipcRenderer) {
+            const listener = (_event: any, data: VersionListenerData) => this.versionListener(data)
+
+            ipcRenderer.on('version', listener)
+            ipcRenderer.send('request-version')
+
+            this.setState({
+                versionListener: listener
+            })
+        }
     }
 
     componentWillUnmount() {
-        ipcRenderer?.removeListener('version', this.versionListener)
+        if (this.state.versionListener) {
+            ipcRenderer?.removeListener('version', this.state.versionListener)
+        }
     }
 
-    @bind
-    async versionListener(_event: any, data: { version: string, platform: string }) {
+    async versionListener(data: VersionListenerData) {
         let channel = null
 
         if (data.platform === 'linux') {
@@ -60,7 +74,6 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
         }
     }
 
-    @bind
     close() {
         this.setState({
             newVersionName: undefined
@@ -73,7 +86,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
                 .map((item, index ) => <p key={index} className={styles.descriptionParagraph}>{item}</p>)
 
             return (
-                <Popup title='New version available' closeHandler={this.close}>
+                <Popup title='New version available' closeHandler={() => this.close()}>
                     <div className={styles.container}>
                         <div className={styles.content}>Version 
                             <span className={styles.contentBold}> {this.state.newVersionCount} </span> 

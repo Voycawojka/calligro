@@ -1,4 +1,3 @@
-import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
 import styles from './dropzone.module.scss'
 
@@ -42,14 +41,12 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
         }
     }
 
-    @bind
     handleInput() {
         const data = this.templateInput.current?.files?.[0]
        
         this.handleFileInput(data)
     }
 
-    @bind
     handleDrop(event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault()
         const data = event.dataTransfer.files[0]
@@ -64,7 +61,6 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
         event.preventDefault()
     }
     
-    @bind
     dragEnter (event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault()
 
@@ -73,7 +69,6 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
         }))
     }
     
-    @bind
     dragLeave (event: React.DragEvent<HTMLDivElement>) {
         event.preventDefault()
 
@@ -94,10 +89,10 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
         return (
             <div
                 className={`${styles.container} ${this.state.dragCounter ? styles.containerDragOver : ''}`}
-                onDrop={this.handleDrop}
-                onDragOver={this.dragOver}
-                onDragEnter={this.dragEnter}
-                onDragLeave={this.dragLeave}
+                onDrop={event => this.handleDrop(event)}
+                onDragOver={event => this.dragOver(event)}
+                onDragEnter={event => this.dragEnter(event)}
+                onDragLeave={event => this.dragLeave(event)}
             >
                 <label className={styles.label}>Drag&amp;drop the {this.props.inputName}</label>
                 <div className={styles.inputContainer}>
@@ -105,7 +100,7 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
                         aria-label={`${this.props.inputName} input`}
                         className={styles.input}
                         type='file' ref={this.templateInput}
-                        onChange={this.handleInput}
+                        onChange={() => this.handleInput()}
                         accept={this.props.acceptedInputType}
                         title=" "
                     />

@@ -5,11 +5,11 @@ import styles from './navbar.module.scss'
 function Navbar() {
     return (
         <nav className={styles.container}>
-            <NavLink exact to='/app/template' className={`${styles.navLink} ${styles.navLinkLeft}`} activeClassName={styles.navLinkActive}>
+            <NavLink to='/app/template' className={({ isActive }) => `${styles.navLink} ${styles.navLinkLeft} ${isActive && styles.navLinkActive}`}>
                 <p className={styles.linkBig}>Step 1</p>
                 <p className={styles.linkSmall}>create a template</p>
             </NavLink>
-            <NavLink to='/app/font' className={`${styles.navLink} ${styles.navLinkRight}`} activeClassName={styles.navLinkActive}>
+            <NavLink to='/app/font' className={({ isActive }) => `${styles.navLink} ${styles.navLinkRight} ${isActive && styles.navLinkActive}`}>
                 <p className={styles.linkBig}>Step 2</p>
                 <p className={styles.linkSmall}>generate your font</p>
             </NavLink>

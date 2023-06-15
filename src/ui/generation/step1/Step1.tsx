@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { bind } from 'helpful-decorators'
 import Step1CharacterList from '../step1CharacterList/Step1CharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'
 import Template, { FontOptions } from '../../../generation/template/Template'
@@ -80,15 +79,14 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('load-template', this.loadTemplateListener)
+        ipcRenderer?.on('load-template', (_event: any, templateCode: string) => this.loadTemplateListener(templateCode))
     }
 
     componentWillUnmount() {
-        ipcRenderer?.removeListener('load-template', this.loadTemplateListener)
+        ipcRenderer?.removeListener('load-template', (_event: any, templateCode: string) => this.loadTemplateListener(templateCode))
     }
 
-    @bind
-    loadTemplateListener(_event: any, templateCode: string) {
+    loadTemplateListener(templateCode: string) {
         const code = parseTemplateCode(templateCode)
 
         if (code) {
@@ -105,7 +103,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     handleCharSetInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
         event.preventDefault()
 
@@ -126,7 +123,6 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    @bind
     removeDuplicatesFromCharString() {
         const validCharString = [...new Set(this.state.charString.split(''))].join('')
 
@@ -135,14 +131,12 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    @bind
     isCharStringValid() {
         const charArray = this.state.charString.split('')
 
         return new Set(charArray).size === charArray.length
     }
 
-    @bind
     createCharSetFromPreset(preset: string): WorkSlot[] {
         const activeRange = this.unicodeRanges.find(range => range.category === preset)
 
@@ -167,12 +161,10 @@ class Step1 extends Component<{}, Step1State> {
         }))
     }
 
-    @bind
     isSlotArrayValid(): boolean {
         return this.slotArray.every(slot => slot.height > 0 && slot.width > 0)
     }
 
-    @bind
     isBaseValid(): boolean {
         const standardizedBase: number = standardizeNumericalInput(this.state.base)
         const standardizedHeight: number = standardizeNumericalInput(this.state.defaultHeight)
@@ -180,7 +172,6 @@ class Step1 extends Component<{}, Step1State> {
         return standardizedBase <= standardizedHeight && standardizedBase >= 0
     }
 
-    @bind
     handleDefaultValueChange(event: React.ChangeEvent<HTMLInputElement>, valueName: 'defaultWidth' | 'defaultHeight' | 'base') {
         const newValue = event.target.value === '' ? '' : parseInt(event.target.value, 10)
 
@@ -190,7 +181,6 @@ class Step1 extends Component<{}, Step1State> {
         }))
     }
 
-    @bind
     handleDimensionChange(event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) {
         const newValue = event.target.value === '' ? '' : parseInt(event.target.value, 10)
         const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
@@ -207,7 +197,6 @@ class Step1 extends Component<{}, Step1State> {
 
     }
 
-    @bind
     resetCharacterDimensions(char: WorkSlot) {
         const newCharSet = this.state.charSet.map(workSlot => char === workSlot ? { character: workSlot.character } : workSlot)
 
@@ -216,7 +205,6 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    @bind
     async downloadTemplate() {
         const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset, this.state.fontOptions)
 
@@ -230,7 +218,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     changePreset(event: React.ChangeEvent<HTMLInputElement>) {
         const isValuePreset = this.unicodeRanges.some(range => range.category === event.target.value)
 
@@ -250,7 +237,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     changePrefill(event: React.ChangeEvent<HTMLInputElement>) {
         if (event.target.value === "") {
             this.setState({
@@ -267,7 +253,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     presetSelectBlur(event: React.FocusEvent<HTMLInputElement>) {
         event.target.value = this.state.selectedPreset
     }
@@ -293,10 +278,10 @@ class Step1 extends Component<{}, Step1State> {
                     <input
                         list={datalistId}
                         aria-label='unicode presets selection input'
-                        onChange={this.changePreset}
+                        onChange={event => this.changePreset(event)}
                         value={this.state.presetInputValue}
                         className={styles.presetSelect}
-                        onBlur={this.presetSelectBlur}
+                        onBlur={event => this.presetSelectBlur(event)}
                     />
 
                     <datalist id={datalistId}>
@@ -344,11 +329,11 @@ class Step1 extends Component<{}, Step1State> {
                             aria-label='characters input'
                             className={styles.charactersTextArea}
                             onChange={event => this.setState({ charString: event.target.value })}
-                            onBlur={this.handleCharSetInput}
+                            onBlur={event => this.handleCharSetInput(event)}
                             value={this.state.charString}
                         />
                         <button
-                            onClick={this.removeDuplicatesFromCharString}
+                            onClick={() => this.removeDuplicatesFromCharString()}
                             className={styles.smallFormButton}
                             disabled={this.isCharStringValid()}
                         >
@@ -400,7 +385,7 @@ class Step1 extends Component<{}, Step1State> {
                                 <input
                                     list="prefill-datalist"
                                     aria-label='unicode presets selection input'
-                                    onChange={this.changePrefill}
+                                    onChange={event => this.changePrefill(event)}
                                     value={this.state.fontOptions?.name}
                                     className={styles.prefillSelect}
                                 />
@@ -417,7 +402,7 @@ class Step1 extends Component<{}, Step1State> {
                             </div>
 
                             <button
-                                onClick={this.downloadTemplate}
+                                onClick={() => this.downloadTemplate()}
                                 className={styles.formButton}
                                 disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
                             >
@@ -439,8 +424,8 @@ class Step1 extends Component<{}, Step1State> {
                                 charSet={this.state.charSet}
                                 defaultHeight={this.state.defaultHeight}
                                 defaultWidth={this.state.defaultWidth}
-                                handleDimensionChange={this.handleDimensionChange}
-                                resetCharacterDimensions={this.resetCharacterDimensions}
+                                handleDimensionChange={(event, dimension, char) => this.handleDimensionChange(event, dimension, char)}
+                                resetCharacterDimensions={char => this.resetCharacterDimensions(char)}
                             />
                         </div>
                     </div>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router'
-import { bind } from 'helpful-decorators'
+import { Navigate } from 'react-router'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -19,19 +18,18 @@ export class IpcNavigation extends Component<{}, IpcNavigationState> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('navigation', this.navigationListener)
+        ipcRenderer?.on('navigation', (_event: any, arg: string) => this.navigationListener(arg))
     }
 
     componentWillUnmount() {
-        ipcRenderer?.removeListener('navigation', this.navigationListener)
+        ipcRenderer?.removeListener('navigation', (_event: any, arg: string) => this.navigationListener(arg))
     }
 
-    @bind
-    navigationListener(_event: any, arg: string) {
+    navigationListener(arg: string) {
         this.setState({ url: arg })
     }
 
     render() {
-        return <Redirect to={this.state.url} />;
+        return <Navigate replace to={this.state.url} />;
     }
 }

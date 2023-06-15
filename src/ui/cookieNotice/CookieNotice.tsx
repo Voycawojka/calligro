@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Cookies from 'js-cookie'
 import styles from './cookieNotice.module.scss'
 import { Link } from 'react-router-dom'
-import { bind } from 'helpful-decorators'
 
 interface CookieNoticeState {
     acknowledged: boolean
@@ -19,19 +18,17 @@ class CookieNotice extends Component<{}, CookieNoticeState> {
     componentDidMount() {
         this.setState({
             acknowledged: Cookies.get('cookies-acknowledged') === 'true'
-        }, this.updateAnalytics)
+        }, () => this.updateAnalytics())
     }
 
-    @bind
     handleExit() {
         Cookies.set('cookies-acknowledged', 'true', { expires: 1000 })
 
         this.setState({
             acknowledged: true
-        }, this.updateAnalytics)
+        }, () => this.updateAnalytics())
     }
 
-    @bind
     updateAnalytics() {
         const analyticsStatus = this.state.acknowledged ? 'granted' : 'denied'
 
@@ -55,7 +52,7 @@ class CookieNotice extends Component<{}, CookieNoticeState> {
 
                             <div className={styles.linkContainer}>
                                 <Link to='/policy' className={styles.link}>Learn more</Link>
-                                <button onClick={this.handleExit} className={styles.link} >Accept</button>
+                                <button onClick={() => this.handleExit()} className={styles.link} >Accept</button>
                             </div>
                         </div>
                     </div>
