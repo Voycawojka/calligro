@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Cookies from 'js-cookie'
 import styles from './cookieNotice.module.scss'
 import { Link } from 'react-router-dom'
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 
 interface CookieNoticeState {

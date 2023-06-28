@@ -1,4 +1,5 @@
 import { Component } from 'react'
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 import { fetchNewerVersion } from '../../api/latestVesion'
 import Popup from '../popup/Popup'

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 import Step1CharacterList from '../step1CharacterList/Step1CharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'

@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
 import { FontConfig, generateFont, KerningPair } from '../../../generation/font/Font'

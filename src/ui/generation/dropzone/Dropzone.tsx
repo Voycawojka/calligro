@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
 import styles from './dropzone.module.scss'

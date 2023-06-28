@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styles from './aboutPopup.module.scss'
-
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 import Popup from '../popup/Popup'
 import Authors from '../authors/Authors'

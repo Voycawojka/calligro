@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null

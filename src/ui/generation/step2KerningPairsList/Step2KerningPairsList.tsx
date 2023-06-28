@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import styles from './step2KerningPairsList.module.scss'
 import { KerningPair } from '../../../generation/font/Font'
+// eslint-disable-next-line
 import { bind } from 'helpful-decorators'
 import { unicodeToChar, charToUnicode } from '../../../utils/char'
 import Fa from '../../misc/fa/Fa';
