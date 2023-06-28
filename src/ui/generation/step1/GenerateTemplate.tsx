@@ -1,23 +1,77 @@
 import React, { useState } from "react"
-import Grid from '@mui/material/Unstable_Grid2'
+import Grid from '@mui/material/Unstable_Grid2' 
 import { Characters } from "./Characters"
 import { CommonSettings } from "./CommonSettings"
-import { PerCharacterSettings } from "./PerCharacterSettings"
+import { OverriddenCharacter, PerCharacterSettings } from "./PerCharacterSettings"
+import { Button, Stack } from "@mui/material"
+import { LoadingButton } from "@mui/lab"
+import { isElectron } from "../../../electron/electronInterop"
+import Template, { FontOptions } from "../../../generation/template/Template"
+import { downloadTemplate } from "../../../generation/template/download"
+import { Slot } from "../../../generation/template/types"
 
-interface GenerateTemplateProps {
+const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
+function constructFontOptions(prefill: string | null): FontOptions | null {
+    return !!prefill ? {
+        name: prefill,
+        fillColor: 'black',
+        outlineColor: ''
+    } : null
 }
 
-export function GenerateTemplate(props: GenerateTemplateProps) {
+function constructSlots(characterString: string, characterOverrides: OverriddenCharacter[], charWidth: number, charHeight: number): Slot[] {
+    const overridesMap: { [key: string]: OverriddenCharacter}  = Object.fromEntries(characterOverrides.map(override => [override.char, override]))
+    return [...new Set(characterString.split(''))].map(char => {
+        const override: OverriddenCharacter | undefined = overridesMap[char]
+        if (override) {
+            return {
+                character: char,
+                width: override.width,
+                height: override.height
+            }
+        } else {
+            return {
+                character: char,
+                width: charWidth,
+                height: charHeight
+            }
+        }
+    })
+}
+
+export function GenerateTemplate() {
     const defaultCharWidth = 100
     const defaultCharHeight = 100
     const defaultCharBase = 70
 
     const [characterString, setCharacterString] = useState('')
+    const [presetName, setPresetName] = useState('custom')
     const [charWidth, setCharWidth] = useState(defaultCharWidth)
     const [charHeight, setCharHeight] = useState(defaultCharHeight)
     const [charBase, setCharBase] = useState(defaultCharBase)
     const [prefill, setPrefill] = useState<string | null>(null)
+    const [characterOverrides, setCharacterOverrides] = useState<OverriddenCharacter[]>([])
+    const [templateLoading, setTemplateLoading] = useState(false)
+
+    const constructAndDownloadTemplate = async () => {
+        setTemplateLoading(true)
+
+        const fontOptions: FontOptions | null = constructFontOptions(prefill)
+        const slots: Slot[] = constructSlots(characterString, characterOverrides, charWidth, charHeight)
+        const template = new Template(slots, charBase, presetName, fontOptions)
+
+        if (isElectron()) {
+            const image = await template.generateImageBlob()
+            const imageBlobArrayBuffer = await image.arrayBuffer()
+
+            ipcRenderer?.send('save-template', imageBlobArrayBuffer, template.generateTemplateCode(), template.readmeContent)
+        } else {
+            downloadTemplate(template)
+        }
+
+        setTemplateLoading(false)
+    }
 
     return (
         <Grid container spacing={2}>
@@ -25,115 +79,37 @@ export function GenerateTemplate(props: GenerateTemplateProps) {
                 <Characters
                     defaultPreset="Basic Latin"
                     onCharacterStringChanged={value => setCharacterString(value)}
+                    onPresetNameChanged={value => setPresetName(value)}
                 />
             </Grid>
             <Grid xs={12} md={6}>
-                <CommonSettings
-                    defaultWidth={defaultCharWidth}
-                    defaultHeight={defaultCharHeight}
-                    defaultBase={defaultCharBase}
-                    onWidthChanged={value => setCharWidth(value)}
-                    onHeightChanged={value => setCharHeight(value)}
-                    onBaseChanged={value => setCharBase(value)}
-                    onPrefillChanged={value => setPrefill(value)}
-                />
+                <Stack spacing={2}>
+                    <CommonSettings
+                        defaultWidth={defaultCharWidth}
+                        defaultHeight={defaultCharHeight}
+                        defaultBase={defaultCharBase}
+                        onWidthChanged={value => setCharWidth(value)}
+                        onHeightChanged={value => setCharHeight(value)}
+                        onBaseChanged={value => setCharBase(value)}
+                        onPrefillChanged={value => setPrefill(value)}
+                    />
+                    <LoadingButton
+                        loading={templateLoading}
+                        variant="contained"
+                        onClick={() => constructAndDownloadTemplate()}
+                    >
+                        {`${isElectron() ? 'save' : 'download'} template`}
+                    </LoadingButton>
+                </Stack>
             </Grid>
             <Grid xs={12} md={6}>
                 <PerCharacterSettings
                     characterString={characterString}
                     commonWidth={charWidth}
                     commonHeight={charHeight}
+                    onOverriddenCharactersChange={overrides => setCharacterOverrides(overrides)}
                 />
             </Grid>
         </Grid>
-
-        // <div className={styles.parameters}>
-        //     <div className={styles.commonParameters}>
-        //         <div>
-        //             <label className={styles.label}>Common</label>
-        //             <label className={styles.commonLabel}>Size</label>
-        //             <input
-        //                 aria-label='default width input'
-        //                 className={styles.commonInput}
-        //                 type='number'
-        //                 onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
-        //                 value={this.state.defaultWidth}
-        //             />
-        //             <Fa icon='fas fa-times' className={styles.times} />
-        //             <input
-        //                 aria-label='default height input'
-        //                 className={styles.commonInput}
-        //                 type='number'
-        //                 onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
-        //                 value={this.state.defaultHeight}
-        //             />
-        //             <Fa icon='fas fa-question' className={styles.questionMark} title='Default size of one character in pixels' />
-        //         </div>
-
-        //         <div>
-        //             <label className={styles.commonLabel}>Base</label>
-        //             <input
-        //                 aria-label='characters base input'
-        //                 className={`${styles.commonInput} ${this.isBaseValid() ? '' : styles.commonInputIvalid}`}
-        //                 type='number'
-        //                 onChange={event => this.handleDefaultValueChange(event, 'base')}
-        //                 value={this.state.base}
-        //             />
-        //             <Fa
-        //                 icon='fas fa-question'
-        //                 className={styles.questionMark}
-        //                 title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")'
-        //             />
-        //         </div>
-
-        //         <div>
-        //             <label className={styles.commonLabel}>Prefill</label>
-        //             <input
-        //                 list="prefill-datalist"
-        //                 aria-label='unicode presets selection input'
-        //                 onChange={event => this.changePrefill(event)}
-        //                 value={this.state.fontOptions?.name}
-        //                 className={styles.prefillSelect}
-        //             />
-
-        //             <datalist id="prefill-datalist">
-        //                 {defaultPrefillOption}
-        //                 {prefillOptions}
-        //             </datalist>
-        //             <Fa
-        //                 icon='fas fa-question'
-        //                 className={styles.questionMark}
-        //                 title='Vector font to prefill the template with. Leave empty to not prefill.'
-        //             />
-        //         </div>
-
-        //         <button
-        //             onClick={() => this.downloadTemplate()}
-        //             className={styles.formButton}
-        //             disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
-        //         >
-        //             {`${isElectron() ? 'save' : 'download'} template`}
-        //         </button>
-        //     </div>
-
-        //     <div className={styles.perCharacterParameters} >
-        //         <label className={styles.label}>
-        //             Per character
-        //             <Fa
-        //                 icon='fas fa-question'
-        //                 className={styles.questionMark}
-        //                 title='Override default size per character'
-        //             />
-        //         </label>
-
-        //         <Step1CharacterList
-        //             charSet={this.state.charSet}
-        //             defaultHeight={this.state.defaultHeight}
-        //             defaultWidth={this.state.defaultWidth}
-        //             handleDimensionChange={(event, dimension, char) => this.handleDimensionChange(event, dimension, char)}
-        //             resetCharacterDimensions={char => this.resetCharacterDimensions(char)}
-        //         />
-        //     </div>
-        // </div>
     )
 }

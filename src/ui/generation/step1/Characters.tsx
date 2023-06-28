@@ -7,6 +7,7 @@ import { useDebounce } from "usehooks-ts"
 interface CharactersProps {
     defaultPreset: string
     onCharacterStringChanged: (value: string) => void
+    onPresetNameChanged: (value: string) => void
 }
 
 function createCharacterStringFromPreset(preset: string) {
@@ -36,6 +37,7 @@ export function Characters(props: CharactersProps) {
 
         setChosenPreset(preset)
         setCharactersString(newString)
+        props.onPresetNameChanged(preset)
     }
 
     const updateMode = (mode: string) => {

@@ -18,6 +18,7 @@ import Head from '../../Head/Head'
 import { findSystemFonts } from '../../../generation/template/fontsDetection'
 import { Characters } from './Characters'
 import { GenerateTemplate } from './GenerateTemplate'
+import { ScopedCssBaseline } from '@mui/material'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -281,7 +282,9 @@ class Step1 extends Component<{}, Step1State> {
                         </p>
                     </WebOnly>
 
-                    <GenerateTemplate />
+                    <ScopedCssBaseline>
+                        <GenerateTemplate />
+                    </ScopedCssBaseline>
                 </div>
 
                 <div>

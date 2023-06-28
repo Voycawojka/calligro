@@ -15,10 +15,31 @@ interface CommonSettingsProps {
 
 export function CommonSettings(props: CommonSettingsProps) {
     const [systemFonts, setSystemFonts] = useState([] as string[])
+    const [width, setWidth] = useState(props.defaultWidth)
+    const [height, setHeight] = useState(props.defaultHeight)
+    const [base, setBase] = useState(props.defaultBase)
 
     useEffect(() => {
         findSystemFonts().then(fonts => setSystemFonts(fonts))
     }, [])
+
+    const changeWidth = (value: number) => {
+        const newValue = value > 0 ? value : 1
+        setWidth(newValue)
+        props.onWidthChanged(newValue)
+    }
+
+    const changeHeight = (value: number) => {
+        const newValue = value > 0 ? value : 1
+        setHeight(newValue)
+        props.onHeightChanged(newValue)
+    }
+
+    const changeBase = (value: number) => {
+        const newValue = value >= 0 ? value : 0
+        setBase(newValue)
+        props.onBaseChanged(newValue)
+    }
 
     return (
         <Grid container spacing={2}>
@@ -27,8 +48,8 @@ export function CommonSettings(props: CommonSettingsProps) {
                     label="Character width"
                     type="number"
                     fullWidth
-                    defaultValue={props.defaultWidth}
-                    onChange={event => props.onWidthChanged(parseInt(event.target.value))}
+                    value={width}
+                    onChange={event => changeWidth(parseInt(event.target.value))}
                 />
             </Grid>
             <Grid xs={6}>
@@ -36,8 +57,8 @@ export function CommonSettings(props: CommonSettingsProps) {
                     label="Character height"
                     type="number"
                     fullWidth
-                    defaultValue={props.defaultHeight}
-                    onChange={event => props.onHeightChanged(parseInt(event.target.value))}
+                    value={height}
+                    onChange={event => changeHeight(parseInt(event.target.value))}
                 />
             </Grid>
             <Grid xs={12}>
@@ -45,8 +66,8 @@ export function CommonSettings(props: CommonSettingsProps) {
                     label="Character base"
                     type="number"
                     fullWidth
-                    defaultValue={props.defaultBase}
-                    onChange={event => props.onBaseChanged(parseInt(event.target.value))}
+                    value={base}
+                    onChange={event => changeBase(parseInt(event.target.value))}
                 />
             </Grid>
             <Grid xs={12}>
