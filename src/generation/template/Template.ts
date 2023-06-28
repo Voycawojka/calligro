@@ -1,6 +1,7 @@
 import { convertToBlob, createCanvas } from '../../utils/canvasHelpers'
 import { CodePayload, Slot } from './types'
 import { drawLogo, drawSlot } from './slotDrawing'
+import { isElectron } from '../../electron/electronInterop'
 
 export interface FontOptions {
     name: string
@@ -58,7 +59,10 @@ export default class Template {
 
     public async generateImageBlob(): Promise<Blob> {
         if (!this.cachedBlob) {
-            await drawLogo(this.ctx, 0, 0, this.enclosingDim.w, this.enclosingDim.h)
+            if (!isElectron()) {
+                // hotfix (it should work with electron too)
+                await drawLogo(this.ctx, 0, 0, this.enclosingDim.w, this.enclosingDim.h)
+            }
         
             this.slots.forEach((slot, index) => {
                 const { x, y } = this.getSlotPosition(index + 1)
