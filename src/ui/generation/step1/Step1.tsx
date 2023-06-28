@@ -9,13 +9,15 @@ import { Link } from 'react-router-dom'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import { WebOnly } from '../../envSpecific/WebOnly'
 import { isElectron } from '../../../electron/electronInterop'
-import { getUnicodeRanges, UnicodeRange } from '../../../utils/unicodeRanges'
+import {  UnicodeRange } from '../../../utils/unicodeRanges'
 import { parseTemplateCode } from '../../../generation/template/parse'
 import { unicodeToChar } from '../../../utils/char'
 import { DesktopOnly } from '../../envSpecific/DesktopOnly'
 import ExternalLink from '../../misc/externalLink/ExternalLink'
 import Head from '../../Head/Head'
 import { findSystemFonts } from '../../../generation/template/fontsDetection'
+import { Characters } from './Characters'
+import { GenerateTemplate } from './GenerateTemplate'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 
@@ -39,7 +41,7 @@ class Step1 extends Component<{}, Step1State> {
     constructor(props: {}) {
         super(props)
 
-        this.unicodeRanges = getUnicodeRanges()
+        this.unicodeRanges = []
         this.systemFonts = []
         this.state = this.setInitialState()
 
@@ -258,40 +260,6 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     render() {
-        const renderPresetSelect = (() => {
-            const options = this.unicodeRanges
-                .filter(range => range.category.toLowerCase().includes(this.state.presetInputValue.toLowerCase()))
-                .slice(0, 10)
-                .map(range => <option value={range.category} key={range.category} >{range.category}</option>)
-
-            const defaultOption = <option value='Basic Latin'>Default</option>
-            const datalistId = 'presets-datalist'
-
-            return (
-                <div className={styles.inputContainer}>
-                    <Fa
-                        icon='fas fa-question'
-                        className={`${styles.questionMark} ${styles.inputQuestionMark}`}
-                        title='Search any unicode preset like Arabic, Cyrillic, or Hiragana'
-                    />
-
-                    <input
-                        list={datalistId}
-                        aria-label='unicode presets selection input'
-                        onChange={event => this.changePreset(event)}
-                        value={this.state.presetInputValue}
-                        className={styles.presetSelect}
-                        onBlur={event => this.presetSelectBlur(event)}
-                    />
-
-                    <datalist id={datalistId}>
-                        {defaultOption}
-                        {options}
-                    </datalist>
-                </div>
-            )
-        })()
-
         const defaultPrefillOption = <option value="" key="none">none</option>
         const prefillOptions = this.state.loadedSystemFonts
             ? this.systemFonts.map(font => <option value={font} key={font}>{font}</option>)
@@ -313,128 +281,7 @@ class Step1 extends Component<{}, Step1State> {
                         </p>
                     </WebOnly>
 
-                    <div>
-                        <div className={styles.charactersLabelContainer}>
-                            <label className={`${styles.label} ${styles.charactersLabel}`}>
-                                Characters
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title={'Characters you want to be included in the final font (symbols made from multiple unicode characters won\'t work, e.g. more complex emojis)'}
-                                />
-                            </label>
-                            {renderPresetSelect}
-                        </div>
-                        <textarea
-                            aria-label='characters input'
-                            className={styles.charactersTextArea}
-                            onChange={event => this.setState({ charString: event.target.value })}
-                            onBlur={event => this.handleCharSetInput(event)}
-                            value={this.state.charString}
-                        />
-                        <button
-                            onClick={() => this.removeDuplicatesFromCharString()}
-                            className={styles.smallFormButton}
-                            disabled={this.isCharStringValid()}
-                        >
-                            Remove duplicates
-                        </button>
-                    </div>
-
-                    <div className={styles.parameters}>
-                        <div className={styles.commonParameters}>
-                            <div>
-                                <label className={styles.label}>Common</label>
-                                <label className={styles.commonLabel}>Size</label>
-                                <input
-                                    aria-label='default width input'
-                                    className={styles.commonInput}
-                                    type='number'
-                                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
-                                    value={this.state.defaultWidth}
-                                />
-                                <Fa icon='fas fa-times' className={styles.times} />
-                                <input
-                                    aria-label='default height input'
-                                    className={styles.commonInput}
-                                    type='number'
-                                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
-                                    value={this.state.defaultHeight}
-                                />
-                                <Fa icon='fas fa-question' className={styles.questionMark} title='Default size of one character in pixels' />
-                            </div>
-
-                            <div>
-                                <label className={styles.commonLabel}>Base</label>
-                                <input
-                                    aria-label='characters base input'
-                                    className={`${styles.commonInput} ${this.isBaseValid() ? '' : styles.commonInputIvalid}`}
-                                    type='number'
-                                    onChange={event => this.handleDefaultValueChange(event, 'base')}
-                                    value={this.state.base}
-                                />
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")'
-                                />
-                            </div>
-
-                            <div>
-                                <label className={styles.commonLabel}>Prefill</label>
-                                <input
-                                    list="prefill-datalist"
-                                    aria-label='unicode presets selection input'
-                                    onChange={event => this.changePrefill(event)}
-                                    value={this.state.fontOptions?.name}
-                                    className={styles.prefillSelect}
-                                />
-
-                                <datalist id="prefill-datalist">
-                                    {defaultPrefillOption}
-                                    {prefillOptions}
-                                </datalist>
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title='Vector font to prefill the template with. Leave empty to not prefill.'
-                                />
-                            </div>
-
-                            <button
-                                onClick={() => this.downloadTemplate()}
-                                className={styles.formButton}
-                                disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
-                            >
-                                {`${isElectron() ? 'save' : 'download'} template`}
-                            </button>
-                        </div>
-
-                        <div className={styles.perCharacterParameters} >
-                            <label className={styles.label}>
-                                Per character
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title='Override default size per character'
-                                />
-                            </label>
-
-                            <Step1CharacterList
-                                charSet={this.state.charSet}
-                                defaultHeight={this.state.defaultHeight}
-                                defaultWidth={this.state.defaultWidth}
-                                handleDimensionChange={(event, dimension, char) => this.handleDimensionChange(event, dimension, char)}
-                                resetCharacterDimensions={char => this.resetCharacterDimensions(char)}
-                            />
-                        </div>
-                    </div>
-                    {/* <div>
-                        <TemplatePreview
-                            width={1000}
-                            height={500}
-                            template={new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset, this.state.fontOptions)}/>
-                    </div> */}
+                    <GenerateTemplate />
                 </div>
 
                 <div>

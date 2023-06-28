@@ -6,9 +6,7 @@ export interface UnicodeRange {
     range: [number, number]
 }
 
-export function getUnicodeRanges(): UnicodeRange[] {
-    unicodeRanges.splice(-2, 2)
-    unicodeRanges.sort((a: UnicodeRange, b: UnicodeRange) => a.category.localeCompare(b.category, 'en'))
+unicodeRanges.splice(-2, 2)
+unicodeRanges.sort((a: UnicodeRange, b: UnicodeRange) => a.category.localeCompare(b.category, 'en'))
 
-    return unicodeRanges
-}
+export default unicodeRanges as UnicodeRange[]
