@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import Step1 from './ui/generation/step1/Step1'
+import Step1 from './ui/generation/generateTemplate/Step1'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Header from './ui/header/Header'
 import Footer from './ui/footer/Footer'
@@ -12,7 +12,7 @@ import { IpcNavigation } from './ui/ipcNavigation/IpcNavigation'
 import { Updater } from './ui/updater/Updater'
 import AboutPopup from './ui/aboutPopup/AboutPopup'
 
-const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
+const Step2 = React.lazy(() => import('./ui/generation/generateFont/Step2'))
 
 function App() {
     const stepTop = (

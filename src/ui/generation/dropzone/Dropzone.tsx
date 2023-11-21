@@ -1,5 +1,5 @@
+import { Box } from '@mui/material'
 import React, { Component } from 'react'
-import styles from './dropzone.module.scss'
 
 interface DropzoneProps {
     handleDropzoneInput: (data: File) => void
@@ -79,26 +79,25 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
 
     render() {
         const renderUploadedFileName = this.props.fileName
-            ? <p className={styles.fileName}>Uploaded {this.props.fileName}</p>
+            ? <p>Uploaded {this.props.fileName}</p>
             : null
         
         const renderError = this.props.error
-            ? <p className={styles.error}>{this.props.error}</p>
+            ? <p>{this.props.error}</p>
             : null
 
         return (
-            <div
-                className={`${styles.container} ${this.state.dragCounter ? styles.containerDragOver : ''}`}
+            <Box
+                sx={{ p: 2, border: '1px dashed grey' }}
                 onDrop={event => this.handleDrop(event)}
                 onDragOver={event => this.dragOver(event)}
                 onDragEnter={event => this.dragEnter(event)}
                 onDragLeave={event => this.dragLeave(event)}
             >
-                <label className={styles.label}>Drag&amp;drop the {this.props.inputName}</label>
-                <div className={styles.inputContainer}>
+                <label>Drag&amp;drop the {this.props.inputName}</label>
+                <div>
                     <input
                         aria-label={`${this.props.inputName} input`}
-                        className={styles.input}
                         type='file' ref={this.templateInput}
                         onChange={() => this.handleInput()}
                         accept={this.props.acceptedInputType}
@@ -107,7 +106,7 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
                 </div>
                 {renderUploadedFileName}
                 {renderError}
-            </div>
+            </Box>
         )
     }
 }

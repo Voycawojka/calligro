@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import Step1CharacterList from '../step1CharacterList/Step1CharacterList'
-import { WorkSlot, Slot } from '../../../generation/template/types'
 import Template, { FontOptions } from '../../../generation/template/Template'
 import { downloadTemplate } from '../../../generation/template/download'
 import styles from './step1.module.scss'
-import Fa from '../../misc//fa/Fa'
-import { Link } from 'react-router-dom'
+import Fa from '../../misc/fa/Fa'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
 import { WebOnly } from '../../envSpecific/WebOnly'
 import { isElectron } from '../../../electron/electronInterop'
@@ -17,8 +14,9 @@ import ExternalLink from '../../misc/externalLink/ExternalLink'
 import Head from '../../Head/Head'
 import { findSystemFonts } from '../../../generation/template/fontsDetection'
 import { Characters } from './Characters'
-import { GenerateTemplate } from './GenerateTemplate'
 import { ScopedCssBaseline } from '@mui/material'
+import { GenerateTemplate } from './GenerateTemplate'
+import { Link } from 'react-router-dom'
 
 const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
 

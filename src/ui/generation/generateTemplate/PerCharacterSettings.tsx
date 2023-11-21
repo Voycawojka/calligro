@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Autocomplete, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
+import { AddCircle, Clear, ModeEdit } from '@mui/icons-material'
 
 interface PerCharacterSettingsProps {
     characterString: string
@@ -151,14 +152,14 @@ export function PerCharacterSettings(props: PerCharacterSettingsProps) {
                         <TableCell>Width</TableCell>
                         <TableCell>Height</TableCell>
                         <TableCell>
-                            <Button onClick={() => addOverride()}>+</Button>
+                            <Button onClick={() => addOverride()}><AddCircle /></Button>
                         </TableCell>
                     </TableHead>
                     <TableBody>
                         {overriddenCharacters.map((override, index) => (
                             <TableRow>
                                 <TableCell>
-                                    <Button onClick={() => setEditedRow(index)}>edit</Button>
+                                    <Button onClick={() => setEditedRow(index)}><ModeEdit /></Button>
                                 </TableCell>
                                 <TableCell>
                                     {override.char}
@@ -170,7 +171,7 @@ export function PerCharacterSettings(props: PerCharacterSettingsProps) {
                                     {override.height}
                                 </TableCell>
                                 <TableCell>
-                                    <Button onClick={() => removeOverride(index)}>X</Button>
+                                    <Button onClick={() => removeOverride(index)}><Clear /></Button>
                                 </TableCell>
                             </TableRow>
                         ))}
