@@ -89,8 +89,8 @@ class Dropzone extends Component<DropzoneProps, DropzoneState> {
         return (
             <div
                 className={`${styles.container} ${this.state.dragCounter ? styles.containerDragOver : ''}`}
-                onDrop={() => this.handleDrop}
-                onDragOver={this.dragOver}
+                onDrop={event => this.handleDrop(event)}
+                onDragOver={event => this.dragOver(event)}
                 onDragEnter={event => this.dragEnter(event)}
                 onDragLeave={event => this.dragLeave(event)}
             >
