@@ -5,39 +5,22 @@
   "main": "src/electron/main.js",
   "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest",
     "version": "printenv npm_package_version | tr -d '\\n' > version.txt && cp version.txt electron_resources/version.txt && git add version.txt && git add electron_resources/version.txt",
-    "electron:dev": "cross-env ELECTRON_URL=http://localhost:3000 electron .",
+    "electron:dev": "cross-env ELECTRON_URL=http://localhost:5173 electron .",
     "electron:build": "powershell -file build-electron.ps1",
     "itch:upload": "powershell -file upload-itch.ps1"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "dependencies": {
     "client-zip": "^1.2.2",
     "font-list": "^1.4.3",
-    "helpful-decorators": "^2.1.0",
     "js-cookie": "^2.2.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-github-corner": "^2.5.0",
     "react-helmet": "^6.1.0",
     "react-router": "^5.2.0",
@@ -46,23 +29,26 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.3.0",
-    "@types/jest": "^26.0.15",
+    "@eslint/js": "^9.15.0",
     "@types/js-cookie": "^2.2.6",
-    "@types/node": "^12.19.8",
-    "@types/react": "^16.14.2",
-    "@types/react-dom": "^16.9.10",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@types/react-helmet": "^6.1.5",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.6",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "cross-env": "^7.0.3",
-    "electron": "^11.3.0",
-    "electron-packager": "^15.2.0",
-    "nock": "^13.1.4",
-    "react-scripts": "^4.0.3",
-    "typescript": "^4.1.2",
-    "typescript-plugin-css-modules": "^3.4.0"
+    "electron": "^33.2.1",
+    "electron-packager": "^17.1.2",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.12.0",
+    "nock": "^13.5.6",
+    "sass-embedded": "^1.81.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.15.0",
+    "vite": "^6.0.1",
+    "vitest": "^2.1.6"
   }
 }

@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import styles from './step2KerningPairsList.module.scss'
 import { KerningPair } from '../../../generation/font/Font'
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
 import { unicodeToChar, charToUnicode } from '../../../utils/char'
 import Fa from '../../misc/fa/Fa';
 import { CodePayload } from '../../../generation/template/types'
@@ -62,7 +60,6 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
         }
     }
 
-    @bind
     addPair() {
         this.setState(prevState => ({
             pairs: [...prevState.pairs, {
@@ -77,7 +74,6 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
         }
     }
 
-    @bind
     deletePair(index: number) {
         const newPairs = [...this.state.pairs]
         newPairs.splice(index, 1)
@@ -87,7 +83,6 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
         })
     }
 
-    @bind
     changeChar(event: React.ChangeEvent<HTMLInputElement>, index: number, char: 'first' | 'second') {
          const value = event.target.value === '' ? undefined : charToUnicode(event.target.value.charAt(0))
          const newPairs = [...this.state.pairs]
@@ -99,7 +94,6 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
          })
     }
 
-    @bind
     changeAmount(event: React.ChangeEvent<HTMLInputElement>, index: number) {
         const value = event.target.value === '' ? undefined : parseInt(event.target.value, 10)
         const newPairs = [...this.state.pairs]
@@ -111,7 +105,6 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
         })
     }
 
-    @bind
     isCharLegal(char?: number): boolean {
         return char !== undefined ? this.state.UICodeCharList.includes(char) : false
     }
@@ -131,7 +124,6 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
         return isFirstCharLegal && isSecondCharLegal && isAmountLegal
     }
 
-    @bind
     isPairValid(pair: WorkKerningPair): boolean {
         return this.isWorkPairLegal(pair) && this.isPairUnrepeated(pair)
     }
@@ -199,7 +191,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
                     <p className={styles.pairsKey}>
                         <button
                             className={styles.button}
-                            onClick={this.addPair}
+                            onClick={() => this.addPair()}
                             disabled={this.state.UICodeCharList.length === 0}
                             title='Add kerning pair'
                         >

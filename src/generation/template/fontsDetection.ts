@@ -23,7 +23,7 @@ async function checkForCommonFonts(): Promise<string[]> {
 
 function requestFontsFromElectron(): Promise<string[]> {
     return new Promise(resolve => {
-        ipcRenderer?.once('fonts', (_event, data: { fonts: string[] }) => resolve(data.fonts))
+        ipcRenderer?.once('fonts', (_event: any, data: { fonts: string[] }) => resolve(data.fonts))
         ipcRenderer?.send('request-fonts')
     })
 }

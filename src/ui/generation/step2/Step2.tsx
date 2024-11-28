@@ -1,5 +1,3 @@
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
 import { FontConfig, generateFont, KerningPair } from '../../../generation/font/Font'
 import { fontSpecToTextFile } from '../../../generation/font/specSaver'
@@ -43,7 +41,6 @@ class Step2 extends Component<{}, Step2State> {
         }
     }
 
-    @bind
     async handleTemplateDropzoneInput(data: File) {
         if (!this.isTemplateFileValid(data)) {
             this.setState(prevState => ({
@@ -62,7 +59,6 @@ class Step2 extends Component<{}, Step2State> {
         }))
     }
 
-    @bind
     async handleCodeDropzoneInput(data: File) {
         if (!this.isCodeFileValid(data)) {
             this.setState(prevState => ({
@@ -104,7 +100,6 @@ class Step2 extends Component<{}, Step2State> {
         return !!file && file.type === 'image/png'
     }
 
-    @bind
     areDropzonesValid(): boolean {
         return !this.state.templateError
             && !this.state.templateCodeError
@@ -113,7 +108,6 @@ class Step2 extends Component<{}, Step2State> {
             && this.state.isKerningsValid
     }
     
-    @bind
     handleNumericalInput(event: React.ChangeEvent<HTMLInputElement>, name: 'horizontalMargin' | 'verticalMargin' | 'lineHeight') {
         const value = event.target.value === '' ? '' : parseInt(event.target.value, 10)
 
@@ -125,7 +119,6 @@ class Step2 extends Component<{}, Step2State> {
         }
     }
 
-    @bind
     async downloadFont(format: 'txt' | 'xml') {
         if (!this.state.template || !this.state.templateCode) {
             return
@@ -165,14 +158,12 @@ class Step2 extends Component<{}, Step2State> {
         }
     }
 
-    @bind
     changeKernings(kernings: KerningPair[]) {
         this.setState({
             kerningPairs: kernings
         })
     }
 
-    @bind
     handleKerningsValidity(valid: boolean) {
         this.setState({
             isKerningsValid: valid
@@ -189,7 +180,7 @@ class Step2 extends Component<{}, Step2State> {
                             inputName='image'
                             acceptedInputType='.png'
                             dataType='image/png'
-                            handleDropzoneInput={this.handleTemplateDropzoneInput}
+                            handleDropzoneInput={data => this.handleTemplateDropzoneInput(data)}
                             fileName={this.state.template?.name}
                             error={this.state.templateError}
                         />
@@ -197,7 +188,7 @@ class Step2 extends Component<{}, Step2State> {
                         <Dropzone
                             inputName='code file'
                             acceptedInputType='.calligro'
-                            handleDropzoneInput={this.handleCodeDropzoneInput}
+                            handleDropzoneInput={data => this.handleCodeDropzoneInput(data)}
                             fileName={this.state.templateCodeName}
                             error={this.state.templateCodeError}
                         />
@@ -239,8 +230,8 @@ class Step2 extends Component<{}, Step2State> {
 
                         <Step2KerningPairsList
                             templateCode={this.state.templateCode}
-                            changeKernings={this.changeKernings}
-                            handleKerningsValidity={this.handleKerningsValidity}
+                            changeKernings={kernings => this.changeKernings(kernings)}
+                            handleKerningsValidity={valid => this.handleKerningsValidity(valid)}
                         />
 
                         <div className={styles.download}>
@@ -284,26 +275,6 @@ class Step2 extends Component<{}, Step2State> {
                             templateCode={this.state.templateCode}
                             templateImg={this.state.template}
                             fontConfig={this.getFontConfig()} />
-                    </div>
-
-                    <div>
-                        <h2 className={styles.heading}>Step 2 - Generate your font</h2>
-                        
-                        <ol className={styles.instructionList}>
-                            <li className={styles.instructionListItem}>Upload the template image with your characters drawn on it and the corresponding .calligro file (metadata).</li>
-                            <li className={styles.instructionListItem}>Specify font options</li>
-                            <li className={styles.instructionListItem}>
-                                <p>
-                                    Add kerning pairs if you want to. Characters in a pair are rendered further or closer to each other.
-                                    E.g. pair "ab" with distance -10 will cause "b" to be 10 pixels closer to "a". Pair "ab" &ne; "ba"!
-                                </p>
-                                <p>
-                                    Warning - not all tools support this feature. We know Godot does.
-                                </p>
-                            </li>
-                            <li className={styles.instructionListItem}>Preview changes live at any point.</li>
-                            <li className={styles.instructionListItem}>Generate and download your BMFont.</li>
-                        </ol>
                     </div>
                 </div>
             </div>

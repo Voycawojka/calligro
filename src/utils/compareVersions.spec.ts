@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { compareVersions } from "./compareVersions"
 
 test('compares versions properly', () => {

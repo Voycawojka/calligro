@@ -1,0 +1,194 @@
+:root {
+    --primary-color: #202020;
+    --secondary-color: #f2f2f2;
+    --ternary-color: #707070;
+    --link-color: #3f3f3f;
+    --color-on-bg: #ffd76c;
+    --link-color-on-bg: #707070;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+.summary-header {
+    display: inline-block;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a i .bx {
+    display: inline-block;
+    text-decoration: none;
+}
+
+header {
+    background: var(--primary-color);
+    color: var(--color-on-bg);
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+header nav {
+    margin-top: 0.5rem;
+}
+
+header nav a {
+    margin: 0 1rem;
+    font-size: 1rem;
+    color: var(--link-color-on-bg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero img {
+    max-width: 100%;
+    height: auto;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem;
+}
+
+.feature:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.feature img {
+    height: auto;
+    flex: 1;
+}
+
+.feature-text {
+    flex: 2;
+}
+
+.cta {
+    margin-top: 6rem;
+    padding: 2rem 1rem;
+    padding-bottom: 0;
+    background: var(--primary-color);
+    color: var(--link-color-on-bg);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.cta h2 {
+    margin-bottom: 1.5rem;
+}
+
+.cta a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: var(--color-on-bg);
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 2px;
+    border: 2px solid var(--link-color-on-bg);
+}
+
+.cta a:hover {
+    background: var(--secondary-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.cta .widget-container {
+    width: 100%;
+}
+
+.cta .widget-container p {
+    margin: 0 0;
+}
+
+iframe {
+    border: none;
+    width: 100%;
+    max-width: 600px;
+    height: 167px;
+}
+
+.tutorial-section {
+    margin-left: 1rem;
+}
+
+.warning {
+    padding-left: 1rem;
+    border-left: 1px solid var(--primary-color);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 3 rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.authors {
+    display: flex;
+    gap: 2rem;
+    padding: 0 2rem;
+    justify-content: center;
+}
+
+.socials {
+    list-style: none;
+    padding: 0 0;
+    margin: 0 0;
+}
+
+.socials li {
+    display: inline-block;
+}

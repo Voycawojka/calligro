@@ -1,6 +1,4 @@
 import { Component } from 'react'
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
 import { fetchNewerVersion } from '../../api/latestVesion'
 import Popup from '../popup/Popup'
 import styles from './updater.module.scss'
@@ -27,7 +25,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('version', this.versionListener)
+        ipcRenderer?.on('version', (_event: any, data: { version: string, platform: string }) => this.versionListener(_event, data))
         ipcRenderer?.send('request-version')
     }
 
@@ -35,7 +33,6 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
         ipcRenderer?.removeListener('version', this.versionListener)
     }
 
-    @bind
     async versionListener(_event: any, data: { version: string, platform: string }) {
         let channel = null
 
@@ -61,7 +58,6 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
         }
     }
 
-    @bind
     close() {
         this.setState({
             newVersionName: undefined
@@ -74,7 +70,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
                 .map((item, index ) => <p key={index} className={styles.descriptionParagraph}>{item}</p>)
 
             return (
-                <Popup title='New version available' closeHandler={this.close}>
+                <Popup title='New version available' closeHandler={() => this.close()}>
                     <div className={styles.container}>
                         <div className={styles.content}>Version 
                             <span className={styles.contentBold}> {this.state.newVersionCount} </span> 

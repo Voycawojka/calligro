@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import Fa from '../fa/Fa'
 import styles from './loader.module.scss'
 

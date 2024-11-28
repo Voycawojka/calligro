@@ -2,9 +2,6 @@ import React, { Suspense } from 'react'
 import Step1 from './ui/generation/step1/Step1'
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import Header from './ui/header/Header'
-import Footer from './ui/footer/Footer'
-import Policy from './ui/policy/Policy'
-import CookieNotice from './ui/cookieNotice/CookieNotice'
 import Loader from './ui/misc/loader/Loader'
 import { WebOnly } from './ui/envSpecific/WebOnly'
 import { DesktopOnly } from './ui/envSpecific/DesktopOnly'
@@ -18,44 +15,26 @@ function App() {
     return (
         <HashRouter>
             <Switch>
-                <Route path='/policy'>
-                    <Policy />
-                </Route>
-
                 <Route>
                     <WebOnly>
                         <Header />
                     </WebOnly>
 
-                    {/* <Route exact path='/' render={() => (
-                        isElectron() ? <Redirect to="/app/template" /> : <LandingPage />
-                    )}>
-                    </Route> */}
-
                     <Route exact path='/'>
-                        <Redirect to="/app/template" />
+                        <Redirect to="/template" />
                     </Route>
 
-                    <Route exact path='/app'>
-                        <Redirect to="/app/template" />
-                    </Route>
-
-                    <Route exact path='/app/template'>
+                    <Route exact path='/template'>
                         <Suspense fallback={<Loader />}>
                             <Step1 />
                         </Suspense>
                     </Route>
 
-                    <Route exact path='/app/font'>
+                    <Route exact path='/font'>
                         <Suspense fallback={<Loader />}>
                             <Step2 />
                         </Suspense>
                     </Route>
-
-                    <WebOnly>
-                        <Footer />
-                        <CookieNotice />
-                    </WebOnly>
 
                     <DesktopOnly>
                         <IpcNavigation />

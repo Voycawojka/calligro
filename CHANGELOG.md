@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- migrated to Vite, Node 20, and React 18
+- moved most content into a new, seperate landing page
+- written a tutorial
+
 ## 1.1.2
 
 - fixed a bug where a template couldn't be saved sometimes on the desktop version

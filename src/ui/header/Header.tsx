@@ -1,4 +1,4 @@
-import React from 'react'
+import 'react'
 import Navbar from '../navbar/Navbar'
 import styles from './header.module.scss'
 import GithubCorner from 'react-github-corner'

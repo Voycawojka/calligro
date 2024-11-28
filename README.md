@@ -31,17 +31,16 @@ If you only want to convert an existing truetype font into a bitmap font, you ca
 - [AngelCode's BMFont](https://www.angelcode.com/products/bmfont/) 
 - [Hiero](https://libgdx.com/wiki/tools/hiero)
 - [ShoeBox](http://renderhjs.net/shoebox/)
-- [Littera](http://kvazars.com/littera/) (requires Flash)
 
 # Contributing
 If you'd like to contribute: thanks!
 
-This is a regular create-react-app project in TypeScript using npm (not yarn) so:
+This is a regular React/TypeScript project:
 
 ```bash
 # install dependencies and start a dev server with hot reloading
 npm install
-npm start
+npm run dev
 
 # then optionally start the desktop app
 cd electron_resources
@@ -53,13 +52,13 @@ npm run electron:dev
 npm run test
 ```
 
-Our actions use Node 14.
+Our actions use Node 20.
 
 ## Production builds
 
 ### Web
 
-Create the production web build in the `build/` directory:
+Create the production web build in the `dist/` directory:
 
 ```bash
 npm run build

@@ -6,8 +6,8 @@
 
 .container {
     background-color: $secondary-color;
-    padding: $header-height 3% $footer-height;
-    min-height: calc(100vh - #{$footer-height});
+    padding: $header-height 3% 0;
+    min-height: 100vh;
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 46% 48%;

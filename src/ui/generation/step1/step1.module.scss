@@ -5,11 +5,11 @@
 
 .container {
     background-color: $secondary-color;
-    padding: $header-height 3% $footer-height;
+    padding: $header-height 3% 0;
     display: grid;
     grid-template-columns: 48% 48%;
     column-gap: 4%;
-    min-height: calc(100vh - #{$footer-height});
+    min-height: 100vh;
     box-sizing: border-box;
 
     @include vertical-device-or-mini-device {
