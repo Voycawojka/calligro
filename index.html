@@ -47,6 +47,33 @@
             }
         </script>
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+        
+            gtag("consent", "default", {
+                ad_storage: "denied",
+                analytics_storage: "denied",
+                wait_for_update: 500,
+            });
+        </script>
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-LYVXVB1GZS"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+        
+            gtag("config", "G-LYVXVB1GZS", { anonymize_ip: true });
+        </script>
+
         <link rel="apple-touch-icon" href="logo192.png" />
         <link rel="manifest" href="manifest.json" />
         
@@ -58,7 +85,7 @@
     </head>
     <body>
         <header>
-            <h1>Bitmap Font Generator</h1>
+            <a href="/"><img src="img/promo/logo.svg" /></a>
             <nav>
                 <a href="/webapp.html">Web App</a>
                 <a href="https://voycawojka.itch.io/calligro">Download</a>
@@ -74,43 +101,37 @@
                     <h2>Font Generator For Game Devs</h2>
                     <p>Turn your art into fonts compatible with most game engines. Free, open source.</p>
                 </div>
-                <img src="hero-placeholder.png" alt="Bitmap font generator preview">
             </section>
+
+            <hr />
 
             <section class="features">
                 <div class="feature">
-                    <img src="feature-placeholder.png" alt="Feature preview">
+                    <img src="img/tutorial/imported-in-godot.png" alt="Feature preview">
                     <div class="feature-text">
                         <h3>Create BMFont fonts</h3>
                         <p>The <a href="https://www.angelcode.com/products/bmfont/doc/file_format.html">Angel Code BMFont</a> format is already widely supported by most engines and frameworks (Godot, Love2d, Phaser, to name a few)</p>
                     </div>
                 </div>
                 <div class="feature">
-                    <img src="feature-placeholder.png" alt="Feature preview">
+                    <img src="img/promo/aseprite-template.png" alt="Feature preview">
                     <div class="feature-text">
                         <h3>Use your favourite graphics editor</h3>
                         <p>Calligro exports a template you can edit in any graphics software you'd like before exporting the font files</p>
                     </div>
                 </div>
                 <div class="feature">
-                    <img src="feature-placeholder.png" alt="Feature preview">
+                    <img src="img/promo/desktop-shortcut.png" alt="Feature preview">
                     <div class="feature-text">
                         <h3>Web Based & Desktop Versions</h3>
                         <p>Try it right in your browser or download for offline use. Desktop version has the exact same features but is a bit more convenient</p>
                     </div>
                 </div>
                 <div class="feature">
-                    <img src="feature-placeholder.png" alt="Feature preview">
+                    <img src="img/promo/open-source.png" alt="Feature preview">
                     <div class="feature-text">
                         <h3>Open Source</h3>
                         <p>Have a feature request? Found a bug? Want to contribute? Check out our <a href="https://github.com/Voycawojka/calligro">repository</a>!</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <img src="feature-placeholder.png" alt="Feature preview">
-                    <div class="feature-text">
-                        <h3>Always Offline</h3>
-                        <p>Even on the web version, everything happens on your computer. Your projects are not sent or stored on any kind of server</p>
                     </div>
                 </div>
             </section>
@@ -120,12 +141,12 @@
                 <div class="widget-container">
                     <p>Or download the desktop version:</p>
                     <iframe title="Itch.io desktop widget" frameBorder="0" src="https://itch.io/embed/946259" width="552" height="167"><a href="https://voycawojka.itch.io/calligro">Calligro by Voycawojka</a></iframe>
-                    <!-- mobile: <iframe title="Itch.io mobile widget" frameBorder="0" src="https://itch.io/embed/946259" width="208" height="167"><a href="https://voycawojka.itch.io/calligro">Calligro by Voycawojka</a></iframe> -->
                 </div>
             </section>
         </div>
 
         <footer>
+            <a href="/privacy.html">Privacy policy</a>
             <section class="authors">
                 <div class="author">
                     <p>Filip A. Kowalski</p>
