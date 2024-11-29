@@ -24,6 +24,9 @@ There is also an offline version available for Windows and Linux. It has the sam
 The BMFont format has existed for a while and a lot of game frameworks, libraries and engines support it out of the box.
 Some examples and more details on compatibility can be found in the [samples/](samples) directory.
 
+# Tutorial
+A tutorial is available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com/tutorial.html).
+
 # Use case
 Calligro is useful when you need to draw a custom font stored as a spritesheet. Pixelart font would be a good use.
 

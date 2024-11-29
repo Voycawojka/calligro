@@ -313,6 +313,7 @@ class Step1 extends Component<{}, Step1State> {
                         </div>
                         <textarea
                             aria-label='characters input'
+                            spellCheck={false}
                             className={styles.charactersTextArea}
                             onChange={event => this.setState({ charString: event.target.value })}
                             onBlur={event => this.handleCharSetInput(event)}

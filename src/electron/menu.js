@@ -97,10 +97,6 @@ async function constructMenuTemplate(app, window) {
                     click: () => shell.openExternal('https://calligro.ideasalmanac.com')
                 },
                 {
-                    label: 'Tutorial',
-                    click: () => shell.openExternal('https://calligro.ideasalmanac.com/tutorial.html')
-                },
-                {
                     label: 'About',
                     click: async () => {
                         try {
@@ -113,6 +109,15 @@ async function constructMenuTemplate(app, window) {
                             window.webContents.send('about-popup', '[error while reading version]')
                         }
                     }
+                }
+            ]
+        },
+        {
+            label: 'Tutorial',
+            submenu: [
+                {
+                    label: 'Open online',
+                    click: () => shell.openExternal('https://calligro.ideasalmanac.com/tutorial.html')
                 }
             ]
         },

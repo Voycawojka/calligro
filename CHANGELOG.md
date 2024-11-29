@@ -5,6 +5,7 @@
 - migrated to Vite, Node 20, and React 18
 - moved most content into a new, seperate landing page
 - written a tutorial
+- disable spellchecker in the characters input
 
 ## 1.1.2
 

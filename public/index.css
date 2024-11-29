@@ -65,6 +65,10 @@ header nav a {
     padding: 0 1rem;
 }
 
+.article {
+    max-width: 800px;
+}
+
 .hero {
     display: flex;
     align-items: center;
@@ -160,7 +164,15 @@ iframe {
 }
 
 .tutorial-section {
+    display: flex;
+    flex-direction: column;
     margin-left: 1rem;
+}
+
+.tutorial-image {
+    margin: 1rem;
+    align-self: center;
+    max-width: 500px;
 }
 
 .warning {
