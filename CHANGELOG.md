@@ -6,6 +6,7 @@
 - moved most content into a new, seperate landing page
 - written a tutorial
 - disable spellchecker in the characters input
+- fix page file name bug on desktop
 
 ## 1.1.2
 

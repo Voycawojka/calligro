@@ -5,6 +5,7 @@ const { readVersion } = require('./version')
 const { addRecentlySavedTemplate, addRecentlySavedFont } = require('./recentlySaved')
 const { setupMenu } = require('./menu')
 const { errorDialog } = require('./nativeDialogs')
+const path = require('path')
 
 function setupIpcListeners(app, window) {
     ipcMain.on('save-template', (_event, image, code, readme) => saveTemplate(app, window, image, code, readme))
@@ -51,7 +52,12 @@ async function saveFont(app, window, fntFile, pagesBufferArray) {
         return
     }
 
-    writeFile(`${result.filePath}.fnt`, fntFile, (error) => {
+    let adjustedFntFile = fntFile
+    for (let i = 0; i < pagesBufferArray.length; i++) {
+        adjustedFntFile = adjustedFntFile.replace(`@<<PAGE_FILE_NAME_${i}>>`, path.basename(`${result.filePath}-${i}.png`))
+    }
+
+    writeFile(`${result.filePath}.fnt`, adjustedFntFile, (error) => {
         if (error) {
             errorDialog(`Cannot save ${result.filePath}.fnt`, error.message)
         }
