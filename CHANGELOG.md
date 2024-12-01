@@ -7,6 +7,7 @@
 - written a tutorial
 - disable spellchecker in the characters input
 - fix page file name bug on desktop
+- fix loading recently saved templates on desktop
 
 ## 1.1.2
 
