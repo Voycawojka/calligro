@@ -23,7 +23,7 @@ async function saveTemplate(app, window, imageBlobBufferArray, templateCode, rea
 
     writeFile(`${result.filePath}.calligro`, templateCode, (error) => {
         if (error) {
-            errorDialog(`Cannot save ${result.filePath}.txt`, error.message)
+            errorDialog(`Cannot save ${result.filePath}.calligro`, error.message)
         }
     })
     writeFile(`${result.filePath}.png`, Buffer.from(imageBlobBufferArray), { encoding: 'base64' }, (error) => {
@@ -39,7 +39,7 @@ async function saveTemplate(app, window, imageBlobBufferArray, templateCode, rea
 
     await addRecentlySavedTemplate({
         name: result.filePath.split('/').pop().split('\\').pop(),
-        path: `${result.filePath}.txt`
+        path: `${result.filePath}.calligro`
     }, app)
 
     setupMenu(app, window)
