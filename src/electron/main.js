@@ -22,8 +22,7 @@ async function createWindow() {
     const appUrl = process.env.ELECTRON_URL
         ? path.join(process.env.ELECTRON_URL, '/webapp.html#/template')
         : url.format({
-            pathname: path.join(__dirname, '/webapp.html#/template'),
-            protocol: 'file:',
+            pathname: path.join(__dirname, 'app/webapp.html'),
             slashes: true
         })
 
@@ -31,6 +30,10 @@ async function createWindow() {
     window.loadURL(appUrl)
     readVersion().then(version => console.log(`Running version ${version}`))
     setupIpcListeners(app, window)
+    // hot fix!
+    setTimeout(() => {
+        window.webContents.send('navigation', '/template')
+    }, 500)
 }
 
 app.whenReady().then(createWindow)
