@@ -14,7 +14,7 @@ import { unicodeToChar } from '../../../utils/char'
 import Head from '../../Head/Head'
 import { findSystemFonts } from '../../../generation/template/fontsDetection'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 
 interface Step1State {

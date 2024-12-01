@@ -38,7 +38,9 @@ class FontPreview extends Component<FontPreviewProps, FontPreviewState> {
             const ctx = this.canvas.current.getContext('2d')
             const spec = await generateFont(this.props.templateImg, this.props.templateCode, this.props.fontConfig)
 
-            ctx && drawPreview(this.state.text, spec[0], spec[1], this.state.scale, ctx)
+            if (ctx) {
+                drawPreview(this.state.text, spec[0], spec[1], this.state.scale, ctx)
+            }
         }
     }
 

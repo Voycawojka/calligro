@@ -139,7 +139,7 @@ class Step2 extends Component<Step2Props, Step2State> {
         const fntFile = fontSpecToTextFile(fontSpec, format)
 
         if (isElectron()) {
-            let pagesBufferArray: ArrayBuffer[] = []
+            const pagesBufferArray: ArrayBuffer[] = []
 
             for (let i = 0; i < pages.length; i++) {
                 const buffer = await pages[i].arrayBuffer()
