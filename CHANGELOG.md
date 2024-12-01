@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.0
+
+- migrated to Vite, Node 20, and React 18
+- moved most content into a new, seperate landing page
+- written a tutorial
+- disable spellchecker in the characters input
+- fix page file name bug on desktop
+- fix loading recently saved templates on desktop
+
 ## 1.1.2
 
 - fixed a bug where a template couldn't be saved sometimes on the desktop version

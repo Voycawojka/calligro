@@ -1,4 +1,4 @@
-import React from 'react'
+import 'react'
 import Navbar from '../navbar/Navbar'
 import styles from './header.module.scss'
 import GithubCorner from 'react-github-corner'
@@ -7,7 +7,7 @@ function Header() {
     return (
         <header className={styles.container}>
             <h1 className={styles.heading}>
-                <img src='logo.svg' alt='Calligro' height='80' width='158' className={styles.logo} />
+                <a href="/"><img src='img/promo/logo.svg' alt='Calligro' height='80' width='158' className={styles.logo} /></a>
             </h1>
             <Navbar />
             <div className={styles.sourceNoticeContainer}>

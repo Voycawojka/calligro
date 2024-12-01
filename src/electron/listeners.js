@@ -5,6 +5,7 @@ const { readVersion } = require('./version')
 const { addRecentlySavedTemplate, addRecentlySavedFont } = require('./recentlySaved')
 const { setupMenu } = require('./menu')
 const { errorDialog } = require('./nativeDialogs')
+const path = require('path')
 
 function setupIpcListeners(app, window) {
     ipcMain.on('save-template', (_event, image, code, readme) => saveTemplate(app, window, image, code, readme))
@@ -22,7 +23,7 @@ async function saveTemplate(app, window, imageBlobBufferArray, templateCode, rea
 
     writeFile(`${result.filePath}.calligro`, templateCode, (error) => {
         if (error) {
-            errorDialog(`Cannot save ${result.filePath}.txt`, error.message)
+            errorDialog(`Cannot save ${result.filePath}.calligro`, error.message)
         }
     })
     writeFile(`${result.filePath}.png`, Buffer.from(imageBlobBufferArray), { encoding: 'base64' }, (error) => {
@@ -38,7 +39,7 @@ async function saveTemplate(app, window, imageBlobBufferArray, templateCode, rea
 
     await addRecentlySavedTemplate({
         name: result.filePath.split('/').pop().split('\\').pop(),
-        path: `${result.filePath}.txt`
+        path: `${result.filePath}.calligro`
     }, app)
 
     setupMenu(app, window)
@@ -51,7 +52,12 @@ async function saveFont(app, window, fntFile, pagesBufferArray) {
         return
     }
 
-    writeFile(`${result.filePath}.fnt`, fntFile, (error) => {
+    let adjustedFntFile = fntFile
+    for (let i = 0; i < pagesBufferArray.length; i++) {
+        adjustedFntFile = adjustedFntFile.replace(`@<<PAGE_FILE_NAME_${i}>>`, path.basename(`${result.filePath}-${i}.png`))
+    }
+
+    writeFile(`${result.filePath}.fnt`, adjustedFntFile, (error) => {
         if (error) {
             errorDialog(`Cannot save ${result.filePath}.fnt`, error.message)
         }

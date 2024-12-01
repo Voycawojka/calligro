@@ -1,12 +1,10 @@
 import { Component } from 'react'
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
 import { fetchNewerVersion } from '../../api/latestVesion'
 import Popup from '../popup/Popup'
 import styles from './updater.module.scss'
 import ExternalLink from '../misc/externalLink/ExternalLink'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface UpdaterState {
     newVersionName?: string
@@ -18,6 +16,9 @@ interface UpdaterState {
 interface UpdaterProps {
 }
 
+interface IpcEvent {
+}
+
 export class Updater extends Component<UpdaterProps, UpdaterState> {
 
     constructor(props: UpdaterProps) {
@@ -27,7 +28,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('version', this.versionListener)
+        ipcRenderer?.on('version', (_event: IpcEvent, data: { version: string, platform: string }) => this.versionListener(_event, data))
         ipcRenderer?.send('request-version')
     }
 
@@ -35,8 +36,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
         ipcRenderer?.removeListener('version', this.versionListener)
     }
 
-    @bind
-    async versionListener(_event: any, data: { version: string, platform: string }) {
+    async versionListener(_event: IpcEvent, data: { version: string, platform: string }) {
         let channel = null
 
         if (data.platform === 'linux') {
@@ -61,7 +61,6 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
         }
     }
 
-    @bind
     close() {
         this.setState({
             newVersionName: undefined
@@ -74,7 +73,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
                 .map((item, index ) => <p key={index} className={styles.descriptionParagraph}>{item}</p>)
 
             return (
-                <Popup title='New version available' closeHandler={this.close}>
+                <Popup title='New version available' closeHandler={() => this.close()}>
                     <div className={styles.container}>
                         <div className={styles.content}>Version 
                             <span className={styles.contentBold}> {this.state.newVersionCount} </span> 

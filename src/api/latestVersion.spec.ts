@@ -1,3 +1,4 @@
+import { test, expect, afterEach, vi } from 'vitest'
 import nock from 'nock'
 import { fetchNewerVersion } from './latestVesion'
 
@@ -37,7 +38,7 @@ test('version is up to date when itch version is lower than local version', asyn
 })
 
 test('version is up to date when itch version data is unavailable and error is logged', async () => {
-    console.error = jest.fn()
+    console.error = vi.fn()
 
     const newVersion = await fetchNewerVersion('1.2.3', 'win-64')
 
@@ -82,7 +83,7 @@ test('version is up to date when github version data is unavailable and error is
     mockItchLatest('win-64').reply(200, { latest: '1.3.0' }, responseHeaders)
     mockGithubTag('no').reply(200)
 
-    console.error = jest.fn()
+    console.error = vi.fn()
 
     const newVersion = await fetchNewerVersion('1.2.7', 'win-64')
 

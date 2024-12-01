@@ -1,4 +1,4 @@
-import React from 'react'
+import 'react'
 
 interface FaProps {
     className?: string

@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './author.module.scss'
 import Fa from '../misc/fa/Fa'
 import ExternalLink from '../misc/externalLink/ExternalLink'

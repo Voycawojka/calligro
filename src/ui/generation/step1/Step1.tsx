@@ -1,25 +1,20 @@
-import React, { Component } from 'react'
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
+import { Component } from 'react'
 import Step1CharacterList from '../step1CharacterList/Step1CharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'
 import Template, { FontOptions } from '../../../generation/template/Template'
 import { downloadTemplate } from '../../../generation/template/download'
 import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'
-import { Link } from 'react-router-dom'
 import { NumInputValue, standardizeNumericalInput } from '../../../utils/input'
-import { WebOnly } from '../../envSpecific/WebOnly'
 import { isElectron } from '../../../electron/electronInterop'
-import { getUnicodeRanges, UnicodeRange } from '../../../utils/unicodeRanges'
+import { getUnicodeRanges } from '../../../utils/unicodeRanges'
+import { UnicodeRange } from 'unicode-range-json'
 import { parseTemplateCode } from '../../../generation/template/parse'
 import { unicodeToChar } from '../../../utils/char'
-import { DesktopOnly } from '../../envSpecific/DesktopOnly'
-import ExternalLink from '../../misc/externalLink/ExternalLink'
 import Head from '../../Head/Head'
 import { findSystemFonts } from '../../../generation/template/fontsDetection'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 
 interface Step1State {
@@ -34,7 +29,13 @@ interface Step1State {
     loadedSystemFonts: boolean
 }
 
-class Step1 extends Component<{}, Step1State> {
+interface Step1Props {
+}
+
+interface IpcEvent {
+}
+
+class Step1 extends Component<Step1Props, Step1State> {
     private unicodeRanges: UnicodeRange[]
     private systemFonts: string[]
 
@@ -81,6 +82,7 @@ class Step1 extends Component<{}, Step1State> {
     }
 
     componentDidMount() {
+        this.loadTemplateListener = this.loadTemplateListener.bind(this)
         ipcRenderer?.on('load-template', this.loadTemplateListener)
     }
 
@@ -88,8 +90,7 @@ class Step1 extends Component<{}, Step1State> {
         ipcRenderer?.removeListener('load-template', this.loadTemplateListener)
     }
 
-    @bind
-    loadTemplateListener(_event: any, templateCode: string) {
+    loadTemplateListener(_event: IpcEvent, templateCode: string) {
         const code = parseTemplateCode(templateCode)
 
         if (code) {
@@ -106,7 +107,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     handleCharSetInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
         event.preventDefault()
 
@@ -127,7 +127,6 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    @bind
     removeDuplicatesFromCharString() {
         const validCharString = [...new Set(this.state.charString.split(''))].join('')
 
@@ -136,14 +135,12 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    @bind
     isCharStringValid() {
         const charArray = this.state.charString.split('')
 
         return new Set(charArray).size === charArray.length
     }
 
-    @bind
     createCharSetFromPreset(preset: string): WorkSlot[] {
         const activeRange = this.unicodeRanges.find(range => range.category === preset)
 
@@ -168,12 +165,10 @@ class Step1 extends Component<{}, Step1State> {
         }))
     }
 
-    @bind
     isSlotArrayValid(): boolean {
         return this.slotArray.every(slot => slot.height > 0 && slot.width > 0)
     }
 
-    @bind
     isBaseValid(): boolean {
         const standardizedBase: number = standardizeNumericalInput(this.state.base)
         const standardizedHeight: number = standardizeNumericalInput(this.state.defaultHeight)
@@ -181,7 +176,6 @@ class Step1 extends Component<{}, Step1State> {
         return standardizedBase <= standardizedHeight && standardizedBase >= 0
     }
 
-    @bind
     handleDefaultValueChange(event: React.ChangeEvent<HTMLInputElement>, valueName: 'defaultWidth' | 'defaultHeight' | 'base') {
         const newValue = event.target.value === '' ? '' : parseInt(event.target.value, 10)
 
@@ -191,7 +185,6 @@ class Step1 extends Component<{}, Step1State> {
         }))
     }
 
-    @bind
     handleDimensionChange(event: React.ChangeEvent<HTMLInputElement>, dimension: 'width' | 'height', char: WorkSlot) {
         const newValue = event.target.value === '' ? '' : parseInt(event.target.value, 10)
         const newCharSet: WorkSlot[] = this.state.charSet.map(character => character === char
@@ -208,7 +201,6 @@ class Step1 extends Component<{}, Step1State> {
 
     }
 
-    @bind
     resetCharacterDimensions(char: WorkSlot) {
         const newCharSet = this.state.charSet.map(workSlot => char === workSlot ? { character: workSlot.character } : workSlot)
 
@@ -217,7 +209,6 @@ class Step1 extends Component<{}, Step1State> {
         })
     }
 
-    @bind
     async downloadTemplate() {
         const template = new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset, this.state.fontOptions)
 
@@ -231,7 +222,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     changePreset(event: React.ChangeEvent<HTMLInputElement>) {
         const isValuePreset = this.unicodeRanges.some(range => range.category === event.target.value)
 
@@ -251,7 +241,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     changePrefill(event: React.ChangeEvent<HTMLInputElement>) {
         if (event.target.value === "") {
             this.setState({
@@ -268,7 +257,6 @@ class Step1 extends Component<{}, Step1State> {
         }
     }
 
-    @bind
     presetSelectBlur(event: React.FocusEvent<HTMLInputElement>) {
         event.target.value = this.state.selectedPreset
     }
@@ -294,10 +282,10 @@ class Step1 extends Component<{}, Step1State> {
                     <input
                         list={datalistId}
                         aria-label='unicode presets selection input'
-                        onChange={this.changePreset}
+                        onChange={event => this.changePreset(event)}
                         value={this.state.presetInputValue}
                         className={styles.presetSelect}
-                        onBlur={this.presetSelectBlur}
+                        onBlur={event => this.presetSelectBlur(event)}
                     />
 
                     <datalist id={datalistId}>
@@ -317,170 +305,121 @@ class Step1 extends Component<{}, Step1State> {
             <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <Head title={'Template Generation | Calligro'} />
                 <div>
-                    <WebOnly div>
-                        <h2 className={styles.heading}>Generate bitmap fonts in the <ExternalLink href='https://www.angelcode.com/products/bmfont/doc/file_format.html' className={styles.link}>BMFont</ExternalLink> format.</h2>
-                        <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>
-                        <p className={styles.paragraph}>
-                            This tool can also be used to convert a trutype font into a BMFont (with the prefill option) but if you’re looking specifically for that try tools like the original{' '}
-                            <ExternalLink href='https://www.angelcode.com/products/bmfont/' className={styles.link}>BMFont</ExternalLink>
-                            {' '}or{' '}
-                            <ExternalLink href='https://libgdx.com/wiki/tools/hiero' className={styles.link}>Hiero</ExternalLink>
-                            {' '}instead.
-                        </p>
-                    </WebOnly>
+                    <div className={styles.charactersLabelContainer}>
+                        <label className={`${styles.label} ${styles.charactersLabel}`}>
+                            Characters
+                            <Fa
+                                icon='fas fa-question'
+                                className={styles.questionMark}
+                                title={'Characters you want to be included in the final font (symbols made from multiple unicode characters won\'t work, e.g. more complex emojis)'}
+                            />
+                        </label>
+                        {renderPresetSelect}
+                    </div>
+                    <textarea
+                        aria-label='characters input'
+                        spellCheck={false}
+                        className={styles.charactersTextArea}
+                        onChange={event => this.setState({ charString: event.target.value })}
+                        onBlur={event => this.handleCharSetInput(event)}
+                        value={this.state.charString}
+                    />
+                    <button
+                        onClick={() => this.removeDuplicatesFromCharString()}
+                        className={styles.smallFormButton}
+                        disabled={this.isCharStringValid()}
+                    >
+                        Remove duplicates
+                    </button>
+                </div>
 
-                    <div>
-                        <div className={styles.charactersLabelContainer}>
-                            <label className={`${styles.label} ${styles.charactersLabel}`}>
-                                Characters
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title={'Characters you want to be included in the final font (symbols made from multiple unicode characters won\'t work, e.g. more complex emojis)'}
-                                />
-                            </label>
-                            {renderPresetSelect}
+                <div className={styles.parameters}>
+                    <div className={styles.commonParameters}>
+                        <div>
+                            <label className={styles.label}>Common</label>
+                            <label className={styles.commonLabel}>Size</label>
+                            <input
+                                aria-label='default width input'
+                                className={styles.commonInput}
+                                type='number'
+                                onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
+                                value={this.state.defaultWidth}
+                            />
+                            <Fa icon='fas fa-times' className={styles.times} />
+                            <input
+                                aria-label='default height input'
+                                className={styles.commonInput}
+                                type='number'
+                                onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
+                                value={this.state.defaultHeight}
+                            />
+                            <Fa icon='fas fa-question' className={styles.questionMark} title='Default size of one character in pixels' />
                         </div>
-                        <textarea
-                            aria-label='characters input'
-                            className={styles.charactersTextArea}
-                            onChange={event => this.setState({ charString: event.target.value })}
-                            onBlur={this.handleCharSetInput}
-                            value={this.state.charString}
-                        />
+
+                        <div>
+                            <label className={styles.commonLabel}>Base</label>
+                            <input
+                                aria-label='characters base input'
+                                className={`${styles.commonInput} ${this.isBaseValid() ? '' : styles.commonInputIvalid}`}
+                                type='number'
+                                onChange={event => this.handleDefaultValueChange(event, 'base')}
+                                value={this.state.base}
+                            />
+                            <Fa
+                                icon='fas fa-question'
+                                className={styles.questionMark}
+                                title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")'
+                            />
+                        </div>
+
+                        <div>
+                            <label className={styles.commonLabel}>Prefill</label>
+                            <input
+                                list="prefill-datalist"
+                                aria-label='unicode presets selection input'
+                                onChange={event => this.changePrefill(event)}
+                                value={this.state.fontOptions?.name}
+                                className={styles.prefillSelect}
+                            />
+
+                            <datalist id="prefill-datalist">
+                                {defaultPrefillOption}
+                                {prefillOptions}
+                            </datalist>
+                            <Fa
+                                icon='fas fa-question'
+                                className={styles.questionMark}
+                                title='Vector font to prefill the template with. Leave empty to not prefill.'
+                            />
+                        </div>
+
                         <button
-                            onClick={this.removeDuplicatesFromCharString}
-                            className={styles.smallFormButton}
-                            disabled={this.isCharStringValid()}
+                            onClick={() => this.downloadTemplate()}
+                            className={styles.formButton}
+                            disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
                         >
-                            Remove duplicates
+                            {`${isElectron() ? 'save' : 'download'} template`}
                         </button>
                     </div>
 
-                    <div className={styles.parameters}>
-                        <div className={styles.commonParameters}>
-                            <div>
-                                <label className={styles.label}>Common</label>
-                                <label className={styles.commonLabel}>Size</label>
-                                <input
-                                    aria-label='default width input'
-                                    className={styles.commonInput}
-                                    type='number'
-                                    onChange={event => this.handleDefaultValueChange(event, 'defaultWidth')}
-                                    value={this.state.defaultWidth}
-                                />
-                                <Fa icon='fas fa-times' className={styles.times} />
-                                <input
-                                    aria-label='default height input'
-                                    className={styles.commonInput}
-                                    type='number'
-                                    onChange={event => this.handleDefaultValueChange(event, 'defaultHeight')}
-                                    value={this.state.defaultHeight}
-                                />
-                                <Fa icon='fas fa-question' className={styles.questionMark} title='Default size of one character in pixels' />
-                            </div>
-
-                            <div>
-                                <label className={styles.commonLabel}>Base</label>
-                                <input
-                                    aria-label='characters base input'
-                                    className={`${styles.commonInput} ${this.isBaseValid() ? '' : styles.commonInputIvalid}`}
-                                    type='number'
-                                    onChange={event => this.handleDefaultValueChange(event, 'base')}
-                                    value={this.state.base}
-                                />
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title='Distance from the top of the letter to the line base in pixels (character parts below this will stick out like in "g" or "j")'
-                                />
-                            </div>
-
-                            <div>
-                                <label className={styles.commonLabel}>Prefill</label>
-                                <input
-                                    list="prefill-datalist"
-                                    aria-label='unicode presets selection input'
-                                    onChange={this.changePrefill}
-                                    value={this.state.fontOptions?.name}
-                                    className={styles.prefillSelect}
-                                />
-
-                                <datalist id="prefill-datalist">
-                                    {defaultPrefillOption}
-                                    {prefillOptions}
-                                </datalist>
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title='Vector font to prefill the template with. Leave empty to not prefill.'
-                                />
-                            </div>
-
-                            <button
-                                onClick={this.downloadTemplate}
-                                className={styles.formButton}
-                                disabled={!this.isSlotArrayValid() || !this.isBaseValid()}
-                            >
-                                {`${isElectron() ? 'save' : 'download'} template`}
-                            </button>
-                        </div>
-
-                        <div className={styles.perCharacterParameters} >
-                            <label className={styles.label}>
-                                Per character
-                                <Fa
-                                    icon='fas fa-question'
-                                    className={styles.questionMark}
-                                    title='Override default size per character'
-                                />
-                            </label>
-
-                            <Step1CharacterList
-                                charSet={this.state.charSet}
-                                defaultHeight={this.state.defaultHeight}
-                                defaultWidth={this.state.defaultWidth}
-                                handleDimensionChange={this.handleDimensionChange}
-                                resetCharacterDimensions={this.resetCharacterDimensions}
+                    <div className={styles.perCharacterParameters} >
+                        <label className={styles.label}>
+                            Per character
+                            <Fa
+                                icon='fas fa-question'
+                                className={styles.questionMark}
+                                title='Override default size per character'
                             />
-                        </div>
+                        </label>
+
+                        <Step1CharacterList
+                            charSet={this.state.charSet}
+                            defaultHeight={this.state.defaultHeight}
+                            defaultWidth={this.state.defaultWidth}
+                            handleDimensionChange={(event, dimension, char) => this.handleDimensionChange(event, dimension, char)}
+                            resetCharacterDimensions={char => this.resetCharacterDimensions(char)}
+                        />
                     </div>
-                    {/* <div>
-                        <TemplatePreview
-                            width={1000}
-                            height={500}
-                            template={new Template(this.slotArray, standardizeNumericalInput(this.state.base), this.state.selectedPreset, this.state.fontOptions)}/>
-                    </div> */}
-                </div>
-
-                <div>
-                    <h2 className={styles.heading}>Step 1 - Create a template</h2>
-                    <ol className={styles.instructionList}>
-                        <li className={styles.instructionListItem}>Specify what characters you want included in the final font. </li>
-                        <li className={styles.instructionListItem}>Choose the character size and base.</li>
-                        <li className={styles.instructionListItem}>Optionally choose a font to prefill the template with. Doesn't work well with low resolution templates.</li>
-                        <li className={styles.instructionListItem}>Optionally override the size per character if you want some to be smaller or bigger than the rest.</li>
-                        <li className={styles.instructionListItem}>Download the generated template. It’s a zip archive containing three files: .png, .calligro and a readme. Open the png in your graphics editor of choice and draw characters inside the yellow boundaries.</li>
-                        <li className={styles.instructionListItem}>
-                            Go to{' '}
-                            <WebOnly><Link to='/step2' className={styles.link}>Step 2</Link></WebOnly>
-                            <DesktopOnly>'Fonts -&gt; Generate a font'</DesktopOnly>
-                            {' '}to upload the template and generate your font.
-                        </li>
-                    </ol>
-
-                    <WebOnly div>
-                        <h2 className={styles.heading}>We have an offline version too</h2>
-                        <p className={styles.paragraph}>The desktop version is also free and has the same features but is just a little bit more convenient to use ;)</p>
-                        <div className={styles.desktopWidget}>
-                            {/* Copied from itch.io */}
-                            <iframe title="Itch.io desktop widget" frameBorder="0" src="https://itch.io/embed/946259" width="552" height="167"><a href="https://voycawojka.itch.io/calligro">Calligro by Voycawojka</a></iframe>
-                        </div>
-                        <div className={styles.mobileWidget}>
-                            {/* Copied from itch.io */}
-                            <iframe title="Itch.io mobile widget" frameBorder="0" src="https://itch.io/embed/946259" width="208" height="167"><a href="https://voycawojka.itch.io/calligro">Calligro by Voycawojka</a></iframe>
-                        </div>
-                    </WebOnly>
                 </div>
             </div>
         )

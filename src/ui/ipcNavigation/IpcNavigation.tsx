@@ -1,15 +1,19 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Redirect } from 'react-router'
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface IpcNavigationState {
     url: string
 }
 
-export class IpcNavigation extends Component<{}, IpcNavigationState> {
+interface IpcNavigationProps {
+}
+
+interface IpcEvent {
+}
+
+export class IpcNavigation extends Component<IpcNavigationProps, IpcNavigationState> {
 
     constructor(props: {}) {
         super(props)
@@ -20,6 +24,7 @@ export class IpcNavigation extends Component<{}, IpcNavigationState> {
     }
 
     componentDidMount() {
+        this.navigationListener = this.navigationListener.bind(this)
         ipcRenderer?.on('navigation', this.navigationListener)
     }
 
@@ -27,8 +32,7 @@ export class IpcNavigation extends Component<{}, IpcNavigationState> {
         ipcRenderer?.removeListener('navigation', this.navigationListener)
     }
 
-    @bind
-    navigationListener(_event: any, arg: string) {
+    navigationListener(_event: IpcEvent, arg: string) {
         this.setState({ url: arg })
     }
 

@@ -1,5 +1,3 @@
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
 import React, { Component } from 'react'
 import { FontConfig, generateFont, KerningPair } from '../../../generation/font/Font'
 import { fontSpecToTextFile } from '../../../generation/font/specSaver'
@@ -15,7 +13,7 @@ import FontPreview from '../fontPreview/FontPreview'
 import { CodePayload } from '../../../generation/template/types'
 import Head from '../../Head/Head'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface Step2State {
     horizontalMargin: NumInputValue
@@ -30,7 +28,10 @@ interface Step2State {
     templateCodeError?: string
 }
 
-class Step2 extends Component<{}, Step2State> {
+interface Step2Props {
+}
+
+class Step2 extends Component<Step2Props, Step2State> {
     constructor(props: {}) {
         super(props)
 
@@ -43,7 +44,6 @@ class Step2 extends Component<{}, Step2State> {
         }
     }
 
-    @bind
     async handleTemplateDropzoneInput(data: File) {
         if (!this.isTemplateFileValid(data)) {
             this.setState(prevState => ({
@@ -62,7 +62,6 @@ class Step2 extends Component<{}, Step2State> {
         }))
     }
 
-    @bind
     async handleCodeDropzoneInput(data: File) {
         if (!this.isCodeFileValid(data)) {
             this.setState(prevState => ({
@@ -104,7 +103,6 @@ class Step2 extends Component<{}, Step2State> {
         return !!file && file.type === 'image/png'
     }
 
-    @bind
     areDropzonesValid(): boolean {
         return !this.state.templateError
             && !this.state.templateCodeError
@@ -113,7 +111,6 @@ class Step2 extends Component<{}, Step2State> {
             && this.state.isKerningsValid
     }
     
-    @bind
     handleNumericalInput(event: React.ChangeEvent<HTMLInputElement>, name: 'horizontalMargin' | 'verticalMargin' | 'lineHeight') {
         const value = event.target.value === '' ? '' : parseInt(event.target.value, 10)
 
@@ -125,7 +122,6 @@ class Step2 extends Component<{}, Step2State> {
         }
     }
 
-    @bind
     async downloadFont(format: 'txt' | 'xml') {
         if (!this.state.template || !this.state.templateCode) {
             return
@@ -143,7 +139,7 @@ class Step2 extends Component<{}, Step2State> {
         const fntFile = fontSpecToTextFile(fontSpec, format)
 
         if (isElectron()) {
-            let pagesBufferArray: ArrayBuffer[] = []
+            const pagesBufferArray: ArrayBuffer[] = []
 
             for (let i = 0; i < pages.length; i++) {
                 const buffer = await pages[i].arrayBuffer()
@@ -165,14 +161,12 @@ class Step2 extends Component<{}, Step2State> {
         }
     }
 
-    @bind
     changeKernings(kernings: KerningPair[]) {
         this.setState({
             kerningPairs: kernings
         })
     }
 
-    @bind
     handleKerningsValidity(valid: boolean) {
         this.setState({
             isKerningsValid: valid
@@ -183,13 +177,13 @@ class Step2 extends Component<{}, Step2State> {
         return(
             <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <Head title={'Font Generation | Calligro'}/>
-                <div>
+                <div className={styles.toolbar}>
                     <div className={`${styles.dropzones} ${isElectron() ? styles.desktop : ''}`}>
                         <Dropzone
                             inputName='image'
                             acceptedInputType='.png'
                             dataType='image/png'
-                            handleDropzoneInput={this.handleTemplateDropzoneInput}
+                            handleDropzoneInput={data => this.handleTemplateDropzoneInput(data)}
                             fileName={this.state.template?.name}
                             error={this.state.templateError}
                         />
@@ -197,7 +191,7 @@ class Step2 extends Component<{}, Step2State> {
                         <Dropzone
                             inputName='code file'
                             acceptedInputType='.calligro'
-                            handleDropzoneInput={this.handleCodeDropzoneInput}
+                            handleDropzoneInput={data => this.handleCodeDropzoneInput(data)}
                             fileName={this.state.templateCodeName}
                             error={this.state.templateCodeError}
                         />
@@ -239,72 +233,50 @@ class Step2 extends Component<{}, Step2State> {
 
                         <Step2KerningPairsList
                             templateCode={this.state.templateCode}
-                            changeKernings={this.changeKernings}
-                            handleKerningsValidity={this.handleKerningsValidity}
+                            changeKernings={kernings => this.changeKernings(kernings)}
+                            handleKerningsValidity={valid => this.handleKerningsValidity(valid)}
                         />
+                    </div>
 
-                        <div className={styles.download}>
-                            <label className={styles.buttonsContainerLabel}>
-                                {`${isElectron() ? 'save' : 'download'} font`}
-                            </label>
+                    <div className={styles.download}>
+                        <label className={styles.buttonsContainerLabel}>
+                            {`${isElectron() ? 'save' : 'download'} font`}
+                        </label>
 
-                            <div className={styles.buttons}>
-                                <div>
-                                    <button onClick={() => this.downloadFont('txt')} className={styles.formButton} disabled={!this.areDropzonesValid()} >txt format</button>
-                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, LÖVE, Heaps.io and possibly others.'/>
-                                </div>
-
-                                <div>
-                                    <button onClick={() => this.downloadFont('xml')} className={styles.formButton} disabled={!this.areDropzonesValid()} >xml format</button>
-                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser, HaxeFlixel and possibly others.'/>
-                                </div>
+                        <div className={styles.buttons}>
+                            <div>
+                                <button onClick={() => this.downloadFont('txt')} className={styles.formButton} disabled={!this.areDropzonesValid()} >txt format</button>
+                                <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, LÖVE, Heaps.io and possibly others.'/>
                             </div>
-                            
-                            <p className={styles.samplesParagraph}>
-                                Check
-                                <a
-                                    href='https://github.com/Voycawojka/calligro/tree/main/samples'
-                                    className={styles.samplesLink}
-                                    target='_blank'
-                                    rel='noreferrer'
-                                >
-                                    our samples
-                                </a>
-                                to see how to use it
-                            </p>
+
+                            <div>
+                                <button onClick={() => this.downloadFont('xml')} className={styles.formButton} disabled={!this.areDropzonesValid()} >xml format</button>
+                                <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser, HaxeFlixel and possibly others.'/>
+                            </div>
                         </div>
+                        
+                        <p className={styles.samplesParagraph}>
+                            Check
+                            <a
+                                href='https://github.com/Voycawojka/calligro/tree/main/samples'
+                                className={styles.samplesLink}
+                                target='_blank'
+                                rel='noreferrer'
+                            >
+                                our samples
+                            </a>
+                            to see how to use it
+                        </p>
                     </div>
                 </div>
 
-                <div>
-                    <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
-                        <FontPreview
-                            width={400}
-                            height={250}
-                            templateCode={this.state.templateCode}
-                            templateImg={this.state.template}
-                            fontConfig={this.getFontConfig()} />
-                    </div>
-
-                    <div>
-                        <h2 className={styles.heading}>Step 2 - Generate your font</h2>
-                        
-                        <ol className={styles.instructionList}>
-                            <li className={styles.instructionListItem}>Upload the template image with your characters drawn on it and the corresponding .calligro file (metadata).</li>
-                            <li className={styles.instructionListItem}>Specify font options</li>
-                            <li className={styles.instructionListItem}>
-                                <p>
-                                    Add kerning pairs if you want to. Characters in a pair are rendered further or closer to each other.
-                                    E.g. pair "ab" with distance -10 will cause "b" to be 10 pixels closer to "a". Pair "ab" &ne; "ba"!
-                                </p>
-                                <p>
-                                    Warning - not all tools support this feature. We know Godot does.
-                                </p>
-                            </li>
-                            <li className={styles.instructionListItem}>Preview changes live at any point.</li>
-                            <li className={styles.instructionListItem}>Generate and download your BMFont.</li>
-                        </ol>
-                    </div>
+                <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
+                    <FontPreview
+                        width={400}
+                        height={250}
+                        templateCode={this.state.templateCode}
+                        templateImg={this.state.template}
+                        fontConfig={this.getFontConfig()} />
                 </div>
             </div>
         )

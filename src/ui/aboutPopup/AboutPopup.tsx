@@ -1,19 +1,23 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import styles from './aboutPopup.module.scss'
-// eslint-disable-next-line
-import { bind } from 'helpful-decorators'
 import Popup from '../popup/Popup'
 import Authors from '../authors/Authors'
 import ExternalLink from '../misc/externalLink/ExternalLink'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface AboutPopupState {
     active: boolean
     version: string
 }
 
-class AboutPopup extends Component<{}, AboutPopupState> {
+interface AboutPopupProps {
+}
+
+interface IpcEvent {
+}
+
+class AboutPopup extends Component<AboutPopupProps, AboutPopupState> {
     constructor(props: {}) {
         super(props)
         this.state = {
@@ -23,7 +27,7 @@ class AboutPopup extends Component<{}, AboutPopupState> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('about-popup', (event, version: string) => {
+        ipcRenderer?.on('about-popup', (_event: IpcEvent, version: string) => {
             this.setState({
                 active: true,
                 version: version
@@ -35,7 +39,6 @@ class AboutPopup extends Component<{}, AboutPopupState> {
         ipcRenderer?.removeListener('about-popup', () => {})
     }
 
-    @bind
     closeWindow() {
         this.setState({
             active: false
@@ -45,7 +48,7 @@ class AboutPopup extends Component<{}, AboutPopupState> {
     render () {
         if (this.state.active) {
             return (
-                <Popup title='About' closeHandler={this.closeWindow}>
+                <Popup title='About' closeHandler={() => this.closeWindow()}>
                     <div className={styles.container}>
                         <div className={styles.disclaimer}>
                             <p className={styles.paragraph}>Calligro lets you generate custom fonts from images created in graphics software like Gimp, Photoshop, Aseprite and others.</p>

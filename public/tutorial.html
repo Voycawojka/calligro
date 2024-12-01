@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="favicon.svg" />
+    <link rel="mask-icon" href="favicon.svg" color="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+
+    <!-- Primary Meta Tags -->
+    <title>Tutorial | Calligro - Bitmap Font Generator</title>
+    <meta name="title" content="Calligro - Bitmap Font Generator" />
+    <meta name="description"
+        content="Online open source bitmap font generator compatible with most game engines and frameworks." />
+    <meta name="keywords"
+        content="bitmap font, font, bmfont, generator, tool, godot, heaps.io, phaser, libgdx, haxeflixel, raylib, love2d" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://calligro.ideasalmanac.com" />
+    <meta property="og:title" content="Calligro - Bitmap Font Generator" />
+    <meta property="og:description"
+        content="Online open source bitmap font generator compatible with most game engines and frameworks" />
+    <meta property="og:image" content="https://calligro.ideasalmanac.com/OgImage.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://calligro.ideasalmanac.com/" />
+    <meta property="twitter:title" content="Calligro - Bitmap Font Generator" />
+    <meta property="twitter:description"
+        content="Online open source bitmap font generator compatible with most game engines and frameworks." />
+    <meta property="twitter:image" content="https://calligro.ideasalmanac.com/OgImage.png" />
+
+    <!-- Linked Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": ["SoftwareApplication", "WebApplication"],
+            "name": "Calligro",
+            "applicationCategory": ["DesignApplication", "DeveloperApplication"],
+            "applicationSubCategory": "Bitmap Font Generator",
+            "operatingSystem": ["Windows 11", "Windows 10", "Linux", "Web"],
+            "screenshot": "https://calligro.ideasalmanac.com/OgImage.png",
+            "about": "Online open source bitmap font generator compatible with most game engines and frameworks.",
+            "keywords": "bitmap font,font,bmfont,generator,tool,godot,heaps.io,phaser,libgdx,haxeflixel,raylib,love2d",
+            "url": "https://calligro.ideasalmanac.com/",
+            "offers": {
+                "@type": "Offer",
+                "price": "0"
+            }
+        }
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+    
+        gtag("consent", "default", {
+            ad_storage: "denied",
+            analytics_storage: "denied",
+            wait_for_update: 500,
+        });
+    </script>
+    <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-LYVXVB1GZS"
+    ></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+    
+        gtag("config", "G-LYVXVB1GZS", { anonymize_ip: true });
+    </script>
+
+    <link rel="apple-touch-icon" href="logo192.png" />
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="preload" as="image" href="logo.svg" />
+    <link rel="preload" as="document" href="https://itch.io/embed/946259" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="index.css" />
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+</head>
+
+<body>
+    <header>
+        <a href="/"><img src="img/promo/logo.svg" /></a>
+        <nav>
+            <a href="/webapp.html">Web App</a>
+            <a href="https://voycawojka.itch.io/calligro">Download</a>
+            <a href="/tutorial.html">Tutorial</a>
+            <a href="https://github.com/Voycawojka/calligro/tree/main/samples">Engine Samples</a>
+            <a href="https://github.com/Voycawojka/calligro">Github</a>
+        </nav>
+    </header>
+
+    <div class="container article">
+        <h2>Create a font</h2>
+        <p>
+            Making a font with Calligro consists of two steps.
+            First, you define basic font parameters to generate a template.
+            This template is a PNG file with designated places for each character.
+            You can then draw your characters in any graphics software you'd like.
+        </p>
+        <p>
+            Second, you open the filled in template back in Calligro, configure additional parameters, and export a
+            bitmap font.
+            To see examples on how to use an exported font with different game engines and frameworks, check out <a
+                href="https://github.com/Voycawojka/calligro/tree/main/samples">the samples</a>.
+        </p>
+
+        <details>
+            <summary>
+                <h3 class="summary-header">Prepare a template</h3>
+            </summary>
+            <section class="tutorial-section">
+                <h4>Choose a character set</h4>
+                <p>
+                    Write all characters you want to include in your font in the characters input.
+                    You can choose an existing unicode preset like Latin Basic, Hiragana or Georgian.
+                    You can also just write any unicode characters you'd like, except for symbols made from multiple
+                    unicode code points (like emojis).
+                    Note that any duplicated characters will be ignored.
+                </p>
+                <img src="img/tutorial/input-characters.png" class="tutorial-image" />
+                <h4>Choose character size and base</h4>
+                <p>
+                    In the "common" section you can choose size and base for all characters.
+                    In the "per character" section you can also override size for each individual character.
+                    Size is simply the total character width and height in pixels.
+                    A character's base is the height from the top at which the character "sits".
+                    Everything below the base will stick out like in the letters "j" and "g".
+                    This means that a character of height 100 and base 70 will have 30 pixels below the base.
+                </p>
+                <img src="img/tutorial/size-and-base.png" class="tutorial-image" />
+                <h4>Prefill (optional)</h4>
+                <p>
+                    Optionally, you can choose a regular font to prefill the template with.
+                    Do this if you don't want to draw each character from scratch.
+                    Keep in mind prefilling might not work great for very small character sizes (meant for pixel art).
+                    Below you can see an example of a part of template prefilled with Lucida Console.
+                </p>
+                <details>
+                    <summary>Note on supported fonts and licensing</summary>
+                    <p class="warning">
+                        In the web version of Calligro you can choose from a limited set of commonly used fonts.
+                        In the desktop version you can choose any font installed on your system.
+                        Be mindful of the font's license.
+                    </p>
+                </details>
+                <details>
+                    <summary>Note on converting truetype fonts</summary>
+                    <p class="warning">
+                        Thanks to the prefill option Calligro can be used to convert a trutype font into a BMFont.
+                        However, if you’re looking specifically for that try tools like the original
+                        <a href='https://www.angelcode.com/products/bmfont/' class={styles.link}>BMFont</a>
+                        or
+                        <a href='https://libgdx.com/wiki/tools/hiero' class={styles.link}>Hiero</a>
+                        instead.
+                    </p>
+                </details>
+                <img src="img/tutorial/prefilled-template-part.png" class="tutorial-image" />
+                <h4>Draw your font</h4>
+                <p>
+                    Save/download the template you configured.
+                    You will get two files - a .png and a .calligro file.
+                    Open the PNG in any graphics editor (for example Photoshop or Aseprite) and draw your font.
+                    Characters should be drawn inside the yellow boundaries.
+                    Horizontal lines between them determine the character base.
+                </p>
+                <img src="img/tutorial/drawn-characters.png" class="tutorial-image" />
+            </section>
+        </details>
+
+        <details>
+            <summary>
+                <h3 class="summary-header">Turn the template into a font</h3>
+            </summary>
+            <section class="tutorial-section">
+                <h4>Open the template</h4>
+                <p>
+                    Go to either "Step 2" in the web version or to "Fonts -&gt; Generate a font" in the desktop version.
+                    Open/upload the filled in .png file and the corresponding .calligro file back in Calligro.
+                </p>
+                <h4>Configure the font</h4>
+                <p>
+                    Specify the desired margin, line height and kerning pairs.
+                    You can preview the outcome live in the preview section.
+                </p>
+                <p>
+                    Margin is a distance bewteen characters in pixels.
+                    Line height is the distance from the top of one line of text to the top of the line below.
+                    Kerning pairs modify the margin between specific character.
+                    For example, pair "ab" with distance -10 will cause "b" to be 10 pixels closer to "a".
+                    Pair "ab" ≠ "ba"!
+                </p>
+                <details>
+                    <summary>Note on kerning pairs support!</summary>
+                    <p class="warning">
+                        Be aware that even though kerning pairs are part of the BMFont specification, not all engines
+                        and frameworks support it.
+                        From all the tools in <a href="https://github.com/Voycawojka/calligro/tree/main/samples">the
+                            samples</a> section, only Godot seems to support it.
+                    </p>
+                </details>
+                <img src="img/tutorial/font-options.png" class="tutorial-image" />
+                <img src="img/tutorial/font-preview.png" class="tutorial-image" />
+                <h4>Export your font</h4>
+                <p>
+                    Generate and save/download the final font.
+                    You can choose between the TXT and XML formats.
+                    Some engines and frameworks require the TXT format and some require the XML format.
+                    <details>
+                        <summary>Note on file names</summary>
+                        <p class="warning">
+                           After exporting a font you will get a .fnt file and a corresponding .png file.
+                           They need to always be kept toghether.
+                           If you ever want to change the name of the PNG you need to edit the FNT file in a text editor and replace the PNG file name.
+                        </p>
+                    </details>
+                </p>
+                <p>
+                    Examples of tools with TXT support:
+                <ul>
+                    <li>Godot</li>
+                    <li>LibGDX</li>
+                    <li>LÖVE</li>
+                    <li>Heaps.io</li>
+                </ul>
+                Example of tools with XML support:
+                <ul>
+                    <li>Phaser</li>
+                    <li>HaxeFlixel</li>
+                </ul>
+                </p>
+                <img src="img/tutorial/imported-in-godot.png" class="tutorial-image" />
+            </section>
+        </details>
+    </div>
+
+    <footer>
+        <a href="/privacy.html">Privacy policy</a>
+        <section class="authors">
+            <div class="author">
+                <p>Filip A. Kowalski</p>
+                <ul class="socials">
+                    <li><a href="https://ideasalmanac.com/" aria-label="personal website"><i
+                                class='bx bx-globe bx-md'></i></a></li>
+                    <li><a href="https://x.com/ideasalmanac" aria-label="twitter"><i
+                                class='bx bxl-twitter bx-md'></i></a></li>
+                    <li><a href="https://github.com/Voycawojka" aria-label="github"><i
+                                class='bx bxl-github bx-md'></i></a></li>
+                </ul>
+            </div>
+            <div class="author">
+                <p>Dominik Józefiak</p>
+                <ul class="socials">
+                    <li><a href="https://github.com/domlj" aria-label="github"><i class='bx bxl-github bx-md'></i></a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </footer>
+</body>
+
+</html>

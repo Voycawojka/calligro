@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import Fa from '../fa/Fa'
 import styles from './loader.module.scss'
 
@@ -6,7 +6,10 @@ interface LoaderState {
     isLoaderOn: boolean
 }
 
-class Loader extends Component<{}, LoaderState> {
+interface LoaderProps {
+}
+
+class Loader extends Component<LoaderProps, LoaderState> {
     private timer?: NodeJS.Timeout
 
     constructor(props: {}) {

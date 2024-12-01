@@ -2,7 +2,7 @@ import React from 'react'
 import { isElectron } from '../../electron/electronInterop'
 
 interface DesktopOnlyProps {
-    div?: Boolean
+    div?: boolean
     children: React.ReactNode
 }
 

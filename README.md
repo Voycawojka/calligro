@@ -24,6 +24,9 @@ There is also an offline version available for Windows and Linux. It has the sam
 The BMFont format has existed for a while and a lot of game frameworks, libraries and engines support it out of the box.
 Some examples and more details on compatibility can be found in the [samples/](samples) directory.
 
+# Tutorial
+A tutorial is available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com/tutorial.html).
+
 # Use case
 Calligro is useful when you need to draw a custom font stored as a spritesheet. Pixelart font would be a good use.
 
@@ -31,17 +34,16 @@ If you only want to convert an existing truetype font into a bitmap font, you ca
 - [AngelCode's BMFont](https://www.angelcode.com/products/bmfont/) 
 - [Hiero](https://libgdx.com/wiki/tools/hiero)
 - [ShoeBox](http://renderhjs.net/shoebox/)
-- [Littera](http://kvazars.com/littera/) (requires Flash)
 
 # Contributing
 If you'd like to contribute: thanks!
 
-This is a regular create-react-app project in TypeScript using npm (not yarn) so:
+This is a regular React/TypeScript project:
 
 ```bash
 # install dependencies and start a dev server with hot reloading
 npm install
-npm start
+npm run dev
 
 # then optionally start the desktop app
 cd electron_resources
@@ -53,13 +55,13 @@ npm run electron:dev
 npm run test
 ```
 
-Our actions use Node 14.
+Our actions use Node 20.
 
 ## Production builds
 
 ### Web
 
-Create the production web build in the `build/` directory:
+Create the production web build in the `dist/` directory:
 
 ```bash
 npm run build

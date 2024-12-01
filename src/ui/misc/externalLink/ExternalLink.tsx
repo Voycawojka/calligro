@@ -1,7 +1,7 @@
 import React, { HTMLProps } from 'react'
 import { isElectron } from '../../../electron/electronInterop'
 
-const shell = !!window.require ? window.require('electron').shell : null
+const shell = window.require ? window.require('electron').shell : null
 
 interface ExternalLinkProps extends HTMLProps<HTMLAnchorElement> {
 }

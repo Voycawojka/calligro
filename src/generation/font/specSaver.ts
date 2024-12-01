@@ -1,3 +1,4 @@
+import { isElectron } from "../../electron/electronInterop";
 import { FontSpec } from "./Font";
 
 type tagProp = [string, string | number]
@@ -39,7 +40,7 @@ export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml
 
     const pageTags = specification.pages.map(page => tag('page', [
         ['id', page.id],
-        ['file', page.file]
+        ['file', isElectron() ? `@<<PAGE_FILE_NAME_${page.id}>>` : page.file]
     ]))
 
     const charTags = specification.chars.map(char => tag('char', [

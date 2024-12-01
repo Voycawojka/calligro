@@ -38,7 +38,9 @@ class FontPreview extends Component<FontPreviewProps, FontPreviewState> {
             const ctx = this.canvas.current.getContext('2d')
             const spec = await generateFont(this.props.templateImg, this.props.templateCode, this.props.fontConfig)
 
-            ctx && drawPreview(this.state.text, spec[0], spec[1], this.state.scale, ctx)
+            if (ctx) {
+                drawPreview(this.state.text, spec[0], spec[1], this.state.scale, ctx)
+            }
         }
     }
 
@@ -64,24 +66,26 @@ class FontPreview extends Component<FontPreviewProps, FontPreviewState> {
                     className={styles.previewInput}
                     placeholder='Type to preview the font' />
                 <div>
-                    <label className={styles.label}>Scale</label>
-                    <input
-                        aria-label='preview scale input'
-                        type='number'
-                        step={0.01}
-                        min={0.01}
-                        onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
-                        value={isNaN(this.state.scale) ? '' : this.state.scale}
-                        className={styles.scaleInput} />
-                </div>
-                <div>
-                    <label className={styles.label}>Background</label>
-                    <input
-                        aria-label='preview color input'
-                        type='color'
-                        className={styles.colorInput}
-                        defaultValue='#ffffff'
-                        onChange={event => this.handleBgColorChange(event.target.value)} />
+                    <div>
+                        <label className={styles.label}>Scale</label>
+                        <input
+                            aria-label='preview scale input'
+                            type='number'
+                            step={0.01}
+                            min={0.01}
+                            onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
+                            value={isNaN(this.state.scale) ? '' : this.state.scale}
+                            className={styles.scaleInput} />
+                    </div>
+                    <div>
+                        <label className={styles.label}>Background</label>
+                        <input
+                            aria-label='preview color input'
+                            type='color'
+                            className={styles.colorInput}
+                            defaultValue='#ffffff'
+                            onChange={event => this.handleBgColorChange(event.target.value)} />
+                    </div>
                 </div>
             </div>
             <div
