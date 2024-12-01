@@ -4,14 +4,20 @@ import Popup from '../popup/Popup'
 import Authors from '../authors/Authors'
 import ExternalLink from '../misc/externalLink/ExternalLink'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface AboutPopupState {
     active: boolean
     version: string
 }
 
-class AboutPopup extends Component<{}, AboutPopupState> {
+interface AboutPopupProps {
+}
+
+interface IpcEvent {
+}
+
+class AboutPopup extends Component<AboutPopupProps, AboutPopupState> {
     constructor(props: {}) {
         super(props)
         this.state = {
@@ -21,7 +27,7 @@ class AboutPopup extends Component<{}, AboutPopupState> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('about-popup', (_event: any, version: string) => {
+        ipcRenderer?.on('about-popup', (_event: IpcEvent, version: string) => {
             this.setState({
                 active: true,
                 version: version

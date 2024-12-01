@@ -4,7 +4,7 @@ import Popup from '../popup/Popup'
 import styles from './updater.module.scss'
 import ExternalLink from '../misc/externalLink/ExternalLink'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface UpdaterState {
     newVersionName?: string
@@ -16,6 +16,9 @@ interface UpdaterState {
 interface UpdaterProps {
 }
 
+interface IpcEvent {
+}
+
 export class Updater extends Component<UpdaterProps, UpdaterState> {
 
     constructor(props: UpdaterProps) {
@@ -25,7 +28,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
     }
 
     componentDidMount() {
-        ipcRenderer?.on('version', (_event: any, data: { version: string, platform: string }) => this.versionListener(_event, data))
+        ipcRenderer?.on('version', (_event: IpcEvent, data: { version: string, platform: string }) => this.versionListener(_event, data))
         ipcRenderer?.send('request-version')
     }
 
@@ -33,7 +36,7 @@ export class Updater extends Component<UpdaterProps, UpdaterState> {
         ipcRenderer?.removeListener('version', this.versionListener)
     }
 
-    async versionListener(_event: any, data: { version: string, platform: string }) {
+    async versionListener(_event: IpcEvent, data: { version: string, platform: string }) {
         let channel = null
 
         if (data.platform === 'linux') {

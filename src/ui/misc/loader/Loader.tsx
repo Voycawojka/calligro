@@ -6,7 +6,10 @@ interface LoaderState {
     isLoaderOn: boolean
 }
 
-class Loader extends Component<{}, LoaderState> {
+interface LoaderProps {
+}
+
+class Loader extends Component<LoaderProps, LoaderState> {
     private timer?: NodeJS.Timeout
 
     constructor(props: {}) {

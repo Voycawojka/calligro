@@ -157,7 +157,7 @@ class Step2KerningPairsList extends Component<Step2KerningPairsListProps, Step2K
 
                 <input
                     aria-label='distance input'
-                    className={`${styles.input} ${!!pair.amount ? '' : styles.inputInvalid}`}
+                    className={`${styles.input} ${pair.amount ? '' : styles.inputInvalid}`}
                     value={pair.amount ?? ''}
                     onChange={(event) => this.changeAmount(event, index)}
                     type='number'

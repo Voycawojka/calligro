@@ -1,13 +1,19 @@
 import { Component } from 'react'
 import { Redirect } from 'react-router'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface IpcNavigationState {
     url: string
 }
 
-export class IpcNavigation extends Component<{}, IpcNavigationState> {
+interface IpcNavigationProps {
+}
+
+interface IpcEvent {
+}
+
+export class IpcNavigation extends Component<IpcNavigationProps, IpcNavigationState> {
 
     constructor(props: {}) {
         super(props)
@@ -20,15 +26,13 @@ export class IpcNavigation extends Component<{}, IpcNavigationState> {
     componentDidMount() {
         this.navigationListener = this.navigationListener.bind(this)
         ipcRenderer?.on('navigation', this.navigationListener)
-
-        console.log(window.require('electron'))
     }
 
     componentWillUnmount() {
         ipcRenderer?.removeListener('navigation', this.navigationListener)
     }
 
-    navigationListener(_event: any, arg: string) {
+    navigationListener(_event: IpcEvent, arg: string) {
         this.setState({ url: arg })
     }
 

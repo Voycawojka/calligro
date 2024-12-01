@@ -13,7 +13,7 @@ import FontPreview from '../fontPreview/FontPreview'
 import { CodePayload } from '../../../generation/template/types'
 import Head from '../../Head/Head'
 
-const ipcRenderer = !!window.require ? window.require('electron').ipcRenderer : null
+const ipcRenderer = window.require ? window.require('electron').ipcRenderer : null
 
 interface Step2State {
     horizontalMargin: NumInputValue
@@ -28,7 +28,10 @@ interface Step2State {
     templateCodeError?: string
 }
 
-class Step2 extends Component<{}, Step2State> {
+interface Step2Props {
+}
+
+class Step2 extends Component<Step2Props, Step2State> {
     constructor(props: {}) {
         super(props)
 

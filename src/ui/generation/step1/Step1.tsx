@@ -29,7 +29,13 @@ interface Step1State {
     loadedSystemFonts: boolean
 }
 
-class Step1 extends Component<{}, Step1State> {
+interface Step1Props {
+}
+
+interface IpcEvent {
+}
+
+class Step1 extends Component<Step1Props, Step1State> {
     private unicodeRanges: UnicodeRange[]
     private systemFonts: string[]
 
@@ -84,7 +90,7 @@ class Step1 extends Component<{}, Step1State> {
         ipcRenderer?.removeListener('load-template', this.loadTemplateListener)
     }
 
-    loadTemplateListener(_event: any, templateCode: string) {
+    loadTemplateListener(_event: IpcEvent, templateCode: string) {
         const code = parseTemplateCode(templateCode)
 
         if (code) {
