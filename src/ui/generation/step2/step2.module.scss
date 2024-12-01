@@ -7,21 +7,22 @@
 .container {
     background-color: $secondary-color;
     padding: $header-height 3% 0;
-    min-height: 100vh;
     box-sizing: border-box;
-    display: grid;
-    grid-template-columns: 46% 48%;
-    column-gap: 6%;
-
-    @include vertical-device-or-mini-device {
-        grid-template-columns: 100%;
-        grid-template-rows: min-content min-content;
-    }
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
 
     &.desktop {
         padding: 3%;
-        min-height: 100vh;
     }
+}
+
+.toolbar {
+    max-width: 1000px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .instructionList {
@@ -42,9 +43,10 @@
 }
 
 .dropzones {
-    margin-top: 54px;
-    width: 100%;
+    margin: 54px;
+    margin-left: 0;
     min-height: 185px;
+    max-height: 200px;
     display: grid;
     grid-template-columns: 49% 49%;
     column-gap: 2%;
@@ -151,6 +153,7 @@
 
 .previewContainer {
     margin-top: 65px;
+    justify-self: center;
 
     &.desktop {
         margin-top: 11px;

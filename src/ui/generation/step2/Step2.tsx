@@ -174,7 +174,7 @@ class Step2 extends Component<{}, Step2State> {
         return(
             <div className={`${styles.container} ${isElectron() ? styles.desktop : ''}`}>
                 <Head title={'Font Generation | Calligro'}/>
-                <div>
+                <div className={styles.toolbar}>
                     <div className={`${styles.dropzones} ${isElectron() ? styles.desktop : ''}`}>
                         <Dropzone
                             inputName='image'
@@ -233,49 +233,47 @@ class Step2 extends Component<{}, Step2State> {
                             changeKernings={kernings => this.changeKernings(kernings)}
                             handleKerningsValidity={valid => this.handleKerningsValidity(valid)}
                         />
+                    </div>
 
-                        <div className={styles.download}>
-                            <label className={styles.buttonsContainerLabel}>
-                                {`${isElectron() ? 'save' : 'download'} font`}
-                            </label>
+                    <div className={styles.download}>
+                        <label className={styles.buttonsContainerLabel}>
+                            {`${isElectron() ? 'save' : 'download'} font`}
+                        </label>
 
-                            <div className={styles.buttons}>
-                                <div>
-                                    <button onClick={() => this.downloadFont('txt')} className={styles.formButton} disabled={!this.areDropzonesValid()} >txt format</button>
-                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, LÖVE, Heaps.io and possibly others.'/>
-                                </div>
-
-                                <div>
-                                    <button onClick={() => this.downloadFont('xml')} className={styles.formButton} disabled={!this.areDropzonesValid()} >xml format</button>
-                                    <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser, HaxeFlixel and possibly others.'/>
-                                </div>
+                        <div className={styles.buttons}>
+                            <div>
+                                <button onClick={() => this.downloadFont('txt')} className={styles.formButton} disabled={!this.areDropzonesValid()} >txt format</button>
+                                <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Godot, LibGDX, LÖVE, Heaps.io and possibly others.'/>
                             </div>
-                            
-                            <p className={styles.samplesParagraph}>
-                                Check
-                                <a
-                                    href='https://github.com/Voycawojka/calligro/tree/main/samples'
-                                    className={styles.samplesLink}
-                                    target='_blank'
-                                    rel='noreferrer'
-                                >
-                                    our samples
-                                </a>
-                                to see how to use it
-                            </p>
+
+                            <div>
+                                <button onClick={() => this.downloadFont('xml')} className={styles.formButton} disabled={!this.areDropzonesValid()} >xml format</button>
+                                <Fa icon='fas fa-question' className={styles.questionMark} title='Supported by Phaser, HaxeFlixel and possibly others.'/>
+                            </div>
                         </div>
+                        
+                        <p className={styles.samplesParagraph}>
+                            Check
+                            <a
+                                href='https://github.com/Voycawojka/calligro/tree/main/samples'
+                                className={styles.samplesLink}
+                                target='_blank'
+                                rel='noreferrer'
+                            >
+                                our samples
+                            </a>
+                            to see how to use it
+                        </p>
                     </div>
                 </div>
 
-                <div>
-                    <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
-                        <FontPreview
-                            width={400}
-                            height={250}
-                            templateCode={this.state.templateCode}
-                            templateImg={this.state.template}
-                            fontConfig={this.getFontConfig()} />
-                    </div>
+                <div className={`${styles.previewContainer} ${isElectron() ? styles.desktop : ''}`}>
+                    <FontPreview
+                        width={400}
+                        height={250}
+                        templateCode={this.state.templateCode}
+                        templateImg={this.state.template}
+                        fontConfig={this.getFontConfig()} />
                 </div>
             </div>
         )

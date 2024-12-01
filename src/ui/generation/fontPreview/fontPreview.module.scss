@@ -5,7 +5,8 @@
     
     display: block;
     border: 2px solid black;
-    max-width: 100%;
+    width: 100%;
+    max-width: 420px;
     background-color: var(--bgColor);
 
     canvas {
@@ -15,7 +16,7 @@
 
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-evenly;
     margin-bottom: 50px;
@@ -23,8 +24,7 @@
 
 .controls {
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    flex-direction: row;
     gap: 10px;
     max-height: 100%;
     margin-right: 10px;

@@ -5,7 +5,7 @@
 
 .container {
     background-color: $secondary-color;
-    padding: $header-height 3% 0;
+    padding: calc($header-height + 2rem) 2rem 0;
     display: grid;
     grid-template-columns: 48% 48%;
     column-gap: 4%;
@@ -18,7 +18,7 @@
     }
 
     &.desktop {
-        padding: 10% 3%;
+        padding: 2rem;
         min-height: 100vh;
     }
 }

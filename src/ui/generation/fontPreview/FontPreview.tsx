@@ -64,24 +64,26 @@ class FontPreview extends Component<FontPreviewProps, FontPreviewState> {
                     className={styles.previewInput}
                     placeholder='Type to preview the font' />
                 <div>
-                    <label className={styles.label}>Scale</label>
-                    <input
-                        aria-label='preview scale input'
-                        type='number'
-                        step={0.01}
-                        min={0.01}
-                        onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
-                        value={isNaN(this.state.scale) ? '' : this.state.scale}
-                        className={styles.scaleInput} />
-                </div>
-                <div>
-                    <label className={styles.label}>Background</label>
-                    <input
-                        aria-label='preview color input'
-                        type='color'
-                        className={styles.colorInput}
-                        defaultValue='#ffffff'
-                        onChange={event => this.handleBgColorChange(event.target.value)} />
+                    <div>
+                        <label className={styles.label}>Scale</label>
+                        <input
+                            aria-label='preview scale input'
+                            type='number'
+                            step={0.01}
+                            min={0.01}
+                            onChange={event => this.setState({ scale: parseFloat(event.target.value) })}
+                            value={isNaN(this.state.scale) ? '' : this.state.scale}
+                            className={styles.scaleInput} />
+                    </div>
+                    <div>
+                        <label className={styles.label}>Background</label>
+                        <input
+                            aria-label='preview color input'
+                            type='color'
+                            className={styles.colorInput}
+                            defaultValue='#ffffff'
+                            onChange={event => this.handleBgColorChange(event.target.value)} />
+                    </div>
                 </div>
             </div>
             <div
