@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FontConfig, generateFont, KerningPair } from '../../../generation/font/Font'
+import { FontConfig, generateFont, KerningPair } from '../../../generation/font/font'
 import { fontSpecToTextFile } from '../../../generation/font/specSaver'
 import { downloadBmf } from '../../../generation/font/download'
 import styles from './step2.module.scss'

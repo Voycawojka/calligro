@@ -30,6 +30,8 @@ function getKerningAmount(text: string, charIndex: number, spec: FontSpec): numb
 }
 
 export async function drawPreview(text:string, spec: FontSpec, pages: Blob[], scale: number, ctx: CanvasRenderingContext2D): Promise<void> {
+    ctx.imageSmoothingEnabled = false // TODO toggle'able option?
+    
     const textures = await blobsToTextures(pages)
     const cursor = {
         x: spec.info.padding.left,

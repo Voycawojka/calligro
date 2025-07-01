@@ -7,3 +7,13 @@ export function getUnicodeRanges(): UnicodeRange[] {
 
     return unicodeRanges
 }
+
+export function getUnicodeRangeChars(unicodeRange: UnicodeRange): string {
+    let charSet = ""
+
+    for (let i = unicodeRange.range[0]; i < unicodeRange.range[1]; i++) {
+        charSet += String.fromCharCode(i)
+    }
+
+    return charSet
+}

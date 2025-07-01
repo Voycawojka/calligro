@@ -1,8 +1,8 @@
+import { ProjectData } from '../../filesystem/projectstore'
 import { convertToBlob } from '../../utils/canvasHelpers'
 import { blobToCanvas } from '../fs/image'
 import { packFromSheet, SourceRect } from '../packing/imagePacking'
-import Template from '../template/Template'
-import { CodePayload } from '../template/types'
+import { generateTemplateImage, getSlotPosition, TemplateData } from '../template/template'
 
 export interface FontSpec {
     info: {
@@ -52,32 +52,23 @@ export interface FontSpec {
     }[]
 }
 
-export interface KerningPair {
-    first: number
-    second: number
-    amount: number
-}
+export async function generateFont(templateData: TemplateData, templateImage: Blob): Promise<[FontSpec, Blob[]]> {
+    const [canvas] = await blobToCanvas(templateImage)
 
-export interface FontConfig {
-    horizontalSpacing: number
-    verticalSpacing: number
-    lineHeight: number
-    kernings: KerningPair[]
-}
+    const sourceRects: SourceRect[] = []
+    for (let i = 0; i < templateData.project.characterSet.length; i++) {
+        // TODO take into consideration size overrides
+        const slotWidth = templateData.project.defaultCharacterWidth
+        const slotHeight = templateData.project.defaultCharacterHeight
 
-export async function generateFont(templateImg: Blob, tempConfig: CodePayload, fontConfig: FontConfig): Promise<[FontSpec, Blob[]]> {
-    const slots = tempConfig.slots.map(([ unicode, width, height ]) => ({ character: String.fromCharCode(unicode), width, height }))
-    const template = new Template(slots, tempConfig.base, tempConfig.presetName, null)
-
-    const [canvas] = await blobToCanvas(templateImg)
-
-    const sourceRects: SourceRect[] = slots.map((slot, index) => ({
-        slot,
-        x: template.getSlotPosition(index + 1).x + template.enclosingDim.w / 2 - (slot.width - 2) / 2,
-        y: template.getSlotPosition(index + 1).y + template.enclosingDim.h / 2 - (slot.height - 2) / 2,
-        w: slot.width - 2,
-        h: slot.height - 2
-    }))
+        sourceRects.push({
+            character: templateData.project.characterSet.charCodeAt(i),
+            x: getSlotPosition(i + 1, templateData).x + Math.floor(templateData.slotOuterWidth / 2) - Math.floor((slotWidth - 2) / 2),
+            y: getSlotPosition(i + 1, templateData).y + Math.floor(templateData.slotOuterHeight / 2) - Math.floor((slotHeight - 2) / 2),
+            w: slotWidth - 2,
+            h: slotHeight - 2
+        })
+    }
 
     const [packedTexture, packedRects] = packFromSheet(canvas, sourceRects)
     const packedBlob = await convertToBlob(packedTexture)
@@ -92,20 +83,20 @@ export async function generateFont(templateImg: Blob, tempConfig: CodePayload, f
                 up: 0,
                 right: 0,
                 down: 0,
-                left: 0
+                left: 0,
             },
             spacing: {
-                horizontal: fontConfig.horizontalSpacing,
-                vertical: fontConfig.verticalSpacing
+                horizontal: templateData.project.horizontalSpacing,
+                vertical: templateData.project.verticalSpacing,
             },
-            outline: 0
+            outline: 0,
         },
         common: {
-            lineHeight: fontConfig.lineHeight,
-            base: tempConfig.base,
+            lineHeight: templateData.project.lineHeight,
+            base: templateData.project.characterBase,
             scaleW: canvas.width,
             scaleH: canvas.height,
-            pages: 1
+            pages: 1,
         },
         pages: [
             {
@@ -114,7 +105,7 @@ export async function generateFont(templateImg: Blob, tempConfig: CodePayload, f
             }
         ],
         chars: packedRects.map(rect => ({
-            id: rect.sourceRect.slot.character.charCodeAt(0),
+            id: rect.sourceRect.character,
             x: rect.x,
             y: rect.y,
             width: rect.sourceRect.w,
@@ -123,9 +114,9 @@ export async function generateFont(templateImg: Blob, tempConfig: CodePayload, f
             yoffset: 0,
             xadvance: rect.sourceRect.w,
             page: 0,
-            chnl: 15
+            chnl: 15,
         })),
-        kernings: fontConfig.kernings
+        kernings: templateData.project.kernings,
     }
 
     return [specification, [packedBlob]]

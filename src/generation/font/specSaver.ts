@@ -1,5 +1,5 @@
 import { isElectron } from "../../electron/electronInterop";
-import { FontSpec } from "./Font";
+import { FontSpec } from "./font";
 
 type tagProp = [string, string | number]
 

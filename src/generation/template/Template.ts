@@ -1,7 +1,6 @@
 import { convertToBlob, createCanvas } from '../../utils/canvasHelpers'
-import { CodePayload, Slot } from './types'
-import { drawLogo, drawSlot } from './slotDrawing'
-import { isElectron } from '../../electron/electronInterop'
+import { drawSlot } from './slotDrawing'
+import { ProjectData } from '../../filesystem/projectstore'
 
 export interface FontOptions {
     name: string
@@ -9,127 +8,109 @@ export interface FontOptions {
     outlineColor: string
 }
 
-export interface EnclosingSpaceDimensions {
-    w: number
-    h: number
-    hMargin: number
+export interface TemplateData {
+    totalWidth: number,
+    totalHeight: number,
+    horizontalSlots: number,
+    verticalSlots: number,
+    slotOuterWidth: number,
+    slotOuterHeight: number,
+    slotHorizontalMargin: number,
+    project: ProjectData,
 }
 
-export default class Template {
-    private readonly canvas: HTMLCanvasElement
-    private readonly ctx: CanvasRenderingContext2D
-
-    private cachedBlob: Blob | null = null
-    private cachedCode: string | null = null
-
-    public readonly w: number
-    public readonly h: number
-    public readonly enclosingDim: EnclosingSpaceDimensions
-
-    constructor(
-        private readonly slots: Slot[],
-        private readonly base: number,
-        private readonly presetName: string,
-        private readonly fontOptions: FontOptions | null
-    ) {
-        this.w = Math.ceil(Math.sqrt(this.slots.length + 1))
-        this.h = Math.ceil(Math.sqrt(this.slots.length + 1))
-        this.enclosingDim = this.calcEnclosingDim(this.slots)
-
-        ;[this.canvas, this.ctx] = createCanvas(this.w * this.enclosingDim.w, this.h * this.enclosingDim.h, '#202020')
+export function getSlotPosition(index: number, templateData: TemplateData): { x: number, y: number } {
+    return {
+        x: (index % templateData.horizontalSlots) * templateData.slotOuterWidth,
+        y: Math.floor(index / templateData.verticalSlots) * templateData.slotOuterHeight,
     }
+}
 
-    private calcEnclosingDim(slots: Slot[]): EnclosingSpaceDimensions {
-        const maxW = Math.max.apply(null, slots.map(slot => slot.width))
-        const maxH = Math.max.apply(null, slots.map(slot => slot.height))
-
-        const slotW = Math.round(maxW * 1.3)
-        const slotH = Math.max(Math.round(maxH * 1.3), 30)
-        const vertMargin = Math.ceil((slotH - maxH) / 2)
-
-        return { w: slotW, h: slotH, hMargin: vertMargin }
-    }
-
-    public getSlotPosition(index: number): { x: number, y: number } {
-        return {
-            x: (index % this.w) * this.enclosingDim.w,
-            y: Math.floor(index / this.w) * this.enclosingDim.h
-        }
-    }
-
-    public async generateImageBlob(): Promise<Blob> {
-        if (!this.cachedBlob) {
-            if (!isElectron()) {
-                // hotfix (it should work with electron too)
-                await drawLogo(this.ctx, 0, 0, this.enclosingDim.w, this.enclosingDim.h)
-            }
-        
-            this.slots.forEach((slot, index) => {
-                const { x, y } = this.getSlotPosition(index + 1)
-
-                drawSlot(this.ctx, slot, {
-                    enclosingSpaceX: x,
-                    enclosingSpaceY: y,
-                    enclosingSpaceW: this.enclosingDim.w,
-                    enclosingSpaceH: this.enclosingDim.h,
-                    base: this.base,
-                    vertMargin: this.enclosingDim.hMargin,
-                    font: this.fontOptions
-                })
-            })
-
-            this.cachedBlob = await convertToBlob(this.canvas)
-        }
-
-        return this.cachedBlob
-    }
+async function drawTemplate(ctx: CanvasRenderingContext2D, templateData: TemplateData) {
+    ctx.imageSmoothingEnabled = false
     
-    public generateTemplateCode(): string {
-        if (!this.cachedCode) {
-            const payload: CodePayload = {
-                version: 2,
-                slots: this.slots.map(slot => ([slot.character.charCodeAt(0), slot.width, slot.height])),
-                base: this.base,
-                presetName: this.presetName
-            }
+    for (let i = 0; i < templateData.project.characterSet.length; i++) {
+        const { x, y } = getSlotPosition(i + 1, templateData)
 
-            this.cachedCode = btoa(unescape(encodeURIComponent(JSON.stringify(payload))))
+        // TODO take size overrides into account
+        const slot = {
+            character: templateData.project.characterSet[i],
+            width: templateData.project.defaultCharacterWidth,
+            height: templateData.project.defaultCharacterHeight
         }
-
-        return this.cachedCode
-    }
-
-    public get readmeContent(): string {
-        return `
-        1) Open template.png in a graphics editor of your choice.
-        2) Draw characters inside the yellow boundaries. Horizontal lines between them determine the letter base.
-        2) Upload template.png and template.calligro back to Calligro (step 2: font)
-        3) Generate your font
-
-        More info at https://calligro.ideasalmanac.com
-        `.trim()
-    }
-
-    public async copyOnto(ctx: CanvasRenderingContext2D): Promise<void> {
-        await this.generateImageBlob()
-
-        const aspectRatio = this.canvas.width / this.canvas.height;
-        const canvasAspectRatio = ctx.canvas.width / ctx.canvas.height;
-
-        let drawWidth, drawHeight, offsetX, offsetY;
-
-        if (aspectRatio > canvasAspectRatio) {
-            drawWidth = ctx.canvas.width;
-            drawHeight = ctx.canvas.width / aspectRatio;
-            offsetX = 0;
-            offsetY = (ctx.canvas.height - drawHeight) / 2;
-        } else {
-            drawWidth = ctx.canvas.height * aspectRatio;
-            drawHeight = ctx.canvas.height;
-            offsetX = (ctx.canvas.width - drawWidth) / 2;
-            offsetY = 0;
-        }
-
-        ctx.drawImage(this.canvas, 0, 0, this.canvas.width, this.canvas.height, offsetX, offsetY, drawWidth, drawHeight);
+        
+        drawSlot(ctx, slot, {
+            enclosingSpaceX: x,
+            enclosingSpaceY: y,
+            enclosingSpaceW: templateData.slotOuterWidth,
+            enclosingSpaceH: templateData.slotOuterHeight,
+            base: templateData.project.characterBase,
+            vertMargin: templateData.slotHorizontalMargin,
+            // TODO actual options
+            font: templateData.project.prefill !== null ? {
+                name: templateData.project.prefill,
+                fillColor: "#110000",
+                outlineColor: "#001100",
+            } : null
+        })
     }
 }
+
+export function calculateTemplateData(project: ProjectData): TemplateData {
+    const horizontalSlots = Math.ceil(Math.sqrt(project.characterSet.length + 1))
+    const verticalSlots = Math.ceil(Math.sqrt(project.characterSet.length + 1))
+
+    // const maxW = Math.max.apply(null, slots.map(slot => slot.width))
+    // const maxH = Math.max.apply(null, slots.map(slot => slot.height))
+    // TODO take dimension overrides into account
+    const maxCharacterWidth = project.defaultCharacterWidth
+    const maxCharacterHeight = project.defaultCharacterHeight
+
+    const slotOuterWidth = Math.round(maxCharacterWidth * 1.3)
+    const slotOuterHeight = Math.max(Math.round(maxCharacterHeight * 1.3), 30)
+    const slotHorizontalMargin = Math.ceil((slotOuterHeight - maxCharacterHeight) / 2)
+
+    const totalWidth = horizontalSlots * slotOuterWidth
+    const totalHeight = verticalSlots * slotOuterHeight
+
+    return {
+        totalWidth,
+        totalHeight,
+        horizontalSlots,
+        verticalSlots,
+        slotOuterWidth,
+        slotOuterHeight,
+        slotHorizontalMargin,
+        project,
+    }
+}
+
+export async function generateTemplateImage(templateData: TemplateData) {
+    const [canvas, ctx] = createCanvas(templateData.totalWidth, templateData.totalHeight, "white")
+
+    await drawTemplate(ctx, templateData)
+    return await convertToBlob(canvas)
+}
+
+// export async function copyOnto(ctx: CanvasRenderingContext2D): Promise<void> {
+//     await this.generateImageBlob()
+
+//     const aspectRatio = this.canvas.width / this.canvas.height;
+//     const canvasAspectRatio = ctx.canvas.width / ctx.canvas.height;
+
+//     let drawWidth, drawHeight, offsetX, offsetY;
+
+//     if (aspectRatio > canvasAspectRatio) {
+//         drawWidth = ctx.canvas.width;
+//         drawHeight = ctx.canvas.width / aspectRatio;
+//         offsetX = 0;
+//         offsetY = (ctx.canvas.height - drawHeight) / 2;
+//     } else {
+//         drawWidth = ctx.canvas.height * aspectRatio;
+//         drawHeight = ctx.canvas.height;
+//         offsetX = (ctx.canvas.width - drawWidth) / 2;
+//         offsetY = 0;
+//     }
+
+//     ctx.drawImage(this.canvas, 0, 0, this.canvas.width, this.canvas.height, offsetX, offsetY, drawWidth, drawHeight);
+// }

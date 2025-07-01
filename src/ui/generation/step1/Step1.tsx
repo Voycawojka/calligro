@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import Step1CharacterList from '../step1CharacterList/Step1CharacterList'
 import { WorkSlot, Slot } from '../../../generation/template/types'
-import Template, { FontOptions } from '../../../generation/template/Template'
+import Template, { FontOptions } from '../../../generation/template/template'
 import { downloadTemplate } from '../../../generation/template/download'
 import styles from './step1.module.scss'
 import Fa from '../../misc//fa/Fa'

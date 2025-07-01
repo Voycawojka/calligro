@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, shell } = require('electron')
 const path = require('path')
 const url = require('url')
 const { setupIpcListeners } = require('./listeners')
@@ -25,6 +25,11 @@ async function createWindow() {
             pathname: path.join(__dirname, 'app/webapp.html'),
             slashes: true
         })
+
+    window.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url)
+        return { action: 'deny' }
+    })
 
     setupMenu(app, window)
     window.loadURL(appUrl)

@@ -1,5 +1,5 @@
 import { downloadArchive, ZippedFile } from '../fs/zip'
-import Template from './Template'
+import Template from './template'
 
 export async function downloadTemplate(template: Template): Promise<void> {
     const files: ZippedFile[] = [

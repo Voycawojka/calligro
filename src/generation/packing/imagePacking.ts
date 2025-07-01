@@ -1,12 +1,11 @@
 import { createCanvas } from '../../utils/canvasHelpers'
-import { Slot } from '../template/types'
 
 export interface SourceRect {
+    character: number,
     x: number,
     y: number,
     w: number,
     h: number,
-    slot: Slot
 }
 
 export interface PackedRect {
