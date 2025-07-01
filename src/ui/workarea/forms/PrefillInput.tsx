@@ -1,5 +1,5 @@
 import { OverlayToaster, MenuItem, Button, ControlGroup, Tooltip, FormGroup, Callout } from "@blueprintjs/core"
-import { ItemRenderer, ItemPredicate, Select } from "@blueprintjs/select"
+import { ItemRenderer, ItemPredicate, Select, Classes } from "@blueprintjs/select"
 import { useState, useEffect, useContext } from "react"
 import { findSystemFonts } from "../../../generation/template/fontsDetection"
 import { ProjectData } from "../../../filesystem/projectstore"

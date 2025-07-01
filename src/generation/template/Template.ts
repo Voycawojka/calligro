@@ -81,7 +81,7 @@ export function calculateTemplateData(project: ProjectData): TemplateData {
         slotOuterWidth,
         slotOuterHeight,
         slotHorizontalMargin,
-        project,
+        project: {...project},
     }
 }
 

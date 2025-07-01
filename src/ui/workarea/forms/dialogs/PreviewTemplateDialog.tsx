@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogBody, DialogFooter } from "@blueprintjs/core"
 import { useEffect, useState } from "react"
-import { ProjectData } from "../../../filesystem/projectstore"
-import { calculateTemplateData, generateTemplateImage } from "../../../generation/template/template"
+import { ProjectData } from "../../../../filesystem/projectstore"
+import { calculateTemplateData, generateTemplateImage } from "../../../../generation/template/template"
 
 export interface Props {
     project: ProjectData

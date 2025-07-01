@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ProjectData } from "../../../filesystem/projectstore";
 import { Button, FormGroup } from "@blueprintjs/core";
-import PreviewTemplateDialog from "./PreviewTemplateDialog";
+import PreviewTemplateDialog from "./dialogs/PreviewTemplateDialog";
 
 export interface Props {
     project: ProjectData,

@@ -1,8 +1,8 @@
-import { Button, ButtonGroup, Callout, Dialog, DialogBody, DialogFooter, Icon, MenuItem, SegmentedControl, Switch, TextArea, Tooltip } from "@blueprintjs/core"
+import { Button, ButtonGroup, Callout, Dialog, DialogBody, DialogFooter, Icon, MenuItem, TextArea, Tooltip } from "@blueprintjs/core"
 import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select"
 import { ChangeEvent, useEffect, useState } from "react"
 import { UnicodeRange } from "unicode-range-json"
-import { getUnicodeRangeChars, getUnicodeRanges } from "../../../utils/unicodeRanges"
+import { getUnicodeRangeChars, getUnicodeRanges } from "../../../../utils/unicodeRanges"
 
 export interface Props {
     isOpen: boolean

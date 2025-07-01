@@ -1,6 +1,6 @@
 import { Button, FormGroup } from "@blueprintjs/core"
 import { useContext, useEffect, useState } from "react"
-import CharacterSetDialog from "./CharacterSetDialog"
+import CharacterSetDialog from "./dialogs/CharacterSetDialog"
 import { ProjectData } from "../../../filesystem/projectstore"
 import { ProjectLoadContext } from "../../ProjectContext"
 

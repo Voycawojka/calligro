@@ -1,11 +1,12 @@
 import Toolbar from './ui/toolbar/Toolbar'
 import WorkAreaContainer from './ui/workarea/WorkAreaContainer'
 import ProjectContextRoot from './ui/ProjectContext'
+import { BlueprintProvider } from '@blueprintjs/core'
 
 import "normalize.css/normalize.css"
 import "@blueprintjs/core/lib/css/blueprint.css"
 import "@blueprintjs/icons/lib/css/blueprint-icons.css"
-import { BlueprintProvider } from '@blueprintjs/core'
+import "@blueprintjs/select/lib/css/blueprint-select.css"
 
 // const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
 

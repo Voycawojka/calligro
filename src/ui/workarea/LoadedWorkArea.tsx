@@ -1,4 +1,4 @@
-import { Card, Classes, Divider, H4, Tab, Tabs } from "@blueprintjs/core"
+import { Divider, H4 } from "@blueprintjs/core"
 import { ProjectData } from "../../filesystem/projectstore"
 
 import styles from "./workarea.module.scss"
@@ -8,6 +8,7 @@ import SizeInput from "./forms/SizeInput"
 import FontPreview from "./canvas/FontPreview"
 import PreviewTemplateButton from "./forms/PreviewTemplateButton"
 import FontMarginsInput from "./forms/FontMarginsInput"
+import KerningPairsInput from "./forms/KerningPairsInput"
 
 export interface Props {
     project: ProjectData
@@ -27,6 +28,7 @@ export default function LoadedWorkArea({ project }: Props) {
             <div className={`${styles.formcontainer}`}>
                     <H4>Font Settings</H4>
                     <FontMarginsInput project={project} />
+                    <KerningPairsInput project={project} />
             </div>
             <Divider />
             <div className={`${styles.canvascontainer}`}>
