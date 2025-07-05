@@ -30,10 +30,13 @@ export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: Dra
 
         ctx.fillStyle = options.font.fillColor
         ctx.strokeStyle = options.font.outlineColor
+        ctx.lineWidth = options.font.outline
         ctx.font = `${0.9 * base}px ${options.font.name}`
         ctx.textAlign = 'center'
         ctx.textBaseline = 'alphabetic'
         ctx.fillText(slot.character, enclosingSpaceX + Math.floor(enclosingSpaceW / 2), absSlotY + base, enclosingSpaceW)
-        ctx.strokeText(slot.character, enclosingSpaceX + Math.floor(enclosingSpaceW / 2), absSlotY + base, enclosingSpaceW)
+        if (options.font.outline > 0) {
+            ctx.strokeText(slot.character, enclosingSpaceX + Math.floor(enclosingSpaceW / 2), absSlotY + base, enclosingSpaceW)
+        }
     }
 }

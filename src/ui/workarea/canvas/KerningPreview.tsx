@@ -25,7 +25,7 @@ export default function KerningPreview({ project, kerning }: Props) {
 
     useEffect(() => {
         const generate = async () => {
-            const templateData = calculateTemplateData(project)
+            const templateData = calculateTemplateData(project, "current or imported")
             templateData.project.kernings = [kerning]
             const templateImage = await generateTemplateImage(templateData)
             const font = await generateFont(templateData, templateImage)

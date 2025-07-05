@@ -5,18 +5,22 @@ import { ProjectData } from '../../filesystem/projectstore'
 export interface FontOptions {
     name: string
     fillColor: string
+    outline: number
     outlineColor: string
 }
 
+export type TemplateMode = "force current" | "current or imported"
+
 export interface TemplateData {
-    totalWidth: number,
-    totalHeight: number,
-    horizontalSlots: number,
-    verticalSlots: number,
-    slotOuterWidth: number,
-    slotOuterHeight: number,
-    slotHorizontalMargin: number,
-    project: ProjectData,
+    totalWidth: number
+    totalHeight: number
+    horizontalSlots: number
+    verticalSlots: number
+    slotOuterWidth: number
+    slotOuterHeight: number
+    slotHorizontalMargin: number
+    project: ProjectData
+    mode: TemplateMode
 }
 
 export function getSlotPosition(index: number, templateData: TemplateData): { x: number, y: number } {
@@ -49,22 +53,28 @@ async function drawTemplate(ctx: CanvasRenderingContext2D, templateData: Templat
             // TODO actual options
             font: templateData.project.prefill !== null ? {
                 name: templateData.project.prefill,
-                fillColor: "#110000",
-                outlineColor: "#001100",
+                fillColor: templateData.project.prefillColor,
+                outline: templateData.project.prefillOutline,
+                outlineColor: templateData.project.prefillOutlineColor,
             } : null
         })
     }
 }
 
-export function calculateTemplateData(project: ProjectData): TemplateData {
-    const horizontalSlots = Math.ceil(Math.sqrt(project.characterSet.length + 1))
-    const verticalSlots = Math.ceil(Math.sqrt(project.characterSet.length + 1))
+export function calculateTemplateData(project: ProjectData, mode: TemplateMode): TemplateData {
+    let settings = project.lastExportSnapshot ?? project
+    if (mode === "force current") {
+        settings = project
+    }
+    
+    const horizontalSlots = Math.ceil(Math.sqrt(settings.characterSet.length + 1))
+    const verticalSlots = Math.ceil(Math.sqrt(settings.characterSet.length + 1))
 
     // const maxW = Math.max.apply(null, slots.map(slot => slot.width))
     // const maxH = Math.max.apply(null, slots.map(slot => slot.height))
     // TODO take dimension overrides into account
-    const maxCharacterWidth = project.defaultCharacterWidth
-    const maxCharacterHeight = project.defaultCharacterHeight
+    const maxCharacterWidth = settings.defaultCharacterWidth
+    const maxCharacterHeight = settings.defaultCharacterHeight
 
     const slotOuterWidth = Math.round(maxCharacterWidth * 1.3)
     const slotOuterHeight = Math.max(Math.round(maxCharacterHeight * 1.3), 30)
@@ -81,11 +91,22 @@ export function calculateTemplateData(project: ProjectData): TemplateData {
         slotOuterWidth,
         slotOuterHeight,
         slotHorizontalMargin,
-        project: {...project},
+        project: {
+            ...project,
+            defaultCharacterWidth: settings.defaultCharacterWidth,
+            defaultCharacterHeight: settings.defaultCharacterHeight,
+            characterBase: settings.characterBase,
+            characterSet: settings.characterSet,
+        },
+        mode,
     }
 }
 
 export async function generateTemplateImage(templateData: TemplateData) {
+    if (templateData.mode === "current or imported" && templateData.project.importedTemplate) {
+        return templateData.project.importedTemplate.image
+    }
+
     const [canvas, ctx] = createCanvas(templateData.totalWidth, templateData.totalHeight, "white")
 
     await drawTemplate(ctx, templateData)

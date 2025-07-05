@@ -12,10 +12,26 @@ export interface ProjectData {
     characterBase: number
     characterSet: string
     prefill: string | null
+    prefillColor: string
+    prefillOutline: number
+    prefillOutlineColor: string
     horizontalSpacing: number
     verticalSpacing: number
     lineHeight: number
     kernings: KerningPair[]
+    lastExportSnapshot: null | {
+        defaultCharacterWidth: number
+        defaultCharacterHeight: number
+        characterBase: number
+        characterSet: string
+    }
+    importedTemplate: null | {
+        defaultCharacterWidth: number
+        defaultCharacterHeight: number
+        characterBase: number
+        characterSet: string
+        image: Blob
+    }
     dirty: boolean
 }
 
@@ -50,10 +66,15 @@ export function newProject(name: string): ProjectData {
         characterBase: 20,
         characterSet: " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
         prefill: null,
+        prefillColor: "#000000",
+        prefillOutline: 0,
+        prefillOutlineColor: "#000000",
         horizontalSpacing: 0,
         verticalSpacing: 0,
         lineHeight: 35,
         kernings: [],
+        lastExportSnapshot: null,
+        importedTemplate: null,
         dirty: false,
     } satisfies ProjectData
     const json = JSON.stringify(emptyProject)

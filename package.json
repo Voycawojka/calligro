@@ -18,6 +18,7 @@
   "dependencies": {
     "@blueprintjs/core": "^6.0.0",
     "@blueprintjs/select": "^6.0.0",
+    "@react-hook/resize-observer": "^2.0.2",
     "client-zip": "^1.2.2",
     "font-list": "^1.4.3",
     "js-cookie": "^2.2.1",
@@ -25,6 +26,7 @@
     "react-dom": "^18.3.1",
     "react-github-corner": "^2.5.0",
     "react-helmet": "^6.1.0",
+    "react-resizable-panels": "^3.0.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "unicode-range-json": "^1.0.1",
@@ -38,6 +40,7 @@
     "@types/react-helmet": "^6.1.5",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.6",
+    "@types/wicg-file-system-access": "^2023.10.6",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "cross-env": "^7.0.3",
     "electron": "^33.2.1",

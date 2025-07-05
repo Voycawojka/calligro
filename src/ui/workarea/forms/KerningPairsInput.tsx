@@ -1,9 +1,10 @@
 import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select";
 import { KerningPair, ProjectData } from "../../../filesystem/projectstore";
-import { Button, ButtonGroup, ControlGroup, FormGroup, InputGroup, MenuItem, Tag, Tooltip } from "@blueprintjs/core";
-import { MouseEventHandler, useState } from "react";
+import { Button, ButtonGroup, FormGroup, InputGroup, MenuItem, Tag, Tooltip } from "@blueprintjs/core";
+import { useContext, useState } from "react";
 import AddKerningDialog from "./dialogs/AddKerningDialog";
 import KerningPreview from "../canvas/KerningPreview";
+import { ProjectLoadContext } from "../../ProjectContext";
 
 export interface Props {
     project: ProjectData
@@ -12,6 +13,8 @@ export interface Props {
 export default function KerningPairsInput({ project }: Props) {
     const [editedKerning, setEditedKerning] = useState(null as KerningPair | null)
     const [dialogOpen, setDialogOpen] = useState(false)
+
+    const setProjectContext = useContext(ProjectLoadContext)
 
     const str = (kerning: KerningPair) => `${String.fromCharCode(kerning.first)}${String.fromCharCode(kerning.second)}`
 
@@ -44,11 +47,20 @@ export default function KerningPairsInput({ project }: Props) {
         }
     }
 
+    const onAmountChanged = (value: string) => {
+        const val = Number(value)
+        if (!isNaN(val) && editedKerning) {
+            editedKerning.amount = val
+            setProjectContext({...project})
+        }
+    }
+
     return (
         <>
             <FormGroup label="Kerning pairs">
                 <InputGroup
                     value={editedKerning?.amount?.toString() ?? ""}
+                    onValueChange={onAmountChanged}
                     type="number"
                     leftElement={
                         <ButtonGroup>
