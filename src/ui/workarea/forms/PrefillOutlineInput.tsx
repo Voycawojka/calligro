@@ -33,6 +33,14 @@ export default function PrefillOutlineInput({ project }: Props) {
         }
     }, [color])
 
+    useEffect(() => {
+        setSize(project.prefillOutline)
+    }, [project.prefillOutline])
+
+    useEffect(() => {
+        setColor(project.prefillOutlineColor)
+    }, [project.prefillOutlineColor])
+
     return (
             <FormGroup label="Pre-fill outline" disabled={!project.prefill}>
                     <InputGroup

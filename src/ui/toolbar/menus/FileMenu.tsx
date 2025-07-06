@@ -7,8 +7,9 @@ import OpenProjectDialog from "../dialogs/OpenProjectDialog";
 import { ProjectContext, ProjectLoadContext } from "../../ProjectContext";
 import OverwriteChangesAlert from "../dialogs/OverwriteChangesAlert";
 import SaveAsDialog from "../dialogs/SaveAsDialog";
-import { exportTemplate, importTemplate } from "../../../filesystem/templatestore";
+import { exportTemplate } from "../../../filesystem/templatestore";
 import ExportFontDialog from "../dialogs/ExportFontDialog";
+import ImportTemplateWarningDialog from "../dialogs/ImportTemplateWarningDialog";
 
 export default function FileMenu() {
     const [newProjectModalOpen, setIsNewProjectModalOpen] = useState(false)
@@ -16,6 +17,7 @@ export default function FileMenu() {
     const [overwriteAlertOpen, setIsOverwriteAlertOpen] = useState(false)
     const [overwriteAlertAcceptFunction, setOverwriteAlertAcceptFunction] = useState(() => () => {})
     const [saveAsModalOpen, setSaveAsModalOpen] = useState(false)
+    const [importTemplateModalOpen, setImportTemplateModalOpen] = useState(false)
     const [exportFontModalOpen, setExportFontModalOpen] = useState(false)
 
     const project = useContext(ProjectContext)
@@ -95,42 +97,6 @@ export default function FileMenu() {
         }
     }
 
-    const importTemplateToCurrentProject = async () => {
-        try {
-            if (!project) {
-                throw new Error("No project to import a template to")
-            }
-
-            // TODO popup with a warning about using saved settings or current settings
-
-            const image = await importTemplate()
-
-            if (!image) {
-                throw new Error("Something went wrong reading the template file")
-            }
-
-            const settings = project.lastExportSnapshot ?? project
-            setProjectContext({
-                ...project,
-                importedTemplate: {
-                    defaultCharacterWidth: settings.defaultCharacterWidth,
-                    defaultCharacterHeight: settings.defaultCharacterHeight,
-                    characterBase: settings.characterBase,
-                    characterSet: settings.characterSet,
-                    image: image,
-                },
-                dirty: true,
-            })
-        } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: (e as Error).message
-            })
-        }
-    }
-
     return (
         <>
             <ToolbarMenu buttonIcon="document" buttonText="File">
@@ -146,7 +112,7 @@ export default function FileMenu() {
                 <MenuItem key="save-as" icon="folder-shared" text="Save As..." disabled={!project} onClick={() => setSaveAsModalOpen(true)} />
                 <MenuDivider />
                 <MenuItem key="export-template" icon="export" text="Export Template PNG" disabled={!project} onClick={exportCurrentTemplate} />
-                <MenuItem key="import-template" icon="import" text="Import Template PNG" disabled={!project} onClick={importTemplateToCurrentProject} />
+                <MenuItem key="import-template" icon="import" text="Import Template PNG" disabled={!project} onClick={() => setImportTemplateModalOpen(true)} />
                 <MenuDivider />
                 <MenuItem key="export-font" icon="generate" text="Export Font" disabled={!project} onClick={() => setExportFontModalOpen(true)} />
             </ToolbarMenu>
@@ -155,6 +121,7 @@ export default function FileMenu() {
             <OpenProjectDialog isOpen={openProjectModalOpen} setIsOpen={setIsOpenProjectModalOpen} />
             <OverwriteChangesAlert isOpen={overwriteAlertOpen} setIsOpen={setIsOverwriteAlertOpen} onAccepted={overwriteAlertAcceptFunction} />
             <SaveAsDialog isOpen={saveAsModalOpen} setIsOpen={setSaveAsModalOpen} />
+            <ImportTemplateWarningDialog isOpen={importTemplateModalOpen} setIsOpen={setImportTemplateModalOpen} />
             <ExportFontDialog isOpen={exportFontModalOpen} setIsOpen={setExportFontModalOpen} />
         </>
     )

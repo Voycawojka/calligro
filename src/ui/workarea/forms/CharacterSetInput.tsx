@@ -1,32 +1,16 @@
 import { Button, FormGroup } from "@blueprintjs/core"
-import { useContext, useEffect, useState } from "react"
+import { useState } from "react"
 import CharacterSetDialog from "./dialogs/CharacterSetDialog"
 import { ProjectData } from "../../../filesystem/projectstore"
-import { ProjectLoadContext } from "../../ProjectContext"
+import { useProjectState } from "../hooks/useProjectState"
 
 export interface Props {
     project: ProjectData
 }
 
 export default function CharacterSetInput({ project }: Props) {
-    const setProjectContext = useContext(ProjectLoadContext)
-
-    const [characters, setCharacters] = useState(project.characterSet)
+    const [characters, setCharacters] = useProjectState("characterSet", project)
     const [dialogOpen, setDialogOpen] = useState(false)
-
-    useEffect(() => {
-        if (characters !== project.characterSet) {
-            setProjectContext({
-                ...project,
-                characterSet: characters,
-                dirty: true
-            })
-        }
-    }, [characters])
-
-    useEffect(() => {
-        setCharacters(project.characterSet)
-    }, [project.characterSet])
 
     return (
         <>

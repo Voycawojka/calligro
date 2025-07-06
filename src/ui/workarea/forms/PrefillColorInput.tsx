@@ -22,6 +22,10 @@ export default function PrefillColorInput({ project }: Props) {
         }
    }, [color])
 
+   useEffect(() => {
+        setColor(project.prefillColor)
+   }, [project.prefillColor])
+
     return (
         <FormGroup label="Pre-fill color" disabled={!project.prefill}>
             <InputGroup

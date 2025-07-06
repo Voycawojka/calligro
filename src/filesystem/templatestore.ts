@@ -13,7 +13,7 @@ function exportTemplateFallback(image: Blob, filename: string) {
 }
 
 export async function exportTemplate(project: ProjectData) {
-    const templateData = calculateTemplateData(project)
+    const templateData = calculateTemplateData(project, "force current")
     const image = await generateTemplateImage(templateData)
     const filename = `${project.name}-template.png`
 

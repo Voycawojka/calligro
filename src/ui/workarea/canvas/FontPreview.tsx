@@ -75,7 +75,7 @@ export default function FontPreview({ project }: Props) {
                 <NumericInput leftIcon="zoom-in" min={1} value={scale} onValueChange={setScale} clampValueOnBlur fill />
             </FormGroup>
             <FormGroup label="Background">
-                <InputGroup type="color" leftIcon="color-fill" onChange={onBgChanged} />
+                <InputGroup type="color" defaultValue="#ffffff" leftIcon="color-fill" onChange={onBgChanged} />
             </FormGroup>
             <Card ref={canvasParentRef}>
                 <canvas ref={canvasRef} />

@@ -50,7 +50,6 @@ async function drawTemplate(ctx: CanvasRenderingContext2D, templateData: Templat
             enclosingSpaceH: templateData.slotOuterHeight,
             base: templateData.project.characterBase,
             vertMargin: templateData.slotHorizontalMargin,
-            // TODO actual options
             font: templateData.project.prefill !== null ? {
                 name: templateData.project.prefill,
                 fillColor: templateData.project.prefillColor,

@@ -1,7 +1,8 @@
 import { Dialog, DialogBody, InputGroup, Callout, DialogFooter, Button } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { newProject } from "../../../filesystem/projectstore";
-import { ProjectLoadContext } from "../../ProjectContext";
+import { ProjectContext, ProjectLoadContext } from "../../ProjectContext";
+import OverwriteChangesAlert from "./OverwriteChangesAlert";
 
 export interface Props {
     isOpen: boolean
@@ -11,7 +12,10 @@ export interface Props {
 export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
     const [projectName, setProjectName] = useState("")
     const [errorMessage, setErrorMessage] = useState(null as string | null)
+    const [overwriteAlertOpen, setOverwriteAlertOpen] = useState(false)
+    const [overwriteAlertAcceptFunction, setOverwriteAlertAcceptFunction] = useState(() => () => {})
 
+    const currentProject = useContext(ProjectContext)
     const setProjectContext = useContext(ProjectLoadContext)
 
     const onClose = () => {
@@ -20,9 +24,13 @@ export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
         setIsOpen(false)
     }
 
-    const onCreate = () => {
+    const onCreate = (force: boolean) => {
         try {
-            // TODO check unsaved changes
+            if (!force && currentProject && currentProject.dirty) {
+                setOverwriteAlertAcceptFunction(() => () => onCreate(true))
+                setOverwriteAlertOpen(true)
+                return
+            }
 
             if (projectName.trim() === "") {
                 throw new Error("Name cannot be empty")
@@ -37,24 +45,32 @@ export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
     }
 
     return (
-        <Dialog
-            title="New Project"
-            icon="new-object"
-            isOpen={isOpen}
-            onClose={onClose}
-        >
-            <DialogBody>
-                <InputGroup id="new-project-name" placeholder="Project Name" value={projectName} onValueChange={setProjectName} />
-                { errorMessage && 
-                    <Callout intent="danger">{errorMessage}</Callout>
-                }
-            </DialogBody>
-            <DialogFooter actions={
-                <>
-                    <Button text="Cancel" onClick={onClose} />
-                    <Button intent="primary" text="Create!" onClick={onCreate} />
-                </>
-            } />
-        </Dialog>
+        <>
+            <Dialog
+                title="New Project"
+                icon="new-object"
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <DialogBody>
+                    <InputGroup id="new-project-name" placeholder="Project Name" value={projectName} onValueChange={setProjectName} />
+                    { errorMessage && 
+                        <Callout intent="danger">{errorMessage}</Callout>
+                    }
+                </DialogBody>
+                <DialogFooter actions={
+                    <>
+                        <Button text="Cancel" onClick={onClose} />
+                        <Button intent="primary" text="Create!" onClick={() => onCreate(false)} />
+                    </>
+                } />
+            </Dialog>
+
+            <OverwriteChangesAlert 
+                isOpen={overwriteAlertOpen}
+                setIsOpen={setOverwriteAlertOpen}
+                onAccepted={overwriteAlertAcceptFunction}
+            />
+        </>
     )
 }

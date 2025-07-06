@@ -1,18 +1,16 @@
 import { OverlayToaster, MenuItem, Button, ControlGroup, Tooltip, FormGroup, Callout } from "@blueprintjs/core"
-import { ItemRenderer, ItemPredicate, Select, Classes } from "@blueprintjs/select"
-import { useState, useEffect, useContext } from "react"
+import { ItemRenderer, ItemPredicate, Select } from "@blueprintjs/select"
+import { useState, useEffect } from "react"
 import { findSystemFonts } from "../../../generation/template/fontsDetection"
 import { ProjectData } from "../../../filesystem/projectstore"
-import { ProjectLoadContext } from "../../ProjectContext"
+import { useProjectState } from "../hooks/useProjectState"
 
 export interface Props {
     project: ProjectData
 }
 
 export default function PrefillInput({ project }: Props) {
-    const setProjectContext = useContext(ProjectLoadContext)
-
-    const [prefill, setPrefill] = useState(project.prefill)
+    const [prefill, setPrefill] = useProjectState("prefill", project)
     const [systemFonts, setSystemFonts] = useState([] as string[])
 
     useEffect(() => {
@@ -30,20 +28,6 @@ export default function PrefillInput({ project }: Props) {
         }
         findFonts()
     }, [])
-
-    useEffect(() => {
-        if (prefill !== project.prefill) {
-            setProjectContext({
-                ...project,
-                prefill,
-                dirty: true,
-            })
-        }
-    }, [prefill])
-
-    useEffect(() => {
-        setPrefill(project.prefill)
-    }, [project.prefill])
 
     const renderPrefill: ItemRenderer<string> = (name, { handleClick, handleFocus, modifiers, query}) => {
         if (!modifiers.matchesPredicate) {
