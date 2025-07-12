@@ -1,9 +1,10 @@
-import { ButtonGroup, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from "@blueprintjs/core";
+import { Alignment, ButtonGroup, Navbar, NavbarDivider, NavbarGroup, NavbarHeading, Slider, Switch } from "@blueprintjs/core";
 import FileMenu from "./menus/FileMenu";
 import MoreMenu from "./menus/MoreMenu";
 import HelpMenu from "./menus/HelpMenu";
 import { useContext } from "react";
-import { ProjectContext } from "../ProjectContext";
+import { ProjectContext } from "../contexts/ProjectContext";
+import ThemeSwitch from "./ThemeSwitch";
 
 export default function Toolbar() {
     const project = useContext(ProjectContext)
@@ -26,7 +27,9 @@ export default function Toolbar() {
                         </NavbarHeading>
                     </>
                 }
-                
+            </NavbarGroup>
+            <NavbarGroup align={Alignment.END}>
+                <ThemeSwitch />
             </NavbarGroup>
         </Navbar>
     )

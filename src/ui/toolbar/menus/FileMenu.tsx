@@ -4,7 +4,7 @@ import { listProjectNames, loadProject, saveProject } from "../../../filesystem/
 import { useContext, useState } from "react";
 import NewProjectDialog from "../dialogs/NewProjectDialog";
 import OpenProjectDialog from "../dialogs/OpenProjectDialog";
-import { ProjectContext, ProjectLoadContext } from "../../ProjectContext";
+import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
 import OverwriteChangesAlert from "../dialogs/OverwriteChangesAlert";
 import SaveAsDialog from "../dialogs/SaveAsDialog";
 import { exportTemplate } from "../../../filesystem/templatestore";

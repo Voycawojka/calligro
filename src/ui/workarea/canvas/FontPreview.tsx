@@ -1,7 +1,7 @@
 import { Card, FormGroup, H4, InputGroup, NumericInput, TextArea } from "@blueprintjs/core"
 import { ProjectData } from "../../../filesystem/projectstore"
-import { ChangeEvent, ReactEventHandler, useEffect, useRef, useState } from "react"
-import { drawPreview } from "../../../preview/preview"
+import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { drawPreview } from "../../../generation/preview"
 import { FontSpec, generateFont } from "../../../generation/font/Font"
 import { calculateTemplateData, generateTemplateImage } from "../../../generation/template/template"
 import useResizeObserver from "@react-hook/resize-observer"
@@ -13,11 +13,11 @@ export interface Props {
 export default function FontPreview({ project }: Props) {
     const [text, setText] = useState("Just a sample text")
     const [scale, setScale] = useState(1)
-    const [ctx, setCtx] = useState(null as CanvasRenderingContext2D | null)
-    const [font, setFont] = useState(null as [FontSpec, Blob[]] | null)
+    const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
+    const [font, setFont] = useState<[FontSpec, Blob[]] | null>(null)
 
-    const canvasParentRef = useRef(null as HTMLDivElement | null)
-    const canvasRef = useRef(null as HTMLCanvasElement | null)
+    const canvasParentRef = useRef<HTMLDivElement | null>(null)
+    const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
     useEffect(() => {
         if (canvasRef.current) {
@@ -77,7 +77,7 @@ export default function FontPreview({ project }: Props) {
             <FormGroup label="Background">
                 <InputGroup type="color" defaultValue="#ffffff" leftIcon="color-fill" onChange={onBgChanged} />
             </FormGroup>
-            <Card ref={canvasParentRef}>
+            <Card ref={canvasParentRef} style={{ backgroundColor: "#ffffff" }}>
                 <canvas ref={canvasRef} />
             </Card>
         </>

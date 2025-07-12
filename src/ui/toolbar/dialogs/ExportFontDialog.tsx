@@ -1,6 +1,6 @@
 import { Dialog, DialogBody, DialogFooter, Button, OverlayToaster, RadioGroup, RadioCard, Classes } from "@blueprintjs/core";
 import { FormEvent, useContext, useState } from "react";
-import { ProjectContext } from "../../ProjectContext";
+import { ProjectContext } from "../../contexts/ProjectContext";
 import { saveFont } from "../../../filesystem/fontstore";
 
 export interface Props {
@@ -9,7 +9,7 @@ export interface Props {
 }
 
 export default function ExportFontDialog({ isOpen, setIsOpen }: Props) {
-    const [selectedFormat, setSelectedFormat] = useState("txt" as "txt" | "xml")
+    const [selectedFormat, setSelectedFormat] = useState<"txt" | "xml">("txt")
 
     const currentProject = useContext(ProjectContext)
 

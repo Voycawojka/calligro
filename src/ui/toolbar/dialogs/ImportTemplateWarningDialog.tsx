@@ -1,6 +1,6 @@
 import { Dialog, DialogBody, DialogFooter, Button, OverlayToaster, Callout } from "@blueprintjs/core";
 import { useContext } from "react";
-import { ProjectContext, ProjectLoadContext } from "../../ProjectContext"
+import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext"
 import { importTemplate } from "../../../filesystem/templatestore";
 
 export interface Props {

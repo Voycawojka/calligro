@@ -1,7 +1,7 @@
 import { Dialog, DialogBody, InputGroup, Callout, DialogFooter, Button } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { newProject } from "../../../filesystem/projectstore";
-import { ProjectContext, ProjectLoadContext } from "../../ProjectContext";
+import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
 import OverwriteChangesAlert from "./OverwriteChangesAlert";
 
 export interface Props {
@@ -11,7 +11,7 @@ export interface Props {
 
 export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
     const [projectName, setProjectName] = useState("")
-    const [errorMessage, setErrorMessage] = useState(null as string | null)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [overwriteAlertOpen, setOverwriteAlertOpen] = useState(false)
     const [overwriteAlertAcceptFunction, setOverwriteAlertAcceptFunction] = useState(() => () => {})
 

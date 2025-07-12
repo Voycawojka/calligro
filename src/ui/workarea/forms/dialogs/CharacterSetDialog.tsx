@@ -18,9 +18,9 @@ export default function CharacterSetDialog({
     setAcceptedCharacters
 }: Props) {
     const [characters, setCharacters] = useState(acceptedCharacters)
-    const [unicodeRanges, setUnicodeRanges] = useState([] as UnicodeRange[])
+    const [unicodeRanges, setUnicodeRanges] = useState<UnicodeRange[]>([])
     const [hasDuplicates, setHasDuplicates] = useState(false)
-    const [errorMessage, setErrorMessage] = useState(null as string | null)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     useEffect(() => {
         setUnicodeRanges(getUnicodeRanges())
@@ -117,6 +117,7 @@ export default function CharacterSetDialog({
                     value={characters}
                     onChange={onCharactersChange}
                     rows={5}
+                    spellCheck={false}
                 />
                 <ButtonGroup>
                     <Select<UnicodeRange>

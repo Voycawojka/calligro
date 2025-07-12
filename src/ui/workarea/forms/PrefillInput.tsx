@@ -11,7 +11,7 @@ export interface Props {
 
 export default function PrefillInput({ project }: Props) {
     const [prefill, setPrefill] = useProjectState("prefill", project)
-    const [systemFonts, setSystemFonts] = useState([] as string[])
+    const [systemFonts, setSystemFonts] = useState<string[]>([])
 
     useEffect(() => {
         const findFonts = async () => {

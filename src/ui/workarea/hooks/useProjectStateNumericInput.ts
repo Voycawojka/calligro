@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ProjectData } from "../../../filesystem/projectstore";
-import { ProjectLoadContext } from "../../ProjectContext";
+import { ProjectLoadContext } from "../../contexts/ProjectContext";
 
 type Key = keyof {
     [P in keyof ProjectData as ProjectData[P] extends number? P: never]: any

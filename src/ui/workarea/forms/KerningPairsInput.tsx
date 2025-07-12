@@ -4,14 +4,14 @@ import { Button, ButtonGroup, FormGroup, InputGroup, MenuItem, Tag, Tooltip } fr
 import { useContext, useState } from "react";
 import AddKerningDialog from "./dialogs/AddKerningDialog";
 import KerningPreview from "../canvas/KerningPreview";
-import { ProjectLoadContext } from "../../ProjectContext";
+import { ProjectLoadContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     project: ProjectData
 }
 
 export default function KerningPairsInput({ project }: Props) {
-    const [editedKerning, setEditedKerning] = useState(null as KerningPair | null)
+    const [editedKerning, setEditedKerning] = useState<KerningPair | null>(null)
     const [dialogOpen, setDialogOpen] = useState(false)
 
     const setProjectContext = useContext(ProjectLoadContext)

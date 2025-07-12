@@ -1,4 +1,4 @@
-import { Callout, Classes, Divider, H4, H5, H6 } from "@blueprintjs/core"
+import { Callout, Classes, Divider, H4 } from "@blueprintjs/core"
 import { ProjectData } from "../../filesystem/projectstore"
 
 import styles from "./workarea.module.scss"
@@ -9,7 +9,7 @@ import FontPreview from "./canvas/FontPreview"
 import PreviewTemplateButton from "./forms/PreviewTemplateButton"
 import FontMarginsInput from "./forms/FontMarginsInput"
 import KerningPairsInput from "./forms/KerningPairsInput"
-import { ImperativePanelGroupHandle, Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels"
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels"
 import { useRef, useState } from "react"
 import useResizeObserver from "@react-hook/resize-observer"
 import PrefillColorInput from "./forms/PrefillColorInput"
@@ -20,20 +20,18 @@ export interface Props {
 }
 
 export default function LoadedWorkArea({ project }: Props) {
-    const [groupWidth, setGroupWidth] = useState(0)
+    const [minSize, setMinSize] = useState(0)
 
-    const panelRef = useRef(null as HTMLDivElement | null)
+    const panelRef = useRef<HTMLDivElement | null>(null)
 
     useResizeObserver(panelRef, entry => {
-        setGroupWidth(entry.contentRect.width)
+        setMinSize(200 / entry.contentRect.width * 100)
     })
-
-    const minSize = (pixels: number) => pixels / groupWidth * 100
 
     return (
         <div ref={panelRef}>
             <PanelGroup direction="horizontal">
-                <Panel id="template-settings" order={1} minSize={minSize(200)}>
+                <Panel id="template-settings" order={1} minSize={minSize}>
                     <div className={`${styles.formcontainer}`}>
                         <H4>Template Settings</H4>
                         { project.importedTemplate &&
@@ -52,7 +50,7 @@ export default function LoadedWorkArea({ project }: Props) {
                     </div>
                 </Panel>
                 <PanelResizeHandle id="template-font-handle" className={Classes.DIVIDER} />
-                <Panel id="font-settings" order={2} minSize={minSize(200)}>
+                <Panel id="font-settings" order={2} minSize={minSize}>
                     <div className={`${styles.formcontainer}`}>
                             <H4>Font Settings</H4>
                             <FontMarginsInput project={project} />
@@ -60,7 +58,7 @@ export default function LoadedWorkArea({ project }: Props) {
                     </div>
                 </Panel>
                 <PanelResizeHandle id="font-canvas-handle" className={Classes.DIVIDER}  />
-                <Panel id="canvas" order={3} minSize={minSize(200)}>
+                <Panel id="canvas" order={3} minSize={minSize}>
                     <div className={`${styles.canvascontainer}`}>
                             <FontPreview project={project} />
                     </div>

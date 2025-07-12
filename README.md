@@ -16,7 +16,7 @@ The workflow is as follows:
 - draw your characters on the template in any graphics editor (Photoshop, Gimp, Aseprite, anything else)
 - upload the filled template back to Calligro and download a bitmap font
 
-Everything is calculated on the client side. No files are sent or stored on the server (we use gh pages anyway).
+Everything is calculated on the client side. No files are sent or stored on the server.
 
 There is also an offline version available for Windows and Linux. It has the same core features but is a little bit more convenient to use. It also detects system fonts better.
 

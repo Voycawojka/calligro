@@ -1,6 +1,6 @@
 import { KerningPair, ProjectData } from "../../../filesystem/projectstore"
 import { useEffect, useRef, useState } from "react"
-import { drawPreview } from "../../../preview/preview"
+import { drawPreview } from "../../../generation/preview"
 import { FontSpec, generateFont } from "../../../generation/font/Font"
 import { calculateTemplateData, generateTemplateImage } from "../../../generation/template/template"
 
@@ -10,10 +10,10 @@ export interface Props {
 }
 
 export default function KerningPreview({ project, kerning }: Props) {
-    const [ctx, setCtx] = useState(null as CanvasRenderingContext2D | null)
-    const [font, setFont] = useState(null as [FontSpec, Blob[]] | null)
+    const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
+    const [font, setFont] = useState<[FontSpec, Blob[]] | null>(null)
 
-    const canvasRef = useRef(null as HTMLCanvasElement | null)
+    const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
     useEffect(() => {
         if (canvasRef.current) {

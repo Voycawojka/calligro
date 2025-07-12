@@ -2,7 +2,7 @@ import { Button, Callout, ControlGroup, Dialog, DialogBody, DialogFooter, Divide
 import { ProjectData } from "../../../../filesystem/projectstore"
 import KerningPreview from "../../canvas/KerningPreview"
 import { useContext, useState } from "react"
-import { ProjectLoadContext } from "../../../ProjectContext"
+import { ProjectLoadContext } from "../../../contexts/ProjectContext"
 
 export interface Props {
     project: ProjectData
@@ -15,10 +15,10 @@ export default function AddKerningDialog({
     isOpen,
     setIsOpen,
 }: Props) {
-    const [left, setLeft] = useState(null as number | null)
-    const [right, setRight] = useState(null as number | null)
+    const [left, setLeft] = useState<number | null>(null)
+    const [right, setRight] = useState<number | null>(null)
     const [amount, setAmount] = useState("0")
-    const [errorMessage, setErrorMessage] = useState(null as string | null)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const setProjectContext = useContext(ProjectLoadContext)
 

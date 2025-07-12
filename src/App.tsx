@@ -1,6 +1,7 @@
 import Toolbar from './ui/toolbar/Toolbar'
 import WorkAreaContainer from './ui/workarea/WorkAreaContainer'
-import ProjectContextRoot from './ui/ProjectContext'
+import ThemeContextRoot from './ui/contexts/ThemeContext'
+import ProjectContextRoot from './ui/contexts/ProjectContext'
 import { BlueprintProvider } from '@blueprintjs/core'
 
 import "normalize.css/normalize.css"
@@ -8,48 +9,26 @@ import "@blueprintjs/core/lib/css/blueprint.css"
 import "@blueprintjs/icons/lib/css/blueprint-icons.css"
 import "@blueprintjs/select/lib/css/blueprint-select.css"
 
-// const Step2 = React.lazy(() => import('./ui/generation/step2/Step2'))
-
 function App() {
     return (
-        // <HashRouter>
-        //     <Switch>
-        //         <Route>
-                    //  <WebOnly>
-                    //     <Header />
-                    // </WebOnly>
+        //  <WebOnly>
+        //     <Header />
+        // </WebOnly>
 
-                    <BlueprintProvider>
-                        <ProjectContextRoot>
-                            <Toolbar />
-                            <WorkAreaContainer />
-                        </ProjectContextRoot>
-                    </BlueprintProvider>
+        <BlueprintProvider>
+            <ThemeContextRoot>
+                <ProjectContextRoot>
+                    <Toolbar />
+                    <WorkAreaContainer />
+                </ProjectContextRoot>
+            </ThemeContextRoot>
+        </BlueprintProvider>
 
-                    // {/* <Route exact path='/'>
-                    //     <Redirect to="/template" />
-                    // </Route>
-
-                    // <Route exact path='/template'>
-                    //     <Suspense fallback={<Loader />}>
-                    //         <Step1 />
-                    //     </Suspense>
-                    // </Route>
-
-                    // <Route exact path='/font'>
-                    //     <Suspense fallback={<Loader />}>
-                    //         <Step2 />
-                    //     </Suspense>
-                    // </Route>
-
-                    // <DesktopOnly>
-                    //     <IpcNavigation />
-                    //     <Updater />
-                    //     <AboutPopup />
-                    // </DesktopOnly> */}
-        //         </Route>
-        //     </Switch>
-        // </HashRouter>
+        // <DesktopOnly>
+        //     <IpcNavigation />
+        //     <Updater />
+        //     <AboutPopup />
+        // </DesktopOnly> */}
     )
 }
 

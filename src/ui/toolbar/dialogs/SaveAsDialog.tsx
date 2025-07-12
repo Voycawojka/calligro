@@ -1,7 +1,7 @@
 import { Dialog, DialogBody, InputGroup, Callout, DialogFooter, Button } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { listProjectNames, saveProject } from "../../../filesystem/projectstore";
-import { ProjectContext, ProjectLoadContext } from "../../ProjectContext";
+import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     isOpen: boolean
@@ -10,7 +10,7 @@ export interface Props {
 
 export default function SaveAsDialog({ isOpen, setIsOpen }: Props) {
     const [projectName, setProjectName] = useState("")
-    const [errorMessage, setErrorMessage] = useState(null as string | null)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const currentProject = useContext(ProjectContext)
     const setProjectContext = useContext(ProjectLoadContext)

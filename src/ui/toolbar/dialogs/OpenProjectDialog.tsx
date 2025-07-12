@@ -2,7 +2,7 @@ import { Button, Callout, Dialog, DialogBody, DialogFooter, MenuItem } from "@bl
 import { listProjectNames, loadProject } from "../../../filesystem/projectstore"
 import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select"
 import { useContext, useState } from "react"
-import { ProjectContext, ProjectLoadContext } from "../../ProjectContext"
+import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext"
 import OverwriteChangesAlert from "./OverwriteChangesAlert"
 
 export interface Props {
@@ -11,8 +11,8 @@ export interface Props {
 }
 
 export default function OpenProjectDialog({ isOpen, setIsOpen }: Props) {
-    const [selectedProject, setSelectedProject] = useState(null as string | null)
-    const [errorMessage, setErrorMessage] = useState(null as string | null)
+    const [selectedProject, setSelectedProject] = useState<string | null>(null)
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [overwriteAlertOpen, setOverwriteAlertOpen] = useState(false)
     const [overwriteAlertAcceptFunction, setOverwriteAlertAcceptFunction] = useState(() => () => {})
 

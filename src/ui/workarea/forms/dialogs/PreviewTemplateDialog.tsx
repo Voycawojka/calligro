@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { ProjectData } from "../../../../filesystem/projectstore"
 import { calculateTemplateData, generateTemplateImage } from "../../../../generation/template/template"
 import { exportTemplate } from "../../../../filesystem/templatestore"
-import { ProjectLoadContext } from "../../../ProjectContext"
+import { ProjectLoadContext } from "../../../contexts/ProjectContext"
 
 export interface Props {
     project: ProjectData
@@ -16,7 +16,7 @@ export default function PreviewTemplateDialog({
     isOpen,
     setIsOpen,
 }: Props) {
-    const [imageUrl, setImageUrl] = useState(null as string | null)
+    const [imageUrl, setImageUrl] = useState<string | null>(null)
 
     const setProjectContext = useContext(ProjectLoadContext)
 

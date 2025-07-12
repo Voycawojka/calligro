@@ -1,7 +1,7 @@
 import { FormGroup, InputGroup } from "@blueprintjs/core";
 import { ProjectData } from "../../../filesystem/projectstore";
 import { useContext, useEffect, useState } from "react";
-import { ProjectLoadContext } from "../../ProjectContext";
+import { ProjectLoadContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     project: ProjectData
