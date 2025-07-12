@@ -57,12 +57,19 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
 
     const sourceRects: SourceRect[] = []
     for (let i = 0; i < templateData.project.characterSet.length; i++) {
-        // TODO take into consideration size overrides
-        const slotWidth = templateData.project.defaultCharacterWidth
-        const slotHeight = templateData.project.defaultCharacterHeight
+        const character = templateData.project.characterSet.charCodeAt(i)
+
+        let slotWidth = templateData.project.defaultCharacterWidth
+        let slotHeight = templateData.project.defaultCharacterHeight
+
+        const sizeOverride = templateData.project.sizeOverrides.find(override => override.char === character)
+        if (sizeOverride) {
+            slotWidth = sizeOverride.width
+            slotHeight = sizeOverride.height
+        }
 
         sourceRects.push({
-            character: templateData.project.characterSet.charCodeAt(i),
+            character,
             x: getSlotPosition(i + 1, templateData).x + Math.floor(templateData.slotOuterWidth / 2) - Math.floor((slotWidth - 2) / 2),
             y: getSlotPosition(i + 1, templateData).y + Math.floor(templateData.slotOuterHeight / 2) - Math.floor((slotHeight - 2) / 2),
             w: slotWidth - 2,

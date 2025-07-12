@@ -85,6 +85,7 @@ export default function KerningPairsInput({ project }: Props) {
                         <>
                             <Tag minimal>px</Tag>
                             <Tooltip content="Remove kerning">
+                                {/* TODO remove kerning */}
                                 <Button icon="remove" disabled={!editedKerning} />
                             </Tooltip>
                         </>

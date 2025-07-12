@@ -1,4 +1,4 @@
-import { Button, Callout, ControlGroup, Dialog, DialogBody, DialogFooter, Divider, FormGroup, InputGroup } from "@blueprintjs/core"
+import { Button, Callout, Dialog, DialogBody, DialogFooter, FormGroup, InputGroup } from "@blueprintjs/core"
 import { ProjectData } from "../../../../filesystem/projectstore"
 import KerningPreview from "../../canvas/KerningPreview"
 import { useContext, useState } from "react"
@@ -65,6 +65,9 @@ export default function AddKerningDialog({
             <DialogBody>
                 <Callout>
                     Overwrites how much closer or further apart should two characters be when next to each other.
+                    <br />
+                    <br />
+                    Not all game engines support this feature.
                 </Callout>
                 <br />
                 <FormGroup label="Left character">

@@ -13,6 +13,18 @@ interface SavedImportedTemplate {
     imageBase64: string
 }
 
+export interface KerningPair {
+    first: number
+    second: number
+    amount: number
+}
+
+export interface SizeOverride {
+    char: number
+    width: number
+    height: number
+}
+
 interface SavedProjectData {
     name: string
     createdAt: number
@@ -28,14 +40,9 @@ interface SavedProjectData {
     verticalSpacing: number
     lineHeight: number
     kernings: KerningPair[]
+    sizeOverrides: SizeOverride[]
     lastExportSnapshot: null | SavedLastExportSnapshot
     importedTemplate: null | SavedImportedTemplate
-}
-
-export interface KerningPair {
-    first: number
-    second: number
-    amount: number
 }
 
 export interface ImportedTemplate extends SavedImportedTemplate {
@@ -126,6 +133,7 @@ export function newProject(name: string): ProjectData {
         verticalSpacing: 0,
         lineHeight: 35,
         kernings: [],
+        sizeOverrides: [],
         lastExportSnapshot: null,
         importedTemplate: null,
     } satisfies SavedProjectData

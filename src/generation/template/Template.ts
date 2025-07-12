@@ -1,6 +1,7 @@
 import { convertToBlob, createCanvas } from '../../utils/canvasHelpers'
 import { drawSlot } from './slotDrawing'
 import { ProjectData } from '../../filesystem/projectstore'
+import { set } from 'js-cookie'
 
 export interface FontOptions {
     name: string
@@ -36,11 +37,16 @@ async function drawTemplate(ctx: CanvasRenderingContext2D, templateData: Templat
     for (let i = 0; i < templateData.project.characterSet.length; i++) {
         const { x, y } = getSlotPosition(i + 1, templateData)
 
-        // TODO take size overrides into account
         const slot = {
             character: templateData.project.characterSet[i],
             width: templateData.project.defaultCharacterWidth,
             height: templateData.project.defaultCharacterHeight
+        }
+
+        const sizeOverride = templateData.project.sizeOverrides.find(override => override.char === slot.character.charCodeAt(0))
+        if (sizeOverride) {
+            slot.width = sizeOverride.width
+            slot.height = sizeOverride.height
         }
         
         drawSlot(ctx, slot, {
@@ -61,7 +67,7 @@ async function drawTemplate(ctx: CanvasRenderingContext2D, templateData: Templat
 }
 
 export function calculateTemplateData(project: ProjectData, mode: TemplateMode): TemplateData {
-    let settings = project.lastExportSnapshot ?? project
+    let settings = project.importedTemplate ?? project
     if (mode === "force current") {
         settings = project
     }
@@ -69,11 +75,8 @@ export function calculateTemplateData(project: ProjectData, mode: TemplateMode):
     const horizontalSlots = Math.ceil(Math.sqrt(settings.characterSet.length + 1))
     const verticalSlots = Math.ceil(Math.sqrt(settings.characterSet.length + 1))
 
-    // const maxW = Math.max.apply(null, slots.map(slot => slot.width))
-    // const maxH = Math.max.apply(null, slots.map(slot => slot.height))
-    // TODO take dimension overrides into account
-    const maxCharacterWidth = settings.defaultCharacterWidth
-    const maxCharacterHeight = settings.defaultCharacterHeight
+    const maxCharacterWidth = Math.max.apply(null, [settings.defaultCharacterWidth, ...project.sizeOverrides.map(override => override.width)])
+    const maxCharacterHeight = Math.max.apply(null, [settings.defaultCharacterHeight, ...project.sizeOverrides.map(override => override.height)])
 
     const slotOuterWidth = Math.round(maxCharacterWidth * 1.3)
     const slotOuterHeight = Math.max(Math.round(maxCharacterHeight * 1.3), 30)
