@@ -1,10 +1,19 @@
-export interface KerningPair {
-    first: number
-    second: number
-    amount: number
+interface SavedLastExportSnapshot {
+    defaultCharacterWidth: number
+    defaultCharacterHeight: number
+    characterBase: number
+    characterSet: string
 }
 
-export interface ProjectData {
+interface SavedImportedTemplate {
+    defaultCharacterWidth: number
+    defaultCharacterHeight: number
+    characterBase: number
+    characterSet: string
+    imageBase64: string
+}
+
+interface SavedProjectData {
     name: string
     createdAt: number
     defaultCharacterWidth: number
@@ -19,19 +28,22 @@ export interface ProjectData {
     verticalSpacing: number
     lineHeight: number
     kernings: KerningPair[]
-    lastExportSnapshot: null | {
-        defaultCharacterWidth: number
-        defaultCharacterHeight: number
-        characterBase: number
-        characterSet: string
-    }
-    importedTemplate: null | {
-        defaultCharacterWidth: number
-        defaultCharacterHeight: number
-        characterBase: number
-        characterSet: string
-        image: Blob
-    }
+    lastExportSnapshot: null | SavedLastExportSnapshot
+    importedTemplate: null | SavedImportedTemplate
+}
+
+export interface KerningPair {
+    first: number
+    second: number
+    amount: number
+}
+
+export interface ImportedTemplate extends SavedImportedTemplate {
+    image: Blob
+}
+
+export interface ProjectData extends SavedProjectData {
+    importedTemplate: null | ImportedTemplate
     dirty: boolean
 }
 
@@ -49,6 +61,47 @@ function saveProjectNameArray(array: string[]) {
 
 function generareProjectKey(name: String): string {
     return `_project:${name}`
+}
+
+function blobToBase64(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onloadend = () => resolve((reader.result as string).split(",")[1])
+        reader.onerror = reject
+        reader.readAsDataURL(blob)
+    })
+}
+
+function base64ToBlob(base64: string): Blob {
+    const binary = atob(base64)
+    const array = new Uint8Array(binary.length)
+    for (let i = 0; i < binary.length; i++) {
+        array[i] = binary.charCodeAt(i)
+    }
+    return new Blob([array], { type: "image/png"})
+}
+
+function savedToExported(data: SavedProjectData): ProjectData {
+    return {
+        ...data,
+        importedTemplate: data.importedTemplate === null ? null : {
+            ...data.importedTemplate,
+            image: base64ToBlob(data.importedTemplate.imageBase64)
+        },
+        dirty: false,
+    }
+}
+
+async function exportedToSaved(data: ProjectData): Promise<SavedProjectData> {
+    const saved: SavedProjectData = {
+        ...data,
+    }
+    delete (saved as any).dirty
+    if (saved.importedTemplate) {
+        saved.importedTemplate.imageBase64 = await blobToBase64((saved.importedTemplate as ImportedTemplate).image)
+        delete (saved.importedTemplate as any).image
+    }
+    return saved
 }
 
 export function newProject(name: string): ProjectData {
@@ -75,8 +128,7 @@ export function newProject(name: string): ProjectData {
         kernings: [],
         lastExportSnapshot: null,
         importedTemplate: null,
-        dirty: false,
-    } satisfies ProjectData
+    } satisfies SavedProjectData
     const json = JSON.stringify(emptyProject)
     localStorage.setItem(projectKey, json)
 
@@ -84,12 +136,12 @@ export function newProject(name: string): ProjectData {
     projects.unshift(name)
     saveProjectNameArray(projects)
 
-    return emptyProject
+    return savedToExported(emptyProject)
 }
 
-export function saveProject(name: string, data: ProjectData) {
+export async function saveProject(name: string, data: ProjectData) {
     const projectKey = generareProjectKey(name)
-    const json = JSON.stringify(data)
+    const json = JSON.stringify(await exportedToSaved(data))
     
     localStorage.setItem(projectKey, json)
 
@@ -100,10 +152,10 @@ export function saveProject(name: string, data: ProjectData) {
     }
 }
 
-export function loadProject(name: string): ProjectData | undefined {
+export function loadProject(name: string): ProjectData | null {
     const projectKey = generareProjectKey(name)
     const json = localStorage.getItem(projectKey)
-    return json && JSON.parse(json)
+    return json === null ? null : savedToExported(JSON.parse(json))
 }
 
 export function listProjectNames(max: number | undefined): string[] {

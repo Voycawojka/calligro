@@ -21,7 +21,7 @@ export default function SaveAsDialog({ isOpen, setIsOpen }: Props) {
         setIsOpen(false)
     }
 
-    const onSave = () => {
+    const onSave = async () => {
         try {
             if (!currentProject) {
                 throw new Error("No project to save")
@@ -41,7 +41,7 @@ export default function SaveAsDialog({ isOpen, setIsOpen }: Props) {
                 dirty: false,
             }
 
-            saveProject(projectName, copiedProject)
+            await saveProject(projectName, copiedProject)
             setProjectContext(copiedProject)
             onClose()
         } catch (e: any) {

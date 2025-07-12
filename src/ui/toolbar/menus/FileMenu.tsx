@@ -54,7 +54,7 @@ export default function FileMenu() {
                 throw new Error("No project to save")
             }
             project.dirty = false
-            saveProject(project.name, project)
+            await saveProject(project.name, project)
             setProjectContext({ ...project })
         } catch (e: any) {
             if (project) {

@@ -24,7 +24,7 @@ export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
         setIsOpen(false)
     }
 
-    const onCreate = (force: boolean) => {
+    const onCreate = async (force: boolean) => {
         try {
             if (!force && currentProject && currentProject.dirty) {
                 setOverwriteAlertAcceptFunction(() => () => onCreate(true))
