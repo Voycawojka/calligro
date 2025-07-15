@@ -35,10 +35,18 @@ export default function AddSizeOverrideDialog({
             let addedCount = 0
 
             for (let i = 0; i < characters.length; i++) {
-                // TODO ignore duplicates
-                // TODO ignore characters not in the character set
+                const character = characters.charCodeAt(i)
+
+                if (updatedProject.sizeOverrides.find(override => override.char === character)) {
+                    continue
+                }
+
+                if (!updatedProject.characterSet.includes(characters[i])) {
+                    continue
+                }
+
                 updatedProject.sizeOverrides.push({
-                    char: characters.charCodeAt(i),
+                    char: character,
                     width: updatedProject.defaultCharacterWidth,
                     height: updatedProject.defaultCharacterHeight,
                 })
@@ -51,7 +59,7 @@ export default function AddSizeOverrideDialog({
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
                 icon: "add",
-                intent: "success",
+                intent: addedCount === 0 ? "warning" : "success",
                 message: `Added ${addedCount} size overrides`
             })
         } catch (e: any) {

@@ -7,9 +7,10 @@ import AddSizeOverrideDialog from "./dialogs/AddSizeOverrideDialog";
 
 export interface Props {
     project: ProjectData
+    forceDisabled: boolean
 }
 
-export default function SizeOverrideInput({ project }: Props) {
+export default function SizeOverrideInput({ project, forceDisabled }: Props) {
     const [editedOverride, setEditedOverride] = useState<SizeOverride | null>(null)
     const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -62,12 +63,19 @@ export default function SizeOverrideInput({ project }: Props) {
         }
     }
 
+    const removeOverride = () => {
+        const updatedProject = { ...project }
+        updatedProject.sizeOverrides = updatedProject.sizeOverrides.filter(override => override !== editedOverride)
+        setProjectContext(updatedProject)
+        setEditedOverride(null)
+    }
+
     return (
         <>
-            <FormGroup label="Size overrides">
+            <FormGroup label="Size overrides" disabled={forceDisabled}>
                 <ButtonGroup>
                     <Tooltip content="Add size override">
-                        <Button icon="add" onClick={() => setDialogOpen(true)} />
+                        <Button icon="add" onClick={() => setDialogOpen(true)} disabled={forceDisabled} />
                     </Tooltip>
                     <Select<SizeOverride>
                         items={project.sizeOverrides}
@@ -78,12 +86,12 @@ export default function SizeOverrideInput({ project }: Props) {
                         }
                         onItemSelect={setEditedOverride}
                         popoverProps={{ minimal: true }}
+                        disabled={forceDisabled}
                     >
-                        <Button icon="caret-down" text={editedOverride && str(editedOverride)} />
+                        <Button icon="caret-down" text={editedOverride && str(editedOverride)} disabled={forceDisabled} />
                     </Select>
                     <Tooltip content="Remove size override">
-                        {/* TODO remove override */}
-                        <Button icon="remove" disabled={!editedOverride} />
+                        <Button icon="remove" disabled={!editedOverride || forceDisabled} onClick={removeOverride} />
                     </Tooltip>
                 </ButtonGroup>
             </FormGroup>
@@ -98,6 +106,7 @@ export default function SizeOverrideInput({ project }: Props) {
                             rightElement={<Tag minimal>px</Tag>}
                             size="small"
                             min={1}
+                            disabled={forceDisabled}
                         />
                     </FormGroup>
                     <FormGroup label={`Height override (${str(editedOverride)})`}>
@@ -108,6 +117,7 @@ export default function SizeOverrideInput({ project }: Props) {
                             rightElement={<Tag minimal>px</Tag>}
                             size="small"
                             min={1}
+                            disabled={forceDisabled}
                         />
                     </FormGroup>
                 </>

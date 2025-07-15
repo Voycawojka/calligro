@@ -5,9 +5,10 @@ import { ProjectLoadContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     project: ProjectData
+    forceDisabled: boolean
 }
 
-export default function PrefillColorInput({ project }: Props) {
+export default function PrefillColorInput({ project, forceDisabled }: Props) {
     const [color, setColor] = useState(project.prefillColor)
 
     const setProjectContext = useContext(ProjectLoadContext)
@@ -27,9 +28,9 @@ export default function PrefillColorInput({ project }: Props) {
    }, [project.prefillColor])
 
     return (
-        <FormGroup label="Pre-fill color" disabled={!project.prefill}>
+        <FormGroup label="Pre-fill color" disabled={!project.prefill || forceDisabled}>
             <InputGroup
-                disabled={!project.prefill}
+                disabled={!project.prefill || forceDisabled}
                 type="color"
                 leftIcon="tint"
                 value={color}

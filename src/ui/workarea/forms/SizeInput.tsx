@@ -5,16 +5,17 @@ import SizeOverrideInput from "./SizeOverrideInput";
 
 export interface Props {
     project: ProjectData
+    forceDisabled: boolean
 }
 
-export default function SizeInput({ project }: Props) {
+export default function SizeInput({ project, forceDisabled }: Props) {
     const [width, setWidth] = useProjectStateNumericInput("defaultCharacterWidth", project)
     const [height, setHeight] = useProjectStateNumericInput("defaultCharacterHeight", project)
     const [base, setBase] = useProjectStateNumericInput("characterBase", project)
 
     return (
         <>
-            <FormGroup label="Char. width">
+            <FormGroup label="Char. width" disabled={forceDisabled}>
                 <InputGroup
                     value={width}
                     onValueChange={setWidth}
@@ -22,9 +23,10 @@ export default function SizeInput({ project }: Props) {
                     rightElement={<Tag minimal>px</Tag>}
                     size="small"
                     min={1}
+                    disabled={forceDisabled}
                 />
             </FormGroup>
-            <FormGroup label="Char. height">
+            <FormGroup label="Char. height" disabled={forceDisabled}>
                 <InputGroup
                     value={height}
                     onValueChange={setHeight}
@@ -32,9 +34,10 @@ export default function SizeInput({ project }: Props) {
                     rightElement={<Tag minimal>px</Tag>}
                     size="small"
                     min={1}
+                    disabled={forceDisabled}
                 />
             </FormGroup>
-            <FormGroup label="Char. base">
+            <FormGroup label="Char. base" disabled={forceDisabled}>
                 <InputGroup
                     value={base}
                     onValueChange={setBase}
@@ -42,9 +45,10 @@ export default function SizeInput({ project }: Props) {
                     rightElement={<Tag minimal>px</Tag>}
                     size="small"
                     min={0}
+                    disabled={forceDisabled}
                 />
             </FormGroup>
-            <SizeOverrideInput project={project} />
+            <SizeOverrideInput project={project} forceDisabled={forceDisabled} />
         </>
     )
 }

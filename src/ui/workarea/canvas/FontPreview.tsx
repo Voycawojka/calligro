@@ -1,18 +1,21 @@
-import { Card, FormGroup, H4, InputGroup, NumericInput, TextArea } from "@blueprintjs/core"
+import { Card, FormGroup, H4, InputGroup, TextArea } from "@blueprintjs/core"
 import { ProjectData } from "../../../filesystem/projectstore"
 import { ChangeEvent, useEffect, useRef, useState } from "react"
 import { drawPreview } from "../../../generation/preview"
 import { FontSpec, generateFont } from "../../../generation/font/Font"
 import { calculateTemplateData, generateTemplateImage } from "../../../generation/template/template"
 import useResizeObserver from "@react-hook/resize-observer"
+import { useProjectState } from "../hooks/useProjectState"
+import { useProjectStateNumericInput } from "../hooks/useProjectStateNumericInput"
 
 export interface Props {
     project: ProjectData
 }
 
 export default function FontPreview({ project }: Props) {
-    const [text, setText] = useState("Just a sample text")
-    const [scale, setScale] = useState(1)
+    const [text, setText] = useProjectState("previewText", project)
+    const [rawScale, setRawScale, scale] = useProjectStateNumericInput("previewScale", project)
+    const [bgColor, setBgColor] = useProjectState("previewBgColor", project)
     const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
     const [font, setFont] = useState<[FontSpec, Blob[]] | null>(null)
 
@@ -60,24 +63,18 @@ export default function FontPreview({ project }: Props) {
         setText(el.target.value)
     }
 
-    const onBgChanged = (el: ChangeEvent<HTMLInputElement>) => {
-        if (canvasParentRef.current) {
-            const color = el.target.value
-            canvasParentRef.current.style.background = color
-        }
-    }
-
     return (
         <>
             <H4>Font Preview</H4>
             <TextArea value={text} onChange={onTextChanged} fill />
             <FormGroup label="Scale">
-                <NumericInput leftIcon="zoom-in" min={1} value={scale} onValueChange={setScale} clampValueOnBlur fill />
+                <InputGroup type="number" leftIcon="zoom-in" min={1} value={rawScale} onValueChange={setRawScale} fill />
             </FormGroup>
             <FormGroup label="Background">
-                <InputGroup type="color" defaultValue="#ffffff" leftIcon="color-fill" onChange={onBgChanged} />
+                {/* // TODO FIX THIS */}
+                <InputGroup type="color" value={bgColor} leftIcon="color-fill" onValueChange={setBgColor} />
             </FormGroup>
-            <Card ref={canvasParentRef} style={{ backgroundColor: "#ffffff" }}>
+            <Card ref={canvasParentRef} style={{ backgroundColor: bgColor }}>
                 <canvas ref={canvasRef} />
             </Card>
         </>

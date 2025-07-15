@@ -6,19 +6,21 @@ import { useProjectState } from "../hooks/useProjectState"
 
 export interface Props {
     project: ProjectData
+    forceDisabled: boolean
 }
 
-export default function CharacterSetInput({ project }: Props) {
+export default function CharacterSetInput({ project, forceDisabled }: Props) {
     const [characters, setCharacters] = useProjectState("characterSet", project)
     const [dialogOpen, setDialogOpen] = useState(false)
 
     return (
         <>
-            <FormGroup label="Character set">
+            <FormGroup label="Character set" disabled={forceDisabled}>
                 <Button
                     icon="edit"
                     text={`${characters.length} characters`}
                     onClick={() => setDialogOpen(true)}
+                    disabled={forceDisabled}
                 />
             </FormGroup>
 

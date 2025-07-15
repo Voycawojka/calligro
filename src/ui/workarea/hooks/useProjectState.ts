@@ -1,25 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ProjectData } from "../../../filesystem/projectstore";
 import { ProjectLoadContext } from "../../contexts/ProjectContext";
 
 export function useProjectState<T extends keyof ProjectData>(key: T, project: ProjectData): [ProjectData[T], (v: ProjectData[T]) => void] {
-    const [value, setValue] = useState(project[key])
-
     const setProjectContext = useContext(ProjectLoadContext)
 
-    useEffect(() => {
-        if (value !== project[key]) {
+    const setValue = (v: ProjectData[T]) => {
+        if (v !== project[key]) {
             setProjectContext({
                 ...project,
-                [key]: value,
+                [key]: v,
                 dirty: true,
             })
         }
-    }, [value])
+    }
 
-    useEffect(() => {
-        setValue(project[key])
-    }, [project[key]])
-
-    return [value, setValue]
+    return [project[key], setValue]
 }

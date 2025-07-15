@@ -1,4 +1,4 @@
-import { Callout, Classes, Divider, H4 } from "@blueprintjs/core"
+import { Button, Callout, Classes, Divider, H4, Switch } from "@blueprintjs/core"
 import { ProjectData } from "../../filesystem/projectstore"
 
 import styles from "./workarea.module.scss"
@@ -21,12 +21,15 @@ export interface Props {
 
 export default function LoadedWorkArea({ project }: Props) {
     const [minSize, setMinSize] = useState(0)
+    const [isForceEditTemplate, setForceEditTemplate] = useState(false)
 
     const panelRef = useRef<HTMLDivElement | null>(null)
 
     useResizeObserver(panelRef, entry => {
         setMinSize(200 / entry.contentRect.width * 100)
     })
+
+    const templateDisabled = !!project.importedTemplate && !isForceEditTemplate
 
     return (
         <div ref={panelRef}>
@@ -37,16 +40,17 @@ export default function LoadedWorkArea({ project }: Props) {
                         { project.importedTemplate &&
                             <Callout intent="warning">
                                 A template was imported. The settings in this section will have no effect on the font until they are exported and reimported.
+                                <Switch label="Understood, edit anyway" checked={isForceEditTemplate} onChange={e => setForceEditTemplate(e.target.checked)} />
                             </Callout>
                         }
-                        <PrefillInput project={project} />
-                        <PrefillColorInput project={project} />
-                        <PrefillOutlineInput project={project} />
+                        <PrefillInput project={project} forceDisabled={templateDisabled} />
+                        <PrefillColorInput project={project} forceDisabled={templateDisabled} />
+                        <PrefillOutlineInput project={project} forceDisabled={templateDisabled} />
                         <Divider />
-                        <CharacterSetInput project={project} />
-                        <SizeInput project={project} />
+                        <CharacterSetInput project={project} forceDisabled={templateDisabled} />
+                        <SizeInput project={project} forceDisabled={templateDisabled} />
                         <Divider />
-                        <PreviewTemplateButton project={project} />
+                        <PreviewTemplateButton project={project} forceDisabled={templateDisabled} />
                     </div>
                 </Panel>
                 <PanelResizeHandle id="template-font-handle" className={Classes.DIVIDER} />

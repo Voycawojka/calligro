@@ -55,6 +55,13 @@ export default function KerningPairsInput({ project }: Props) {
         }
     }
 
+    const removeKerning = () => {
+        const updatedProject = { ...project }
+        updatedProject.kernings = updatedProject.kernings.filter(kerning => kerning !== editedKerning)
+        setProjectContext(updatedProject)
+        setEditedKerning(null)
+    }
+
     return (
         <>
             <FormGroup label="Kerning pairs">
@@ -85,8 +92,7 @@ export default function KerningPairsInput({ project }: Props) {
                         <>
                             <Tag minimal>px</Tag>
                             <Tooltip content="Remove kerning">
-                                {/* TODO remove kerning */}
-                                <Button icon="remove" disabled={!editedKerning} />
+                                <Button icon="remove" disabled={!editedKerning} onClick={removeKerning} />
                             </Tooltip>
                         </>
                     }

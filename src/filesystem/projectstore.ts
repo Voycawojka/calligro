@@ -41,6 +41,9 @@ interface SavedProjectData {
     lineHeight: number
     kernings: KerningPair[]
     sizeOverrides: SizeOverride[]
+    previewText: string
+    previewScale: number
+    previewBgColor: string
     lastExportSnapshot: null | SavedLastExportSnapshot
     importedTemplate: null | SavedImportedTemplate
 }
@@ -134,6 +137,9 @@ export function newProject(name: string): ProjectData {
         lineHeight: 35,
         kernings: [],
         sizeOverrides: [],
+        previewText: "Just a sample text",
+        previewScale: 1,
+        previewBgColor: "#ffffff",
         lastExportSnapshot: null,
         importedTemplate: null,
     } satisfies SavedProjectData

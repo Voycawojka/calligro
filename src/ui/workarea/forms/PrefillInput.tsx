@@ -7,9 +7,10 @@ import { useProjectState } from "../hooks/useProjectState"
 
 export interface Props {
     project: ProjectData
+    forceDisabled: boolean
 }
 
-export default function PrefillInput({ project }: Props) {
+export default function PrefillInput({ project, forceDisabled }: Props) {
     const [prefill, setPrefill] = useProjectState("prefill", project)
     const [systemFonts, setSystemFonts] = useState<string[]>([])
 
@@ -61,7 +62,7 @@ export default function PrefillInput({ project }: Props) {
     }
 
     return (
-        <FormGroup label="Pre-fill">
+        <FormGroup label="Pre-fill" disabled={forceDisabled}>
             <ControlGroup>
                 <Select<string>
                     items={systemFonts}
@@ -72,14 +73,15 @@ export default function PrefillInput({ project }: Props) {
                     }
                     onItemSelect={setPrefill}
                     popoverProps={{ minimal: true }}
+                    disabled={forceDisabled}
                 >
                     <Tooltip content="Base for drawing on the template" compact>
-                        <Button icon="font" text={prefill ?? "blank"} endIcon="caret-down" />
+                        <Button icon="font" text={prefill ?? "blank"} endIcon="caret-down" disabled={forceDisabled} />
                     </Tooltip>
                 </Select>
                 { prefill &&
                     <Tooltip content="Remove prefill" compact>
-                        <Button endIcon="remove" onClick={() => setPrefill(null)} />
+                        <Button endIcon="remove" onClick={() => setPrefill(null)} disabled={forceDisabled} />
                     </Tooltip>
                 }
             </ControlGroup>
