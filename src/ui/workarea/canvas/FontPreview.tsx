@@ -15,7 +15,7 @@ export interface Props {
 export default function FontPreview({ project }: Props) {
     const [text, setText] = useProjectState("previewText", project)
     const [rawScale, setRawScale, scale] = useProjectStateNumericInput("previewScale", project)
-    const [bgColor, setBgColor] = useProjectState("previewBgColor", project)
+    const [bgColor, setBgColor] = useProjectState("previewBgColor", project, 60)
     const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null)
     const [font, setFont] = useState<[FontSpec, Blob[]] | null>(null)
 
@@ -33,7 +33,7 @@ export default function FontPreview({ project }: Props) {
             const templateData = calculateTemplateData(project, "current or imported")
             const templateImage = await generateTemplateImage(templateData)
             const font = await generateFont(templateData, templateImage)
-            
+
             setFont(font)
         }
         generate()
@@ -71,7 +71,6 @@ export default function FontPreview({ project }: Props) {
                 <InputGroup type="number" leftIcon="zoom-in" min={1} value={rawScale} onValueChange={setRawScale} fill />
             </FormGroup>
             <FormGroup label="Background">
-                {/* // TODO FIX THIS */}
                 <InputGroup type="color" value={bgColor} leftIcon="color-fill" onValueChange={setBgColor} />
             </FormGroup>
             <Card ref={canvasParentRef} style={{ backgroundColor: bgColor }}>
