@@ -13,6 +13,12 @@ function mockGithubTag(tag: string): nock.Interceptor {
         .get(`/repos/voycawojka/calligro/releases/tags/${tag}`)
 }
 
+function mockItchLatestError() {
+    nock('https://itch.io')
+        .get('/api/1/x/wharf/latest')
+        .replyWithError('Cannot fetch latest version information')
+}
+
 const responseHeaders = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
 
 afterEach(() => {
@@ -39,6 +45,7 @@ test('version is up to date when itch version is lower than local version', asyn
 
 test('version is up to date when itch version data is unavailable and error is logged', async () => {
     console.error = vi.fn()
+    mockItchLatestError()
 
     const newVersion = await fetchNewerVersion('1.2.3', 'win-64')
 
