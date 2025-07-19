@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0
+
+- the entire user interface has been redesigned and rewritten
+- moved to a project based workflow (no more dangling template files)
+- fixed: no way to re-add space (https://github.com/Voycawojka/calligro/issues/80)
+- fixed: misleading slot sizeing (https://github.com/Voycawojka/calligro/issues/78)
+- fixed: slow per character settings (https://github.com/Voycawojka/calligro/issues/62)
+- light and dark themes support
+- template preview before export
+- new pre-fill font color and outline settings
+- unified UI between the web and the desktop versions
+
 ## 1.2.0
 
 - migrated to Vite, Node 20, and React 18

@@ -9,7 +9,7 @@ export function createCanvas(width: number, height: number, color?: string): [HT
     const ctx = canvas.getContext('2d')
 
     if (!ctx) {
-        throw new Error('Your browser doesn\'t support 2d canvas context. Use a modern browser, please.')
+        throw new Error("Unsupported browser")
     }
 
     ctx.imageSmoothingEnabled = false

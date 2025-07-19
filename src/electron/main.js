@@ -1,9 +1,7 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, shell } = require('electron')
 const path = require('path')
 const url = require('url')
 const { setupIpcListeners } = require('./listeners')
-const { setupMenu } = require('./menu')
-const { readVersion } = require('./version')
 
 async function createWindow() {
     const window = new BrowserWindow({
@@ -16,24 +14,24 @@ async function createWindow() {
             allowRunningInsecureContent: false,
             contextIsolation: false
         },
-        useContentSize: true
+        useContentSize: true,
+        autoHideMenuBar: true
     })
 
     const appUrl = process.env.ELECTRON_URL
-        ? path.join(process.env.ELECTRON_URL, '/webapp.html#/template')
+        ? path.join(process.env.ELECTRON_URL, '/webapp.html')
         : url.format({
             pathname: path.join(__dirname, 'app/webapp.html'),
             slashes: true
         })
 
-    setupMenu(app, window)
+    window.webContents.setWindowOpenHandler(({ url }) => {
+        shell.openExternal(url)
+        return { action: 'deny' }
+    })
+
     window.loadURL(appUrl)
-    readVersion().then(version => console.log(`Running version ${version}`))
     setupIpcListeners(app, window)
-    // hot fix!
-    setTimeout(() => {
-        window.webContents.send('navigation', '/template')
-    }, 500)
 }
 
 app.whenReady().then(createWindow)

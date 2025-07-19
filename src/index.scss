@@ -1,6 +1,5 @@
-@import "./scss/colors.scss";
-
 body {
     margin: 0;
-    background-color: $secondary-color;
+    height: 100vh;
+    overflow-x: hidden;
 }
