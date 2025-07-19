@@ -98,8 +98,7 @@ export default function SizeOverrideInput({ project, forceDisabled }: Props) {
             
             { editedOverride &&
                 <>
-                    {/* TODO force disable labels too */}
-                    <FormGroup label={`Width override (${str(editedOverride)})`}>
+                    <FormGroup label={`Width override (${str(editedOverride)})`} disabled={forceDisabled}>
                         <InputGroup
                             type="number"
                             value={editedOverride.width.toString()}
@@ -110,7 +109,7 @@ export default function SizeOverrideInput({ project, forceDisabled }: Props) {
                             disabled={forceDisabled}
                         />
                     </FormGroup>
-                    <FormGroup label={`Height override (${str(editedOverride)})`}>
+                    <FormGroup label={`Height override (${str(editedOverride)})`} disabled={forceDisabled}>
                         <InputGroup
                             type="number"
                             value={editedOverride.height.toString()}

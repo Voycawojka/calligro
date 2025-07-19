@@ -18,7 +18,7 @@ export default function Toolbar() {
     return (
         <Navbar>
             <NavbarGroup>
-                <NavbarHeading>Calligro</NavbarHeading>
+                <img src="../../../public/favicon.svg" height="30px" />
                 <NavbarDivider />
                 <ButtonGroup>
                     <FileMenu />

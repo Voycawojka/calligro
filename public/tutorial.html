@@ -102,208 +102,234 @@
     </header>
 
     <div class="container article">
-        <h1>Tutorial</h1>
+       <h1>Tutorial</h1>
         <p>
-            Creating a font with Calligro consists of generating a font template, drawing characters in it, and then exporting a bitmap font.
-            The template can be filled by using a regular TTF font and/or drawing in any graphics editor.
+            Creating a font with Calligro involves generating a font template, drawing characters in it, and then exporting a bitmap font.
+            The template can be filled using a regular TTF font and/or by drawing in any graphics editor.
         </p>
         <p>
-            To see examples on how to use an exported font with different game engines and frameworks check out
+            To see examples of how to use an exported font with different game engines and frameworks, check out
             <a href="https://github.com/Voycawojka/calligro/tree/main/samples">the samples</a>.
         </p>
 
         <h2>UI Overview</h2>
 
         <p>
-            To create or open a project use the "File" menu.
-            When a project is open the UI is divided into three sections:
+            Use the "File" menu to create or open a project.
+            When a project is open, the UI is divided into three sections:
         </p>
         <ul>
             <li>
-                <strong>Template Settings</strong> - defines the character set, size, and other properites impacting what you'll be drawing
+                <strong>Template Settings</strong> – defines the character set, size, and other properties that affect what you'll be drawing.
             </li>
             <li>
-                <strong>Font Settings</strong> - defines other properties that can still be tweaked after drawing the characters
+                <strong>Font Settings</strong> – includes options that can be adjusted after drawing the characters.
             </li>
             <li>
-                <strong>Font Preview</strong> - shows a preview of how the font will look like with the current settings
+                <strong>Font Preview</strong> – shows a preview of how the font will look with the current settings.
             </li>
         </ul>
 
-        TODO image
+        <img src="./img/tutorial/general-ui.png" alt="UI Overview" />
 
         <h2>Template Settings</h2>
 
         <p>
-            In the template settings you'll define the template, which is a PNG image with blank spots for you to draw your characters in.
+            In the Template Settings section, you define the template - a PNG image with blank spots where you'll draw your characters.
         </p>
         <p>
-            You can always preview how the template will look like by pressing the "Preview Template" button at the bottom.
-            For a freshly created project you'll see a regular grid of transparent squares.
-            Each square corresponds to a different character, like "a", "b", "c", etc, for a total of 95 characters by default.
-        </p>
-        TODO image
-
-        <h3>Pre-fill inputs</h3>
-
-        <p>
-            Close the preview and take a look at the "Prefill" input at the top of the template settings.
-            It allows you to choose a regular TTF font to prefill the template with.
-            Choose a font.
-            You'll immediately see the preview on the right side of the program display sample text.
-        </p>
-        TODO image
-        <p>
-            You can now also change the font fill color, outline color, and outline width with the inputs just below the prefill input.
-            When you're done, preview the template again by pressing the "Preview Template" button.
-            You'll see the template filled with the chosen font and colors.
-        </p>
-        TODO image
-        TODO note about fonts on web and desktop
-
-        <h3>Character set</h3>
-        <p>
-            Below the prefill input you'll find the "Characters set" button.
-            Press it to open a dialog where you can choose the characters that will be included in the template.
-            You can feely write any characters you'd like.
-            You can also start from a preset like "Basic Latin" or "Hiragana" using the "Override with preset" button.
-        </p>
-        TODO image
-        TODO note about emojis
-
-        <h3>Character size and base</h3>
-        <p>
-            Below the character set input you'll find the width, height and base inputs.
-            The width and height define the size of each character in pixels.
-        </p>
-        <p>
-            The base defines the height from the top of a character at which the character "sits".
-            Everything below the base will stick out like in the letters "j" and "g".
-            For example, a character of height 100 and base 70 will have 30 pixels of space below the base.
-        </p>
-        <p>
-            When you preview the template again you'll see horizontal lines between character slots.
-            Those lines represent the base of each character.
-        </p>
-        TODO image
-
-        <h3>Size overrides</h3>
-
-        <p>
-            Below the size and base inputs you'll find the "Size overrides" control.
-            It allows you to define different sizes for different characters.
-        </p>
-        <p>
-            Press the "+" button to open a dialog where you can add characters to the list of size overrides.
-            For example, write "abc" in the dialog's input and press "Add all" to add the characters "a", "b" and "c".
-        </p>
-        TODO image
-        <p>
-            Now, choose "a" from the dropdown next to the "+" button.
-            New inputs for witdh and height should appear below.
-            Modify them and press "Preview Template" to check that the "a" slot is now bigger or smaller than the others.
-        </p>
-        TODO image
-
-        <h2>Exporting and importing templates</h2>
-
-        <p>
-            Before exporting the template you can also play with the Font Settings section (explained later) and preview how the font will look like.
-            Font settings have no impact on the exported template.
-            If you're happy with how the font looks like just by using the prefill inputs, you can skip exporting the template.
-            If you want to draw your own characters, you need to export the template.
+            Press the "Preview Template" button at the bottom to see how it looks.
+            For a new project, you'll see a grid of transparent squares.
+            Each square corresponds to a different character (like "a", "b", "c", etc.), with 95 characters included by default.
         </p>
 
-        <h3>Exporting template</h3>
+        <img src="./img/tutorial/blank-template-preview.png" alt="Template Preview" />
+
+        <h3>Pre-fill Inputs</h3>
 
         <p>
-            To export the template, you can either:
+            Close the preview and check out the "Prefill" input at the top of Template Settings.
+            It lets you choose a regular TTF font to prefill the template.
+            Once you select a font, you’ll immediately see a sample text preview on the right.
+        </p>
+        
+        <img src="./img/tutorial/font-dropdown.png" alt="Prefill Dropdown" />
+        <img src="./img/tutorial/prefill-preview.png" alt="Prefill Input with Sample Text" />
+
+        <p>
+            You can also adjust the font fill color, outline color, and outline width using the inputs below.
+            When you're done, press "Preview Template" again to see the updated template with your chosen font and colors.
+        </p>
+        
+        <img src="./img/tutorial/prefill-template-preview.png" alt="Prefill Template Preview" />
+
+        <p class="note">
+            For technical reasons, in the web app the prefill dropdown only shows a limited set of commonly used fonts.
+            The desktop app allows you to choose from any font installed on your system.
+        </p>
+
+        <h3>Character Set</h3>
+        <p>
+            Below the Prefill input, you'll find the "Character Set" button.
+            Click it to open a dialog where you can choose the characters to include in your template.
+            You can enter any characters manually, or start from a preset like "Basic Latin" or "Hiragana" using the "Override with preset" button.
+        </p>
+        
+        <img src="./img/tutorial/character-set-dialog.png" alt="Character Set Dialog" />
+        <img src="./img/tutorial/preset-dropdown.png" alt="Character Set Preview" />
+
+        <p class="note">
+            Emojis and other characters made out of multiple code points are not supported.
+            You can however include any graphics you want if you assign them to characters you won't use otherwise.
+        </p>
+
+        <h3>Character Size and Base</h3>
+        <p>
+            Below the character set input are the width, height, and base inputs.
+            Width and height define the pixel size of each character.
+        </p>
+        <p>
+            The base sets the vertical position where the character "sits".
+            Anything below the base will extend downward - like in "j" or "g".
+            For example, a character with a height of 100 and a base of 70 will have 30 pixels of space below the base.
+        </p>
+        <p>
+            When previewing the template, horizontal lines between character slots indicate the base for each character.
+        </p>
+        
+        <img src="./img/tutorial/size-inputs.png" alt="Size and Base Inputs" />
+        <img src="./img/tutorial/base-example.png" alt="Example of a Base" />
+
+        <h3>Size Overrides</h3>
+
+        <p>
+            Below the size and base settings is the "Size Overrides" section.
+            This lets you define custom sizes for specific characters.
+        </p>
+        <p>
+            Click the "+" button to open a dialog where you can add characters to the override list.
+            For example, enter "abc" and click "Add all" to include "a", "b", and "c".
+        </p>
+        
+        <img src="./img/tutorial/add-size-override.png" alt="Size Overrides Dialog" />
+
+        <p>
+            Select a character like "a" from the dropdown next to the "+" button.
+            Width and height inputs will appear.
+            Modify them and press "Preview Template" to see the updated size in the template.
+        </p>
+        
+        <img src="./img/tutorial/a-override.png" alt="Size Override Example" />
+        <img src="./img/tutorial/template-with-override.png" alt="Size Override Preview" />
+
+        <h2>Exporting and Importing Templates</h2>
+
+        <p>
+            Before exporting a template, you can adjust settings in the Font Settings section (explained below) and preview how the font will look.
+            These settings don't affect the exported template.
+            If you're satisfied with the results using just the Prefill inputs, you may skip exporting.
+            But if you want to draw your own characters, you'll need to export the template.
+        </p>
+
+        <h3>Exporting the Template</h3>
+
+        <p>
+            To export the template:
             <ul>
-                <li>press "Preview Template" and then "Export PNG", or</li>
-                <li>choose the "File -&gt; Export Template PNG" menu at the top</li>
+                <li>Press "Preview Template" and then "Export PNG", or</li>
+                <li>Use the "File → Export Template PNG" menu</li>
             </ul>
-            In the desktop app and in the web app on modern browsers you'll be prompted to choose a location to save the template.
-            In the web app on browsers without the support of the File System API you'll be prompted to download the template file.
+            In the desktop app and on modern web browsers, you'll be prompted to choose a save location.
+            On older browsers, the file will just be downloaded.
         </p>
         <p>
-            You should now have a PNG file you can edit in any graphics editor.
-            Remember that the horizontal lines between characters represent the character base.
-            After you're done drawing your characters, you can import the PNG back into Calligro.
+            You now have a PNG file that can be edited in any graphics editor.
+            Remember the horizontal lines indicate character baselines.
+            Once you're done drawing, import the PNG back into Calligro.
         </p>
 
-        <h3>Importing templates</h3>
+        <h3>Importing Templates</h3>
 
         <p>
-            Import a filled template back to calligro by choosing "File -&gt; Import Template PNG" from the menu at the top.
-            You'll immediately see your custom characters in the font preview on the right.
+            To import a filled template, choose "File → Import Template PNG".
+            Your custom characters will immediately appear in the font preview.
         </p>
-        TODO image
+        
+        <img src="./img/tutorial/imported-preview.png" alt="Imported Preview" />
+
         <p>
-            After a template is imported, the Template Settings section becomes disabled by default.
-            You can still opt to edit it by checking the "edit anyway" checkbox at the top but note that any changes you make in this section now will have no effect on the font unless you export and import the template again.
+            After importing, the Template Settings section becomes disabled by default.
+            You can still make changes by checking "Edit anyway" at the top, but keep in mind those changes won’t affect the font unless you export and import the template again.
         </p>
-        TODO image
+        
+        <img src="./img/tutorial/disabled-template-settings.png" alt="Edit Anyway Checkbox" />
 
         <h2>Font Settings</h2>
 
         <p>
-            In Font Settings you can define additional properties, like spacing, line height, and kerning pairs.
-            Unlike Template Settings, those properties can still be changed after the template is imported.
+            The Font Settings section lets you adjust additional properties like spacing, line height, and kerning.
+            These can still be changed after the template has been imported.
         </p>
 
-        <h3>Spacing and line height</h3>
+        <h3>Spacing and Line Height</h3>
 
         <p>
-            The horizontal and vertical spacing is the distance between characters in pixels.
-            If the spacing is set to 0, character boundaries (as defined by the template) will touch each other.
+            Horizontal and vertical spacing define the space in pixels between characters.
+            If spacing is set to 0, characters will be directly adjacent to one another (as defined by the template sizes).
         </p>
 
         <p>
-            Line height is the vertical distance between lines of text.
-            The actual distance between lines will be the line height plus the vertical spacing.
-        </p>
-        TODO add image
-
-        <h3>Kerning pairs</h3>
-
-        <p>
-            Kerning pairs allow you to define custom spacing between specific characters.
-            For example, if you want the letter "a" to be closer to "b" than to "c", you can add a kerning pair for "ab" with a negative distance.
-            The distance is the number of pixels by which the second character in the pair will be moved further or closer to the first one.
-        </p>
-
-        TODO note about kerning pairs support
-
-        <p>
-            To add a kerning pair, press the "+" button next to the kerning pairs input.
-            A dialog will open where you can write the characters you want to pair and the distance.
-            Press "Add" to add the pair to the list.
-        </p>
-
-        TODO add image
-
-        <p>
-            Once a pair is added, you can edit it by choosing it from the dropdown next to the "+" button and modifying the distance input.
-            You can also remove it by pressing the "-" button next to the dropdown.
-        </p>
-
-        <h2>Exporting a font</h2>
-
-        <p>
-            Once you're happy with the font settings, you can export the font by pressing the "File -&gt; Export Font" menu at the top.
-            You can choose between two formats: TXT and XML.
-            Some game engines and frameworks require the TXT format and some require the XML format.
-            Unfortunately, this is usually not documented anywhere, so you might need to try both.
-            Some known examples include:
+            Line height is the vertical space between lines of text.
+            The actual space between lines is the line height plus vertical spacing.
         </p>
         
+        <img src="./img/tutorial/spacing-input.png" alt="Spacing and Line Height Inputs" />
+        <img src="./img/tutorial/custom-spacing-preview.png" alt="Line Height Example" />
+
+        <h3>Kerning Pairs</h3>
+
+        <p>
+            Kerning pairs let you define custom spacing between specific character pairs.
+            For example, if you want "a" to be closer to "b" than "c", add a kerning pair for "ab" with a negative value.
+            This value sets how much the second character moves relative to the first.
+        </p>
+
+        <p class="note">
+            Altought kerning pairs are part of the BMFont specification, not all game engines support them.
+            This is often not documented, so you may need to test if your engine supports kerning.
+            Godot is known to support it.
+        </p>
+    
+        <p>
+            To add a pair, click the "+" button next to the kerning pairs input.
+            A dialog will appear where you can enter the characters and spacing.
+            Click "Add" to save the pair.
+        </p>
+        
+        <img src="./img/tutorial/add-kerning.png" alt="Add Kerning Pair Dialog" />
+
+        <p>
+            You can edit an existing pair by selecting it from the dropdown and adjusting the distance.
+            To remove a pair, press the "-" button next to the dropdown.
+        </p>
+
+        <img src="./img/tutorial/edit-kerning.png" alt="Edit Kerning" />
+        <img src="./img/tutorial/kerning-preview.png" alt="Kerning Preview" />
+
+        <h2>Exporting a Font</h2>
+
+        <p>
+            Once you're happy with your font, export it using "File → Export Font".
+            You can choose between TXT and XML formats.
+            Different game engines require different formats.
+            Unfortunately, this often isn’t documented, so you may need to try both.
+        </p>
+
+        <p>
+            Some known examples:
+        </p>
+
         <table>
-            <thead>
-                <tr>
-                    <th>Tool</th>
-                    <th>Format</th>
-                </tr>
-            </thead>
             <tbody>
                 <tr>
                     <td>Godot</td>
@@ -333,7 +359,7 @@
         </table>
 
         <p>
-            To see examples on how to use an exported font with different game engines and frameworks check out
+            To see examples of how to use an exported font with different game engines and frameworks, check out
             <a href="https://github.com/Voycawojka/calligro/tree/main/samples">the samples</a>.
         </p>
     </div>

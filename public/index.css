@@ -4,6 +4,12 @@
     --link-color: #474d5f;
     --accent-color: #ffd76c;
     --color-on-dark-bg: #acacac;
+    --note-bg-color: #eaf4ff;
+    --note-mark-color: #3399ff;
+    --note-text-color: #174a6c;
+    --section-spacing: 2.5rem;
+    --element-spacing: 1.25rem;
+    --border-radius: 4px;
 }
 
 body {
@@ -12,24 +18,53 @@ body {
     padding: 0;
     background: #f4f4f9;
     color: #333;
-    line-height: 1.6;
+    line-height: 1.7;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 h1, h2, h3 {
-    margin: 0;
+    margin: 0 0 0.7em 0;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.7rem;
 }
 
 .summary-header {
     display: inline-block;
+    margin-bottom: 1.2rem;
 }
 
 a {
     color: var(--link-color);
-    text-decoration: none;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.2s, background 0.2s;
+    padding: 0.05em 0.1em;
+    border-radius: var(--border-radius);
+    background: none;
+    box-shadow: none;
 }
 
 a:hover {
     text-decoration: underline;
+    background: var(--accent-color);
+    color: var(--background-dark);
+    box-shadow: none;
 }
 
 a i .bx {
@@ -37,36 +72,83 @@ a i .bx {
     text-decoration: none;
 }
 
+table {
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+    width: 100%;
+    margin: 2em 0;
+}
+
+th, td {
+    padding: 0.6em 1.2em;
+    text-align: left;
+}
+
+th {
+    background: #f7f7f7;
+    font-weight: 700;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+td {
+    background: #fff;
+    border-bottom: 1px solid #ececec;
+}
+
 header {
     background: var(--background-dark);
     color: var(--accent-color);
-    padding: 1rem 2rem;
+    padding: 1.5rem 2.5rem 1.2rem 2.5rem;
     text-align: center;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    margin-bottom: var(--section-spacing);
 }
 
 header img {
     width: 100%;
     max-width: 300px;
+    margin-bottom: 0.5rem;
 }
 
 header nav {
-    margin-top: 0.5rem;
+    margin-top: 0.7rem;
 }
 
 header nav a {
-    margin: 0 1rem;
-    font-size: 1rem;
+    margin: 0 1.2rem;
+    font-size: 1.05rem;
     color: var(--color-on-dark-bg);
+    padding: 0.2em 0.7em;
+    border-radius: var(--border-radius);
+    transition: background 0.2s, color 0.2s;
+}
+
+header nav a:hover {
+    background: var(--accent-color);
+    color: var(--background-dark);
 }
 
 .container {
     max-width: 1000px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: var(--section-spacing) auto;
+    padding: 0 2rem;
 }
 
 .article {
     max-width: 800px;
+    margin: 0 auto;
+    padding: var(--element-spacing);
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.article img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .hero {
@@ -74,8 +156,8 @@ header nav a {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 2rem;
-    padding: 2rem 0;
+    gap: 2.5rem;
+    padding: 2.5rem 0 2rem 0;
 }
 
 .hero-text {
@@ -91,7 +173,8 @@ header nav a {
 .features {
     display: flex;
     flex-direction: column;
-    margin-top: 3rem;
+    margin-top: var(--section-spacing);
+    gap: 2.2rem;
 }
 
 .feature {
@@ -99,7 +182,10 @@ header nav a {
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
 .feature:nth-child(even) {
@@ -118,39 +204,19 @@ header nav a {
 }
 
 .cta {
-    margin-top: 6rem;
-    padding: 2rem 1rem;
-    padding-bottom: 0;
-    background: var(--background-dark);
+    padding: 2.5rem 1.5rem 0 1.5rem;
     color: var(--color-on-dark-bg);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-}
-
-.cta h2 {
-    margin-bottom: 1.5rem;
+    border-radius: var(--border-radius);
 }
 
 .cta a {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: var(--background-dark);
-    color: var(--accent-color);
-    font-weight: bold;
+    font-size: 2rem;
     text-transform: uppercase;
-    border-radius: 2px;
-    border: 2px solid var(--color-on-dark-bg);
-}
-
-.cta a:hover {
-    background: var(--background-light);
-    color: var(--background-dark);
-    border-color: var(--background-dark);
 }
 
 .cta .widget-container {
@@ -171,39 +237,58 @@ iframe {
 .tutorial-section {
     display: flex;
     flex-direction: column;
-    margin-left: 1rem;
+    margin-left: 1.5rem;
+    margin-bottom: var(--section-spacing);
+    gap: 1.2rem;
 }
 
 .tutorial-image {
-    margin: 1rem;
+    margin: 1.5rem;
     align-self: center;
     max-width: 500px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
 .warning {
-    padding-left: 1rem;
-    border-left: 1px solid var(--background-dark);
+    padding-left: 1.2rem;
+    border-left: 2px solid var(--background-dark);
+    margin-bottom: 1.2rem;
+}
+
+.note {
+    background: var(--note-bg-color);
+    border-left: 4px solid var(--note-mark-color);
+    color: var(--note-text-color);
+    padding: 1rem 1.2rem;
+    margin: 1.2rem 0;
+    border-radius: var(--border-radius);
 }
 
 footer {
     text-align: center;
-    padding: 1rem 0;
-    margin-top: 3 rem;
-    font-size: 0.9rem;
+    padding: 1.2rem 0 1.5rem 0;
+    margin-top: var(--section-spacing);
+    font-size: 0.98rem;
     color: #666;
+    background: #fafafa;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
 }
 
 .authors {
     display: flex;
-    gap: 2rem;
-    padding: 0 2rem;
+    gap: 2.5rem;
+    padding: 0 2.5rem;
     justify-content: center;
+    margin-bottom: 1.2rem;
 }
 
 .socials {
     list-style: none;
     padding: 0;
     margin: 0;
+    margin-top: 0.5rem;
 }
 
 .socials li {

@@ -1,6 +1,7 @@
 .container {
     width: 100vw;
     height: calc(100vh - 50px);
+    overflow: hidden; /* Prevent scrollbars on container */
 }
 
 .worksplit {
@@ -11,9 +12,13 @@
 .formcontainer {
     flex-grow: 1;
     padding: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 50px);
 }
 
 .canvascontainer {
     flex-grow: 4;
     padding: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 50px);
 }

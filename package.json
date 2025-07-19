@@ -21,10 +21,8 @@
     "@react-hook/resize-observer": "^2.0.2",
     "client-zip": "^1.2.2",
     "font-list": "^1.4.3",
-    "js-cookie": "^2.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-github-corner": "^2.5.0",
     "react-helmet": "^6.1.0",
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^3.0.3",
@@ -35,7 +33,6 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
-    "@types/js-cookie": "^2.2.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-helmet": "^6.1.5",
