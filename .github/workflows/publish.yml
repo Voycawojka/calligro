@@ -20,11 +20,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Build 🔨
-        run: |
-          npm ci
-          npm run build
-
       - name: Bump version 📈
         if: ${{ github.event.inputs.versionBump != 'none' }}
         run: |
@@ -32,6 +27,11 @@ jobs:
           git config user.email "<>"
           npm version ${{ github.event.inputs.versionBump }} -m "Release %s"
           git push --follow-tags origin main
+
+      - name: Build 🔨
+        run: |
+          npm ci
+          npm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
