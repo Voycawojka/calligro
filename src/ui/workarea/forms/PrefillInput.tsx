@@ -30,7 +30,7 @@ export default function PrefillInput({ project, forceDisabled }: Props) {
         findFonts()
     }, [])
 
-    const renderPrefill: ItemRenderer<string> = (name, { handleClick, handleFocus, modifiers, query}) => {
+    const renderPrefill: ItemRenderer<string> = (name, { handleClick, handleFocus, modifiers }) => {
         if (!modifiers.matchesPredicate) {
             return null
         }

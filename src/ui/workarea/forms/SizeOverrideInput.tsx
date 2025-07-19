@@ -18,7 +18,7 @@ export default function SizeOverrideInput({ project, forceDisabled }: Props) {
 
     const str = (override: SizeOverride) => String.fromCharCode(override.char)
 
-    const renderOverride: ItemRenderer<SizeOverride> = (override, { handleClick, handleFocus, modifiers, query}) => {
+    const renderOverride: ItemRenderer<SizeOverride> = (override, { handleClick, handleFocus, modifiers }) => {
         if (!modifiers.matchesPredicate) {
             return null
         }
@@ -98,6 +98,7 @@ export default function SizeOverrideInput({ project, forceDisabled }: Props) {
             
             { editedOverride &&
                 <>
+                    {/* TODO force disable labels too */}
                     <FormGroup label={`Width override (${str(editedOverride)})`}>
                         <InputGroup
                             type="number"

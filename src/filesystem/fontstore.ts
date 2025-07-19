@@ -1,4 +1,4 @@
-import { generateFont } from "../generation/font/Font";
+import { generateFont } from "../generation/font/font";
 import { fontSpecToTextFile } from "../generation/font/specSaver";
 import { downloadArchive, ZippedFile } from "../generation/fs/zip";
 import { calculateTemplateData, generateTemplateImage } from "../generation/template/template";

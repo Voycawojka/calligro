@@ -1,4 +1,4 @@
-import { Dialog, DialogBody, InputGroup, Callout, DialogFooter, Button } from "@blueprintjs/core";
+import { Dialog, DialogBody, InputGroup, Callout, DialogFooter, Button, OverlayToaster } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { newProject } from "../../../filesystem/projectstore";
 import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
@@ -39,6 +39,11 @@ export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
             const project = newProject(projectName)
             setProjectContext(project)
             onClose()
+            const toaster = await OverlayToaster.create({ position: "top-right" })
+            toaster.show({
+                intent: "success",
+                message: `Project '${projectName}' created.`
+            })
         } catch (e: any) {
             setErrorMessage((e as Error).message)
         }

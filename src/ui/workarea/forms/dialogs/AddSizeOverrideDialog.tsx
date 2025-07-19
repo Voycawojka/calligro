@@ -1,4 +1,4 @@
-import { Button, Callout, Dialog, DialogBody, DialogFooter, FormGroup, InputGroup, OverlayToaster, TextArea } from "@blueprintjs/core"
+import { Button, Callout, Dialog, DialogBody, DialogFooter, OverlayToaster, TextArea } from "@blueprintjs/core"
 import { ProjectData } from "../../../../filesystem/projectstore"
 import { useContext, useState } from "react"
 import { ProjectLoadContext } from "../../../contexts/ProjectContext"

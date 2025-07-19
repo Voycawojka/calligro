@@ -8,27 +8,19 @@ import "normalize.css/normalize.css"
 import "@blueprintjs/core/lib/css/blueprint.css"
 import "@blueprintjs/icons/lib/css/blueprint-icons.css"
 import "@blueprintjs/select/lib/css/blueprint-select.css"
+import Head from './ui/head/Head'
 
 function App() {
     return (
-        //  <WebOnly>
-        //     <Header />
-        // </WebOnly>
-
         <BlueprintProvider>
             <ThemeContextRoot>
                 <ProjectContextRoot>
+                    <Head />
                     <Toolbar />
                     <WorkAreaContainer />
                 </ProjectContextRoot>
             </ThemeContextRoot>
         </BlueprintProvider>
-
-        // <DesktopOnly>
-        //     <IpcNavigation />
-        //     <Updater />
-        //     <AboutPopup />
-        // </DesktopOnly> */}
     )
 }
 

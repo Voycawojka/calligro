@@ -102,147 +102,240 @@
     </header>
 
     <div class="container article">
-        <h2>Create a font</h2>
+        <h1>Tutorial</h1>
         <p>
-            Making a font with Calligro consists of two steps.
-            First, you define basic font parameters to generate a template.
-            This template is a PNG file with designated places for each character.
-            You can then draw your characters in any graphics software you'd like.
+            Creating a font with Calligro consists of generating a font template, drawing characters in it, and then exporting a bitmap font.
+            The template can be filled by using a regular TTF font and/or drawing in any graphics editor.
         </p>
         <p>
-            Second, you open the filled in template back in Calligro, configure additional parameters, and export a
-            bitmap font.
-            To see examples on how to use an exported font with different game engines and frameworks, check out <a
-                href="https://github.com/Voycawojka/calligro/tree/main/samples">the samples</a>.
+            To see examples on how to use an exported font with different game engines and frameworks check out
+            <a href="https://github.com/Voycawojka/calligro/tree/main/samples">the samples</a>.
         </p>
 
-        <details>
-            <summary>
-                <h3 class="summary-header">Prepare a template</h3>
-            </summary>
-            <section class="tutorial-section">
-                <h4>Choose a character set</h4>
-                <p>
-                    Write all characters you want to include in your font in the characters input.
-                    You can choose an existing unicode preset like Latin Basic, Hiragana or Georgian.
-                    You can also just write any unicode characters you'd like, except for symbols made from multiple
-                    unicode code points (like emojis).
-                    Note that any duplicated characters will be ignored.
-                </p>
-                <img src="img/tutorial/input-characters.png" class="tutorial-image" />
-                <h4>Choose character size and base</h4>
-                <p>
-                    In the "common" section you can choose size and base for all characters.
-                    In the "per character" section you can also override size for each individual character.
-                    Size is simply the total character width and height in pixels.
-                    A character's base is the height from the top at which the character "sits".
-                    Everything below the base will stick out like in the letters "j" and "g".
-                    This means that a character of height 100 and base 70 will have 30 pixels below the base.
-                </p>
-                <img src="img/tutorial/size-and-base.png" class="tutorial-image" />
-                <h4>Prefill (optional)</h4>
-                <p>
-                    Optionally, you can choose a regular font to prefill the template with.
-                    Do this if you don't want to draw each character from scratch.
-                    Keep in mind prefilling might not work great for very small character sizes (meant for pixel art).
-                    Below you can see an example of a part of template prefilled with Lucida Console.
-                </p>
-                <details>
-                    <summary>Note on supported fonts and licensing</summary>
-                    <p class="warning">
-                        In the web version of Calligro you can choose from a limited set of commonly used fonts.
-                        In the desktop version you can choose any font installed on your system.
-                        Be mindful of the font's license.
-                    </p>
-                </details>
-                <details>
-                    <summary>Note on converting truetype fonts</summary>
-                    <p class="warning">
-                        Thanks to the prefill option Calligro can be used to convert a trutype font into a BMFont.
-                        However, if you’re looking specifically for that try tools like the original
-                        <a href='https://www.angelcode.com/products/bmfont/' class={styles.link}>BMFont</a>
-                        or
-                        <a href='https://libgdx.com/wiki/tools/hiero' class={styles.link}>Hiero</a>
-                        instead.
-                    </p>
-                </details>
-                <img src="img/tutorial/prefilled-template-part.png" class="tutorial-image" />
-                <h4>Draw your font</h4>
-                <p>
-                    Save/download the template you configured.
-                    You will get two files - a .png and a .calligro file.
-                    Open the PNG in any graphics editor (for example Photoshop or Aseprite) and draw your font.
-                    Characters should be drawn inside the yellow boundaries.
-                    Horizontal lines between them determine the character base.
-                </p>
-                <img src="img/tutorial/drawn-characters.png" class="tutorial-image" />
-            </section>
-        </details>
+        <h2>UI Overview</h2>
 
-        <details>
-            <summary>
-                <h3 class="summary-header">Turn the template into a font</h3>
-            </summary>
-            <section class="tutorial-section">
-                <h4>Open the template</h4>
-                <p>
-                    Go to either "Step 2" in the web version or to "Fonts -&gt; Generate a font" in the desktop version.
-                    Open/upload the filled in .png file and the corresponding .calligro file back in Calligro.
-                </p>
-                <h4>Configure the font</h4>
-                <p>
-                    Specify the desired margin, line height and kerning pairs.
-                    You can preview the outcome live in the preview section.
-                </p>
-                <p>
-                    Margin is a distance bewteen characters in pixels.
-                    Line height is the distance from the top of one line of text to the top of the line below.
-                    Kerning pairs modify the margin between specific character.
-                    For example, pair "ab" with distance -10 will cause "b" to be 10 pixels closer to "a".
-                    Pair "ab" ≠ "ba"!
-                </p>
-                <details>
-                    <summary>Note on kerning pairs support!</summary>
-                    <p class="warning">
-                        Be aware that even though kerning pairs are part of the BMFont specification, not all engines
-                        and frameworks support it.
-                        From all the tools in <a href="https://github.com/Voycawojka/calligro/tree/main/samples">the
-                            samples</a> section, only Godot seems to support it.
-                    </p>
-                </details>
-                <img src="img/tutorial/font-options.png" class="tutorial-image" />
-                <img src="img/tutorial/font-preview.png" class="tutorial-image" />
-                <h4>Export your font</h4>
-                <p>
-                    Generate and save/download the final font.
-                    You can choose between the TXT and XML formats.
-                    Some engines and frameworks require the TXT format and some require the XML format.
-                    <details>
-                        <summary>Note on file names</summary>
-                        <p class="warning">
-                           After exporting a font you will get a .fnt file and a corresponding .png file.
-                           They need to always be kept toghether.
-                           If you ever want to change the name of the PNG you need to edit the FNT file in a text editor and replace the PNG file name.
-                        </p>
-                    </details>
-                </p>
-                <p>
-                    Examples of tools with TXT support:
-                <ul>
-                    <li>Godot</li>
-                    <li>LibGDX</li>
-                    <li>LÖVE</li>
-                    <li>Heaps.io</li>
-                </ul>
-                Example of tools with XML support:
-                <ul>
-                    <li>Phaser</li>
-                    <li>HaxeFlixel</li>
-                </ul>
-                </p>
-                <img src="img/tutorial/imported-in-godot.png" class="tutorial-image" />
-            </section>
-        </details>
+        <p>
+            To create or open a project use the "File" menu.
+            When a project is open the UI is divided into three sections:
+        </p>
+        <ul>
+            <li>
+                <strong>Template Settings</strong> - defines the character set, size, and other properites impacting what you'll be drawing
+            </li>
+            <li>
+                <strong>Font Settings</strong> - defines other properties that can still be tweaked after drawing the characters
+            </li>
+            <li>
+                <strong>Font Preview</strong> - shows a preview of how the font will look like with the current settings
+            </li>
+        </ul>
+
+        TODO image
+
+        <h2>Template Settings</h2>
+
+        <p>
+            In the template settings you'll define the template, which is a PNG image with blank spots for you to draw your characters in.
+        </p>
+        <p>
+            You can always preview how the template will look like by pressing the "Preview Template" button at the bottom.
+            For a freshly created project you'll see a regular grid of transparent squares.
+            Each square corresponds to a different character, like "a", "b", "c", etc, for a total of 95 characters by default.
+        </p>
+        TODO image
+
+        <h3>Pre-fill inputs</h3>
+
+        <p>
+            Close the preview and take a look at the "Prefill" input at the top of the template settings.
+            It allows you to choose a regular TTF font to prefill the template with.
+            Choose a font.
+            You'll immediately see the preview on the right side of the program display sample text.
+        </p>
+        TODO image
+        <p>
+            You can now also change the font fill color, outline color, and outline width with the inputs just below the prefill input.
+            When you're done, preview the template again by pressing the "Preview Template" button.
+            You'll see the template filled with the chosen font and colors.
+        </p>
+        TODO image
+        TODO note about fonts on web and desktop
+
+        <h3>Character set</h3>
+        <p>
+            Below the prefill input you'll find the "Characters set" button.
+            Press it to open a dialog where you can choose the characters that will be included in the template.
+            You can feely write any characters you'd like.
+            You can also start from a preset like "Basic Latin" or "Hiragana" using the "Override with preset" button.
+        </p>
+        TODO image
+        TODO note about emojis
+
+        <h3>Character size and base</h3>
+        <p>
+            Below the character set input you'll find the width, height and base inputs.
+            The width and height define the size of each character in pixels.
+        </p>
+        <p>
+            The base defines the height from the top of a character at which the character "sits".
+            Everything below the base will stick out like in the letters "j" and "g".
+            For example, a character of height 100 and base 70 will have 30 pixels of space below the base.
+        </p>
+        <p>
+            When you preview the template again you'll see horizontal lines between character slots.
+            Those lines represent the base of each character.
+        </p>
+        TODO image
+
+        <h3>Size overrides</h3>
+
+        <p>
+            Below the size and base inputs you'll find the "Size overrides" control.
+            It allows you to define different sizes for different characters.
+        </p>
+        <p>
+            Press the "+" button to open a dialog where you can add characters to the list of size overrides.
+            For example, write "abc" in the dialog's input and press "Add all" to add the characters "a", "b" and "c".
+        </p>
+        TODO image
+        <p>
+            Now, choose "a" from the dropdown next to the "+" button.
+            New inputs for witdh and height should appear below.
+            Modify them and press "Preview Template" to check that the "a" slot is now bigger or smaller than the others.
+        </p>
+        TODO image
+
+        <h2>Exporting and importing templates</h2>
+
+        <p>
+            Before exporting the template you can also play with the Font Settings section (explained later) and preview how the font will look like.
+            Font settings have no impact on the exported template.
+            If you're happy with how the font looks like just by using the prefill inputs, you can skip exporting the template.
+            If you want to draw your own characters, you need to export the template.
+        </p>
+
+        <h3>Exporting template</h3>
+
+        <p>
+            To export the template, you can either:
+            <ul>
+                <li>press "Preview Template" and then "Export PNG", or</li>
+                <li>choose the "File -&gt; Export Template PNG" menu at the top</li>
+            </ul>
+            In the desktop app and in the web app on modern browsers you'll be prompted to choose a location to save the template.
+            In the web app on browsers without the support of the File System API you'll be prompted to download the template file.
+        </p>
+        <p>
+            You should now have a PNG file you can edit in any graphics editor.
+            Remember that the horizontal lines between characters represent the character base.
+            After you're done drawing your characters, you can import the PNG back into Calligro.
+        </p>
+
+        <h3>Importing templates</h3>
+
+        <p>
+            Import a filled template back to calligro by choosing "File -&gt; Import Template PNG" from the menu at the top.
+            You'll immediately see your custom characters in the font preview on the right.
+        </p>
+        TODO image
+        <p>
+            After a template is imported, the Template Settings section becomes disabled by default.
+            You can still opt to edit it by checking the "edit anyway" checkbox at the top but note that any changes you make in this section now will have no effect on the font unless you export and import the template again.
+        </p>
+        TODO image
+
+        <h2>Font Settings</h2>
+
+        <p>
+            In Font Settings you can define additional properties, like spacing, line height, and kerning pairs.
+            Unlike Template Settings, those properties can still be changed after the template is imported.
+        </p>
+
+        <h3>Spacing and line height</h3>
+
+        <p>
+            The horizontal and vertical spacing is the distance between characters in pixels.
+            If the spacing is set to 0, character boundaries (as defined by the template) will touch each other.
+        </p>
+
+        <p>
+            Line height is the vertical distance between lines of text.
+            The actual distance between lines will be the line height plus the vertical spacing.
+        </p>
+        TODO add image
+
+        <h3>Kerning pairs</h3>
+
+        <p>
+            Kerning pairs allow you to define custom spacing between specific characters.
+            For example, if you want the letter "a" to be closer to "b" than to "c", you can add a kerning pair for "ab" with a negative distance.
+            The distance is the number of pixels by which the second character in the pair will be moved further or closer to the first one.
+        </p>
+
+        TODO note about kerning pairs support
+
+        <p>
+            To add a kerning pair, press the "+" button next to the kerning pairs input.
+            A dialog will open where you can write the characters you want to pair and the distance.
+            Press "Add" to add the pair to the list.
+        </p>
+
+        TODO add image
+
+        <p>
+            Once a pair is added, you can edit it by choosing it from the dropdown next to the "+" button and modifying the distance input.
+            You can also remove it by pressing the "-" button next to the dropdown.
+        </p>
+
+        <h2>Exporting a font</h2>
+
+        <p>
+            Once you're happy with the font settings, you can export the font by pressing the "File -&gt; Export Font" menu at the top.
+            You can choose between two formats: TXT and XML.
+            Some game engines and frameworks require the TXT format and some require the XML format.
+            Unfortunately, this is usually not documented anywhere, so you might need to try both.
+            Some known examples include:
+        </p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Format</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Godot</td>
+                    <td>TXT</td>
+                </tr>
+                <tr>
+                    <td>LibGDX</td>
+                    <td>TXT</td>
+                </tr>
+                <tr>
+                    <td>LÖVE</td>
+                    <td>TXT</td>
+                </tr>
+                <tr>
+                    <td>Heaps.io</td>
+                    <td>TXT</td>
+                </tr>
+                <tr>
+                    <td>Phaser</td>
+                    <td>XML</td>
+                </tr>
+                <tr>
+                    <td>HaxeFlixel</td>
+                    <td>XML</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            To see examples on how to use an exported font with different game engines and frameworks check out
+            <a href="https://github.com/Voycawojka/calligro/tree/main/samples">the samples</a>.
+        </p>
     </div>
 
     <footer>

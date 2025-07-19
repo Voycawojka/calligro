@@ -4,6 +4,7 @@ import { listProjectNames, loadProject, saveProject } from "../../../filesystem/
 import { useContext, useState } from "react";
 import NewProjectDialog from "../dialogs/NewProjectDialog";
 import OpenProjectDialog from "../dialogs/OpenProjectDialog";
+import RemoveProjectDialog from "../dialogs/RemoveProjectDialog";
 import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
 import OverwriteChangesAlert from "../dialogs/OverwriteChangesAlert";
 import SaveAsDialog from "../dialogs/SaveAsDialog";
@@ -14,6 +15,7 @@ import ImportTemplateWarningDialog from "../dialogs/ImportTemplateWarningDialog"
 export default function FileMenu() {
     const [newProjectModalOpen, setIsNewProjectModalOpen] = useState(false)
     const [openProjectModalOpen, setIsOpenProjectModalOpen] = useState(false)
+    const [removeProjectModalOpen, setRemoveProjectModalOpen] = useState(false)
     const [overwriteAlertOpen, setIsOverwriteAlertOpen] = useState(false)
     const [overwriteAlertAcceptFunction, setOverwriteAlertAcceptFunction] = useState(() => () => {})
     const [saveAsModalOpen, setSaveAsModalOpen] = useState(false)
@@ -37,7 +39,12 @@ export default function FileMenu() {
             if (!loadedProject) {
                 throw new Error("Couldn't open project")
             }
-            setProjectContext({ ...loadedProject })
+            setProjectContext(loadedProject)
+            const toaster = await OverlayToaster.create({ position: "top-right" })
+            toaster.show({
+                intent: "success",
+                message: `Project '${name}' opened.`
+            })
         } catch (e: any) {
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
@@ -56,13 +63,17 @@ export default function FileMenu() {
             project.dirty = false
             await saveProject(project.name, project)
             setProjectContext({ ...project })
+            const toaster = await OverlayToaster.create({ position: "top-right" })
+            toaster.show({
+                intent: "success",
+                message: `Project '${project.name}' saved.`
+            })
         } catch (e: any) {
             if (project) {
                 project.dirty = true
             }
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
-                icon: "error",
                 intent: "danger",
                 message: (e as Error).message
             })
@@ -107,6 +118,7 @@ export default function FileMenu() {
                         <MenuItem key={projectName} icon="document-open" text={projectName} onClick={() => openRecentProject(projectName, false)} />
                     )) }
                 </MenuItem>
+                <MenuItem key="remove-project" icon="trash" text="Remove Project" onClick={() => setRemoveProjectModalOpen(true)} />
                 <MenuDivider />
                 <MenuItem key="save-project" icon="floppy-disk" text={`${project?.dirty ? "*" : ""}Save Project`} disabled={!project} onClick={saveCurrentProject} />
                 <MenuItem key="save-as" icon="folder-shared" text="Save As..." disabled={!project} onClick={() => setSaveAsModalOpen(true)} />
@@ -123,6 +135,7 @@ export default function FileMenu() {
             <SaveAsDialog isOpen={saveAsModalOpen} setIsOpen={setSaveAsModalOpen} />
             <ImportTemplateWarningDialog isOpen={importTemplateModalOpen} setIsOpen={setImportTemplateModalOpen} />
             <ExportFontDialog isOpen={exportFontModalOpen} setIsOpen={setExportFontModalOpen} />
+            <RemoveProjectDialog isOpen={removeProjectModalOpen} setIsOpen={setRemoveProjectModalOpen} />
         </>
     )
 }

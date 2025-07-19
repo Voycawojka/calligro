@@ -1,4 +1,4 @@
-import { Button, Callout, Classes, Divider, H4, Switch } from "@blueprintjs/core"
+import { Callout, Classes, Divider, H4, Switch } from "@blueprintjs/core"
 import { ProjectData } from "../../filesystem/projectstore"
 
 import styles from "./workarea.module.scss"

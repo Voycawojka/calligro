@@ -4,11 +4,12 @@ import { ProjectData } from "./projectstore";
 
 function exportTemplateFallback(image: Blob, filename: string) {
     const url = URL.createObjectURL(image)
-    const a = Object.assign(document.createElement("a"), {
-        href: url,
-        dowload: filename,
-    })
+    const a = document.createElement("a")
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
     a.click()
+    document.body.removeChild(a)
     URL.revokeObjectURL(url)
 }
 

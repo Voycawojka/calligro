@@ -1,8 +1,7 @@
-import { ProjectData } from '../../filesystem/projectstore'
 import { convertToBlob } from '../../utils/canvasHelpers'
 import { blobToCanvas } from '../fs/image'
 import { packFromSheet, SourceRect } from '../packing/imagePacking'
-import { generateTemplateImage, getSlotPosition, TemplateData } from '../template/template'
+import { getSlotPosition, TemplateData } from '../template/template'
 
 export interface FontSpec {
     info: {

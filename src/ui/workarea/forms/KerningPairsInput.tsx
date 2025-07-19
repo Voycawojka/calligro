@@ -18,7 +18,7 @@ export default function KerningPairsInput({ project }: Props) {
 
     const str = (kerning: KerningPair) => `${String.fromCharCode(kerning.first)}${String.fromCharCode(kerning.second)}`
 
-    const renderKerning: ItemRenderer<KerningPair> = (kerning, { handleClick, handleFocus, modifiers, query}) => {
+    const renderKerning: ItemRenderer<KerningPair> = (kerning, { handleClick, handleFocus, modifiers }) => {
         if (!modifiers.matchesPredicate) {
             return null
         }

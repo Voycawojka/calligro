@@ -1,7 +1,6 @@
 import { convertToBlob, createCanvas } from '../../utils/canvasHelpers'
 import { drawSlot } from './slotDrawing'
 import { ProjectData } from '../../filesystem/projectstore'
-import { set } from 'js-cookie'
 
 export interface FontOptions {
     name: string
@@ -114,26 +113,3 @@ export async function generateTemplateImage(templateData: TemplateData) {
     await drawTemplate(ctx, templateData)
     return await convertToBlob(canvas)
 }
-
-// export async function copyOnto(ctx: CanvasRenderingContext2D): Promise<void> {
-//     await this.generateImageBlob()
-
-//     const aspectRatio = this.canvas.width / this.canvas.height;
-//     const canvasAspectRatio = ctx.canvas.width / ctx.canvas.height;
-
-//     let drawWidth, drawHeight, offsetX, offsetY;
-
-//     if (aspectRatio > canvasAspectRatio) {
-//         drawWidth = ctx.canvas.width;
-//         drawHeight = ctx.canvas.width / aspectRatio;
-//         offsetX = 0;
-//         offsetY = (ctx.canvas.height - drawHeight) / 2;
-//     } else {
-//         drawWidth = ctx.canvas.height * aspectRatio;
-//         drawHeight = ctx.canvas.height;
-//         offsetX = (ctx.canvas.width - drawWidth) / 2;
-//         offsetY = 0;
-//     }
-
-//     ctx.drawImage(this.canvas, 0, 0, this.canvas.width, this.canvas.height, offsetX, offsetY, drawWidth, drawHeight);
-// }

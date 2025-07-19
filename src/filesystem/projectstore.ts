@@ -176,3 +176,11 @@ export function listProjectNames(max: number | undefined): string[] {
     const projects = getProjectNameArray()
     return projects.slice(0, max)
 }
+
+export function removeProject(name: string) {
+    const projectKey = generareProjectKey(name)
+    const projects = getProjectNameArray().filter(n => n !== name)
+
+    localStorage.removeItem(projectKey)
+    saveProjectNameArray(projects)
+}

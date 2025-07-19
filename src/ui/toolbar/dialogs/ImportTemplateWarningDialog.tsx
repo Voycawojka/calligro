@@ -39,6 +39,7 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
                     characterBase: settings.characterBase,
                     characterSet: settings.characterSet,
                     image: image,
+                    imageBase64: "",
                 },
                 dirty: true,
             })

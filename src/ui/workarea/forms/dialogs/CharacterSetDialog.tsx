@@ -66,7 +66,7 @@ export default function CharacterSetDialog({
         setCharacters(getUnicodeRangeChars(preset))
     }
 
-    const renderPreset: ItemRenderer<UnicodeRange> = (preset, { handleClick, handleFocus, modifiers, query}) => {
+    const renderPreset: ItemRenderer<UnicodeRange> = (preset, { handleClick, handleFocus, modifiers }) => {
         if (!modifiers.matchesPredicate) {
             return null
         }

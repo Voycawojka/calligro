@@ -1,13 +1,19 @@
-import { Alignment, ButtonGroup, Navbar, NavbarDivider, NavbarGroup, NavbarHeading, Slider, Switch } from "@blueprintjs/core";
+import { Alignment, ButtonGroup, Navbar, NavbarDivider, NavbarGroup, NavbarHeading } from "@blueprintjs/core";
 import FileMenu from "./menus/FileMenu";
 import MoreMenu from "./menus/MoreMenu";
 import HelpMenu from "./menus/HelpMenu";
 import { useContext } from "react";
+import { useState } from "react";
 import { ProjectContext } from "../contexts/ProjectContext";
 import ThemeSwitch from "./ThemeSwitch";
+import { useUpdater } from "./useUpdater";
+import UpdaterIcon from "./UpdaterIcon";
+import UpdaterModal from "./UpdaterModal";
 
 export default function Toolbar() {
     const project = useContext(ProjectContext)
+    const [hasUpdate, updaterInfo] = useUpdater();
+    const [updaterModalOpen, setUpdaterModalOpen] = useState(false);
 
     return (
         <Navbar>
@@ -19,6 +25,13 @@ export default function Toolbar() {
                     <MoreMenu />
                     <HelpMenu />
                 </ButtonGroup>
+                { hasUpdate && updaterInfo && (
+                    <>
+                        <NavbarDivider />
+                        <UpdaterIcon onClick={() => setUpdaterModalOpen(true)} />
+                        <UpdaterModal isOpen={updaterModalOpen} setIsOpen={setUpdaterModalOpen} versionInfo={updaterInfo} />
+                    </>
+                )}
                 { project &&
                     <>
                         <NavbarDivider />

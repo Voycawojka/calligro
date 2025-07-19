@@ -1,7 +1,7 @@
 import { KerningPair, ProjectData } from "../../../filesystem/projectstore"
 import { useEffect, useRef, useState } from "react"
 import { drawPreview } from "../../../generation/preview"
-import { FontSpec, generateFont } from "../../../generation/font/Font"
+import { FontSpec, generateFont } from "../../../generation/font/font"
 import { calculateTemplateData, generateTemplateImage } from "../../../generation/template/template"
 import { Card } from "@blueprintjs/core"
 import useResizeObserver from "@react-hook/resize-observer"
