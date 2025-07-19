@@ -9,6 +9,7 @@ import ThemeSwitch from "./ThemeSwitch";
 import { useUpdater } from "./useUpdater";
 import UpdaterIcon from "./UpdaterIcon";
 import UpdaterModal from "./UpdaterModal";
+import favicon from "./favicon.svg";
 
 export default function Toolbar() {
     const project = useContext(ProjectContext)
@@ -18,7 +19,7 @@ export default function Toolbar() {
     return (
         <Navbar>
             <NavbarGroup>
-                <img src="../../../public/favicon.svg" height="30px" />
+                <img src={favicon} height="30px" />
                 <NavbarDivider />
                 <ButtonGroup>
                     <FileMenu />
