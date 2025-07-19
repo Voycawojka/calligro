@@ -24,7 +24,7 @@ body {
 }
 
 h1, h2, h3 {
-    margin: 0 0 0.7em 0;
+    margin: 0 0 0.7em;
     font-weight: 700;
     letter-spacing: 0.01em;
 }
@@ -98,7 +98,7 @@ td {
 header {
     background: var(--background-dark);
     color: var(--accent-color);
-    padding: 1.5rem 2.5rem 1.2rem 2.5rem;
+    padding: 1.5rem 2.5rem 1.2rem;
     text-align: center;
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
@@ -157,7 +157,7 @@ header nav a:hover {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 2.5rem;
-    padding: 2.5rem 0 2rem 0;
+    padding: 2.5rem 0 2rem;
 }
 
 .hero-text {
@@ -204,7 +204,7 @@ header nav a:hover {
 }
 
 .cta {
-    padding: 2.5rem 1.5rem 0 1.5rem;
+    padding: 2.5rem 1.5rem 0;
     color: var(--color-on-dark-bg);
     text-align: center;
     display: flex;
@@ -267,7 +267,7 @@ iframe {
 
 footer {
     text-align: center;
-    padding: 1.2rem 0 1.5rem 0;
+    padding: 1.2rem 0 1.5rem;
     margin-top: var(--section-spacing);
     font-size: 0.98rem;
     color: #666;
