@@ -155,7 +155,7 @@ export class AsepriteWriter {
         this.index += 4
     }
 
-    private bytes(arr: Uint8Array<ArrayBuffer>) { 
+    private bytes(arr: Uint8Array) { 
         this.resizeToFit(arr.length)
         this.buffer.set(arr, this.index)
         this.index += arr.length
