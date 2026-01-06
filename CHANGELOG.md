@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0
+
+- support exporting templates as Aseprite files (https://github.com/Voycawojka/calligro/issues/67, partially)
+- new export dialog
+- remembers last template export format (png or aseprite) per project
+- added Discord link
+
 ## 2.0.0
 
 - the entire user interface has been redesigned and rewritten

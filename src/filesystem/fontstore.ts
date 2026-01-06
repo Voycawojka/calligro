@@ -1,7 +1,7 @@
 import { generateFont } from "../generation/font/font";
 import { fontSpecToTextFile } from "../generation/font/specSaver";
 import { downloadArchive, ZippedFile } from "../generation/fs/zip";
-import { calculateTemplateData, generateTemplateImage } from "../generation/template/template";
+import { calculateTemplateData, generateTemplatePng } from "../generation/template/template";
 import { ProjectData } from "./projectstore";
 
 async function saveFontFallback(fnt: string, page: Blob, fntName: string, pageName: string) {
@@ -21,7 +21,7 @@ async function saveFontFallback(fnt: string, page: Blob, fntName: string, pageNa
 
 export async function saveFont(project: ProjectData, format: "txt" | "xml") {
     const templateData = calculateTemplateData(project, "current or imported")
-    const templateImage = await generateTemplateImage(templateData)
+    const templateImage = await generateTemplatePng(templateData)
     const [spec, [page]] = await generateFont(templateData, templateImage)
     const fntName = `${project.name}.fnt`
     const pageName = `${project.name}.png`

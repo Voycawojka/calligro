@@ -24,6 +24,9 @@ export default function MoreMenu() {
                         window.open("https://voycawojka.itch.io/calligro", "_blank")?.focus()
                     } />}
                 />
+                <MenuItem key="discord" icon="chat" text="Join Discord" onClick={() =>
+                    window.open("https://discord.gg/5MmEpXWSsV", "_blank")?.focus()
+                } />
                 <MenuDivider />
                 <MenuItem key="about" icon="info-sign" text="About" onClick={() => setAboutModalOpen(true)} /> 
             </ToolbarMenu>

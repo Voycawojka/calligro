@@ -3,6 +3,7 @@ interface SavedLastExportSnapshot {
     defaultCharacterHeight: number
     characterBase: number
     characterSet: string
+    format: "png" | "aseprite" | undefined
 }
 
 interface SavedImportedTemplate {

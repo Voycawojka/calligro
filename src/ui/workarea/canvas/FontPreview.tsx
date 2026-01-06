@@ -3,7 +3,7 @@ import { ProjectData } from "../../../filesystem/projectstore"
 import { ChangeEvent, useEffect, useRef, useState } from "react"
 import { drawPreview } from "../../../generation/preview"
 import { FontSpec, generateFont } from "../../../generation/font/font"
-import { calculateTemplateData, generateTemplateImage } from "../../../generation/template/template"
+import { calculateTemplateData, generateTemplatePng } from "../../../generation/template/template"
 import useResizeObserver from "@react-hook/resize-observer"
 import { useProjectState } from "../hooks/useProjectState"
 import { useProjectStateNumericInput } from "../hooks/useProjectStateNumericInput"
@@ -31,7 +31,7 @@ export default function FontPreview({ project }: Props) {
     useEffect(() => {
         const generate = async () => {
             const templateData = calculateTemplateData(project, "current or imported")
-            const templateImage = await generateTemplateImage(templateData)
+            const templateImage = await generateTemplatePng(templateData)
             const font = await generateFont(templateData, templateImage)
 
             setFont(font)

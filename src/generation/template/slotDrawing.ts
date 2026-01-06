@@ -9,7 +9,8 @@ type DrawSlotOptions = {
     enclosingSpaceH: number,
     base: number,
     vertMargin: number,
-    font: FontOptions | null
+    font: FontOptions | null,
+    grid: boolean,
 }
 
 export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: DrawSlotOptions): void {
@@ -18,12 +19,14 @@ export function drawSlot(ctx: CanvasRenderingContext2D, slot: Slot, options: Dra
     const slotX = Math.floor(enclosingSpaceW / 2) - Math.floor(slot.width / 2)
     const slotY = Math.floor(enclosingSpaceH / 2) - Math.floor(slot.height / 2)
 
-    new PixelPerfectDrawer(enclosingSpaceX, enclosingSpaceY, enclosingSpaceW, enclosingSpaceH, ctx)
-        .fillRect(0, 0, enclosingSpaceW, enclosingSpaceH, '#ffffff')
-        .strokeHorizontalLine(0, slotY + base, enclosingSpaceW, '#bebebe')
-        .clearRect(slotX, slotY, slot.width, slot.height)
-        .strokeRect(slotX, slotY, slot.width, slot.height, '#bebebe')
-        .flush()
+    if (options.grid) {
+        new PixelPerfectDrawer(enclosingSpaceX, enclosingSpaceY, enclosingSpaceW, enclosingSpaceH, ctx)
+            .fillRect(0, 0, enclosingSpaceW, enclosingSpaceH, '#ffffff')
+            .strokeHorizontalLine(0, slotY + base, enclosingSpaceW, '#bebebe')
+            .clearRect(slotX, slotY, slot.width, slot.height)
+            .strokeRect(slotX, slotY, slot.width, slot.height, '#bebebe')
+            .flush()
+    }
     
     if (options.font) {
         const absSlotY = enclosingSpaceY + Math.floor(enclosingSpaceH / 2) - Math.floor(slot.height / 2)

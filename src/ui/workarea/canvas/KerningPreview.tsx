@@ -2,7 +2,7 @@ import { KerningPair, ProjectData } from "../../../filesystem/projectstore"
 import { useEffect, useRef, useState } from "react"
 import { drawPreview } from "../../../generation/preview"
 import { FontSpec, generateFont } from "../../../generation/font/font"
-import { calculateTemplateData, generateTemplateImage } from "../../../generation/template/template"
+import { calculateTemplateData, generateTemplatePng } from "../../../generation/template/template"
 import { Card } from "@blueprintjs/core"
 import useResizeObserver from "@react-hook/resize-observer"
 import { useProjectState } from "../hooks/useProjectState"
@@ -33,7 +33,7 @@ export default function KerningPreview({ project, kerning }: Props) {
         const generate = async () => {
             const templateData = calculateTemplateData(project, "current or imported")
             templateData.project.kernings = [kerning]
-            const templateImage = await generateTemplateImage(templateData)
+            const templateImage = await generateTemplatePng(templateData)
             const font = await generateFont(templateData, templateImage)
             
             setFont(font)

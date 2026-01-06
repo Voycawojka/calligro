@@ -1,9 +1,8 @@
 import { Button, Dialog, DialogBody, DialogFooter } from "@blueprintjs/core"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { ProjectData } from "../../../../filesystem/projectstore"
-import { calculateTemplateData, generateTemplateImage } from "../../../../generation/template/template"
-import { exportTemplate } from "../../../../filesystem/templatestore"
-import { ProjectLoadContext } from "../../../contexts/ProjectContext"
+import { calculateTemplateData, generateTemplatePng } from "../../../../generation/template/template"
+import ExportTemplateDialog from "../../../toolbar/dialogs/ExportTemplateDialog"
 
 export interface Props {
     project: ProjectData
@@ -17,13 +16,12 @@ export default function PreviewTemplateDialog({
     setIsOpen,
 }: Props) {
     const [imageUrl, setImageUrl] = useState<string | null>(null)
-
-    const setProjectContext = useContext(ProjectLoadContext)
+    const [exportDialogOpen, setExportDialogOpen] = useState(false)
 
     useEffect(() => {
         const generate = async () => {
             const templateData = calculateTemplateData(project, "force current")
-            const templateImage = await generateTemplateImage(templateData)
+            const templateImage = await generateTemplatePng(templateData)
 
             setImageUrl(URL.createObjectURL(templateImage))
         }
@@ -35,37 +33,36 @@ export default function PreviewTemplateDialog({
     }
 
     const onExport = () => {
-        exportTemplate(project)
-        setProjectContext({
-            ...project,
-            lastExportSnapshot: {
-                defaultCharacterWidth: project.defaultCharacterWidth,
-                defaultCharacterHeight: project.defaultCharacterHeight,
-                characterBase: project.characterBase,
-                characterSet: project.characterSet,
-            },
-            dirty: true,
-        })
+        setExportDialogOpen(true)
+        setIsOpen(false)
     }
 
     return (
-        <Dialog
-            title="Template Preview"
-            icon="eye-open"
-            isOpen={isOpen}
-            onClose={onClose}
-        >
-            <DialogBody>
-                { imageUrl &&
-                    <img src={imageUrl} />
-                }
-            </DialogBody>
-            <DialogFooter actions={
-                <>
-                    <Button text="Close" onClick={onClose} />
-                    <Button intent="primary" text="Export PNG" onClick={onExport} />
-                </>
-            } />
-        </Dialog>
+        <>
+            <Dialog
+                title="Template Preview"
+                icon="eye-open"
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <DialogBody>
+                    { imageUrl &&
+                        <img src={imageUrl} />
+                    }
+                </DialogBody>
+                <DialogFooter actions={
+                    <>
+                        <Button text="Close" onClick={onClose} />
+                        <Button intent="primary" text="Export" onClick={onExport} />
+                    </>
+                } />
+            </Dialog>
+
+            <ExportTemplateDialog
+                project={project}
+                isOpen={exportDialogOpen} 
+                setIsOpen={setExportDialogOpen}
+            />
+        </>
     )
 }

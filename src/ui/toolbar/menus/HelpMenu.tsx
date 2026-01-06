@@ -7,6 +7,9 @@ export default function HelpMenu() {
             <MenuItem key="online-tutorial" icon="learning" text="Online Tutorial" onClick={() => 
                 window.open("https://calligro.ideasalmanac.com/tutorial.html", "_blank")?.focus()
             } />
+            <MenuItem key="discord" icon="chat" text="Join Discord" onClick={() =>
+                window.open("https://discord.gg/5MmEpXWSsV", "_blank")?.focus()
+            } />
         </ToolbarMenu>
     )
 }

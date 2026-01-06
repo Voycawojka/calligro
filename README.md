@@ -27,6 +27,8 @@ Some examples and more details on compatibility can be found in the [samples/](s
 # Tutorial
 A tutorial is available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com/tutorial.html).
 
+Get additional support on the [Ideas Almanac Discord server](https://discord.gg/5MmEpXWSsV).
+
 # Use case
 Calligro is useful when you need to draw a custom font stored as a spritesheet. Pixelart font would be a good use.
 

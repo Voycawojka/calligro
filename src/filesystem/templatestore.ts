@@ -1,5 +1,5 @@
 import { OverlayToaster } from "@blueprintjs/core";
-import { calculateTemplateData, generateTemplateImage } from "../generation/template/template";
+import { calculateTemplateData, generateTemplateAseprite, generateTemplatePng } from "../generation/template/template";
 import { ProjectData } from "./projectstore";
 
 function exportTemplateFallback(image: Blob, filename: string) {
@@ -13,10 +13,14 @@ function exportTemplateFallback(image: Blob, filename: string) {
     URL.revokeObjectURL(url)
 }
 
-export async function exportTemplate(project: ProjectData) {
+export type TemplateExportFormat = "png" | "aseprite"
+
+export async function exportTemplate(project: ProjectData, format: TemplateExportFormat) {
     const templateData = calculateTemplateData(project, "force current")
-    const image = await generateTemplateImage(templateData)
-    const filename = `${project.name}-template.png`
+    const image = format === "png"
+        ? await generateTemplatePng(templateData)
+        : await generateTemplateAseprite(templateData)
+    const filename = `${project.name}-template.${format}`
 
     if (!window["showSaveFilePicker"]) {
         exportTemplateFallback(image, filename)
@@ -26,10 +30,7 @@ export async function exportTemplate(project: ProjectData) {
     const handle = await window.showSaveFilePicker({
         suggestedName: filename,
         startIn: 'documents',
-        types: [{
-            description: 'PNG',
-            accept: { "image/png": ['.png'] }
-        }],
+        types: filePickerTypes(format),
     })
     const writable = await handle.createWritable()
 
@@ -42,6 +43,20 @@ export async function exportTemplate(project: ProjectData) {
         intent: "success",
         message: `Exported template: ${handle.name}`
     })
+}
+
+function filePickerTypes(format: TemplateExportFormat): FilePickerAcceptType[] {
+    if (format === "png") {
+        return [{
+            description: 'PNG',
+            accept: { "image/png": ['.png'] }
+        }]
+    } else {
+        return [{
+            description: 'Aseprite',
+            accept: { "image/x-aseprite": ['.aseprite', '.ase'] }
+        }]
+    }
 }
 
 function importTemplateFallback(): Promise<Blob | null> {

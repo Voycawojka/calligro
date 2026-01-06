@@ -1,6 +1,7 @@
 import { convertToBlob, createCanvas } from '../../utils/canvasHelpers'
 import { drawSlot } from './slotDrawing'
 import { ProjectData } from '../../filesystem/projectstore'
+import { AsepriteWriter } from './aseprite'
 
 export interface FontOptions {
     name: string
@@ -23,6 +24,11 @@ export interface TemplateData {
     mode: TemplateMode
 }
 
+interface TemplateDrawOptions {
+    grid: boolean,
+    prefill: boolean,
+}
+
 export function getSlotPosition(index: number, templateData: TemplateData): { x: number, y: number } {
     return {
         x: (index % templateData.horizontalSlots) * templateData.slotOuterWidth,
@@ -30,7 +36,7 @@ export function getSlotPosition(index: number, templateData: TemplateData): { x:
     }
 }
 
-async function drawTemplate(ctx: CanvasRenderingContext2D, templateData: TemplateData) {
+function drawTemplate(ctx: CanvasRenderingContext2D, templateData: TemplateData, drawOptions: TemplateDrawOptions) {
     ctx.imageSmoothingEnabled = false
     
     for (let i = 0; i < templateData.project.characterSet.length; i++) {
@@ -55,12 +61,13 @@ async function drawTemplate(ctx: CanvasRenderingContext2D, templateData: Templat
             enclosingSpaceH: templateData.slotOuterHeight,
             base: templateData.project.characterBase,
             vertMargin: templateData.slotHorizontalMargin,
-            font: templateData.project.prefill !== null ? {
+            font: drawOptions.prefill && templateData.project.prefill !== null ? {
                 name: templateData.project.prefill,
                 fillColor: templateData.project.prefillColor,
                 outline: templateData.project.prefillOutline,
                 outlineColor: templateData.project.prefillOutlineColor,
-            } : null
+            } : null,
+            grid: drawOptions.grid,
         })
     }
 }
@@ -103,13 +110,43 @@ export function calculateTemplateData(project: ProjectData, mode: TemplateMode):
     }
 }
 
-export async function generateTemplateImage(templateData: TemplateData) {
+export async function generateTemplatePng(templateData: TemplateData): Promise<Blob> {
     if (templateData.mode === "current or imported" && templateData.project.importedTemplate) {
+        // imported template already is a PNG so no need to regenerate it
         return templateData.project.importedTemplate.image
     }
 
     const [canvas, ctx] = createCanvas(templateData.totalWidth, templateData.totalHeight, "white")
 
-    await drawTemplate(ctx, templateData)
+    drawTemplate(ctx, templateData, { grid: true, prefill: true })
     return await convertToBlob(canvas)
+}
+
+export async function generateTemplateAseprite(templateData: TemplateData): Promise<Blob> {
+    const [, bgCtx] = createCanvas(templateData.totalWidth, templateData.totalHeight, "white")
+    const [, gridCtx] = createCanvas(templateData.totalWidth, templateData.totalHeight, "transparent")
+    const [, prefillCtx] = createCanvas(templateData.totalWidth, templateData.totalHeight, "transparent")
+
+    drawTemplate(gridCtx, templateData, { grid: true, prefill: false })
+    drawTemplate(prefillCtx, templateData, { grid: false, prefill: true })
+   
+    const bgImage = bgCtx.getImageData(0, 0, templateData.totalWidth, templateData.totalHeight, { colorSpace: "srgb" })
+    const gridImage = gridCtx.getImageData(0, 0, templateData.totalWidth, templateData.totalHeight, { colorSpace: "srgb" })
+    const prefillImage = prefillCtx.getImageData(0, 0, templateData.totalWidth, templateData.totalHeight, { colorSpace: "srgb" })
+
+    const file = new AsepriteWriter()
+
+    file.beginFile(templateData)
+        file.beginFrame()
+            file.layer("background")
+            file.layer("grid")
+            templateData.project.prefill && file.layer("prefill")
+
+            await file.cel(0, bgImage)
+            await file.cel(1, gridImage)
+            templateData.project.prefill && await file.cel(2, prefillImage)
+        file.endFrame()
+    file.endFile()
+
+    return file.getBlob()
 }
