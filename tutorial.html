@@ -140,7 +140,7 @@
         <h2>Template Settings</h2>
 
         <p>
-            In the Template Settings section, you define the template - a PNG image with blank spots where you'll draw your characters.
+            In the Template Settings section, you define the template - an image with blank spots where you'll draw your characters.
         </p>
         <p>
             Press the "Preview Template" button at the bottom to see how it looks.
@@ -246,23 +246,28 @@
             </ul>
             You can choose either a PNG or Aseprite file format.
             Aseprite templates have the grid and the pre-filled font generated as separate layers.
+        </p>
+        <p class="note">
             Aseprite export is available since Calligro 2.1.0.
         </p>
         <p>
-            You now have a PNG file that can be edited in any graphics editor (or an Aseprite file).
+            You now have an image file that can be edited in any graphics editor.
             Remember the horizontal lines indicate character baselines.
             Once you're done drawing, import the file back into Calligro.
-        </p>
-        <p class="note">
-            As of now, only PNG import is supported.
-            If you exported an Aseprite file you need to save it as PNG before importing to Calligro.
         </p>
 
         <h3>Importing Templates</h3>
 
         <p>
-            To import a filled template, choose "File → Import Template PNG".
+            To import a filled template, choose "File → Import Template".
             Your custom characters will immediately appear in the font preview.
+        </p>
+        <p>
+            For subsequent imports of the same template (i.e. after you've made some adjustments in a graphics editor) you can press the "Reimport" button next to the project name to quickly reimport the last loaded template.
+            You can also enable the "Auto detect changes" option (in the drop down menu next to the button) to have Calligro automatically reimport the template whenever the file is modified.
+        </p>
+        <p class="note">
+            Aseprite import and the quick/auto reimport are available since Calligro 2.2.0.
         </p>
         
         <img src="./img/tutorial/imported-preview.png" alt="Imported Preview" />
