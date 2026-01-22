@@ -1,19 +1,22 @@
-import { Button, OverlayToaster, Tooltip } from "@blueprintjs/core"
+import { Button, ButtonGroup, Checkbox, MenuItem, OverlayToaster, Tooltip } from "@blueprintjs/core"
 import { Icon } from "@blueprintjs/core"
 import { ProjectData } from "../../filesystem/projectstore"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ProjectLoadContext } from "../contexts/ProjectContext"
 import { asepriteToPng } from "../../generation/png/aseprite"
+import ToolbarMenu from "./ToolbarMenu"
 
 export interface Props {
     project: ProjectData,
 }
 
 export default function QuickReimportSection({ project }: Props) {
+    const [isAutoDetectEnabled, setIsAutoDetectEnabled] = useState(false)
+    const [autoDetectIntervalId, setAutoDetectIntervalId] = useState<number | null>(null)
     const setProjectContext = useContext(ProjectLoadContext)
     const displayData = getDisplayData(project)
 
-    const reimport = async () => {
+    const reimport = async (auto: boolean) => {
         if (!displayData.enabled) {
             return
         }
@@ -39,7 +42,7 @@ export default function QuickReimportSection({ project }: Props) {
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
                 intent: "success",
-                message: `Template '${displayData.fileHandle.name}' refreshed.`
+                message: `${auto ? "Changes detected! " : ""}Template '${displayData.fileHandle.name}' refreshed.`
             })
         } catch (e: any) {
             const toaster = await OverlayToaster.create({ position: "top-right" })
@@ -52,15 +55,63 @@ export default function QuickReimportSection({ project }: Props) {
         }
     }
 
+    useEffect(() => {
+        const cleanup = () => {
+            if (autoDetectIntervalId !== null) {
+                clearInterval(autoDetectIntervalId)
+            }
+            setAutoDetectIntervalId(null)
+        }
+
+        if (!isAutoDetectEnabled || !displayData.enabled) {
+            cleanup()
+        }
+
+        if (autoDetectIntervalId === null && isAutoDetectEnabled && displayData.enabled) {
+            let autoDetectLastModified: number | null = null
+            setAutoDetectIntervalId(setInterval(async () => {
+                if (isAutoDetectEnabled && displayData.enabled && displayData.fileHandle) {
+                    const file = await displayData.fileHandle.getFile()
+                    if (autoDetectLastModified === null || file.lastModified > autoDetectLastModified) {
+                        reimport(true)
+                    }
+                    autoDetectLastModified = file.lastModified
+                }
+            }, 500) as unknown as number);
+        }
+
+        return cleanup
+    }, [isAutoDetectEnabled, displayData.enabled])
+
+    useEffect(() => {
+        setIsAutoDetectEnabled(false)
+    }, [project.name])
+
     return (
-        <Tooltip content={<div>Reimport last template{!displayData.enabled && <><br />{displayData.reason}</>}</div>} position="bottom">
-            <Button 
-                disabled={!displayData.enabled} 
-                variant="minimal" 
-                icon={<Icon icon="refresh" />} 
-                onClick={reimport}
-            />
-        </Tooltip>
+            <ButtonGroup>
+                <Tooltip content={<div>Reimport last template{!displayData.enabled && <><br />{displayData.reason}</>}</div>} position="bottom">
+                    <Button 
+                        disabled={!displayData.enabled} 
+                        variant="outlined"
+                        icon={<Icon icon="refresh" />} 
+                        onClick={() => reimport(false)}
+                    >
+                        Reimport
+                    </Button>
+                </Tooltip>
+                <ToolbarMenu buttonIcon="chevron-down" buttonText="">
+                    <MenuItem key="auto-refresh" shouldDismissPopover={false} text={
+                        <Checkbox
+                            inline
+                            style={{ margin: 0 }}
+                            checked={isAutoDetectEnabled}
+                            onChange={e => setIsAutoDetectEnabled(e.currentTarget.checked)}>
+                            Auto detect changes
+                        </Checkbox>
+                    } />
+                </ToolbarMenu> 
+            </ButtonGroup>
+       
     )
 }
 

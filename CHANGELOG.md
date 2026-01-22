@@ -4,6 +4,7 @@
 
 - support importing Aseprite templates directly (no need to save them as PNG anymore)
 - quick template reimport: easily reimport the last loaded template file
+- hot reload: automatically reimport the template when changes are detected
 - added side notifications on successfull template import
 
 ## 2.1.0
