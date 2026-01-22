@@ -114,7 +114,7 @@ export default function FileMenu() {
                 <MenuItem key="save-as" icon="folder-shared" text="Save As..." disabled={!project} onClick={() => setSaveAsModalOpen(true)} />
                 <MenuDivider />
                 <MenuItem key="export-template" icon="export" text="Export Template" disabled={!project} onClick={exportCurrentTemplate} />
-                <MenuItem key="import-template" icon="import" text="Import Template PNG" disabled={!project} onClick={() => setImportTemplateModalOpen(true)} />
+                <MenuItem key="import-template" icon="import" text="Import Template" disabled={!project} onClick={() => setImportTemplateModalOpen(true)} />
                 <MenuDivider />
                 <MenuItem key="export-font" icon="generate" text="Export Font" disabled={!project} onClick={() => setExportFontModalOpen(true)} />
             </ToolbarMenu>

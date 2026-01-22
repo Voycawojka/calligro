@@ -22,7 +22,7 @@ export function createCanvas(width: number, height: number, color?: string): [HT
     return [canvas, ctx]
 }
 
-export function convertToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+export function convertToPngBlob(canvas: HTMLCanvasElement): Promise<Blob> {
     return new Promise((resolve, reject) => {
         canvas.toBlob(blob => blob ? resolve(blob) : reject(), 'image/png', 1)
     })

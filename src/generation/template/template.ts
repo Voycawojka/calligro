@@ -1,4 +1,4 @@
-import { convertToBlob, createCanvas } from '../../utils/canvasHelpers'
+import { convertToPngBlob, createCanvas } from '../../utils/canvasHelpers'
 import { drawSlot } from './slotDrawing'
 import { ProjectData } from '../../filesystem/projectstore'
 import { AsepriteWriter } from './aseprite'
@@ -119,7 +119,7 @@ export async function generateTemplatePng(templateData: TemplateData): Promise<B
     const [canvas, ctx] = createCanvas(templateData.totalWidth, templateData.totalHeight, "white")
 
     drawTemplate(ctx, templateData, { grid: true, prefill: true })
-    return await convertToBlob(canvas)
+    return await convertToPngBlob(canvas)
 }
 
 export async function generateTemplateAseprite(templateData: TemplateData): Promise<Blob> {

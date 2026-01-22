@@ -43,6 +43,7 @@ export default function ExportFontDialog({ isOpen, setIsOpen }: Props) {
                 intent: "danger",
                 message: (e as Error).message
             })
+            console.error(e)
         }
     }
 

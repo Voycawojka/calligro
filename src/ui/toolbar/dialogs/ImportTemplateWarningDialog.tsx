@@ -1,7 +1,8 @@
 import { Dialog, DialogBody, DialogFooter, Button, OverlayToaster, Callout } from "@blueprintjs/core";
 import { useContext } from "react";
 import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext"
-import { importTemplate } from "../../../filesystem/templatestore";
+import { importTemplateFile } from "../../../filesystem/templatestore";
+import { asepriteToPng } from "../../../generation/png/aseprite";
 
 export interface Props {
     isOpen: boolean
@@ -24,12 +25,13 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
                 throw new Error("No project to import a template to")
             }
 
-            const image = await importTemplate()
+            const templateFile = await importTemplateFile()
 
-            if (!image) {
+            if (!templateFile) {
                 throw new Error("Something went wrong reading the template file")
             }
 
+            const image = templateFile.image.type == "image/png" ? templateFile.image : await asepriteToPng(templateFile.image)
             const settings = project.lastExportSnapshot ?? project
             setProjectContext({
                 ...project,
@@ -40,8 +42,16 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
                     characterSet: settings.characterSet,
                     image: image,
                     imageBase64: "",
+                    fileHandle: templateFile.handle,
                 },
                 dirty: true,
+            })
+
+            const toaster = await OverlayToaster.create({ position: "top-right" })
+            const toasterMessage = !!templateFile.handle ? `Template '${templateFile.handle.name}' imported.` : "Template imported."
+            toaster.show({
+                intent: "success",
+                message: toasterMessage,
             })
         } catch (e: any) {
             const toaster = await OverlayToaster.create({ position: "top-right" })
@@ -50,12 +60,13 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
                 intent: "danger",
                 message: (e as Error).message
             })
+            console.error(e)
         }
     }
 
     return (
         <Dialog
-            title="Import Template PNG"
+            title="Import Template"
             icon="import"
             isOpen={isOpen}
             onClose={onClose}

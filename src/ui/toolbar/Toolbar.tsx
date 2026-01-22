@@ -10,6 +10,7 @@ import { useUpdater } from "./useUpdater";
 import UpdaterIcon from "./UpdaterIcon";
 import UpdaterModal from "./UpdaterModal";
 import favicon from "./favicon.svg";
+import QuickReimportSection from "./QuickReimportSection";
 
 export default function Toolbar() {
     const project = useContext(ProjectContext)
@@ -39,6 +40,7 @@ export default function Toolbar() {
                         <NavbarHeading>
                             Project: <strong>{project.name}</strong> {project.dirty && "(unsaved)"}
                         </NavbarHeading>
+                        <QuickReimportSection project={project} />
                     </>
                 }
             </NavbarGroup>

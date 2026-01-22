@@ -12,9 +12,9 @@ Calligro generates bitmap fonts in the [AngelCode's BMFont](https://www.angelcod
 It can be used to convert a TTF but unlike the original BMFont and other tools it can also generate bitmap fonts from custom images.
 
 The workflow is as follows:
-- generate a Calligro template (which is a .png image)
+- generate a Calligro template (which is a PNG or Aseprite image)
 - draw your characters on the template in any graphics editor (Photoshop, Gimp, Aseprite, anything else)
-- upload the filled template back to Calligro and download a bitmap font
+- load the filled template back to Calligro and get a bitmap font
 
 Everything is calculated on the client side. No files are sent or stored on the server.
 

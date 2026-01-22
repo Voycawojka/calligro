@@ -59,31 +59,45 @@ function filePickerTypes(format: TemplateExportFormat): FilePickerAcceptType[] {
     }
 }
 
-function importTemplateFallback(): Promise<Blob | null> {
+export interface ImportedTemplateFile {
+    image: File,
+    handle: FileSystemFileHandle | null,
+}
+
+function importTemplateFileFallback(): Promise<ImportedTemplateFile | null> {
     return new Promise(resolve => {
         const input = Object.assign(document.createElement("input"), {
             type: "file",
-            accept: ".png",
+            accept: ".png, .aseprite, .ase",
             style: "display: none",
         })
-        input.onchange = () => resolve(input.files && input.files[0])
+        input.onchange = () => resolve(input.files && { image: input.files[0], handle: null })
         document.body.append(input);
         input.click()
     })
 }
 
-export async function importTemplate(): Promise<Blob | null> {
+export async function importTemplateFile(): Promise<ImportedTemplateFile | null> {
     if (!window["showOpenFilePicker"]) {
-        return importTemplateFallback()
+        return importTemplateFileFallback()
     }
 
     const [handle] = await window.showOpenFilePicker({
-        types: [{
-            description: "PNG",
-            accept: { "image/png": [".png"] },
-        }],
+        types: [
+            {
+                description: "PNG",
+                accept: { "image/png": [".png"] },
+            },
+            {
+                description: "Aseprite",
+                accept: { "image/x-aseprite": [".aseprite", ".ase"] }
+            }
+        ],
         excludeAcceptAllOption: true,
         startIn: 'documents',
     })
-    return await handle.getFile()
+    return {
+        image: await handle.getFile(),
+        handle
+    }
 }

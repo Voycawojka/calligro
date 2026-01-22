@@ -51,6 +51,7 @@ interface SavedProjectData {
 
 export interface ImportedTemplate extends SavedImportedTemplate {
     image: Blob
+    fileHandle: FileSystemFileHandle | null
 }
 
 export interface ProjectData extends SavedProjectData {
@@ -97,7 +98,8 @@ function savedToExported(data: SavedProjectData): ProjectData {
         ...data,
         importedTemplate: data.importedTemplate === null ? null : {
             ...data.importedTemplate,
-            image: base64ToBlob(data.importedTemplate.imageBase64)
+            image: base64ToBlob(data.importedTemplate.imageBase64),
+            fileHandle: null,
         },
         dirty: false,
     }

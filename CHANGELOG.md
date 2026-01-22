@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0
+
+- support importing Aseprite templates directly (no need to save them as PNG anymore)
+- quick template reimport: easily reimport the last loaded template file
+- added side notifications on successfull template import
+
 ## 2.1.0
 
 - support exporting templates as Aseprite files (https://github.com/Voycawojka/calligro/issues/67, partially)

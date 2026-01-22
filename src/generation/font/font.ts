@@ -1,4 +1,4 @@
-import { convertToBlob } from '../../utils/canvasHelpers'
+import { convertToPngBlob } from '../../utils/canvasHelpers'
 import { blobToCanvas } from '../fs/image'
 import { packFromSheet, SourceRect } from '../packing/imagePacking'
 import { getSlotPosition, TemplateData } from '../template/template'
@@ -77,7 +77,7 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
     }
 
     const [packedTexture, packedRects] = packFromSheet(canvas, sourceRects)
-    const packedBlob = await convertToBlob(packedTexture)
+    const packedBlob = await convertToPngBlob(packedTexture)
 
     const specification: FontSpec = {
         info: {
