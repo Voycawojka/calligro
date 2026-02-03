@@ -1,7 +1,7 @@
 import { Dialog, DialogBody, InputGroup, Callout, DialogFooter, Button } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { listProjectNames, saveProject } from "../../../filesystem/projectstore";
-import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     isOpen: boolean
@@ -13,7 +13,7 @@ export default function SaveAsDialog({ isOpen, setIsOpen }: Props) {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const currentProject = useContext(ProjectContext)
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const onClose = () => {
         setProjectName("")
@@ -42,7 +42,7 @@ export default function SaveAsDialog({ isOpen, setIsOpen }: Props) {
             }
 
             await saveProject(projectName, copiedProject)
-            setProjectContext(copiedProject)
+            setProjectData(copiedProject)
             onClose()
         } catch (e: any) {
             setErrorMessage((e as Error).message)

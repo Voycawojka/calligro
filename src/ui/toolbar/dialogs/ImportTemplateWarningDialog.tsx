@@ -1,6 +1,6 @@
 import { Dialog, DialogBody, DialogFooter, Button, OverlayToaster, Callout } from "@blueprintjs/core";
 import { useContext } from "react";
-import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext"
+import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext"
 import { importTemplateFile } from "../../../filesystem/templatestore";
 import { asepriteToPng } from "../../../generation/png/aseprite";
 
@@ -11,7 +11,7 @@ export interface Props {
 
 export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props) {
     const project = useContext(ProjectContext)
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const onClose = () => {
         setIsOpen(false)
@@ -33,7 +33,7 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
 
             const image = templateFile.image.type == "image/png" ? templateFile.image : await asepriteToPng(templateFile.image)
             const settings = project.lastExportSnapshot ?? project
-            setProjectContext({
+            setProjectData({
                 ...project,
                 importedTemplate: {
                     defaultCharacterWidth: settings.defaultCharacterWidth,

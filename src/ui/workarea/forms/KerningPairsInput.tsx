@@ -4,7 +4,7 @@ import { Button, ButtonGroup, FormGroup, InputGroup, MenuItem, Tag, Tooltip } fr
 import { useContext, useState } from "react";
 import AddKerningDialog from "./dialogs/AddKerningDialog";
 import KerningPreview from "../canvas/KerningPreview";
-import { ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectMutContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     project: ProjectData
@@ -14,7 +14,7 @@ export default function KerningPairsInput({ project }: Props) {
     const [editedKerning, setEditedKerning] = useState<KerningPair | null>(null)
     const [dialogOpen, setDialogOpen] = useState(false)
 
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const str = (kerning: KerningPair) => `${String.fromCharCode(kerning.first)}${String.fromCharCode(kerning.second)}`
 
@@ -51,14 +51,14 @@ export default function KerningPairsInput({ project }: Props) {
         const val = Number(value)
         if (!isNaN(val) && editedKerning) {
             editedKerning.amount = val
-            setProjectContext({...project})
+            setProjectData({...project})
         }
     }
 
     const removeKerning = () => {
         const updatedProject = { ...project }
         updatedProject.kernings = updatedProject.kernings.filter(kerning => kerning !== editedKerning)
-        setProjectContext(updatedProject)
+        setProjectData(updatedProject)
         setEditedKerning(null)
     }
 

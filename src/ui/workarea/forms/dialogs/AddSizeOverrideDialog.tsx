@@ -1,7 +1,7 @@
 import { Button, Callout, Dialog, DialogBody, DialogFooter, OverlayToaster, TextArea } from "@blueprintjs/core"
 import { ProjectData } from "../../../../filesystem/projectstore"
 import { useContext, useState } from "react"
-import { ProjectLoadContext } from "../../../contexts/ProjectContext"
+import { ProjectMutContext } from "../../../contexts/ProjectContext"
 
 export interface Props {
     project: ProjectData
@@ -17,7 +17,7 @@ export default function AddSizeOverrideDialog({
     const [characters, setCharacters] = useState<string>("")
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const onClose = () => {
         setIsOpen(false)
@@ -53,7 +53,7 @@ export default function AddSizeOverrideDialog({
                 addedCount++
             }
 
-            setProjectContext(updatedProject)
+            setProjectData(updatedProject)
             onClose()
 
             const toaster = await OverlayToaster.create({ position: "top-right" })

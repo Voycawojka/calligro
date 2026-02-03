@@ -1,7 +1,7 @@
 import { FormGroup, InputGroup } from "@blueprintjs/core";
 import { ProjectData } from "../../../filesystem/projectstore";
 import { useContext, useEffect, useState } from "react";
-import { ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectMutContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     project: ProjectData
@@ -11,11 +11,11 @@ export interface Props {
 export default function PrefillColorInput({ project, forceDisabled }: Props) {
     const [color, setColor] = useState(project.prefillColor)
 
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
    useEffect(() => {
         if (color !== project.prefillColor) {
-            setProjectContext({
+            setProjectData({
                 ...project,
                 prefillColor: color,
                 dirty: true,

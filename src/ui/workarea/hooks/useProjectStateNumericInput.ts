@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ProjectData } from "../../../filesystem/projectstore";
-import { ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectMutContext } from "../../contexts/ProjectContext";
 
 type Key = keyof {
     [P in keyof ProjectData as ProjectData[P] extends number? P: never]: any
@@ -10,11 +10,11 @@ export function useProjectStateNumericInput<T extends Key>(key: T, project: Proj
     const [raw, setRaw] = useState(project[key].toString())
     const [num, setNum] = useState(project[key])
 
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     useEffect(() => {
         if (num !== project[key]) {
-            setProjectContext({
+            setProjectData({
                 ...project,
                 [key]: num,
                 dirty: true,

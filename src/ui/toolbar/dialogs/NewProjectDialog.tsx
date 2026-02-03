@@ -1,7 +1,7 @@
 import { Dialog, DialogBody, InputGroup, Callout, DialogFooter, Button, OverlayToaster } from "@blueprintjs/core";
 import { useContext, useState } from "react";
 import { newProject } from "../../../filesystem/projectstore";
-import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext";
 import OverwriteChangesAlert from "./OverwriteChangesAlert";
 
 export interface Props {
@@ -16,7 +16,7 @@ export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
     const [overwriteAlertAcceptFunction, setOverwriteAlertAcceptFunction] = useState(() => () => {})
 
     const currentProject = useContext(ProjectContext)
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const onClose = () => {
         setProjectName("")
@@ -37,7 +37,7 @@ export default function NewProjectDialog({ isOpen, setIsOpen }: Props) {
             }
 
             const project = newProject(projectName)
-            setProjectContext(project)
+            setProjectData(project)
             onClose()
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({

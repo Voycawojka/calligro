@@ -2,7 +2,7 @@ import { Button, Callout, Dialog, DialogBody, DialogFooter, MenuItem, OverlayToa
 import { listProjectNames, loadProject } from "../../../filesystem/projectstore"
 import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select"
 import { useContext, useState } from "react"
-import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext"
+import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext"
 import OverwriteChangesAlert from "./OverwriteChangesAlert"
 
 export interface Props {
@@ -17,7 +17,7 @@ export default function OpenProjectDialog({ isOpen, setIsOpen }: Props) {
     const [overwriteAlertAcceptFunction, setOverwriteAlertAcceptFunction] = useState(() => () => {})
 
     const currentProject = useContext(ProjectContext)
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const projectNames = listProjectNames(undefined)
     
@@ -44,7 +44,7 @@ export default function OpenProjectDialog({ isOpen, setIsOpen }: Props) {
                 throw new Error("Couldn't open the project")
             }
 
-            setProjectContext(loadedProject)
+            setProjectData(loadedProject)
             onClose()
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({

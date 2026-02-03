@@ -1,14 +1,14 @@
 import { useContext, useRef } from "react";
 import { ProjectData } from "../../../filesystem/projectstore";
-import { ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectMutContext } from "../../contexts/ProjectContext";
 
 export function useProjectState<T extends keyof ProjectData>(key: T, project: ProjectData, debounceMs: number = 0): [ProjectData[T], (v: ProjectData[T]) => void] {
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
     const debounceRef = useRef<NodeJS.Timeout | null>(null)
 
     const setValue = (v: ProjectData[T]) => {
         if (v !== project[key]) {
-            setProjectContext({
+            setProjectData({
                 ...project,
                 [key]: v,
                 dirty: true,

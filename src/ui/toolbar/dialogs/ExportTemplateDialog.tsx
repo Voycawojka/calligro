@@ -2,7 +2,7 @@ import { Button, Callout, Dialog, DialogBody, DialogFooter, Radio, RadioGroup } 
 import { FormEvent, useContext, useEffect, useState } from "react"
 import { ProjectData } from "../../../filesystem/projectstore"
 import { exportTemplate } from "../../../filesystem/templatestore"
-import { ProjectLoadContext } from "../../contexts/ProjectContext"
+import { ProjectMutContext } from "../../contexts/ProjectContext"
 
 export interface Props {
     project: ProjectData
@@ -16,7 +16,7 @@ export default function ExportTemplateDialog({
     setIsOpen,
 }: Props) {
     const [format, setFormat] = useState(project.lastExportSnapshot?.format ?? "png")
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     useEffect(() => {
         setFormat(project.lastExportSnapshot?.format ?? "png")
@@ -32,7 +32,7 @@ export default function ExportTemplateDialog({
 
     const onExport = () => {
         exportTemplate(project, format)
-        setProjectContext({
+        setProjectData({
             ...project,
             lastExportSnapshot: {
                 defaultCharacterWidth: project.defaultCharacterWidth,

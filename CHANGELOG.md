@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.3.0
+
+- quick font reexport: easily export subsequent changes
+- hot export: automatically rexport font when you modify its properties
+
 ## 2.2.0
 
 - support importing Aseprite templates directly (no need to save them as PNG anymore)

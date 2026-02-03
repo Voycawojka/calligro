@@ -1,3 +1,5 @@
+import { ExportHandles } from "./fontstore"
+
 interface SavedLastExportSnapshot {
     defaultCharacterWidth: number
     defaultCharacterHeight: number
@@ -54,8 +56,14 @@ export interface ImportedTemplate extends SavedImportedTemplate {
     fileHandle: FileSystemFileHandle | null
 }
 
+export interface LastExportedFont {
+    handles: null | ExportHandles
+    format: "txt" | "xml"
+}
+
 export interface ProjectData extends SavedProjectData {
     importedTemplate: null | ImportedTemplate
+    lastExportedFont: null | LastExportedFont
     dirty: boolean
 }
 
@@ -100,6 +108,10 @@ function savedToExported(data: SavedProjectData): ProjectData {
             ...data.importedTemplate,
             image: base64ToBlob(data.importedTemplate.imageBase64),
             fileHandle: null,
+        },
+        lastExportedFont: {
+            handles: null,
+            format: "txt",
         },
         dirty: false,
     }

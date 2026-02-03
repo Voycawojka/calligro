@@ -2,7 +2,7 @@ import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select";
 import { ProjectData, SizeOverride } from "../../../filesystem/projectstore";
 import { Button, ButtonGroup, FormGroup, InputGroup, MenuItem, Tag, Tooltip } from "@blueprintjs/core";
 import { useContext, useState } from "react";
-import { ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectMutContext } from "../../contexts/ProjectContext";
 import AddSizeOverrideDialog from "./dialogs/AddSizeOverrideDialog";
 
 export interface Props {
@@ -14,7 +14,7 @@ export default function SizeOverrideInput({ project, forceDisabled }: Props) {
     const [editedOverride, setEditedOverride] = useState<SizeOverride | null>(null)
     const [dialogOpen, setDialogOpen] = useState(false)
 
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const str = (override: SizeOverride) => String.fromCharCode(override.char)
 
@@ -51,7 +51,7 @@ export default function SizeOverrideInput({ project, forceDisabled }: Props) {
         const val = Number(value)
         if (!isNaN(val) && editedOverride) {
             editedOverride.width = val
-            setProjectContext({...project})
+            setProjectData({...project})
         }
     }
 
@@ -59,14 +59,14 @@ export default function SizeOverrideInput({ project, forceDisabled }: Props) {
         const val = Number(value)
         if (!isNaN(val) && editedOverride) {
             editedOverride.height = val
-            setProjectContext({...project})
+            setProjectData({...project})
         }
     }
 
     const removeOverride = () => {
         const updatedProject = { ...project }
         updatedProject.sizeOverrides = updatedProject.sizeOverrides.filter(override => override !== editedOverride)
-        setProjectContext(updatedProject)
+        setProjectData(updatedProject)
         setEditedOverride(null)
     }
 

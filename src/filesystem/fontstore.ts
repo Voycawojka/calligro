@@ -19,7 +19,12 @@ async function saveFontFallback(fnt: string, page: Blob, fntName: string, pageNa
     return downloadArchive(fntName, files)
 }
 
-export async function saveFont(project: ProjectData, format: "txt" | "xml") {
+export type ExportHandles = {
+    fntHandle: FileSystemFileHandle,
+    pngHandle: FileSystemFileHandle,
+}
+
+export async function saveFontWithPicker(project: ProjectData, format: "txt" | "xml"): Promise<ExportHandles | null> {
     const templateData = calculateTemplateData(project, "current or imported")
     const templateImage = await generateTemplatePng(templateData)
     const [spec, [page]] = await generateFont(templateData, templateImage)
@@ -29,7 +34,7 @@ export async function saveFont(project: ProjectData, format: "txt" | "xml") {
 
     if (!window["showDirectoryPicker"]) {
         await saveFontFallback(fnt, page, fntName, pageName)
-        return
+        return null
     }
 
     const dir = await window.showDirectoryPicker({ mode: "readwrite" })
@@ -41,6 +46,24 @@ export async function saveFont(project: ProjectData, format: "txt" | "xml") {
     await pngStream.close()
 
     const fntStream = await fntHandle.createWritable()
+    await fntStream.write(fnt)
+    await fntStream.close()
+
+    return { fntHandle, pngHandle }
+}
+
+export async function saveFontWithHandles(project: ProjectData, format: "txt" | "xml", handles: ExportHandles) {
+    const templateData = calculateTemplateData(project, "current or imported")
+    const templateImage = await generateTemplatePng(templateData)
+    const [spec, [page]] = await generateFont(templateData, templateImage)
+    const pageName = `${project.name}.png`
+    const fnt = fontSpecToTextFile(spec, format, pageName)
+
+    const pngStream = await handles.pngHandle.createWritable()
+    await pngStream.write(page)
+    await pngStream.close()
+
+    const fntStream = await handles.fntHandle.createWritable()
     await fntStream.write(fnt)
     await fntStream.close()
 }

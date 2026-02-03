@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import NewProjectDialog from "../dialogs/NewProjectDialog";
 import OpenProjectDialog from "../dialogs/OpenProjectDialog";
 import RemoveProjectDialog from "../dialogs/RemoveProjectDialog";
-import { ProjectContext, ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext";
 import OverwriteChangesAlert from "../dialogs/OverwriteChangesAlert";
 import SaveAsDialog from "../dialogs/SaveAsDialog";
 import ExportFontDialog from "../dialogs/ExportFontDialog";
@@ -24,7 +24,7 @@ export default function FileMenu() {
     const [exportFontModalOpen, setExportFontModalOpen] = useState(false)
 
     const project = useContext(ProjectContext)
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const recentProjectNames = listProjectNames(10)
 
@@ -40,7 +40,7 @@ export default function FileMenu() {
             if (!loadedProject) {
                 throw new Error("Couldn't open project")
             }
-            setProjectContext(loadedProject)
+            setProjectData(loadedProject)
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
                 intent: "success",
@@ -63,7 +63,7 @@ export default function FileMenu() {
             }
             project.dirty = false
             await saveProject(project.name, project)
-            setProjectContext({ ...project })
+            setProjectData({ ...project })
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
                 intent: "success",

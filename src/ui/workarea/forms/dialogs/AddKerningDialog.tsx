@@ -2,7 +2,7 @@ import { Button, Callout, Dialog, DialogBody, DialogFooter, FormGroup, InputGrou
 import { ProjectData } from "../../../../filesystem/projectstore"
 import KerningPreview from "../../canvas/KerningPreview"
 import { useContext, useState } from "react"
-import { ProjectLoadContext } from "../../../contexts/ProjectContext"
+import { ProjectMutContext } from "../../../contexts/ProjectContext"
 
 export interface Props {
     project: ProjectData
@@ -20,7 +20,7 @@ export default function AddKerningDialog({
     const [amount, setAmount] = useState("0")
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const onClose = () => {
         setIsOpen(false)
@@ -48,7 +48,7 @@ export default function AddKerningDialog({
                 second: right,
                 amount: Number(amount),
             })
-            setProjectContext(updatedProject)
+            setProjectData(updatedProject)
             onClose()
         } catch (e: any) {
             setErrorMessage((e as Error).message)

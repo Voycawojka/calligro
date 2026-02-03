@@ -1,7 +1,7 @@
 import { FormGroup, InputGroup } from "@blueprintjs/core";
 import { ProjectData } from "../../../filesystem/projectstore";
 import { useContext, useEffect, useState } from "react";
-import { ProjectLoadContext } from "../../contexts/ProjectContext";
+import { ProjectMutContext } from "../../contexts/ProjectContext";
 
 export interface Props {
     project: ProjectData
@@ -12,11 +12,11 @@ export default function PrefillOutlineInput({ project, forceDisabled }: Props) {
     const [size, setSize] = useState(project.prefillOutline)
     const [color, setColor] = useState(project.prefillOutlineColor)
 
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     useEffect(() => {
         if (size !== project.prefillOutline) {
-            setProjectContext({
+            setProjectData({
                 ...project,
                 prefillOutline: size,
                 dirty: true,
@@ -26,7 +26,7 @@ export default function PrefillOutlineInput({ project, forceDisabled }: Props) {
 
     useEffect(() => {
         if (color !== project.prefillOutlineColor) {
-            setProjectContext({
+            setProjectData({
                 ...project,
                 prefillOutlineColor: color,
                 dirty: true,

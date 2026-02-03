@@ -1,7 +1,7 @@
 import { Dialog, DialogBody, DialogFooter, Button, OverlayToaster, RadioGroup, RadioCard, Classes } from "@blueprintjs/core";
 import { FormEvent, useContext, useState } from "react";
-import { ProjectContext } from "../../contexts/ProjectContext";
-import { saveFont } from "../../../filesystem/fontstore";
+import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext";
+import { saveFontWithPicker } from "../../../filesystem/fontstore";
 
 export interface Props {
     isOpen: boolean
@@ -12,6 +12,7 @@ export default function ExportFontDialog({ isOpen, setIsOpen }: Props) {
     const [selectedFormat, setSelectedFormat] = useState<"txt" | "xml">("txt")
 
     const currentProject = useContext(ProjectContext)
+    const { setProjectData } = useContext(ProjectMutContext)
 
     const onFormatSelected = (e: FormEvent<HTMLInputElement>) => {
         setSelectedFormat(e.currentTarget.value as "txt" | "xml")
@@ -29,7 +30,15 @@ export default function ExportFontDialog({ isOpen, setIsOpen }: Props) {
                 throw new Error("No project to export a font from")
             }
 
-            await saveFont(currentProject, selectedFormat)
+            const fontHandles = await saveFontWithPicker(currentProject, selectedFormat)
+
+            setProjectData({
+                ...currentProject,
+                lastExportedFont: {
+                    handles: fontHandles,
+                    format: selectedFormat,
+                },
+            })
 
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({

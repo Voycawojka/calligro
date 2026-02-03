@@ -1,19 +1,13 @@
-import { Button, ButtonGroup, Checkbox, MenuItem, OverlayToaster, Tooltip } from "@blueprintjs/core"
-import { Icon } from "@blueprintjs/core"
 import { ProjectData } from "../../filesystem/projectstore"
 import { useContext, useEffect, useState } from "react"
-import { ProjectLoadContext } from "../contexts/ProjectContext"
+import { ProjectMutContext } from "../contexts/ProjectContext"
 import { asepriteToPng } from "../../generation/png/aseprite"
-import ToolbarMenu from "./ToolbarMenu"
+import { OverlayToaster } from "@blueprintjs/core"
 
-export interface Props {
-    project: ProjectData,
-}
-
-export default function QuickReimportSection({ project }: Props) {
-    const [isAutoDetectEnabled, setIsAutoDetectEnabled] = useState(false)
+export function useQuickReimport(project: ProjectData) {
+    const [isAutoImportEnabled, setIsAutoImportEnabled] = useState(false)
     const [autoDetectIntervalId, setAutoDetectIntervalId] = useState<number | null>(null)
-    const setProjectContext = useContext(ProjectLoadContext)
+    const { setProjectData } = useContext(ProjectMutContext)
     const displayData = getDisplayData(project)
 
     const reimport = async (auto: boolean) => {
@@ -25,7 +19,7 @@ export default function QuickReimportSection({ project }: Props) {
             const templateFile = await displayData.fileHandle.getFile()
             const image = templateFile.type == "image/png" ? templateFile : await asepriteToPng(templateFile)
             const settings = project.lastExportSnapshot ?? project
-            setProjectContext({
+            setProjectData({
                 ...project,
                 importedTemplate: {
                     defaultCharacterWidth: settings.defaultCharacterWidth,
@@ -63,14 +57,14 @@ export default function QuickReimportSection({ project }: Props) {
             setAutoDetectIntervalId(null)
         }
 
-        if (!isAutoDetectEnabled || !displayData.enabled) {
+        if (!isAutoImportEnabled || !displayData.enabled) {
             cleanup()
         }
 
-        if (autoDetectIntervalId === null && isAutoDetectEnabled && displayData.enabled) {
+        if (autoDetectIntervalId === null && isAutoImportEnabled && displayData.enabled) {
             let autoDetectLastModified: number | null = null
             setAutoDetectIntervalId(setInterval(async () => {
-                if (isAutoDetectEnabled && displayData.enabled && displayData.fileHandle) {
+                if (isAutoImportEnabled && displayData.enabled && displayData.fileHandle) {
                     const file = await displayData.fileHandle.getFile()
                     if (autoDetectLastModified === null || file.lastModified > autoDetectLastModified) {
                         reimport(true)
@@ -81,41 +75,21 @@ export default function QuickReimportSection({ project }: Props) {
         }
 
         return cleanup
-    }, [isAutoDetectEnabled, displayData.enabled])
+    }, [isAutoImportEnabled, displayData.enabled])
 
     useEffect(() => {
-        setIsAutoDetectEnabled(false)
+        setIsAutoImportEnabled(false)
     }, [project.name])
 
-    return (
-            <ButtonGroup>
-                <Tooltip content={<div>Reimport last template{!displayData.enabled && <><br />{displayData.reason}</>}</div>} position="bottom">
-                    <Button 
-                        disabled={!displayData.enabled} 
-                        variant="outlined"
-                        icon={<Icon icon="refresh" />} 
-                        onClick={() => reimport(false)}
-                    >
-                        Reimport
-                    </Button>
-                </Tooltip>
-                <ToolbarMenu buttonIcon="chevron-down" buttonText="">
-                    <MenuItem key="auto-refresh" shouldDismissPopover={false} text={
-                        <Checkbox
-                            inline
-                            style={{ margin: 0 }}
-                            checked={isAutoDetectEnabled}
-                            onChange={e => setIsAutoDetectEnabled(e.currentTarget.checked)}>
-                            Auto detect changes
-                        </Checkbox>
-                    } />
-                </ToolbarMenu> 
-            </ButtonGroup>
-       
-    )
+    return {
+        isAutoImportEnabled,
+        setIsAutoImportEnabled,
+        reimport,
+        displayData,
+    }
 }
 
-type displayData =
+export type displayData =
     | { enabled: true, fileHandle: FileSystemFileHandle }
     | { enabled: false, reason: string }
 
