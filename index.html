@@ -85,80 +85,174 @@
         <link rel='stylesheet' href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css'>
     </head>
     <body>
-        <header>
-            <a href="/"><img src="img/promo/logo.svg" /></a>
-            <nav>
+        <header class="site-header">
+            <a class="brand" href="/">
+                <img src="img/promo/logo.svg" alt="Calligro logo" />
+            </a>
+            <nav class="site-nav">
                 <a href="/webapp.html">Web App</a>
                 <a href="https://voycawojka.itch.io/calligro">Download</a>
                 <a href="/tutorial.html">Tutorial</a>
-                <a href="https://github.com/Voycawojka/calligro/tree/main/samples">Engine Samples</a>
-                <a href="https://github.com/Voycawojka/calligro">Github</a>
-                <a href="https://discord.gg/5MmEpXWSsV" target="_blank">Discord</a>
+                <object type="text/html" data="https://img.shields.io/discord/1429867211274719347?logo=discord&style=social&link=https://discord.gg/5MmEpXWSsV"></object>
+                <object type="text/html" data="https://img.shields.io/github/stars/voycawojka/calligro?style=social"></object>
             </nav>
         </header>
 
-        <div class="container">
+        <main class="page">
             <section class="hero">
-                <div class="hero-text">
-                    <h2>Font Generator For Game Devs</h2>
-                    <p>Turn your art into fonts compatible with most game engines. Free, open source.</p>
+                <div class="hero-copy">
+                    <h1>Turn your art into game-ready fonts</h1>
+                    <p class="lead">Calligro is a <strong>bitmap font generator</strong>. It's free, open-source and works in your browser and on desktop.</p>
+                    <div class="hero-actions">
+                        <a class="primary-button" href="/webapp.html">Launch In Browser</a>
+                        <a class="secondary-button" href="https://voycawojka.itch.io/calligro">Download From Itch.io</a>
+                    </div>
+                </div>
+                <div class="hero-art">
+                    <img src="img/promo/imported-in-godot.png" alt="Calligro interface" />
+                    <div class="hero-letters">
+                        <span class="letter one">A</span>
+                        <span class="letter two">B</span>
+                        <span class="letter three">C</span>
+                        <span class="letter four">L</span>
+                        <span class="letter five">M</span>
+                    </div>
                 </div>
             </section>
 
-            <hr />
+            <section class="flow-band" aria-label="Workflow diagram">
+                <div class="flow-diagram">
+                    <div class="flow-column">
+                        <section class="icons-space">
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/ase256.png" width="75px" alt="Aseprite" />
+                                <p>Aseprite</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/krita.png" width="75px" alt="Krita" />
+                                <p>Krita</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/gimp-logo.svg" width="75px" alt="GIMP" />
+                                <p>GIMP</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/photopea.svg" width="75px" alt="Photopea" />
+                                <p>Photopea</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/joker.svg" width="75px" alt="Anything" />
+                                <p>Anything</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/graphite-logo-color.svg" width="75px" alt="Graphite" />
+                                <p>Graphite</p>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="flow-center">
+                        <div class="flow-calligro">Calligro</div>
+                        <div class="flow-arrow">--&gt;</div>
+                    </div>
+                    <div class="flow-column">
+                        <section class="icons-space">
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/godot.svg" width="75px" alt="Godot" />
+                                <p>Godot</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/phaser-planet-web.png" width="75px" alt="Phaser" />
+                                <p>Phaser</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/love-app-icon.svg" width="75px" alt="LÖVE" />
+                                <p>LÖVE</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/kaplay.png" width="75px" alt="Kaplay" />
+                                <p>Kaplay</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/joker.svg" width="75px" alt="Anything" />
+                                <p>Anything</p>
+                            </div>
+                            <div class="icon-3rd">
+                                <img src="img/promo/3rd/raylib_256x256.png" width="75px" alt="Raylib" />
+                                <p>Raylib</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
 
-            <section class="features">
-                <div class="feature">
-                    <img src="img/promo/imported-in-godot.png" alt="Feature preview">
-                    <div class="feature-text">
-                        <h3>Create BMFont fonts</h3>
-                        <p>The <a href="https://www.angelcode.com/products/bmfont/doc/file_format.html">Angel Code BMFont</a> format is already widely supported by most engines and frameworks (Godot, Love2d, Phaser, to name a few)</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <img src="img/promo/aseprite-template.png" alt="Feature preview">
-                    <div class="feature-text">
-                        <h3>Use your favourite graphics editor</h3>
-                        <p>Calligro exports a template you can edit in any graphics software you'd like before exporting the font files</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <img src="img/promo/desktop-shortcut.png" alt="Feature preview">
-                    <div class="feature-text">
-                        <h3>Web Based & Desktop Versions</h3>
-                        <p>Try it right in your browser or download for offline use. Desktop version has the exact same features but is a bit more convenient</p>
-                    </div>
-                </div>
-                <div class="feature">
-                    <img src="img/promo/open-source.png" alt="Feature preview">
-                    <div class="feature-text">
+            <section class="features-grid">
+                <h2>Features</h2>
+                <div class="features-cards">
+                    <article class="feature-card">
+                        <h3>BMFont Standard</h3>
+                        <p>Exports BMFont standards and understands standard BMFont.</p>
+                    </article>
+                    <article class="feature-card">
+                        <h3>Custom Templates</h3>
+                        <img src="img/promo/aseprite-template.png" alt="Template preview" />
+                    </article>
+                    <article class="feature-card">
+                        <h3>Real-Time Preview</h3>
+                        <p>Preview time, eye emulator or real time preview.</p>
+                    </article>
+                    <article class="feature-card">
+                        <h3>No Install Needed</h3>
+                        <p>Calligro exports a template and no install is needed.</p>
+                    </article>
+                    <article class="feature-card">
                         <h3>Open Source</h3>
-                        <p>Have a feature request? Found a bug? Want to contribute? Check out our <a href="https://github.com/Voycawojka/calligro">repository</a>!</p>
-                    </div>
+                        <p>Have a feature request? Found a bug? Join the community.</p>
+                    </article>
+                    <article class="feature-card">
+                        <h3>Cross-Platform</h3>
+                        <p>Calligro exports cross-platform with Windows / Mac / Linux.</p>
+                    </article>
                 </div>
             </section>
 
-            <section class="cta">
-                <a href="/webapp">Open Web Version</a>
-                <div class="widget-container">
-                    <iframe title="Itch.io desktop widget" frameBorder="0" src="https://itch.io/embed/946259" width="552" height="167"><a href="https://voycawojka.itch.io/calligro">Calligro by Voycawojka</a></iframe>
+            <section class="samples">
+                <h2>Engine-Ready Samples</h2>
+                <div class="samples-grid">
+                    <article class="sample-card">
+                        <div class="sample-logo">Godot</div>
+                        <a class="pill-button" href="https://github.com/Voycawojka/calligro/tree/main/samples">View Godot Sample</a>
+                    </article>
+                    <article class="sample-card">
+                        <div class="sample-logo">Unity</div>
+                        <a class="pill-button" href="https://github.com/Voycawojka/calligro/tree/main/samples">View Unity Sample</a>
+                    </article>
+                    <article class="sample-card">
+                        <div class="sample-logo">Phaser</div>
+                        <a class="pill-button" href="https://github.com/Voycawojka/calligro/tree/main/samples">View Phaser Sample</a>
+                    </article>
+                    <article class="sample-card">
+                        <div class="sample-logo">Love2D</div>
+                        <a class="pill-button" href="https://github.com/Voycawojka/calligro/tree/main/samples">View Love2D Sample</a>
+                    </article>
                 </div>
             </section>
-        </div>
+        </main>
 
-        <footer>
+        <footer class="site-footer">
+            <h3>Fork us on GitHub</h3>
+            <a class="pill-button" href="https://github.com/Voycawojka/calligro">View Repository</a>
             <a href="/privacy.html">Privacy policy</a>
             <section class="authors">
                 <div class="author">
                     <p>Filip A. Kowalski</p>
                     <ul class="socials">
-                        <li><a href="https://bsky.app/profile/ideasalmanac.bsky.social" aria-label="bluesky"><i class='bxl bx-bluesky bx-md'></i> </a></li>
+                        <li><a href="https://bsky.app/profile/ideasalmanac.bsky.social" aria-label="bluesky"><i class='bxl bx-bluesky bx-md'></i></a></li>
                         <li><a href="https://ideasalmanac.com/" aria-label="personal website"><i class='bx bx-globe bx-md'></i></a></li>
                         <li><a href="https://github.com/Voycawojka" aria-label="github"><i class='bxl bx-github bx-md'></i></a></li>
                     </ul>
                 </div>
                 <div class="author">
-                    <p>Dominik Józefiak</p>
+                    <p>Dominik Jozefiak</p>
                     <ul class="socials">
                         <li><a href="https://github.com/domlj" aria-label="github"><i class='bxl bx-github bx-md'></i></a></li>
                     </ul>
