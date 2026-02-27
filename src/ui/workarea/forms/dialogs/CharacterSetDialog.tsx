@@ -52,6 +52,11 @@ export default function CharacterSetDialog({
             return
         }
 
+        if (!deduplicated.includes(" ")) {
+            setErrorMessage("The character set must include a space character")
+            return
+        }
+
         setAcceptedCharacters(deduplicated)
         onClose()
     }

@@ -5,6 +5,7 @@
 - migrated from Electron to Tauri
 - added a warning about old projects not being available
 - quick font reexport: easily export subsequent changes
+- require space in the character set
 
 ## 2.2.0
 
