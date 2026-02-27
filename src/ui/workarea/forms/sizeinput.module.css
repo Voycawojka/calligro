@@ -1,0 +1,10 @@
+.sizecontainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.sizecontainer > div {
+  min-width: 100px;
+}

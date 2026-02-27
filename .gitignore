@@ -16,6 +16,10 @@
 # IDE
 .vscode
 
+# Graphics
+*.af
+*.af~lock~
+
 # misc
 .DS_Store
 .env.local
