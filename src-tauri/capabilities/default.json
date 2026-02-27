@@ -7,6 +7,10 @@
   ],
   "permissions": [
     "core:default",
-    "opener:default"
+    "opener:default",
+    "dialog:default",
+    "fs:default",
+    "fs:read-dirs",
+    "fs:write-all"
   ]
 }

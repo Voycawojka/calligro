@@ -16,6 +16,8 @@
     "@blueprintjs/core": "^6.0.0",
     "@blueprintjs/select": "^6.0.0",
     "@react-hook/resize-observer": "^2.0.2",
+    "@tauri-apps/plugin-dialog": "^2.6.0",
+    "@tauri-apps/plugin-fs": "^2.4.5",
     "@tauri-apps/plugin-opener": "^2.5.3",
     "ase-parser": "^0.0.18",
     "client-zip": "^1.2.2",
