@@ -7,6 +7,7 @@
 - quick font reexport: easily export subsequent changes
 - require space in the character set
 - added visual hint for character sizing
+- redesign landing page
 
 ## 2.2.0
 

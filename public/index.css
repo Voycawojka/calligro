@@ -1,12 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap");
 
 :root {
-    --background-dark: #0b0f19;
-    --background-elevated: #141a24;
-    --background-card: #151b27;
-    --link-color: #e2e8f0;
+    --background-card: #212630;
     --accent-color: #f2c15c;
-    --accent-glow: transparent;
     --color-on-dark-bg: #cbd5e1;
     --muted-text: #94a3b8;
     --note-bg-color: #eaf4ff;
@@ -15,8 +11,6 @@
     --section-spacing: 3.5rem;
     --element-spacing: 1.5rem;
     --border-radius: 20px;
-    --shadow-soft: none;
-    --shadow-card: none;
 }
 
 * {
@@ -183,7 +177,6 @@ td {
     padding: var(--element-spacing);
     background: rgba(18, 24, 33, 0.8);
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow-soft);
 }
 
 .article img {
@@ -265,61 +258,10 @@ td {
     color: #ffffff;
 }
 
-.hero-art {
-    position: relative;
-    border-radius: 18px;
-    padding: 0.6rem;
-    background: rgba(18, 24, 34, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
 .hero-art img {
     width: 100%;
     display: block;
     border-radius: 12px;
-}
-
-.hero-letters {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-.hero-letters .letter {
-    position: absolute;
-    font-size: 2rem;
-    font-weight: 800;
-    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
-}
-
-.hero-letters .one {
-    color: #f3b54d;
-    left: 8%;
-    top: 25%;
-}
-
-.hero-letters .two {
-    color: #6aa9ff;
-    left: 55%;
-    top: 6%;
-}
-
-.hero-letters .three {
-    color: #f1777c;
-    right: 6%;
-    top: 30%;
-}
-
-.hero-letters .four {
-    color: #7adc5a;
-    right: 10%;
-    bottom: 20%;
-}
-
-.hero-letters .five {
-    color: #f3b54d;
-    right: 2%;
-    bottom: 5%;
 }
 
 .flow-band {
@@ -332,6 +274,7 @@ td {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
+    margin-top: 20px;
 }
 
 .flow-diagram {
@@ -383,23 +326,22 @@ td {
 
 .features-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin-left: auto;
+    margin-right: auto;
     gap: 1.4rem;
     margin-top: 1.2rem;
 }
 
 .feature-card {
-    background: var(--background-card);
-    border-radius: 14px;
     padding: 1.4rem;
-    border: 1px solid rgba(242, 193, 92, 0.35);
-    text-align: left;
-    min-height: 130px;
+    background-color: var(--background-card);
+    border-radius: 0 0 var(--border-radius);
 }
 
 .feature-card h3 {
     margin-bottom: 0.4rem;
-    font-size: 1rem;
+    font-size: 1.5rem;
 }
 
 .feature-card p {
@@ -414,35 +356,6 @@ td {
     margin-top: 0.6rem;
     background: #ffffff;
     padding: 0.4rem;
-}
-
-.samples {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.samples-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.2rem;
-    margin-top: 1.2rem;
-}
-
-.sample-card {
-    background: var(--background-card);
-    border-radius: 14px;
-    padding: 1.2rem;
-    border: 1px solid rgba(242, 193, 92, 0.35);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.sample-logo {
-    font-weight: 800;
-    font-size: 1.1rem;
-    color: #e2e8f0;
 }
 
 .primary-button:hover {
@@ -484,10 +397,6 @@ td {
     padding: 2rem;
     box-shadow: none;
     border: none;
-}
-
-.feature-row.reverse .feature-media {
-    order: 2;
 }
 
 .feature-media {
@@ -614,13 +523,6 @@ iframe {
     align-self: center;
     max-width: 500px;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow-soft);
-}
-
-.warning {
-    padding-left: 1.2rem;
-    border-left: 2px solid var(--background-dark);
-    margin-bottom: 1.2rem;
 }
 
 .note {
@@ -635,7 +537,6 @@ iframe {
 .site-footer {
     text-align: center;
     padding: 2.5rem 0 2.2rem;
-    margin-top: var(--section-spacing);
     font-size: 0.98rem;
     color: var(--muted-text);
     background: rgba(12, 16, 22, 0.85);
@@ -673,7 +574,7 @@ iframe {
 }
 
 .socials a:hover {
-    color: #151a21;
+    color: var(--accent-color);
 }
 
 @media (max-width: 720px) {
@@ -749,7 +650,9 @@ iframe {
 
 .icon-3rd p {
     font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
+    margin-top: 2px;
     text-align: center;
     text-transform: uppercase;
 }

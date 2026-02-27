@@ -87,22 +87,24 @@
 
     <link rel="stylesheet" href="index.css" />
     <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel='stylesheet' href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css'>
 </head>
 
 <body>
-    <header>
-        <a href="/"><img src="img/promo/logo.svg" /></a>
-        <nav>
+    <header class="site-header">
+        <a class="brand" href="/">
+            <img src="img/promo/logo.svg" alt="Calligro logo" />
+        </a>
+        <nav class="site-nav">
             <a href="/webapp.html">Web App</a>
             <a href="https://voycawojka.itch.io/calligro">Download</a>
             <a href="/tutorial.html">Tutorial</a>
-            <a href="https://github.com/Voycawojka/calligro/tree/main/samples">Engine Samples</a>
-            <a href="https://github.com/Voycawojka/calligro">Github</a>
-            <a href="https://discord.gg/5MmEpXWSsV" target="_blank">Discord</a>
+            <object type="text/html" data="https://img.shields.io/discord/1429867211274719347?logo=discord&style=social&link=https://discord.gg/5MmEpXWSsV"></object>
+            <object type="text/html" data="https://img.shields.io/github/stars/voycawojka/calligro?style=social"></object>
         </nav>
     </header>
 
-    <div class="container article">
+    <main class="page container article">
        <h1>Tutorial</h1>
         <p>
             Creating a font with Calligro involves generating a font template, drawing characters in it, and then exporting a bitmap font.
@@ -382,34 +384,30 @@
             For subsequent exports you can press the "Rexport font" button next to the project name to quickly reexport the font to the same files.
         </p>
         <p class="note">
-            Quick reexport are available since Calligro 2.3.0.
+            Quick reexport is available since Calligro 2.3.0.
         </p>
 
         <p>
             To get help or report issues, join the
             <a href="https://discord.gg/5MmEpXWSsV" target="_blank">Ideas Almanac Discord server</a>.
         </p>
-    </div>
+    </main>
 
-    <footer>
+   <footer class="site-footer">
         <a href="/privacy.html">Privacy policy</a>
         <section class="authors">
             <div class="author">
                 <p>Filip A. Kowalski</p>
                 <ul class="socials">
-                    <li><a href="https://ideasalmanac.com/" aria-label="personal website"><i
-                                class='bx bx-globe bx-md'></i></a></li>
-                    <li><a href="https://x.com/ideasalmanac" aria-label="twitter"><i
-                                class='bx bxl-twitter bx-md'></i></a></li>
-                    <li><a href="https://github.com/Voycawojka" aria-label="github"><i
-                                class='bx bxl-github bx-md'></i></a></li>
+                    <li><a href="https://bsky.app/profile/ideasalmanac.bsky.social" aria-label="bluesky"><i class='bxl bx-bluesky bx-md'></i></a></li>
+                    <li><a href="https://ideasalmanac.com/" aria-label="personal website"><i class='bx bx-globe bx-md'></i></a></li>
+                    <li><a href="https://github.com/Voycawojka" aria-label="github"><i class='bxl bx-github bx-md'></i></a></li>
                 </ul>
             </div>
             <div class="author">
                 <p>Dominik Józefiak</p>
                 <ul class="socials">
-                    <li><a href="https://github.com/domlj" aria-label="github"><i class='bx bxl-github bx-md'></i></a>
-                    </li>
+                    <li><a href="https://github.com/domlj" aria-label="github"><i class='bxl bx-github bx-md'></i></a></li>
                 </ul>
             </div>
         </section>
