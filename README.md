@@ -44,14 +44,11 @@ This is a regular React/TypeScript project:
 
 ```bash
 # install dependencies and start a dev server with hot reloading
-npm install
+npm ci
 npm run dev
 
-# then optionally start the desktop app
-cd electron_resources
-npm install
-cd ..
-npm run electron:dev
+# or if you want to run the desktop app
+npx tauri dev
 
 # run unit tests
 npm run test
@@ -71,10 +68,8 @@ npm run build
 
 ### Desktop
 
-Create the production destop build for Windows and Linux in the `electron_build/` directory:
+Create the production destop build for your OS in the `src-tauri/target/release/` directory:
 
+```bash
+npx tauri build
 ```
-npm run electron:build
-```
-
-Note this command only works on Windows.

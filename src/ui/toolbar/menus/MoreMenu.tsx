@@ -3,6 +3,7 @@ import PlatformSwitch from "../../envSpecific/PlatformSwitch";
 import ToolbarMenu from "../ToolbarMenu";
 import { useState } from "react";
 import AboutDialog from "../dialogs/AboutDialog";
+import MenuItemExternalLink from "../MenuItemExternalLink";
 
 export default function MoreMenu() {
     const [aboutModalOpen, setAboutModalOpen] = useState(false)
@@ -10,23 +11,13 @@ export default function MoreMenu() {
     return (
         <>
             <ToolbarMenu buttonIcon="array" buttonText="More">
-                <MenuItem key="github-repository" icon="git-repo" text="Github Repository" onClick={() => 
-                    window.open("https://github.com/Voycawojka/calligro", "_blank")?.focus()
-                } />
-                <MenuItem key="proposals" icon="lightbulb" text="Propose a feature or report a bug" onClick={() =>
-                    window.open("https://github.com/Voycawojka/calligro/issues", "_blank")?.focus()
-                } />
+                <MenuItemExternalLink key="github-repository" icon="git-repo" text="Github Repository" href="https://github.com/Voycawojka/calligro" />
+                <MenuItemExternalLink key="proposals" icon="lightbulb" text="Propose a feature or report a bug" href="https://github.com/Voycawojka/calligro/issues" />
                 <PlatformSwitch
-                    desktop={() => <MenuItem key="website" icon="open-application" text="Website" onClick={() =>
-                        window.open("https://calligro.ideasalmanac.com", "_blank")?.focus()
-                    } />}
-                    web={() => <MenuItem key="desktop-app" icon="open-application" text="Desktop App" onClick={() =>
-                        window.open("https://voycawojka.itch.io/calligro", "_blank")?.focus()
-                    } />}
+                    desktop={() => <MenuItemExternalLink key="website" icon="open-application" text="Website" href="https://calligro.ideasalmanac.com" />}
+                    web={() => <MenuItemExternalLink key="desktop-app" icon="open-application" text="Desktop App" href="https://voycawojka.itch.io/calligro" />}
                 />
-                <MenuItem key="discord" icon="chat" text="Join Discord" onClick={() =>
-                    window.open("https://discord.gg/5MmEpXWSsV", "_blank")?.focus()
-                } />
+                <MenuItemExternalLink key="discord" icon="chat" text="Join Discord" href="https://discord.gg/5MmEpXWSsV" />
                 <MenuDivider />
                 <MenuItem key="about" icon="info-sign" text="About" onClick={() => setAboutModalOpen(true)} /> 
             </ToolbarMenu>

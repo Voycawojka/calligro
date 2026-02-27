@@ -1,5 +1,4 @@
 import React from 'react'
-import { isElectron } from '../../electron/electronInterop'
 
 interface WebOnlyProps {
     div?: boolean
@@ -7,7 +6,7 @@ interface WebOnlyProps {
 }
 
 export function WebOnly(props: WebOnlyProps) {
-    return isElectron()
+    return window.isTauri
         ? null
         : props.div
             ? <div>{props.children}</div>

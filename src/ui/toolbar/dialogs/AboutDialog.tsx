@@ -1,6 +1,6 @@
 import { Dialog, DialogBody, DialogFooter, Button, AnchorButton, ButtonGroup, Card } from "@blueprintjs/core";
 import version from "../../../../version.txt?raw"
-import { isElectron } from "../../../electron/electronInterop";
+import PlatformSwitch from "../../envSpecific/PlatformSwitch";
 
 export interface Props {
     isOpen: boolean
@@ -21,7 +21,7 @@ export default function AboutDialog({ isOpen, setIsOpen }: Props) {
         >
             <DialogBody>
                 <p>
-                    Calligro, version: <strong>{version} ({isElectron() ? "desktop" : "web"})</strong>
+                    Calligro, version: <strong>{version} ({<PlatformSwitch desktop={() => "desktop"} web={() => "web"} />})</strong>
                 </p>
                 <Card>
                     <p>

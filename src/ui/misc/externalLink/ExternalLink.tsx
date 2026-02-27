@@ -1,17 +1,15 @@
 import React, { HTMLProps } from 'react'
-import { isElectron } from '../../../electron/electronInterop'
-
-const shell = window.require ? window.require('electron').shell : null
+import  { openUrl } from '@tauri-apps/plugin-opener'
 
 interface ExternalLinkProps extends HTMLProps<HTMLAnchorElement> {
 }
 
 function ExternalLink(props: ExternalLinkProps) {
-    if (isElectron()) {
+    if (window.isTauri) {
         const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
             if (props.href) {
                 event.preventDefault()
-                shell?.openExternal(props.href)
+                openUrl(props.href)
             }
         }
 

@@ -10,11 +10,8 @@
 
 # production
 /dist
-/electron_build
-/electron_resources/node_modules
-/electron_resources/src
-!electron_resources/src/.gitkeep
-!electron_resources/src/app/.gitkeep
+/src-tauri/target/
+/src-tauri/gen/
 
 # IDE
 .vscode

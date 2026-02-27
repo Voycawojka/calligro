@@ -4,6 +4,8 @@ import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select"
 import { useContext, useState } from "react"
 import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext"
 import OverwriteChangesAlert from "./OverwriteChangesAlert"
+import ExternalLink from "../../misc/externalLink/ExternalLink"
+import { DesktopOnly } from "../../envSpecific/DesktopOnly"
 
 export interface Props {
     isOpen: boolean
@@ -105,6 +107,12 @@ export default function OpenProjectDialog({ isOpen, setIsOpen }: Props) {
                     >
                         <Button text={selectedProject ?? "Select a project"} endIcon="caret-down" />
                     </Select>
+                    <DesktopOnly>
+                        <br />
+                        <Callout minimal intent="warning">
+                            Projects from versions prior to 2.3.0 aren't available due to a significant change in the desktop app internals. To access those projects download <ExternalLink href="https://github.com/Voycawojka/calligro/releases/tag/v2.2.0">Calligro 2.2.0</ExternalLink>. 
+                        </Callout>
+                    </DesktopOnly>
                     { errorMessage && 
                         <Callout intent="danger">{errorMessage}</Callout>
                     }

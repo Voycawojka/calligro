@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { fetchNewerVersion } from "../../api/latestVesion"
 import localVersion from "../../../version.txt?raw"
-import { isElectron } from "../../electron/electronInterop"
 
 export interface UpdaterInfo {
     newVersionName: string
@@ -15,7 +14,7 @@ export function useUpdater(): [boolean, UpdaterInfo | null] {
     const [info, setInfo] = useState<UpdaterInfo | null>(null)
 
     useEffect(() => {
-        if (!isElectron()) {
+        if (!window.isTauri) {
             return
         }
 

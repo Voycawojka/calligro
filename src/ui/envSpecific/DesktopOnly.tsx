@@ -1,5 +1,4 @@
 import React from 'react'
-import { isElectron } from '../../electron/electronInterop'
 
 interface DesktopOnlyProps {
     div?: boolean
@@ -7,7 +6,7 @@ interface DesktopOnlyProps {
 }
 
 export function DesktopOnly(props: DesktopOnlyProps) {
-    return isElectron()
+    return window.isTauri
         ? props.div
             ? <div>{props.children}</div>
             : <>{props.children}</>
