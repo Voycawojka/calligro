@@ -1,12 +1,18 @@
 import { ProjectData } from "../../filesystem/projectstore"
 import { useContext, useEffect, useState } from "react"
-import { ProjectMutContext } from "../contexts/ProjectContext"
+import { ProjectContext, ProjectMutContext } from "../contexts/ProjectContext"
 import { asepriteToPng } from "../../generation/png/aseprite"
 import { OverlayToaster } from "@blueprintjs/core"
 
-export function useQuickReimport(project: ProjectData) {
+export function useQuickReimport() {
     const [isAutoImportEnabled, setIsAutoImportEnabled] = useState(false)
     const [autoDetectIntervalId, setAutoDetectIntervalId] = useState<number | null>(null)
+    const project = useContext(ProjectContext)
+
+    if (!project) {
+        throw new Error("Unexpected error occured! ProjectContext is null in useQuickReimport.")
+    }
+
     const { setProjectData } = useContext(ProjectMutContext)
     const displayData = getDisplayData(project)
 

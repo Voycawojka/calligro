@@ -9,9 +9,9 @@ export interface Props {
     project: ProjectData,
 }
 
-export default function QuickSyncSection({ project }: Props) {
-    const { isAutoImportEnabled, setIsAutoImportEnabled, reimport, displayData: reimportDisplayData } = useQuickReimport(project)
-    const { isAutoExportEnabled, setIsAutoExportEnabled, reexport, displayData: reexportDisplayData } = useQuickReexport(project)
+export default function QuickSyncSection() {
+    const { isAutoImportEnabled, setIsAutoImportEnabled, reimport, displayData: reimportDisplayData } = useQuickReimport()
+    const { reexport, displayData: reexportDisplayData } = useQuickReexport()
 
     return (
             <ButtonGroup>
@@ -28,9 +28,8 @@ export default function QuickSyncSection({ project }: Props) {
                     <Button 
                         disabled={!reexportDisplayData.enabled} 
                         variant="outlined"
-                        active={isAutoExportEnabled}
                         icon={<Icon icon="export" />}
-                        onClick={() => reexport(false)}
+                        onClick={() => reexport()}
                     />
                 </Tooltip>
                 <ToolbarMenu buttonIcon="chevron-down" buttonText="">
@@ -42,16 +41,6 @@ export default function QuickSyncSection({ project }: Props) {
                             checked={isAutoImportEnabled}
                             onChange={e => setIsAutoImportEnabled(e.currentTarget.checked)}>
                             Auto reimport on changes
-                        </Checkbox>
-                    } />
-                    <MenuItem key="auto-export" shouldDismissPopover={false} text={
-                        <Checkbox
-                            inline
-                            style={{ margin: 0 }}
-                            disabled={!reexportDisplayData.enabled} 
-                            checked={isAutoExportEnabled}
-                            onChange={e => setIsAutoExportEnabled(e.currentTarget.checked)}>
-                            Auto reexport on changes
                         </Checkbox>
                     } />
                 </ToolbarMenu> 

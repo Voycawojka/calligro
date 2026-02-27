@@ -5,7 +5,6 @@
 - migrated from Electron to Tauri
 - added a warning about old projects not being available
 - quick font reexport: easily export subsequent changes
-- hot export: automatically rexport font when you modify its properties
 
 ## 2.2.0
 

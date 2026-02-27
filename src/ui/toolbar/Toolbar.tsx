@@ -40,7 +40,7 @@ export default function Toolbar() {
                         <NavbarHeading>
                             Project: <strong>{project.name}</strong> {project.dirty && "(unsaved)"}
                         </NavbarHeading>
-                        <QuickSyncSection project={project} />
+                        <QuickSyncSection />
                     </>
                 }
             </NavbarGroup>
