@@ -40,6 +40,7 @@ interface SavedProjectData {
     prefillOutline: number
     prefillOutlineColor: string
     horizontalSpacing: number
+    /** @deprecated use lineHeight instead */
     verticalSpacing: number
     lineHeight: number
     kernings: KerningPair[]

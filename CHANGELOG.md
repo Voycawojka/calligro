@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.4.0
+
+- fixed spacing bug
+- adjusted TXT font export for wider compatibility (fixes https://github.com/Voycawojka/calligro/issues/69)
+- deprecated vertical spacing in favor of line height for wider compatibility
+
 ## 2.3.0
 
 - migrated from Electron to Tauri

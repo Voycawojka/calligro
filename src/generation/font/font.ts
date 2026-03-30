@@ -92,8 +92,8 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
                 left: 0,
             },
             spacing: {
-                horizontal: templateData.project.horizontalSpacing,
-                vertical: templateData.project.verticalSpacing,
+                horizontal: 1,
+                vertical: 1,
             },
             outline: 0,
         },
@@ -107,7 +107,7 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
         pages: [
             {
                 id: 0,
-                file: 'calligro-page-0.png'
+                file: '"calligro-page-0.png"'
             }
         ],
         chars: packedRects.map(rect => ({
@@ -118,7 +118,7 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
             height: rect.sourceRect.h,
             xoffset: 0,
             yoffset: 0,
-            xadvance: rect.sourceRect.w,
+            xadvance: rect.sourceRect.w + templateData.project.horizontalSpacing,
             page: 0,
             chnl: 15,
         })),

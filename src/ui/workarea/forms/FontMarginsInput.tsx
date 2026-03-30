@@ -22,7 +22,7 @@ export default function FontMarginsInput({ project }: Props) {
                     size="small"
                 />
             </FormGroup>
-            <FormGroup label="Vertical spacing">
+            <FormGroup label="Vertical spacing" helperText={'Deprecated! Use line height instead.'}>
                 <InputGroup
                     value={vMargin}
                     onValueChange={setVMargin}

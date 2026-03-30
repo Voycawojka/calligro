@@ -67,7 +67,9 @@ export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml
                 infoTag,
                 commonTag,
                 ...pageTags,
+                `chars count=${charTags.length}`,
                 ...charTags,
+                `kernings count=${kerningTags.length}`,
                 ...kerningTags
             ].join('\n')
         
