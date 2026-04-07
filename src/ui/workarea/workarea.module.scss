@@ -16,6 +16,52 @@
     height: calc(100vh - 50px);
 }
 
+.sectionheading {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin: -20px -20px 20px -20px;
+    padding: 12px 20px;
+
+    h4 {
+        margin: 0 !important;
+    }
+
+    :global(.bp6-dark) & {
+        background-color: rgba(255, 255, 255, 0.06);
+        border-bottom-color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+.sectionsubtitle {
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.6;
+    margin-top: 2px;
+}
+
+.buttonrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    .button {
+        flex: 1 1 120px;
+    }
+}
+
+.currenttemplate {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.currenttemplatelabel {
+    font-size: 12px;
+    opacity: 0.6;
+    white-space: nowrap;
+}
+
 .canvascontainer {
     flex-grow: 4;
     padding: 20px;

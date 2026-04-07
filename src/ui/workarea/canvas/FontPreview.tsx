@@ -1,5 +1,6 @@
-import { Card, FormGroup, H4, InputGroup, TextArea } from "@blueprintjs/core"
+import { Card, ControlGroup, H4, InputGroup, TextArea } from "@blueprintjs/core"
 import { ProjectData } from "../../../filesystem/projectstore"
+import styles from "../workarea.module.scss"
 import { ChangeEvent, useEffect, useRef, useState } from "react"
 import { drawPreview } from "../../../generation/preview"
 import { FontSpec, generateFont } from "../../../generation/font/font"
@@ -65,17 +66,17 @@ export default function FontPreview({ project }: Props) {
 
     return (
         <>
-            <H4>Font Preview</H4>
-            <TextArea value={text} onChange={onTextChanged} fill />
-            <FormGroup label="Scale">
-                <InputGroup type="number" leftIcon="zoom-in" min={1} value={rawScale} onValueChange={setRawScale} fill />
-            </FormGroup>
-            <FormGroup label="Background">
-                <InputGroup type="color" value={bgColor} leftIcon="color-fill" onValueChange={setBgColor} />
-            </FormGroup>
+            <div className={styles.sectionheading}>
+                <H4>Preview</H4>
+            </div>
             <Card ref={canvasParentRef} style={{ backgroundColor: bgColor }}>
                 <canvas ref={canvasRef} />
             </Card>
+            <TextArea value={text} onChange={onTextChanged} fill />
+            <ControlGroup>
+                <InputGroup type="number" leftIcon="zoom-in" min={0.1} step={0.1} value={rawScale} onValueChange={setRawScale} fill />
+                <InputGroup type="color" value={bgColor} leftIcon="color-fill" onValueChange={setBgColor} fill />
+            </ControlGroup>
         </>
     )
 }

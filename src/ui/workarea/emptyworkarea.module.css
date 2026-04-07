@@ -1,0 +1,53 @@
+.container {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    padding: 40px 20px;
+    overflow-y: auto;
+    row-gap: 24px;
+    max-width: 560px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.logo {
+    height: 80px;
+    display: block;
+    margin: 0 auto 32px;
+}
+
+.recentProjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.resourceCards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.resourceCard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+}
+
+.texttutorial {
+    border-left-color: #FFD76C;
+}
+
+.videotutorial {
+    border-left-color: #FF6B6B;
+}
+
+.discord {
+    border-left-color: #5865F2;
+}

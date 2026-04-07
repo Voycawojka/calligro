@@ -2,7 +2,7 @@ import { FormGroup, InputGroup, Tag } from "@blueprintjs/core";
 import { ProjectData } from "../../../filesystem/projectstore";
 import { useProjectStateNumericInput } from "../hooks/useProjectStateNumericInput";
 import SizeOverrideInput from "./SizeOverrideInput";
-import styles from "./sizeinput.module.css"
+import styles from "./infographic.module.css"
 
 export interface Props {
     project: ProjectData

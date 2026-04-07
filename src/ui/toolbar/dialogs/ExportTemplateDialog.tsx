@@ -30,8 +30,8 @@ export default function ExportTemplateDialog({
         setFormat(e.currentTarget.value as "png" | "aseprite")
     }
 
-    const onExport = () => {
-        exportTemplate(project, format)
+    const onExport = async () => {
+        const fileHandle = await exportTemplate(project, format)
         setProjectData({
             ...project,
             lastExportSnapshot: {
@@ -40,6 +40,7 @@ export default function ExportTemplateDialog({
                 characterBase: project.characterBase,
                 characterSet: project.characterSet,
                 format: format,
+                fileHandle: fileHandle,
             },
             dirty: true,
         })

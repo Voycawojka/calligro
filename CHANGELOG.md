@@ -3,8 +3,13 @@
 ## 2.4.0
 
 - fixed spacing bug
-- adjusted TXT font export for wider compatibility (fixes https://github.com/Voycawojka/calligro/issues/69)
-- deprecated vertical spacing in favor of line height for wider compatibility
+- adjusted TXT font export and deprecated vertical spacing for wider compatibility (fixes https://github.com/Voycawojka/calligro/issues/69)
+- changed the default preview text to "The quick brown fox jumps over the lazy dog" for new projects
+- tweaked the UI to be more intuitive, added spacing infographic
+- improved kerning pairs dialog to allow for adding kernings in batches
+- exported templates can automatically be reimported without manually choosing the file first
+- linked a video tutorial and updated the text tutorial, fixed help links not working in desktop app
+- added a Godot 4 sample
 
 ## 2.3.0
 

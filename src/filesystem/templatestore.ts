@@ -15,7 +15,7 @@ function exportTemplateFallback(image: Blob, filename: string) {
 
 export type TemplateExportFormat = "png" | "aseprite"
 
-export async function exportTemplate(project: ProjectData, format: TemplateExportFormat) {
+export async function exportTemplate(project: ProjectData, format: TemplateExportFormat): Promise<FileSystemFileHandle | null> {
     const templateData = calculateTemplateData(project, "force current")
     const image = format === "png"
         ? await generateTemplatePng(templateData)
@@ -24,7 +24,7 @@ export async function exportTemplate(project: ProjectData, format: TemplateExpor
 
     if (!window["showSaveFilePicker"]) {
         exportTemplateFallback(image, filename)
-        return
+        return null
     }
 
     const handle = await window.showSaveFilePicker({
@@ -43,6 +43,8 @@ export async function exportTemplate(project: ProjectData, format: TemplateExpor
         intent: "success",
         message: `Exported template: ${handle.name}`
     })
+
+    return handle
 }
 
 function filePickerTypes(format: TemplateExportFormat): FilePickerAcceptType[] {

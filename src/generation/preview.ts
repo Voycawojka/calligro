@@ -66,10 +66,15 @@ export async function drawPreview(text:string, spec: FontSpec, pages: Blob[], sc
 
         if ((pos.x + charSpec.width) * scale >= ctx.canvas.width) {
             cursor.x = 0
+            // TODO Vertical spacing kept for backwards compatibility. Ultimately should be removed in favor of just line height
             cursor.y += spec.info.spacing.vertical + spec.common.lineHeight
 
             pos.x = cursor.x + charSpec.xoffset + kerningAmount
             pos.y = cursor.y + charSpec.yoffset
+
+            if (c.trim() === '') {
+                return
+            }
         }
 
         if (placeholder) {

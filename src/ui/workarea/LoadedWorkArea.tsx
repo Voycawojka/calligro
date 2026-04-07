@@ -9,6 +9,8 @@ import FontPreview from "./canvas/FontPreview"
 import PreviewTemplateButton from "./forms/PreviewTemplateButton"
 import FontMarginsInput from "./forms/FontMarginsInput"
 import KerningPairsInput from "./forms/KerningPairsInput"
+import ExportFontButton from "./forms/ExportFontButton"
+import ImportTemplateButton from "./forms/ImportTemplateButton"
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels"
 import { useRef, useState } from "react"
 import useResizeObserver from "@react-hook/resize-observer"
@@ -36,7 +38,10 @@ export default function LoadedWorkArea({ project }: Props) {
             <PanelGroup direction="horizontal">
                 <Panel id="template-settings" order={1} minSize={minSize}>
                     <div className={`${styles.formcontainer}`}>
-                        <H4>Template Settings</H4>
+                        <div className={styles.sectionheading}>
+                            <H4>1. Template Settings</H4>
+                            <div className={styles.sectionsubtitle}>Configure and export a template to draw on</div>
+                        </div>
                         { project.importedTemplate &&
                             <Callout intent="warning">
                                 A template was imported. The settings in this section will have no effect on the font until they are exported and reimported.
@@ -53,18 +58,25 @@ export default function LoadedWorkArea({ project }: Props) {
                         <PreviewTemplateButton project={project} forceDisabled={templateDisabled} />
                     </div>
                 </Panel>
-                <PanelResizeHandle id="template-font-handle" className={Classes.DIVIDER} />
-                <Panel id="font-settings" order={2} minSize={minSize}>
-                    <div className={`${styles.formcontainer}`}>
-                            <H4>Font Settings</H4>
-                            <FontMarginsInput project={project} />
-                            <KerningPairsInput project={project} />
-                    </div>
-                </Panel>
                 <PanelResizeHandle id="font-canvas-handle" className={Classes.DIVIDER}  />
-                <Panel id="canvas" order={3} minSize={minSize}>
+                <Panel id="canvas" order={2} minSize={minSize}>
                     <div className={`${styles.canvascontainer}`}>
                             <FontPreview project={project} />
+                    </div>
+                </Panel>
+                <PanelResizeHandle id="template-font-handle" className={Classes.DIVIDER} />
+                <Panel id="font-settings" order={3} minSize={minSize}>
+                    <div className={`${styles.formcontainer}`}>
+                            <div className={styles.sectionheading}>
+                                <H4>2. Font Settings</H4>
+                                <div className={styles.sectionsubtitle}>Import a filled template and generate a font</div>
+                            </div>
+                            <ImportTemplateButton project={project} />
+                            <Divider />
+                            <FontMarginsInput project={project} />
+                            <KerningPairsInput project={project} />
+                            <Divider />
+                            <ExportFontButton />
                     </div>
                 </Panel>
             </PanelGroup>

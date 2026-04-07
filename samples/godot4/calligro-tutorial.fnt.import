@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://bn42vd0eughxa"
+path="res://.godot/imported/calligro-tutorial.fnt-852ce0dc17f04744bac93914919aad4c.fontdata"
+
+[deps]
+
+source_file="res://calligro-tutorial.fnt"
+dest_files=["res://.godot/imported/calligro-tutorial.fnt-852ce0dc17f04744bac93914919aad4c.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

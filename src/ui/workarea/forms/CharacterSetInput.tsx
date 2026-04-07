@@ -18,9 +18,10 @@ export default function CharacterSetInput({ project, forceDisabled }: Props) {
             <FormGroup label="Character set" disabled={forceDisabled}>
                 <Button
                     icon="edit"
-                    text={`${characters.length} characters`}
+                    text={`Edit Character Set (${characters.length} chars)`}
                     onClick={() => setDialogOpen(true)}
                     disabled={forceDisabled}
+                    fill
                 />
             </FormGroup>
 

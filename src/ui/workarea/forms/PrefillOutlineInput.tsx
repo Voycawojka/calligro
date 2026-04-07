@@ -43,12 +43,12 @@ export default function PrefillOutlineInput({ project, forceDisabled }: Props) {
     }, [project.prefillOutlineColor])
 
     return (
-            // TODO allow fractional values
             <FormGroup label="Pre-fill outline" disabled={!project.prefill || forceDisabled}>
                     <InputGroup
                         disabled={!project.prefill || forceDisabled}
                         type="number"
                         leftIcon="dot"
+                        step={0.1}
                         value={size.toString()}
                         onValueChange={v => setSize(Number(v))}
                         rightElement={(

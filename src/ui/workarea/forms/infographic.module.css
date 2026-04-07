@@ -6,5 +6,6 @@
 }
 
 .sizecontainer > div {
+  width: 100%;
   min-width: 100px;
 }

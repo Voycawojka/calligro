@@ -104,6 +104,10 @@ function getDisplayData(project: ProjectData): displayData {
         return { enabled: true, fileHandle: project.importedTemplate.fileHandle }
     }
 
+    if (project.lastExportSnapshot?.fileHandle) {
+        return { enabled: true, fileHandle: project.lastExportSnapshot.fileHandle }
+    }
+
     if (!window["showOpenFilePicker"]) {
         return { enabled: false, reason: "This function isn't available in your browser" }
     }

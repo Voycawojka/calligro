@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bqic74s3qvbnk"]
+
+[ext_resource type="FontFile" uid="uid://bn42vd0eughxa" path="res://calligro-tutorial.fnt" id="1_0fbet"]
+
+[node name="Control" type="Control" unique_id=1170452682]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=268581249]
+layout_mode = 0
+offset_right = 1153.0
+offset_bottom = 646.0
+
+[node name="Label" type="Label" parent="." unique_id=1877570316]
+texture_filter = 1
+layout_mode = 0
+offset_left = 430.0
+offset_top = 95.0
+offset_right = 652.0
+offset_bottom = 145.0
+theme_override_fonts/font = ExtResource("1_0fbet")
+theme_override_font_sizes/font_size = 24
+text = "main menu"
+
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1546718290]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 167.0
+offset_right = 664.0
+offset_bottom = 198.0
+theme_override_fonts/font = ExtResource("1_0fbet")
+placeholder_text = "your name"

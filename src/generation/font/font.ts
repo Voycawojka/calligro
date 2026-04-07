@@ -98,7 +98,8 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
             outline: 0,
         },
         common: {
-            lineHeight: templateData.project.lineHeight,
+            // TODO vertical spacing kept for backwards compatibility. Ultimately should be removed in favor of just line height
+            lineHeight: templateData.project.lineHeight + templateData.project.verticalSpacing,
             base: templateData.project.characterBase,
             scaleW: canvas.width,
             scaleH: canvas.height,

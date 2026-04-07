@@ -99,7 +99,7 @@ export default function KerningPairsInput({ project }: Props) {
                 />
             </FormGroup>
             { editedKerning &&
-                <KerningPreview project={project} kerning={editedKerning} />
+                <KerningPreview project={project} kernings={[editedKerning]} />
             }
 
             <AddKerningDialog

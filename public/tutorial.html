@@ -105,7 +105,18 @@
     </header>
 
     <main class="page container article">
-       <h1>Tutorial</h1>
+        <h1>Tutorial</h1>
+
+        <h2>Video</h2>
+        
+        <p>
+            Feel free to watch the video tutorial below.
+            If you prefer written instructions, just keep reading for a step-by-step walkthrough of all the features.
+        </p>
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/cmwSS-oLLBo?si=b_ZtuNQffRwg8UMH" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+        <h2>Introduction</h2>
+        
         <p>
             Creating a font with Calligro involves generating a font template, drawing characters in it, and then exporting a bitmap font.
             The template can be filled using a regular TTF font and/or by drawing in any graphics editor.
@@ -119,10 +130,15 @@
             <a href="https://discord.gg/5MmEpXWSsV" target="_blank">Ideas Almanac Discord server</a>.
         </p>
 
+        <p class="note">
+            This is a tutorial for Calligro 2.4.0.
+            See <a href="/tutorial-old.html">here</a> for the tutorial for previous versions.
+        </p>
+
         <h2>UI Overview</h2>
 
         <p>
-            Use the "File" menu to create or open a project.
+            Create or open a project to get started.
             When a project is open, the UI is divided into three sections:
         </p>
         <ul>
@@ -130,10 +146,10 @@
                 <strong>Template Settings</strong> – defines the character set, size, and other properties that affect what you'll be drawing.
             </li>
             <li>
-                <strong>Font Settings</strong> – includes options that can be adjusted after drawing the characters.
+                <strong>Preview</strong> – shows a preview of how the font will look with the current settings.
             </li>
             <li>
-                <strong>Font Preview</strong> – shows a preview of how the font will look with the current settings.
+                <strong>Font Settings</strong> – includes options that can be adjusted after drawing the characters.
             </li>
         </ul>
 
@@ -142,7 +158,7 @@
         <h2>Template Settings</h2>
 
         <p>
-            In the Template Settings section, you define the template - an image with blank spots where you'll draw your characters.
+            In Template Settings you define the template which is an image with blank spots where you'll draw your characters.
         </p>
         <p>
             Press the "Preview Template" button at the bottom to see how it looks.
@@ -155,9 +171,9 @@
         <h3>Pre-fill Inputs</h3>
 
         <p>
-            Close the preview and check out the "Prefill" input at the top of Template Settings.
+            Close the preview and checkout the "Prefill" input at the top of Template Settings.
             It lets you choose a regular TTF font to prefill the template.
-            Once you select a font, you’ll immediately see a sample text preview on the right.
+            Once you select a font, you'll immediately see a sample text preview.
         </p>
         
         <img src="./img/tutorial/font-dropdown.png" alt="Prefill Dropdown" />
@@ -183,7 +199,7 @@
         </p>
         
         <img src="./img/tutorial/character-set-dialog.png" alt="Character Set Dialog" />
-        <img src="./img/tutorial/preset-dropdown.png" alt="Character Set Preview" />
+        <img src="./img/tutorial/preset-dropdown.png" alt="Character Set Preset Dropdown" />
 
         <p class="note">
             Emojis and other characters made out of multiple code points are not supported.
@@ -205,7 +221,6 @@
         </p>
         
         <img src="./img/tutorial/size-inputs.png" alt="Size and Base Inputs" />
-        <img src="./img/tutorial/base-example.png" alt="Example of a Base" />
 
         <h3>Size Overrides</h3>
 
@@ -232,25 +247,16 @@
         <h2>Exporting and Importing Templates</h2>
 
         <p>
-            Before exporting a template, you can adjust settings in the Font Settings section (explained below) and preview how the font will look.
-            These settings don't affect the exported template.
-            If you're satisfied with the results using just the Prefill inputs, you may skip exporting.
-            But if you want to draw your own characters, you'll need to export the template.
+            If you don't want to draw your own characters and only use the pre-fill option, you may skip exporting.
+            If you want to draw your own characters, you'll need to export the template.
         </p>
 
         <h3>Exporting the Template</h3>
 
         <p>
-            To export the template:
-            <ul>
-                <li>Press "Preview Template" and then "Export", or</li>
-                <li>Use the "File → Export Template" menu</li>
-            </ul>
+            To export the template press "Export Template" at the bottom.
             You can choose either a PNG or Aseprite file format.
             Aseprite templates have the grid and the pre-filled font generated as separate layers.
-        </p>
-        <p class="note">
-            Aseprite export is available since Calligro 2.1.0.
         </p>
         <p>
             You now have an image file that can be edited in any graphics editor.
@@ -258,33 +264,38 @@
             Once you're done drawing, import the file back into Calligro.
         </p>
 
+        <img src="./img/tutorial/template-export-dialog.png" alt="Template Export Dialog" />
+
         <h3>Importing Templates</h3>
 
         <p>
-            To import a filled template, choose "File → Import Template".
-            Your custom characters will immediately appear in the font preview.
-        </p>
-        <p>
-            For subsequent imports of the same template (i.e. after you've made some adjustments in a graphics editor) you can press the "Reimport last template" button next to the project name to quickly reimport the last loaded template.
-            You can also enable the "Auto reimport on changes" option (in the drop down menu next to the button) to have Calligro automatically reimport the template whenever the file is modified.
+            In Font Settings notice a label that says "Current template: your-file-name".
+            It means Calligro is aware of the file.
+            Press "Reimport" to reload the file and see your changes in the preview.
         </p>
         <p class="note">
-            Aseprite import and the quick/auto reimport are available since Calligro 2.2.0.
+            If for whatever reason the label ever says "Current template: embedded in project", it means the template is currently stored in the project file and not linked to an external file.
+            In that case press "Import New Template" to link a file to the project.
+        </p>
+        <p>
+            You can enable "Auto reimport on changes" next to "Reimport" to have Calligro automatically reimport the template whenever the file is modified.
         </p>
         
+        <img src="./img/tutorial/template-import-controls.png" alt="Template Import Controls" />
         <img src="./img/tutorial/imported-preview.png" alt="Imported Preview" />
 
         <p>
-            After importing, the Template Settings section becomes disabled by default.
-            You can still make changes by checking "Edit anyway" at the top, but keep in mind those changes won’t affect the font unless you export and import the template again.
+            After importing, Template Settings become disabled by default.
+            It's best to ignore it from now on.
         </p>
-        
-        <img src="./img/tutorial/disabled-template-settings.png" alt="Edit Anyway Checkbox" />
+        <p class="note">
+            You can still make changes by checking "Edit anyway" at the top, but keep in mind those changes won't affect the font unless you export and import the template again.
+        </p>
 
         <h2>Font Settings</h2>
 
         <p>
-            The Font Settings section lets you adjust additional properties like spacing, line height, and kerning.
+            Font Settings let you adjust additional properties like spacing, line height, and kerning.
             These can still be changed after the template has been imported.
         </p>
 
@@ -300,7 +311,6 @@
         </p>
         
         <img src="./img/tutorial/spacing-input.png" alt="Spacing and Line Height Inputs" />
-        <img src="./img/tutorial/custom-spacing-preview.png" alt="Line Height Example" />
 
         <p class="note">
             There's also a vertical spacing input.
@@ -327,6 +337,11 @@
             A dialog will appear where you can enter the characters and spacing.
             Click "Add" to save the pair.
         </p>
+
+        <p>
+            You can specify multiple characters in the first and second character inputs to create multiple pairs at once.
+            For example, entering "ab" in the first input and "cd" in the second input will create pairs for "ac", "ad", "bc", and "bd".
+        </p>
         
         <img src="./img/tutorial/add-kerning.png" alt="Add Kerning Pair Dialog" />
 
@@ -341,11 +356,13 @@
         <h2>Exporting a Font</h2>
 
         <p>
-            Once you're happy with your font, export it using "File → Export Font".
+            Once you're happy with your font, export it by pressing "Export Font".
             You can choose between TXT and XML formats.
             Different game engines require different formats.
-            Unfortunately, this often isn’t documented, so you may need to try both.
+            Unfortunately, this often isn't documented, so you may need to try both.
         </p>
+
+        <img src="./img/tutorial/font-export-dialog.png" alt="Font Export Dialog" />
 
         <p>
             Some known examples:
@@ -386,10 +403,7 @@
         </p>
 
         <p>
-            For subsequent exports you can press the "Rexport font" button next to the project name to quickly reexport the font to the same files.
-        </p>
-        <p class="note">
-            Quick reexport is available since Calligro 2.3.0.
+            For subsequent exports you can press the "Rexport" button to quickly reexport the font to the same files.
         </p>
 
         <p>

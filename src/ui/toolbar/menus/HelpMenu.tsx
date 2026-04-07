@@ -1,15 +1,12 @@
-import { MenuItem } from "@blueprintjs/core";
 import ToolbarMenu from "../ToolbarMenu";
+import MenuItemExternalLink from "../MenuItemExternalLink";
 
 export default function HelpMenu() {
     return (
         <ToolbarMenu buttonIcon="help" buttonText="Help">
-            <MenuItem key="online-tutorial" icon="learning" text="Online Tutorial" onClick={() => 
-                window.open("https://calligro.ideasalmanac.com/tutorial.html", "_blank")?.focus()
-            } />
-            <MenuItem key="discord" icon="chat" text="Join Discord" onClick={() =>
-                window.open("https://discord.gg/5MmEpXWSsV", "_blank")?.focus()
-            } />
+            <MenuItemExternalLink key="video-tutorial" icon="video" text="Video Tutorial" href="https://youtu.be/cmwSS-oLLBo" />
+            <MenuItemExternalLink key="written-tutorial" icon="learning" text="Written Tutorial" href="https://calligro.ideasalmanac.com/tutorial.html" />
+            <MenuItemExternalLink key="discord" icon="chat" text="Join Discord" href="https://discord.gg/5MmEpXWSsV" />
         </ToolbarMenu>
     )
 }

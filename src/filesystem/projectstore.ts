@@ -6,6 +6,7 @@ interface SavedLastExportSnapshot {
     characterBase: number
     characterSet: string
     format: "png" | "aseprite" | undefined
+    fileHandle: FileSystemFileHandle | null
 }
 
 interface SavedImportedTemplate {
@@ -114,6 +115,10 @@ function savedToExported(data: SavedProjectData): ProjectData {
             handles: null,
             format: "txt",
         },
+        lastExportSnapshot: data.lastExportSnapshot === null ? null : {
+            ...data.lastExportSnapshot,
+            fileHandle: null,
+        },
         dirty: false,
     }
 }
@@ -153,7 +158,7 @@ export function newProject(name: string): ProjectData {
         lineHeight: 35,
         kernings: [],
         sizeOverrides: [],
-        previewText: "Just a sample text",
+        previewText: "The quick brown fox jumps over the lazy dog",
         previewScale: 1,
         previewBgColor: "#ffffff",
         lastExportSnapshot: null,

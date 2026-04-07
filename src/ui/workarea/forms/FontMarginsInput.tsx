@@ -1,6 +1,7 @@
 import { FormGroup, InputGroup, Tag } from "@blueprintjs/core";
 import { ProjectData } from "../../../filesystem/projectstore";
 import { useProjectStateNumericInput } from "../hooks/useProjectStateNumericInput";
+import styles from "./infographic.module.css"
 
 export interface Props {
     project: ProjectData
@@ -12,35 +13,38 @@ export default function FontMarginsInput({ project }: Props) {
     const [lineHeight, setLineHeight] = useProjectStateNumericInput("lineHeight", project)
 
     return (
-        <>
-            <FormGroup label="Horizontal spacing">
-                <InputGroup
-                    value={hMargin}
-                    onValueChange={setHMargin}
-                    type="number"
-                    rightElement={<Tag minimal>px</Tag>}
-                    size="small"
-                />
-            </FormGroup>
-            <FormGroup label="Vertical spacing" helperText={'Deprecated! Use line height instead.'}>
-                <InputGroup
-                    value={vMargin}
-                    onValueChange={setVMargin}
-                    type="number"
-                    rightElement={<Tag minimal>px</Tag>}
-                    size="small"
-                />
-            </FormGroup>
-            <FormGroup label="Line height">
-                <InputGroup
-                    value={lineHeight}
-                    onValueChange={setLineHeight}
-                    type="number"
-                    rightElement={<Tag minimal>px</Tag>}
-                    min={1}
-                    size="small"
-                />
-            </FormGroup>
-        </>
+        <div className={styles.sizecontainer}>
+            <div>
+                <FormGroup label="Horizontal spacing">
+                    <InputGroup
+                        value={hMargin}
+                        onValueChange={setHMargin}
+                        type="number"
+                        rightElement={<Tag minimal>px</Tag>}
+                        size="small"
+                    />
+                </FormGroup>
+                <FormGroup label="Vertical spacing" helperText={'Deprecated! Use line height instead.'}>
+                    <InputGroup
+                        value={vMargin}
+                        onValueChange={setVMargin}
+                        type="number"
+                        rightElement={<Tag minimal>px</Tag>}
+                        size="small"
+                    />
+                </FormGroup>
+                <FormGroup label="Line height">
+                    <InputGroup
+                        value={lineHeight}
+                        onValueChange={setLineHeight}
+                        type="number"
+                        rightElement={<Tag minimal>px</Tag>}
+                        min={1}
+                        size="small"
+                    />
+                </FormGroup>
+            </div>
+            <img src="/img/info/space-info.svg" alt="Spacing info" height={180} />
+        </div>
     )
 }

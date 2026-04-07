@@ -1,0 +1,83 @@
+info face=calligro-custom size=12 unicode=1 bold=0 italic=0 stretchH=100 aa=100 padding=0,0,0,0 spacing=1,1
+common lineHeight=25 base=20 scaleW=198 scaleH=234 pages=1
+page id=0 file=calligro-tutorial.png
+chars count=27
+char id=97 x=0 y=0 width=23 height=28 xoffset=0 yoffset=0 xadvance=21 page=0 chnl=15
+char id=98 x=23 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=99 x=37 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=100 x=51 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=101 x=65 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=102 x=79 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=103 x=93 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=104 x=107 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=105 x=121 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=106 x=135 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=107 x=149 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=108 x=163 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=109 x=177 y=0 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=110 x=0 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=111 x=14 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=112 x=28 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=113 x=42 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=114 x=56 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=115 x=70 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=116 x=84 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=117 x=98 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=118 x=112 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=119 x=126 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=120 x=140 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=121 x=154 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=122 x=168 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+char id=32 x=182 y=28 width=14 height=28 xoffset=0 yoffset=0 xadvance=12 page=0 chnl=15
+kernings count=51
+kerning first=97 second=113 amount=-3
+kerning first=97 second=119 amount=-3
+kerning first=97 second=101 amount=-3
+kerning first=97 second=114 amount=-3
+kerning first=97 second=116 amount=-3
+kerning first=97 second=121 amount=-3
+kerning first=97 second=117 amount=-3
+kerning first=97 second=105 amount=-3
+kerning first=97 second=111 amount=-3
+kerning first=97 second=112 amount=-3
+kerning first=97 second=115 amount=-3
+kerning first=97 second=100 amount=-3
+kerning first=97 second=102 amount=-3
+kerning first=97 second=103 amount=-3
+kerning first=97 second=104 amount=-3
+kerning first=97 second=106 amount=-3
+kerning first=97 second=107 amount=-3
+kerning first=97 second=108 amount=-3
+kerning first=97 second=122 amount=-3
+kerning first=97 second=120 amount=-3
+kerning first=97 second=99 amount=-3
+kerning first=97 second=118 amount=-3
+kerning first=97 second=98 amount=-3
+kerning first=97 second=110 amount=-3
+kerning first=97 second=109 amount=-3
+kerning first=113 second=97 amount=-3
+kerning first=119 second=97 amount=-3
+kerning first=101 second=97 amount=-3
+kerning first=114 second=97 amount=-3
+kerning first=116 second=97 amount=-3
+kerning first=121 second=97 amount=-3
+kerning first=117 second=97 amount=-3
+kerning first=105 second=97 amount=-3
+kerning first=111 second=97 amount=-3
+kerning first=112 second=97 amount=-3
+kerning first=97 second=97 amount=-3
+kerning first=115 second=97 amount=-3
+kerning first=100 second=97 amount=-3
+kerning first=102 second=97 amount=-3
+kerning first=103 second=97 amount=-3
+kerning first=104 second=97 amount=-3
+kerning first=106 second=97 amount=-3
+kerning first=107 second=97 amount=-3
+kerning first=108 second=97 amount=-3
+kerning first=122 second=97 amount=-3
+kerning first=120 second=97 amount=-3
+kerning first=99 second=97 amount=-3
+kerning first=118 second=97 amount=-3
+kerning first=98 second=97 amount=-3
+kerning first=110 second=97 amount=-3
+kerning first=109 second=97 amount=-3
