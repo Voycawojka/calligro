@@ -1,6 +1,8 @@
 import { OverlayToaster } from "@blueprintjs/core";
 import { calculateTemplateData, generateTemplateAseprite, generateTemplatePng } from "../generation/template/template";
 import { ProjectData } from "./projectstore";
+import { getMultiPlatformFileSystem, MultiPlatformFileHandle } from "./access";
+import { BrowserFileSystemApiNotAvailable } from "./access/web";
 
 function exportTemplateFallback(image: Blob, filename: string) {
     const url = URL.createObjectURL(image)
@@ -63,7 +65,7 @@ function filePickerTypes(format: TemplateExportFormat): FilePickerAcceptType[] {
 
 export interface ImportedTemplateFile {
     image: File,
-    handle: FileSystemFileHandle | null,
+    handle: MultiPlatformFileHandle | null,
 }
 
 function importTemplateFileFallback(): Promise<ImportedTemplateFile | null> {
@@ -80,26 +82,33 @@ function importTemplateFileFallback(): Promise<ImportedTemplateFile | null> {
 }
 
 export async function importTemplateFile(): Promise<ImportedTemplateFile | null> {
-    if (!window["showOpenFilePicker"]) {
-        return importTemplateFileFallback()
-    }
+    const fs = getMultiPlatformFileSystem()
 
-    const [handle] = await window.showOpenFilePicker({
-        types: [
+    try {
+        const handle = await fs.showOpenFileDialog([
             {
-                description: "PNG",
-                accept: { "image/png": [".png"] },
+                name: "PNG",
+                mimeType: "image/png",
+                extensions: ["png"],
             },
             {
-                description: "Aseprite",
-                accept: { "image/x-aseprite": [".aseprite", ".ase"] }
-            }
-        ],
-        excludeAcceptAllOption: true,
-        startIn: 'documents',
-    })
-    return {
-        image: await handle.getFile(),
-        handle
+                name: "Aseprite",
+                mimeType: "image/x-aseprite",
+                extensions: [".aseprite", ".ase"]
+            },
+        ])
+        if (!handle) {
+            throw new Error("No file chosen")
+        }
+        return {
+            image: await handle.getFile(),
+            handle
+        }
+    } catch (e) {
+        if (e instanceof BrowserFileSystemApiNotAvailable) {
+            return importTemplateFileFallback()
+        } else {
+            throw e
+        }
     }
 }

@@ -12,12 +12,12 @@ function xmlTag(name: string, properties: tagProp[]) {
     return `<${name} ${joinedProps} />`
 }
 
-export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml', pageName: string) {
+export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml') {
     const tag = format === 'txt' ? txtTag : xmlTag
 
     const info = specification.info
     const infoTag = tag('info', [
-        ['face', info.face],
+        ['face', `"${info.face}"`],
         ['size', info.size],
         ['unicode', '1'],
         ['bold', '0'],
@@ -39,7 +39,7 @@ export function fontSpecToTextFile(specification: FontSpec, format: 'txt' | 'xml
 
     const pageTags = specification.pages.map(page => tag('page', [
         ['id', page.id],
-        ['file', pageName]
+        ['file', `"${page.file}"`]
     ]))
 
     const charTags = specification.chars.map(char => tag('char', [

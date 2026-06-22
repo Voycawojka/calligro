@@ -51,7 +51,7 @@ export interface FontSpec {
     }[]
 }
 
-export async function generateFont(templateData: TemplateData, templateImage: Blob): Promise<[FontSpec, Blob[]]> {
+export async function generateFont(name: string, templateData: TemplateData, templateImage: Blob): Promise<[FontSpec, Blob[]]> {
     const [canvas] = await blobToCanvas(templateImage)
 
     const sourceRects: SourceRect[] = []
@@ -81,7 +81,7 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
 
     const specification: FontSpec = {
         info: {
-            face: 'calligro-custom',
+            face: name,
             size: 12,
             stretchH: 100,
             aa: 1,
@@ -108,7 +108,7 @@ export async function generateFont(templateData: TemplateData, templateImage: Bl
         pages: [
             {
                 id: 0,
-                file: '"calligro-page-0.png"'
+                file: `${name}.png`
             }
         ],
         chars: packedRects.map(rect => ({

@@ -48,7 +48,7 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
             })
 
             const toaster = await OverlayToaster.create({ position: "top-right" })
-            const toasterMessage = !!templateFile.handle ? `Template '${templateFile.handle.name}' imported.` : "Template imported."
+            const toasterMessage = !!templateFile.handle ? `Template '${templateFile.image.name}' imported.` : "Template imported."
             toaster.show({
                 intent: "success",
                 message: toasterMessage,

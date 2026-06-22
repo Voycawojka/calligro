@@ -1,4 +1,5 @@
 use itertools::Itertools;
+use std::path::Path;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -17,6 +18,7 @@ pub fn run() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![list_fonts])
+        .invoke_handler(tauri::generate_handler![get_file_metadata])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -30,4 +32,19 @@ fn list_fonts() -> Vec<String> {
         .map(|f| f.family_name.clone())
         .unique()
         .collect()
+}
+
+#[tauri::command]
+fn get_file_metadata(path: String) -> (String, String) {
+    let path_buffer = Path::new(&path);
+    let file_name = path_buffer
+        .file_name()
+        .and_then(|name| name.to_str())
+        .unwrap_or("__unknown")
+        .to_string();
+    let mime_type = mime_guess::from_path(&path_buffer)
+        .first_or_octet_stream()
+        .to_string();
+
+    (file_name, mime_type)
 }

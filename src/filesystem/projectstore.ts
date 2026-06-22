@@ -1,3 +1,4 @@
+import { MultiPlatformFileHandle } from "./access"
 import { ExportHandles } from "./fontstore"
 
 interface SavedLastExportSnapshot {
@@ -55,12 +56,13 @@ interface SavedProjectData {
 
 export interface ImportedTemplate extends SavedImportedTemplate {
     image: Blob
-    fileHandle: FileSystemFileHandle | null
+    fileHandle: MultiPlatformFileHandle | null
 }
 
 export interface LastExportedFont {
     handles: null | ExportHandles
     format: "txt" | "xml"
+    name: string
 }
 
 export interface ProjectData extends SavedProjectData {
@@ -114,6 +116,7 @@ function savedToExported(data: SavedProjectData): ProjectData {
         lastExportedFont: {
             handles: null,
             format: "txt",
+            name: data.name
         },
         lastExportSnapshot: data.lastExportSnapshot === null ? null : {
             ...data.lastExportSnapshot,

@@ -19,7 +19,7 @@ export function useQuickReexport() {
         }
 
         try {
-            await saveFontWithHandles(project, displayData.format, displayData.exportHandles)
+            await saveFontWithHandles(project, displayData.name, displayData.format, displayData.exportHandles)
 
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
@@ -44,7 +44,7 @@ export function useQuickReexport() {
 }
 
 export type displayData =
-    | { enabled: true, exportHandles: ExportHandles, format: "txt" | "xml" }
+    | { enabled: true, exportHandles: ExportHandles, format: "txt" | "xml", name: string }
     | { enabled: false, reason: string }
 
 function getDisplayData(project: ProjectData): displayData {
@@ -53,6 +53,7 @@ function getDisplayData(project: ProjectData): displayData {
             enabled: true,
             exportHandles: project.lastExportedFont.handles,
             format: project.lastExportedFont.format,
+            name: project.lastExportedFont.name,
         }
     }
 
