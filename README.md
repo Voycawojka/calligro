@@ -54,7 +54,7 @@ npx tauri dev
 npm run test
 ```
 
-Our actions use Node 20.
+Our actions use Node 24.
 
 ## Production builds
 
