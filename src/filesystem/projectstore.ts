@@ -7,7 +7,7 @@ interface SavedLastExportSnapshot {
     characterBase: number
     characterSet: string
     format: "png" | "aseprite" | undefined
-    fileHandle: FileSystemFileHandle | null
+    fileHandle: MultiPlatformFileHandle | null
 }
 
 interface SavedImportedTemplate {

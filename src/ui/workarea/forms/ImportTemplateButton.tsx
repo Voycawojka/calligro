@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, ButtonGroup, FormGroup, Tooltip, Tag } from "@blueprintjs/core";
 import ImportTemplateWarningDialog from "../../toolbar/dialogs/ImportTemplateWarningDialog";
 import { useQuickReimport } from "../../toolbar/useQuickReimport";
@@ -11,11 +11,18 @@ interface Props {
 
 export default function ImportTemplateButton({ project }: Props) {
     const [dialogOpen, setDialogOpen] = useState(false)
+    const [templateName, setTemplateName] = useState<string | null>("<loading...>")
     const { isAutoImportEnabled, setIsAutoImportEnabled, reimport, displayData: reimportDisplayData } = useQuickReimport()
 
-    const templateName = reimportDisplayData.enabled
-        ? reimportDisplayData.fileHandle.name
-        : project.importedTemplate?.fileHandle?.name
+    useEffect(() => {
+        async function loadTemplateName() {
+            const name = reimportDisplayData.enabled
+                ? await reimportDisplayData.fileHandle.getFileName()
+                : await project.importedTemplate?.fileHandle?.getFileName()
+            setTemplateName(name ?? null)
+        }
+        loadTemplateName()
+    }, [reimportDisplayData.enabled])
 
     return (
         <>

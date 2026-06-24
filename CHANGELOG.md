@@ -3,7 +3,7 @@
 ## 2.5.0
 - fixed issue with space in filenames (fixes https://github.com/Voycawojka/calligro/issues/84)
 - allowed to choose a font name on export and clarified which files will be created
-- switched to native file dialog when importing templates in desktop app
+- switched to native file dialogs when exporting and importing templates in desktop app
 
 ## 2.4.0
 

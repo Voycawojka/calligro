@@ -1,7 +1,7 @@
 import { OverlayToaster } from "@blueprintjs/core";
 import { calculateTemplateData, generateTemplateAseprite, generateTemplatePng } from "../generation/template/template";
 import { ProjectData } from "./projectstore";
-import { getMultiPlatformFileSystem, MultiPlatformFileHandle } from "./access";
+import { FileFilter, getMultiPlatformFileSystem, MultiPlatformFileHandle } from "./access";
 import { BrowserFileSystemApiNotAvailable } from "./access/web";
 
 function exportTemplateFallback(image: Blob, filename: string) {
@@ -17,48 +17,52 @@ function exportTemplateFallback(image: Blob, filename: string) {
 
 export type TemplateExportFormat = "png" | "aseprite"
 
-export async function exportTemplate(project: ProjectData, format: TemplateExportFormat): Promise<FileSystemFileHandle | null> {
+export async function exportTemplate(project: ProjectData, format: TemplateExportFormat): Promise<MultiPlatformFileHandle | null> {
     const templateData = calculateTemplateData(project, "force current")
     const image = format === "png"
         ? await generateTemplatePng(templateData)
         : await generateTemplateAseprite(templateData)
     const filename = `${project.name}-template.${format}`
 
-    if (!window["showSaveFilePicker"]) {
-        exportTemplateFallback(image, filename)
-        return null
+    const fs = getMultiPlatformFileSystem()
+    try {
+        const handle = await fs.showSaveFileDialog(filename, filePickerTypesForExport(format))
+        if (!handle) {
+            throw new Error("File not saved")
+        }
+
+        handle.writeData(image)
+
+        const toaster = await OverlayToaster.create({ position: "top-right" })
+        toaster.show({
+            icon: "floppy-disk",
+            intent: "success",
+            message: `Exported template: ${await handle.getFileName()}`
+        })
+
+        return handle
+    } catch(e) {
+        if (e instanceof BrowserFileSystemApiNotAvailable) {
+            exportTemplateFallback(image, filename)
+            return null
+        } else {
+            throw e
+        }
     }
-
-    const handle = await window.showSaveFilePicker({
-        suggestedName: filename,
-        startIn: 'documents',
-        types: filePickerTypes(format),
-    })
-    const writable = await handle.createWritable()
-
-    await writable.write(image)
-    await writable.close()
-
-    const toaster = await OverlayToaster.create({ position: "top-right" })
-    toaster.show({
-        icon: "floppy-disk",
-        intent: "success",
-        message: `Exported template: ${handle.name}`
-    })
-
-    return handle
 }
 
-function filePickerTypes(format: TemplateExportFormat): FilePickerAcceptType[] {
+function filePickerTypesForExport(format: TemplateExportFormat): FileFilter[] {
     if (format === "png") {
         return [{
-            description: 'PNG',
-            accept: { "image/png": ['.png'] }
+            name: 'PNG',
+            mimeType: 'image/png',
+            extensions: ['png']
         }]
     } else {
         return [{
-            description: 'Aseprite',
-            accept: { "image/x-aseprite": ['.aseprite', '.ase'] }
+            name: 'Aseprite',
+            mimeType: 'image/x-aseprite',
+            extensions: ['aseprite', 'ase']
         }]
     }
 }

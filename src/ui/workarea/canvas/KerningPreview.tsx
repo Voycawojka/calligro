@@ -36,7 +36,7 @@ export default function KerningPreview({ project, kernings }: Props) {
             const templateData = calculateTemplateData(project, "current or imported")
             templateData.project.kernings = [...kernings]
             const templateImage = await generateTemplatePng(templateData)
-            const font = await generateFont(templateData, templateImage)
+            const font = await generateFont("calligro-preview", templateData, templateImage)
             
             setFont(font)
         }

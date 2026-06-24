@@ -33,7 +33,7 @@ export default function FontPreview({ project }: Props) {
         const generate = async () => {
             const templateData = calculateTemplateData(project, "current or imported")
             const templateImage = await generateTemplatePng(templateData)
-            const font = await generateFont(templateData, templateImage)
+            const font = await generateFont("calligro-preview", templateData, templateImage)
 
             setFont(font)
         }

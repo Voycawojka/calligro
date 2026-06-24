@@ -1,7 +1,8 @@
 import { invoke } from "@tauri-apps/api/core";
 import { FileFilter, MultiPlatformDirectoryHandle, MultiPlatformFileHandle, MultiPlatformFileSystem } from "../access";
-import { open as openDialog } from "@tauri-apps/plugin-dialog";
+import { open as openDialog, save as saveDialog } from "@tauri-apps/plugin-dialog";
 import { writeFile,  writeTextFile, readFile } from "@tauri-apps/plugin-fs";
+import { basename } from "@tauri-apps/api/path"
 
 class DirectoryHandle implements MultiPlatformDirectoryHandle {
     constructor(private path: string) {}
@@ -28,19 +29,28 @@ class FileHandle implements MultiPlatformFileHandle {
         return new File([uint8Array], fileName, { type: mimeType })
     }
 
+    getFileName(): Promise<string> {
+        return basename(this.path)
+    }
+
     private async getFileMetadata(): Promise<[string, string]> {
-        return await invoke('get_file_metadata', { path: this.path });
+        return await invoke('get_file_metadata', { path: this.path })
     }
 }
 
 export const fs = {
     showChooseDirDialog: async () => {
-        const dirPath = await openDialog({ multiple: false, directory: true })
+        const dirPath = await openDialog({ multiple: false, directory: true });
         return dirPath && new DirectoryHandle(dirPath) || null
     },
 
     showOpenFileDialog: async (filters: FileFilter[]) => {
-        const filePath = await openDialog({ filters, multiple: false })
+        const filePath = await openDialog({ filters, multiple: false });
+        return filePath && new FileHandle(filePath) || null
+    },
+
+    showSaveFileDialog: async (suggestedName: string, suggestedTypes: FileFilter[]) => {
+        const filePath = await saveDialog({ defaultPath: suggestedName, filters: suggestedTypes });
         return filePath && new FileHandle(filePath) || null
     }
 } satisfies MultiPlatformFileSystem

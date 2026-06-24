@@ -29,29 +29,49 @@ class FileHandle implements MultiPlatformFileHandle {
     getFile(): Promise<File> {
         return this.nativeHandle.getFile()
     }
+
+    async getFileName(): Promise<string> {
+        return this.nativeHandle.name
+    }
 }
 
 export const fs = {
     showChooseDirDialog: async () => {
         if (!window["showDirectoryPicker"]) {
-            throw new BrowserFileSystemApiNotAvailable()
+            throw new BrowserFileSystemApiNotAvailable();
         }
 
-        const nativeHandle = await window.showDirectoryPicker({ mode: "readwrite" })
-        return new DirectoryHandle(nativeHandle)
+        const nativeHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+        return new DirectoryHandle(nativeHandle);
     },
 
     showOpenFileDialog: async (filters: FileFilter[]) => {
         if (!window["showOpenFilePicker"]) {
-            throw new BrowserFileSystemApiNotAvailable()
+            throw new BrowserFileSystemApiNotAvailable();
         }
 
         const [nativeHandle] = await window.showOpenFilePicker({
-            types: filters.map(({ name, mimeType: contentType, extensions }) => ({
+            types: filters.map(({ name, mimeType, extensions }) => ({
                 description: name,
-                accept: { [contentType]: extensions.map(ext => `.${ext}` satisfies `.${string}`) }
+                accept: { [mimeType]: extensions.map(ext => `.${ext}` satisfies `.${string}`) }
             })),
             excludeAcceptAllOption: true,
+            startIn: 'documents',
+        });
+        return new FileHandle(nativeHandle);
+    },
+
+    showSaveFileDialog: async (suggestedName: string, suggestedTypes: FileFilter[]) => {
+        if (!window["showSaveFilePicker"]) {
+            throw new BrowserFileSystemApiNotAvailable();
+        }
+
+        const nativeHandle = await window.showSaveFilePicker({
+            suggestedName,
+            types: suggestedTypes.map(({ name, mimeType, extensions }) => ({
+                description: name,
+                accept: { [mimeType]: extensions.map(ext => `.${ext}` satisfies `.${string}`) }
+            })),
             startIn: 'documents',
         })
         return new FileHandle(nativeHandle)

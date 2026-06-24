@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { ProjectContext, ProjectMutContext } from "../contexts/ProjectContext"
 import { asepriteToPng } from "../../generation/png/aseprite"
 import { OverlayToaster } from "@blueprintjs/core"
+import { MultiPlatformFileHandle } from "../../filesystem/access"
 
 export function useQuickReimport() {
     const [isAutoImportEnabled, setIsAutoImportEnabled] = useState(false)
@@ -42,14 +43,14 @@ export function useQuickReimport() {
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
                 intent: "success",
-                message: `${auto ? "Changes detected! " : ""}Template '${displayData.fileHandle.name}' refreshed.`
+                message: `${auto ? "Changes detected! " : ""}Template '${templateFile.name}' refreshed.`
             })
         } catch (e: any) {
             const toaster = await OverlayToaster.create({ position: "top-right" })
             toaster.show({
                 icon: "error",
                 intent: "danger",
-                message: `Couldn't reimport "${displayData.fileHandle.name}": ${e.message}`,
+                message: `Couldn't reimport "${await displayData.fileHandle.getFileName()}": ${e.message}`,
             })
             console.error(e)
         }
@@ -96,7 +97,7 @@ export function useQuickReimport() {
 }
 
 export type displayData =
-    | { enabled: true, fileHandle: FileSystemFileHandle }
+    | { enabled: true, fileHandle: MultiPlatformFileHandle }
     | { enabled: false, reason: string }
 
 function getDisplayData(project: ProjectData): displayData {

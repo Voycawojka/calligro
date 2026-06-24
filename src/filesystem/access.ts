@@ -10,6 +10,7 @@ export type FileFilter = {
 export interface MultiPlatformFileSystem {
     showChooseDirDialog(): Promise<MultiPlatformDirectoryHandle | null>
     showOpenFileDialog(filters: FileFilter[]): Promise<MultiPlatformFileHandle | null>
+    showSaveFileDialog(suggestedName: string, suggestedTypes: FileFilter[]): Promise<MultiPlatformFileHandle | null>
 }
 
 export interface MultiPlatformDirectoryHandle {
@@ -20,6 +21,7 @@ export interface MultiPlatformFileHandle {
     writeData(data: Blob): Promise<void>
     writeText(data: string): Promise<void>
     getFile(): Promise<File>
+    getFileName(): Promise<string>
 }
 
 export function getMultiPlatformFileSystem(): MultiPlatformFileSystem {
