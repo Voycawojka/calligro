@@ -1,4 +1,5 @@
-import { Button, Callout, Dialog, DialogBody, DialogFooter, MenuItem, OverlayToaster } from "@blueprintjs/core"
+import { Button, Callout, Dialog, DialogBody, DialogFooter, MenuItem } from "@blueprintjs/core"
+import { showSuccessToast } from "../../../utils/toasts"
 import { listProjectNames, removeProject } from "../../../filesystem/projectstore"
 import { ItemPredicate, ItemRenderer, Select } from "@blueprintjs/select"
 import { useState } from "react"
@@ -28,11 +29,7 @@ export default function RemoveProjectDialog({ isOpen, setIsOpen }: Props) {
             removeProject(selectedProject)
             setSelectedProject(null)
             onClose()
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "success",
-                message: `Removed project '${selectedProject}'`
-            })
+            await showSuccessToast(`Removed project '${selectedProject}'`)
         } catch (e: any) {
             setErrorMessage((e as Error).message)
         }

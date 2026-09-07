@@ -1,4 +1,4 @@
-import { MenuItem, MenuDivider, OverlayToaster } from "@blueprintjs/core";
+import { MenuItem, MenuDivider } from "@blueprintjs/core";
 import ToolbarMenu from "../ToolbarMenu";
 import { listProjectNames, loadProject, saveProject } from "../../../filesystem/projectstore";
 import { useContext, useState } from "react";
@@ -8,6 +8,7 @@ import RemoveProjectDialog from "../dialogs/RemoveProjectDialog";
 import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext";
 import OverwriteChangesAlert from "../dialogs/OverwriteChangesAlert";
 import SaveAsDialog from "../dialogs/SaveAsDialog";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 import ExportFontDialog from "../dialogs/ExportFontDialog";
 import ImportTemplateWarningDialog from "../dialogs/ImportTemplateWarningDialog";
 import ExportTemplateDialog from "../dialogs/ExportTemplateDialog";
@@ -41,18 +42,9 @@ export default function FileMenu() {
                 throw new Error("Couldn't open project")
             }
             setProjectData(loadedProject)
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "success",
-                message: `Project '${name}' opened.`
-            })
+            await showSuccessToast(`Project '${name}' opened.`)
         } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: (e as Error).message
-            })
+            await showErrorToast(e)
         }
     }
 
@@ -64,20 +56,12 @@ export default function FileMenu() {
             project.dirty = false
             await saveProject(project.name, project)
             setProjectData({ ...project })
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "success",
-                message: `Project '${project.name}' saved.`
-            })
+            await showSuccessToast(`Project '${project.name}' saved.`)
         } catch (e: any) {
             if (project) {
                 project.dirty = true
             }
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "danger",
-                message: (e as Error).message
-            })
+            await showErrorToast(e)
         }
     }
 
@@ -89,12 +73,7 @@ export default function FileMenu() {
 
             setExportTemplateModalOpen(true)
         } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: (e as Error).message
-            })
+            await showErrorToast(e)
         }
     }
 

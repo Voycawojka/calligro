@@ -3,7 +3,7 @@ import { fontSpecToTextFile } from "../generation/font/specSaver";
 import { downloadArchive, ZippedFile } from "../generation/fs/zip";
 import { calculateTemplateData, generateTemplatePng } from "../generation/template/template";
 import { ProjectData } from "./projectstore";
-import { getMultiPlatformFileSystem, MultiPlatformFileHandle } from "./access";
+import { getMultiPlatformFileSystem, MultiPlatformDirectoryHandle, MultiPlatformFileHandle } from "./access";
 import { BrowserFileSystemApiNotAvailable } from "./access/web";
 
 async function saveFontFallback(fnt: string, page: Blob, fntName: string, pageName: string) {
@@ -26,7 +26,12 @@ export type ExportHandles = {
     pngHandle: MultiPlatformFileHandle,
 }
 
-export async function saveFontWithPicker(project: ProjectData, name: string, format: "txt" | "xml"): Promise<ExportHandles | null> {
+export type FontExportResult =
+    | { status: "cancelled" }
+    | { status: "downloaded" }
+    | { status: "exported", handles: ExportHandles }
+
+export async function saveFontWithPicker(project: ProjectData, name: string, format: "txt" | "xml"): Promise<FontExportResult> {
     const templateData = calculateTemplateData(project, "current or imported")
     const templateImage = await generateTemplatePng(templateData)
     const [spec, [page]] = await generateFont(name, templateData, templateImage)
@@ -35,30 +40,34 @@ export async function saveFontWithPicker(project: ProjectData, name: string, for
     const fnt = fontSpecToTextFile(spec, format)
 
     const fs = getMultiPlatformFileSystem()
+    let dir: MultiPlatformDirectoryHandle | null
     try {
-        const dir = await fs.showChooseDirDialog()
-
-        if (!dir) {
-            throw new Error("No directory selected")
-        }
-
-        const pngHandle = await dir.getOrCreateFileHandle(pageName)
-        const fntHandle = await dir.getOrCreateFileHandle(fntName)
-
-        await pngHandle.writeData(page)
-        await fntHandle.writeText(fnt)
-
-        return {
-            fntHandle: fntHandle,
-            pngHandle: pngHandle,
-        }
+        dir = await fs.showChooseDirDialog()
     } catch (e) {
         if (e instanceof BrowserFileSystemApiNotAvailable) {
             await saveFontFallback(fnt, page, fntName, pageName)
-            return null
+            return { status: "downloaded" }
         } else {
             throw e
         }
+    }
+
+    if (!dir) {
+        return { status: "cancelled" }
+    }
+
+    const pngHandle = await dir.getOrCreateFileHandle(pageName)
+    const fntHandle = await dir.getOrCreateFileHandle(fntName)
+
+    await pngHandle.writeData(page)
+    await fntHandle.writeText(fnt)
+
+    return {
+        status: "exported",
+        handles: {
+            fntHandle: fntHandle,
+            pngHandle: pngHandle,
+        },
     }
 }
 
@@ -68,6 +77,6 @@ export async function saveFontWithHandles(project: ProjectData, name: string, fo
     const [spec, [page]] = await generateFont(name, templateData, templateImage)
     const fnt = fontSpecToTextFile(spec, format)
 
-    handles.pngHandle.writeData(page)
-    handles.fntHandle.writeText(fnt)
+    await handles.pngHandle.writeData(page)
+    await handles.fntHandle.writeText(fnt)
 }

@@ -1,8 +1,9 @@
 import { ProjectData } from "../../filesystem/projectstore"
 import {  useContext } from "react"
 import { ExportHandles, saveFontWithHandles } from "../../filesystem/fontstore"
-import { OverlayToaster } from "@blueprintjs/core"
 import { ProjectContext } from "../contexts/ProjectContext"
+import { isFilePickingSupported } from "../../filesystem/access"
+import { showErrorToast, showSuccessToast } from "../../utils/toasts"
 
 export function useQuickReexport() {
     const project = useContext(ProjectContext)
@@ -20,20 +21,9 @@ export function useQuickReexport() {
 
         try {
             await saveFontWithHandles(project, displayData.name, displayData.format, displayData.exportHandles)
-
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "success",
-                message: "Font reexported.",
-            })
+            await showSuccessToast("Font reexported.")
         } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: `Couldn't reexport font: ${e.message}`,
-            })
-            console.error(e)
+            await showErrorToast(e, "Couldn't reexport font")
         }
     }
 
@@ -57,7 +47,7 @@ function getDisplayData(project: ProjectData): displayData {
         }
     }
 
-    if (!window["showOpenFilePicker"]) {
+    if (!isFilePickingSupported()) {
         return { enabled: false, reason: "This function isn't available in your browser" }
     }
 

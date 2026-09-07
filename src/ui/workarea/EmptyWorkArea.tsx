@@ -1,4 +1,5 @@
-import { Button, ButtonGroup, Card, Classes, H6, Icon, OverlayToaster } from "@blueprintjs/core";
+import { Button, ButtonGroup, Card, Classes, H6, Icon } from "@blueprintjs/core";
+import { showErrorToast, showSuccessToast } from "../../utils/toasts";
 import { useContext, useState } from "react";
 import { listProjectNames, loadProject } from "../../filesystem/projectstore";
 import { ProjectMutContext } from "../contexts/ProjectContext";
@@ -21,18 +22,9 @@ export default function EmptyWorkArea() {
                 throw new Error("Couldn't open project")
             }
             setProjectData(loadedProject)
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "success",
-                message: `Project '${name}' opened.`
-            })
+            await showSuccessToast(`Project '${name}' opened.`)
         } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: (e as Error).message
-            })
+            await showErrorToast(e)
         }
     }
 

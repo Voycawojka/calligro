@@ -2,6 +2,10 @@ import { FileFilter, MultiPlatformDirectoryHandle, MultiPlatformFileHandle, Mult
 
 export class BrowserFileSystemApiNotAvailable extends Error {}
 
+function hasUserAborted(e: unknown): boolean {
+    return e instanceof Error && e.name === "AbortError"
+}
+
 class DirectoryHandle implements MultiPlatformDirectoryHandle {
     constructor(private nativeHandle: FileSystemDirectoryHandle) {}
 
@@ -41,8 +45,15 @@ export const fs = {
             throw new BrowserFileSystemApiNotAvailable();
         }
 
-        const nativeHandle = await window.showDirectoryPicker({ mode: "readwrite" });
-        return new DirectoryHandle(nativeHandle);
+        try {
+            const nativeHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+            return new DirectoryHandle(nativeHandle);
+        } catch (e) {
+            if (hasUserAborted(e)) {
+                return null
+            }
+            throw e
+        }
     },
 
     showOpenFileDialog: async (filters: FileFilter[]) => {
@@ -50,15 +61,22 @@ export const fs = {
             throw new BrowserFileSystemApiNotAvailable();
         }
 
-        const [nativeHandle] = await window.showOpenFilePicker({
-            types: filters.map(({ name, mimeType, extensions }) => ({
-                description: name,
-                accept: { [mimeType]: extensions.map(ext => `.${ext}` satisfies `.${string}`) }
-            })),
-            excludeAcceptAllOption: true,
-            startIn: 'documents',
-        });
-        return new FileHandle(nativeHandle);
+        try {
+            const [nativeHandle] = await window.showOpenFilePicker({
+                types: filters.map(({ name, mimeType, extensions }) => ({
+                    description: name,
+                    accept: { [mimeType]: extensions.map(ext => `.${ext}` satisfies `.${string}`) }
+                })),
+                excludeAcceptAllOption: true,
+                startIn: 'documents',
+            });
+            return new FileHandle(nativeHandle);
+        } catch (e) {
+            if (hasUserAborted(e)) {
+                return null
+            }
+            throw e
+        }
     },
 
     showSaveFileDialog: async (suggestedName: string, suggestedTypes: FileFilter[]) => {
@@ -66,14 +84,21 @@ export const fs = {
             throw new BrowserFileSystemApiNotAvailable();
         }
 
-        const nativeHandle = await window.showSaveFilePicker({
-            suggestedName,
-            types: suggestedTypes.map(({ name, mimeType, extensions }) => ({
-                description: name,
-                accept: { [mimeType]: extensions.map(ext => `.${ext}` satisfies `.${string}`) }
-            })),
-            startIn: 'documents',
-        })
-        return new FileHandle(nativeHandle)
+        try {
+            const nativeHandle = await window.showSaveFilePicker({
+                suggestedName,
+                types: suggestedTypes.map(({ name, mimeType, extensions }) => ({
+                    description: name,
+                    accept: { [mimeType]: extensions.map(ext => `.${ext}` satisfies `.${string}`) }
+                })),
+                startIn: 'documents',
+            })
+            return new FileHandle(nativeHandle)
+        } catch (e) {
+            if (hasUserAborted(e)) {
+                return null
+            }
+            throw e
+        }
     }
 } satisfies MultiPlatformFileSystem

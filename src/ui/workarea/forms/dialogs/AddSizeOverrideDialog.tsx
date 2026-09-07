@@ -1,4 +1,5 @@
-import { Button, Callout, Dialog, DialogBody, DialogFooter, OverlayToaster, TextArea } from "@blueprintjs/core"
+import { Button, Callout, Dialog, DialogBody, DialogFooter, TextArea } from "@blueprintjs/core"
+import { showToast } from "../../../../utils/toasts"
 import { ProjectData } from "../../../../filesystem/projectstore"
 import { useContext, useState } from "react"
 import { ProjectMutContext } from "../../../contexts/ProjectContext"
@@ -56,8 +57,7 @@ export default function AddSizeOverrideDialog({
             setProjectData(updatedProject)
             onClose()
 
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
+            await showToast({
                 icon: "add",
                 intent: addedCount === 0 ? "warning" : "success",
                 message: `Added ${addedCount} size overrides`

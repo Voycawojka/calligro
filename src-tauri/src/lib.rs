@@ -17,8 +17,7 @@ pub fn run() {
             }
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![list_fonts])
-        .invoke_handler(tauri::generate_handler![get_file_metadata])
+        .invoke_handler(tauri::generate_handler![list_fonts, get_file_metadata])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -16,11 +16,11 @@ class FileHandle implements MultiPlatformFileHandle {
     constructor(private path: string) {}
 
     async writeData(data: Blob): Promise<void> {
-        writeFile(this.path, new Uint8Array(await data.arrayBuffer()))
+        await writeFile(this.path, new Uint8Array(await data.arrayBuffer()))
     }
 
     async writeText(data: string): Promise<void> {
-        writeTextFile(this.path, data)
+        await writeTextFile(this.path, data)
     }
 
     async getFile(): Promise<File> {

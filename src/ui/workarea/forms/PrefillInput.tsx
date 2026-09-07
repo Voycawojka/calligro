@@ -1,4 +1,5 @@
-import { OverlayToaster, MenuItem, Button, ControlGroup, Tooltip, FormGroup, Callout } from "@blueprintjs/core"
+import { MenuItem, Button, ControlGroup, Tooltip, FormGroup, Callout } from "@blueprintjs/core"
+import { showErrorToast } from "../../../utils/toasts"
 import { ItemRenderer, ItemPredicate, Select } from "@blueprintjs/select"
 import { useState, useEffect } from "react"
 import { findSystemFonts } from "../../../generation/template/fontsDetection"
@@ -19,12 +20,7 @@ export default function PrefillInput({ project, forceDisabled }: Props) {
             try {
                 setSystemFonts(await findSystemFonts())
             } catch (e: any) {
-                const toaster = await OverlayToaster.create({ position: "top-right" })
-                toaster.show({
-                    icon: "error",
-                    intent: "danger",
-                    message: `Couldn't load pre-fill font list: ${(e as Error).message}`
-                })
+                await showErrorToast(e, "Couldn't load pre-fill font list")
             }
         }
         findFonts()

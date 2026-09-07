@@ -2,8 +2,8 @@ import { ProjectData } from "../../filesystem/projectstore"
 import { useContext, useEffect, useState } from "react"
 import { ProjectContext, ProjectMutContext } from "../contexts/ProjectContext"
 import { asepriteToPng } from "../../generation/png/aseprite"
-import { OverlayToaster } from "@blueprintjs/core"
-import { MultiPlatformFileHandle } from "../../filesystem/access"
+import { isFilePickingSupported, MultiPlatformFileHandle } from "../../filesystem/access"
+import { showErrorToast, showSuccessToast } from "../../utils/toasts"
 
 export function useQuickReimport() {
     const [isAutoImportEnabled, setIsAutoImportEnabled] = useState(false)
@@ -40,19 +40,9 @@ export function useQuickReimport() {
                 dirty: true,
             })
 
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "success",
-                message: `${auto ? "Changes detected! " : ""}Template '${templateFile.name}' refreshed.`
-            })
+            await showSuccessToast(`${auto ? "Changes detected! " : ""}Template '${templateFile.name}' refreshed.`)
         } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: `Couldn't reimport "${await displayData.fileHandle.getFileName()}": ${e.message}`,
-            })
-            console.error(e)
+            await showErrorToast(e, `Couldn't reimport "${await displayData.fileHandle.getFileName()}"`)
         }
     }
 
@@ -109,7 +99,7 @@ function getDisplayData(project: ProjectData): displayData {
         return { enabled: true, fileHandle: project.lastExportSnapshot.fileHandle }
     }
 
-    if (!window["showOpenFilePicker"]) {
+    if (!isFilePickingSupported()) {
         return { enabled: false, reason: "This function isn't available in your browser" }
     }
 

@@ -3,6 +3,7 @@ import { FormEvent, useContext, useEffect, useState } from "react"
 import { ProjectData } from "../../../filesystem/projectstore"
 import { exportTemplate } from "../../../filesystem/templatestore"
 import { ProjectMutContext } from "../../contexts/ProjectContext"
+import { showErrorToast } from "../../../utils/toasts"
 
 export interface Props {
     project: ProjectData
@@ -31,20 +32,29 @@ export default function ExportTemplateDialog({
     }
 
     const onExport = async () => {
-        const fileHandle = await exportTemplate(project, format)
-        setProjectData({
-            ...project,
-            lastExportSnapshot: {
-                defaultCharacterWidth: project.defaultCharacterWidth,
-                defaultCharacterHeight: project.defaultCharacterHeight,
-                characterBase: project.characterBase,
-                characterSet: project.characterSet,
-                format: format,
-                fileHandle: fileHandle,
-            },
-            dirty: true,
-        })
-        setIsOpen(false)
+        try {
+            const result = await exportTemplate(project, format)
+
+            if (result.status !== "cancelled") {
+                const handle = result.status === "exported" ? result.handle : null
+                setProjectData({
+                    ...project,
+                    lastExportSnapshot: {
+                        defaultCharacterWidth: project.defaultCharacterWidth,
+                        defaultCharacterHeight: project.defaultCharacterHeight,
+                        characterBase: project.characterBase,
+                        characterSet: project.characterSet,
+                        format: format,
+                        fileHandle: handle,
+                    },
+                    dirty: true,
+                })
+            }
+
+            setIsOpen(false)
+        } catch (e: any) {
+            await showErrorToast(e, "Couldn't export template")
+        }
     }
 
     return (

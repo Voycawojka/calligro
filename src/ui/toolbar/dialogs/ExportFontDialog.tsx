@@ -1,7 +1,8 @@
-import { Dialog, DialogBody, DialogFooter, Button, OverlayToaster, RadioGroup, RadioCard, Classes, InputGroup, FormGroup } from "@blueprintjs/core";
+import { Dialog, DialogBody, DialogFooter, Button, RadioGroup, RadioCard, Classes, InputGroup, FormGroup } from "@blueprintjs/core";
 import { FormEvent, useContext, useState } from "react";
 import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext";
 import { saveFontWithPicker } from "../../../filesystem/fontstore";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 
 export interface Props {
     isOpen: boolean
@@ -32,30 +33,26 @@ export default function ExportFontDialog({ isOpen, setIsOpen }: Props) {
                 throw new Error("No project to export a font from")
             }
 
-            const fontHandles = await saveFontWithPicker(currentProject, selectedName, selectedFormat)
+            const result = await saveFontWithPicker(currentProject, selectedName, selectedFormat)
+
+            if (result.status === "cancelled") {
+                return
+            }
+
+            const handles = result.status === "exported" ? result.handles : null
 
             setProjectData({
                 ...currentProject,
                 lastExportedFont: {
-                    handles: fontHandles,
+                    handles: handles,
                     format: selectedFormat,
                     name: selectedName,
                 },
             })
 
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                intent: "success",
-                message: "Exported font"
-            })
+            await showSuccessToast("Exported font")
         } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: (e as Error).message
-            })
-            console.error(e)
+            await showErrorToast(e)
         }
     }
 

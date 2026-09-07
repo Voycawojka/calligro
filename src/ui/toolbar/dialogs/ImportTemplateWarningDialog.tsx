@@ -1,8 +1,9 @@
-import { Dialog, DialogBody, DialogFooter, Button, OverlayToaster, Callout } from "@blueprintjs/core";
+import { Dialog, DialogBody, DialogFooter, Button, Callout } from "@blueprintjs/core";
 import { useContext } from "react";
 import { ProjectContext, ProjectMutContext } from "../../contexts/ProjectContext"
 import { importTemplateFile } from "../../../filesystem/templatestore";
 import { asepriteToPng } from "../../../generation/png/aseprite";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 
 export interface Props {
     isOpen: boolean
@@ -25,12 +26,13 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
                 throw new Error("No project to import a template to")
             }
 
-            const templateFile = await importTemplateFile()
+            const result = await importTemplateFile()
 
-            if (!templateFile) {
-                throw new Error("Something went wrong reading the template file")
+            if (result.status === "cancelled") {
+                return
             }
 
+            const templateFile = result.file
             const image = templateFile.image.type == "image/png" ? templateFile.image : await asepriteToPng(templateFile.image)
             const settings = project.lastExportSnapshot ?? project
             setProjectData({
@@ -47,20 +49,10 @@ export default function ImportTemplateWarningDialog({ isOpen, setIsOpen }: Props
                 dirty: true,
             })
 
-            const toaster = await OverlayToaster.create({ position: "top-right" })
             const toasterMessage = !!templateFile.handle ? `Template '${templateFile.image.name}' imported.` : "Template imported."
-            toaster.show({
-                intent: "success",
-                message: toasterMessage,
-            })
+            await showSuccessToast(toasterMessage)
         } catch (e: any) {
-            const toaster = await OverlayToaster.create({ position: "top-right" })
-            toaster.show({
-                icon: "error",
-                intent: "danger",
-                message: (e as Error).message
-            })
-            console.error(e)
+            await showErrorToast(e)
         }
     }
 

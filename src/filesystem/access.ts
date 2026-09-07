@@ -27,3 +27,7 @@ export interface MultiPlatformFileHandle {
 export function getMultiPlatformFileSystem(): MultiPlatformFileSystem {
     return window.isTauri ? tauriFs : webFs
 }
+
+export function isFilePickingSupported(): boolean {
+    return !!window.isTauri || !!window["showOpenFilePicker"]
+}
