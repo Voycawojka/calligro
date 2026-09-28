@@ -3,3 +3,4 @@ User-agent: *
 Disallow: /.nojekyll
 
 Sitemap: https://calligro.ideasalmanac.com/sitemap.xml
+Sitemap: https://calligro.ideasalmanac.com/tutorial/sitemap.xml
