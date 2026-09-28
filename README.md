@@ -25,7 +25,7 @@ The BMFont format has existed for a while and a lot of game frameworks, librarie
 Some examples and more details on compatibility can be found in the [samples/](samples) directory.
 
 # Tutorial
-A tutorial is available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com/tutorial.html).
+A tutorial is available at [calligro.ideasalmanac.com](https://calligro.ideasalmanac.com/tutorial/).
 
 Get additional support on the [Ideas Almanac Discord server](https://discord.gg/5MmEpXWSsV).
 
@@ -52,6 +52,9 @@ npx tauri dev
 
 # run unit tests
 npm run test
+
+# just the tutorial/docs
+npm run docs:preview
 ```
 
 Our actions use Node 24.

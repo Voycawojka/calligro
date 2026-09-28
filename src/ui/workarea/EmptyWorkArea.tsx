@@ -62,7 +62,7 @@ export default function EmptyWorkArea() {
             <div>
                 <H6 className={Classes.TEXT_MUTED}>Resources</H6>
                 <div className={styles.resourceCards}>
-                    <Card interactive elevation={2} className={`${styles.resourceCard} ${styles.texttutorial}`} onClick={() => externalLink("https://calligro.ideasalmanac.com/tutorial.html")}>
+                    <Card interactive elevation={2} className={`${styles.resourceCard} ${styles.texttutorial}`} onClick={() => externalLink("https://calligro.ideasalmanac.com/tutorial/")}>
                         <Icon icon="manual" size={28} color="#FFD76C" />
                         <strong>Text Tutorial</strong>
                         <small className={Classes.TEXT_MUTED}>Step-by-step guide to creating your first font</small>

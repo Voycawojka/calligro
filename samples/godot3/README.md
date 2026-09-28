@@ -1,5 +1,7 @@
 # BMFont Godot Sample
 
+Step-by-step guide: [calligro.ideasalmanac.com/tutorial/engines/godot-3](https://calligro.ideasalmanac.com/tutorial/engines/godot-3)
+
 This project was created with Godot 3.2.1
 
 See the `CalligroSample.tscn` scene for the font usage.

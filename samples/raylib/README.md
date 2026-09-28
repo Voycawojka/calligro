@@ -1,5 +1,7 @@
 # BMFont Raylib Sample
 
+Step-by-step guide: [calligro.ideasalmanac.com/tutorial/engines/raylib](https://calligro.ideasalmanac.com/tutorial/engines/raylib)
+
 This project was created with raylib 4.0
 
 The example is supposed to be compiled with the default Notepad++ setup.
@@ -7,7 +9,7 @@ The example is supposed to be compiled with the default Notepad++ setup.
 See the `main.c` file for the font usage.
 
 Note raylib requires the TXT version of the format.
-It also doesn't support kerning pairs.
+Kerning pair support hasn't been verified.
 
 - [raylib cheatsheet](https://www.raylib.com/cheatsheet/cheatsheet.html) (see `LoadFont` and `DrawTextEx` functions)
 - [official bmfont example](https://github.com/raysan5/raylib/blob/master/examples/text/text_font_loading.c)
