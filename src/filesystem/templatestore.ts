@@ -108,7 +108,7 @@ export async function importTemplateFile(): Promise<TemplateImportResult> {
             {
                 name: "Aseprite",
                 mimeType: "image/x-aseprite",
-                extensions: [".aseprite", ".ase"]
+                extensions: ["aseprite", "ase"]
             },
         ])
     } catch (e) {
