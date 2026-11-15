@@ -17,7 +17,8 @@ export async function asepriteToPng(file: File): Promise<Blob> {
             continue
         }
 
-        const imageData = ctx.createImageData(cel.w, cel.h)
+        const [celCanvas, celCtx] = createCanvas(cel.w, cel.h) // For compositing layers
+        const imageData = celCtx.createImageData(cel.w, cel.h)
         const data = imageData.data
         const raw = cel.rawCelData
 
@@ -50,8 +51,12 @@ export async function asepriteToPng(file: File): Promise<Blob> {
             }
         }
 
-        ctx.putImageData(imageData, cel.xpos, cel.ypos)
+        // Composite imageData over the other layers in the main canvas respecting layer opacity
+        celCtx.putImageData(imageData, 0, 0)
+        ctx.globalAlpha = (cel.opacity / 255) * (layer.opacity / 255)
+        ctx.drawImage(celCanvas, cel.xpos, cel.ypos)
     }
+    ctx.globalAlpha = 1
 
     return await convertToPngBlob(canvas)
 }
